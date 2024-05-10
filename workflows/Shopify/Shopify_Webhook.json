@@ -1,0 +1,259 @@
+{
+    "meta": {
+      "instanceId": "c4f4146b469720be37fccfa9decbb4bd3e7ee280c05e7522ace5122567557b3a"
+    },
+    "nodes": [
+      {
+        "parameters": {
+          "workflowId": "IMfxu7fHTF2HBsYz"
+        },
+        "id": "9471e1fe-35d7-483b-9ee8-47ebe3207855",
+        "name": "Execute Shopify Notification Workflow",
+        "type": "n8n-nodes-base.executeWorkflow",
+        "typeVersion": 1,
+        "position": [
+          1960,
+          -520
+        ]
+      },
+      {
+        "parameters": {
+          "workflowId": "IMfxu7fHTF2HBsYz"
+        },
+        "id": "2dcfb036-ff69-47f0-826d-878aa63429a7",
+        "name": "Execute Create Product Workflow1",
+        "type": "n8n-nodes-base.executeWorkflow",
+        "typeVersion": 1,
+        "position": [
+          1740,
+          -520
+        ],
+        "alwaysOutputData": true
+      },
+      {
+        "parameters": {
+          "keepOnlySet": true,
+          "values": {
+            "string": [
+              {
+                "name": "Shopify_Body",
+                "value": "={{ $('Get Full Json').item.json.Shopify_Body }}"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "id": "349ce754-c675-42ad-be91-bb3e90be665e",
+        "name": "Set",
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 2,
+        "position": [
+          1520,
+          -520
+        ]
+      },
+      {
+        "parameters": {
+          "workflowId": "3EoLKYimtM1T7euD"
+        },
+        "id": "c09df98f-7771-46c9-aacb-8cb729fa0804",
+        "name": "Execute Update Workflow1",
+        "type": "n8n-nodes-base.executeWorkflow",
+        "typeVersion": 1,
+        "position": [
+          1740,
+          -720
+        ]
+      },
+      {
+        "parameters": {
+          "values": {
+            "string": [
+              {
+                "name": "PrestaShop_Body",
+                "value": "={{ $('Get Full Json').item.json.Shopify_Body }}"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "id": "b60ea599-8d61-4bc3-a201-ea642826cc71",
+        "name": "Set7",
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 2,
+        "position": [
+          1520,
+          -720
+        ]
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "number": [
+              {
+                "value1": "={{ $json.status }}",
+                "operation": "equal",
+                "value2": 200
+              },
+              {
+                "value1": "={{ $json.data.products.length }}",
+                "operation": "isEmpty"
+              }
+            ]
+          }
+        },
+        "id": "f9033556-0f47-41f6-9bcc-de936cbafa6d",
+        "name": "IF4",
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 1,
+        "position": [
+          1300,
+          -620
+        ]
+      },
+      {
+        "parameters": {
+          "url": "=https://api.dev.gosharpei.com/api/products/{{ $('Shopify').item.json.id }}",
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "Accept",
+                "value": "application/json"
+              },
+              {
+                "name": "Authorization",
+                "value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI5YjkxY2NjZS1mMjg3LTQ2YjUtOWYwNC0zYWIxZmYyMjhjN2UiLCJqdGkiOiI1OWM3NDM1MjllZGIzODlmNTJkYzMzZDQ3ZTIzNjJiYzZkM2U1M2IwZWM5NWU2Njk3ZmMwYTUyNTUyOTNiNTA4NGQ0ZThkNWQ5MDE4NGM1NSIsImlhdCI6MTcxNDQ1MTIyNS44MjY2NzgsIm5iZiI6MTcxNDQ1MTIyNS44MjY2OCwiZXhwIjoxNzQ1OTg3MjI1LjgxODUyOSwic3ViIjoiMjE3Iiwic2NvcGVzIjpbXX0.NhGLzbh5QUQSxpHouK-AmX5zfdwfvGvKY9A_z7ouUAOyb9J7B7GsMvYlheycey0jrJFoWADUoh0ycjk_pbx-g5e1Bm6KAiD26-FSxoS4zIegtW1X7ZYrnmdo9DxDo1wa5pLzOoDsR5IoqhexgVxvTtyyncQLm31LzjCN9sawvSDaIdHuTi_AiDN_5EB9dp7P7GzOCvRv9Ytj8JxN42tO7JmPgk8_MHSlTDjhI23y1XDdOMRIX_xm_R2NUD8YUKxbe8G1GIi5-IQfiN2uBKKfP0WnyMLcCMPzN-fmE2IWB5JdBO1JzVv-KO9kNQ7-imI3W3iOPRB9MrFAvQLu_SOHsT1uiU8zgxUAxxdH-uuo7vJXKJ6OVLA8Nii9zVrg87LrEgMlkgxfy-sJ-6N2tNrUMkVyn89OT6eF1_DXbiZy1LI8KNuH6ksU6XkgSfDc7-HSlje9SbJJ3mrgu1s4oyNBP6HN0pPCqgRDnNvnwXFZkba--rIX7o3zVz7R9eK9GuIvT1det3f9ppJdCf9qzmt-FPrsgR0aAqiS13MxKODCHl9_LK0ijDh6oHgPP9igj89sWJTy_XuzPLfPgTSnl_Ot_lf7fFmDVtfaxR_U5RLOTBHdSUjQSG9zXIvE_wYjhHGOqQ-D48YRWFKLENQk09BKrQjNg9vpfJB9EH2e4Z47hZ4"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "id": "91a371ac-b861-436c-9aaf-825e1082b181",
+        "name": "Get Product by Remote ID",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.1,
+        "position": [
+          1100,
+          -620
+        ],
+        "alwaysOutputData": false,
+        "continueOnFail": true
+      },
+      {
+        "parameters": {
+          "jsCode": "return {\n  Shopify_Body: items[0].json\n};\n"
+        },
+        "id": "86684638-4583-430f-8a78-2d564797321b",
+        "name": "Get Full Json",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          900,
+          -620
+        ]
+      },
+      {
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "shopify",
+          "options": {}
+        },
+        "id": "cf508178-93b3-49d3-8e28-f37962e54e33",
+        "name": "Shopify",
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 1,
+        "position": [
+          720,
+          -620
+        ],
+        "webhookId": "5ce1b9c1-c1a5-4264-b47e-95c7a0c9785a"
+      }
+    ],
+    "connections": {
+      "Execute Create Product Workflow1": {
+        "main": [
+          [
+            {
+              "node": "Execute Shopify Notification Workflow",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Set": {
+        "main": [
+          [
+            {
+              "node": "Execute Create Product Workflow1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Set7": {
+        "main": [
+          [
+            {
+              "node": "Execute Update Workflow1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "IF4": {
+        "main": [
+          [
+            {
+              "node": "Set7",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Set",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Get Product by Remote ID": {
+        "main": [
+          [
+            {
+              "node": "IF4",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Get Full Json": {
+        "main": [
+          [
+            {
+              "node": "Get Product by Remote ID",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Shopify": {
+        "main": [
+          [
+            {
+              "node": "Get Full Json",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    }
+  }

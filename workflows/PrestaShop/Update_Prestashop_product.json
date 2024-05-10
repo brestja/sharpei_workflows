@@ -1,0 +1,490 @@
+{
+    "meta": {
+      "instanceId": "c4f4146b469720be37fccfa9decbb4bd3e7ee280c05e7522ace5122567557b3a"
+    },
+    "nodes": [
+      {
+        "parameters": {
+          "method": "PUT",
+          "url": "=https://api.{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.env }}.gosharpei.com/api/products/{{ $('Execute Workflow Trigger').item.json.data.pid }}/variants/{{ $json.data[0].pid }}  ",
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "Accept",
+                "value": "application/json"
+              },
+              {
+                "name": "authentication",
+                "value": "={{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.headers.authentication }}"
+              }
+            ]
+          },
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={\n    \"selling_price\": \"{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.price }}\",\n    \"title\": \"{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.name }}\",\n    \"remote_id\": \"{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.id }}\",\n    \"status_pid\" : \"{{ $('Get Status1').item.json.data.status[6].pid }}\",\n    \"cost\": 0\n\n  } ",
+          "options": {}
+        },
+        "id": "bd3fa5ef-14a2-4160-9974-d5758f055c71",
+        "name": "Update a variant",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.1,
+        "position": [
+          1560,
+          -140
+        ]
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "=https://api.{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.env }}.gosharpei.com/api/products/{{ $('Execute Workflow Trigger').item.json.data.pid }}/variants/multiple     ",
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "Accept",
+                "value": "application/json"
+              },
+              {
+                "name": "authentication",
+                "value": "={{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.headers.authentication }}"
+              }
+            ]
+          },
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "=[\n  {\n    \"selling_price\": \"{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.price }}\",\n    \"title\": \"{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.name }}\",\n    \"remote_id\": \"{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.id }}\",\n    \"status_pid\" : \"{{ $json.data.status[6].pid }}\",\n    \"cost\": 0\n\n  }\n]        ",
+          "options": {}
+        },
+        "id": "530a866d-cfe2-407f-9fd4-b21f8fe929c7",
+        "name": "Create Default Variant",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.1,
+        "position": [
+          1400,
+          -140
+        ]
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "number": [
+              {
+                "value1": "={{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.id_product}}",
+                "operation": "isEmpty"
+              }
+            ]
+          }
+        },
+        "id": "f119c168-ec12-43b5-a05c-8aa97304343c",
+        "name": "IF1",
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 1,
+        "position": [
+          1200,
+          -140
+        ]
+      },
+      {
+        "parameters": {
+          "method": "PUT",
+          "url": "=https://api.{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.env }}.gosharpei.com/api/products/{{ $('Execute Workflow Trigger').item.json.data.pid }}  ",
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "authority",
+                "value": "api.dev.gosharpei.com"
+              },
+              {
+                "name": "accept",
+                "value": "application/json, text/plain, */*"
+              },
+              {
+                "name": "accept-language",
+                "value": "es-ES,es;q=0.9"
+              },
+              {
+                "name": "authentication",
+                "value": "={{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.headers.authentication }}"
+              },
+              {
+                "name": "origin",
+                "value": "https://app.dev.gosharpei.com"
+              },
+              {
+                "name": "referer",
+                "value": "https://app.dev.gosharpei.com/"
+              },
+              {
+                "name": "sec-ch-ua",
+                "value": "\"Not A(Brand\";v=\"99\", \"Google Chrome\";v=\"121\", \"Chromium\";v=\"121\""
+              },
+              {
+                "name": "sec-ch-ua-mobile",
+                "value": "?0"
+              },
+              {
+                "name": "sec-ch-ua-platform",
+                "value": "\"Windows\""
+              },
+              {
+                "name": "sec-fetch-dest",
+                "value": "empty"
+              },
+              {
+                "name": "sec-fetch-mode",
+                "value": "cors"
+              },
+              {
+                "name": "sec-fetch-site",
+                "value": "same-site"
+              },
+              {
+                "name": "user-agent",
+                "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36"
+              }
+            ]
+          },
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={\n  \"title\": \"{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.name }}\",\n  \"body\": \"\",\n  \"status_pid\" : \"{{ $('Get Status1').item.json.data.status[6].pid }}\",\n  \"quantity\": \"{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.quantity }}\"\n}\n\n             ",
+          "options": {}
+        },
+        "id": "df98a749-b33c-463c-9e0e-e7776ec292bf",
+        "name": "Update Product1",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.1,
+        "position": [
+          1760,
+          -320
+        ]
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "string": [
+              {
+                "value1": "={{ $('Execute Workflow Trigger').item.json.data.title }}",
+                "operation": "notEqual",
+                "value2": "={{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.name }}"
+              },
+              {
+                "value1": "={{ $('Execute Workflow Trigger').item.json.data.body }}",
+                "operation": "notEqual",
+                "value2": "={{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.description_short }}"
+              },
+              {
+                "value1": "={{ $('Execute Workflow Trigger').item.json.data.category }}",
+                "operation": "notEqual",
+                "value2": "={{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.category }}"
+              }
+            ]
+          },
+          "combineOperation": "any"
+        },
+        "id": "a282cd6d-cfc8-4fbf-9036-17de8cdc870c",
+        "name": "Check Product Prestashop",
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 1,
+        "position": [
+          1580,
+          -320
+        ]
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "number": [
+              {
+                "value1": "={{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.id_product}}",
+                "operation": "isEmpty"
+              }
+            ]
+          }
+        },
+        "id": "81f1b977-f592-4564-af83-6758f29c00ce",
+        "name": "IF",
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 1,
+        "position": [
+          1380,
+          -320
+        ]
+      },
+      {
+        "parameters": {
+          "method": "PUT",
+          "url": "=https://api.{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.env }}.gosharpei.com/api/products/{{ $('Execute Workflow Trigger').item.json.data.pid }} ",
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "authority",
+                "value": "api.dev.gosharpei.com"
+              },
+              {
+                "name": "accept",
+                "value": "application/json, text/plain, */*"
+              },
+              {
+                "name": "accept-language",
+                "value": "es-ES,es;q=0.9"
+              },
+              {
+                "name": "authentication",
+                "value": "={{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.headers.authentication }}"
+              },
+              {
+                "name": "origin",
+                "value": "https://app.dev.gosharpei.com"
+              },
+              {
+                "name": "referer",
+                "value": "https://app.dev.gosharpei.com/"
+              },
+              {
+                "name": "sec-ch-ua",
+                "value": "\"Not A(Brand\";v=\"99\", \"Google Chrome\";v=\"121\", \"Chromium\";v=\"121\""
+              },
+              {
+                "name": "sec-ch-ua-mobile",
+                "value": "?0"
+              },
+              {
+                "name": "sec-ch-ua-platform",
+                "value": "\"Windows\""
+              },
+              {
+                "name": "sec-fetch-dest",
+                "value": "empty"
+              },
+              {
+                "name": "sec-fetch-mode",
+                "value": "cors"
+              },
+              {
+                "name": "sec-fetch-site",
+                "value": "same-site"
+              },
+              {
+                "name": "user-agent",
+                "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36"
+              }
+            ]
+          },
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={  \n  \"status_pid\": \"{{ $('Get Status1').item.json.data.status[5].pid }}\",\n  \"title\" : \"{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.name }}\"\n}    ",
+          "options": {
+            "redirect": {
+              "redirect": {}
+            }
+          }
+        },
+        "id": "5d74201f-d612-4c09-937b-d15fd5403ce1",
+        "name": "Draft Product",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.1,
+        "position": [
+          1380,
+          -480
+        ]
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "number": [
+              {
+                "value1": "={{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.quantity }}",
+                "operation": "smallerEqual"
+              }
+            ]
+          }
+        },
+        "id": "8ef44f66-aab8-450a-9ccb-1d06b6300b4d",
+        "name": "Check Stock1",
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 1,
+        "position": [
+          1200,
+          -320
+        ]
+      },
+      {
+        "parameters": {
+          "url": "=https://api.{{ $json.PrestaShop_Body.env }}.gosharpei.com/api/status ",
+          "sendQuery": true,
+          "queryParameters": {
+            "parameters": [
+              {}
+            ]
+          },
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "authority",
+                "value": "api.dev.gosharpei.com"
+              },
+              {
+                "name": "accept",
+                "value": "application/json, text/plain, */*"
+              },
+              {
+                "name": "accept-language",
+                "value": "en-US,en;q=0.9"
+              },
+              {
+                "name": "origin",
+                "value": "https://appdev.gosharpei.com"
+              },
+              {
+                "name": "referer",
+                "value": "https://appdev.gosharpei.com/"
+              },
+              {
+                "name": "sec-ch-ua",
+                "value": "\"Chromium\";v=\"104\", \" Not A;Brand\";v=\"99\", \"Google Chrome\";v=\"104\""
+              },
+              {
+                "name": "sec-ch-ua-mobile",
+                "value": "?0"
+              },
+              {
+                "name": "sec-ch-ua-platform",
+                "value": "\"Linux\""
+              },
+              {
+                "name": "sec-fetch-dest",
+                "value": "empty"
+              },
+              {
+                "name": "sec-fetch-mode",
+                "value": "cors"
+              },
+              {
+                "name": "sec-fetch-site",
+                "value": "same-site"
+              },
+              {
+                "name": "user-agent",
+                "value": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "id": "9f3cec6f-c68d-41f8-a8c9-39f006f9bbff",
+        "name": "Get Status1",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.1,
+        "position": [
+          1020,
+          -320
+        ]
+      },
+      {
+        "parameters": {},
+        "id": "29315934-ca58-4cbc-8937-ccbb7d545cb0",
+        "name": "Execute Workflow Trigger",
+        "type": "n8n-nodes-base.executeWorkflowTrigger",
+        "typeVersion": 1,
+        "position": [
+          840,
+          -320
+        ]
+      }
+    ],
+    "connections": {
+      "Create Default Variant": {
+        "main": [
+          [
+            {
+              "node": "Update a variant",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "IF1": {
+        "main": [
+          [
+            {
+              "node": "Create Default Variant",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Check Product Prestashop": {
+        "main": [
+          [
+            {
+              "node": "Update Product1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "IF": {
+        "main": [
+          [
+            {
+              "node": "Check Product Prestashop",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Check Stock1": {
+        "main": [
+          [
+            {
+              "node": "Draft Product",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "IF",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Get Status1": {
+        "main": [
+          [
+            {
+              "node": "Check Stock1",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "IF1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Execute Workflow Trigger": {
+        "main": [
+          [
+            {
+              "node": "Get Status1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    }
+  }

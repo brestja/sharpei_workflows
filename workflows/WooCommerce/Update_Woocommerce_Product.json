@@ -1,0 +1,1244 @@
+{
+    "meta": {
+      "instanceId": "c4f4146b469720be37fccfa9decbb4bd3e7ee280c05e7522ace5122567557b3a"
+    },
+    "nodes": [
+      {
+        "parameters": {
+          "method": "PUT",
+          "url": "=https://api.dev.gosharpei.com/api/products/{{ $('Execute Workflow Trigger').item.json.data.pid }} ",
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "authority",
+                "value": "api.dev.gosharpei.com"
+              },
+              {
+                "name": "accept",
+                "value": "application/json, text/plain, */*"
+              },
+              {
+                "name": "accept-language",
+                "value": "es-ES,es;q=0.9"
+              },
+              {
+                "name": "authorization",
+                "value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI5YjkxY2NjZS1mMjg3LTQ2YjUtOWYwNC0zYWIxZmYyMjhjN2UiLCJqdGkiOiI1MjM3MGFiMjAwZDFmY2ZmZDFiNjAyMTJmMDFlZWQzYTk5MDY3NmJhN2IxY2MyZWIzMTJjY2IxZjgyYTcxNmU5ODc0MWNkYWNlOGE3YmY3YyIsImlhdCI6MTcxMjY5NDkyNS44MDE3NzcsIm5iZiI6MTcxMjY5NDkyNS44MDE3NzgsImV4cCI6MTc0NDIzMDkyNS43OTYyMiwic3ViIjoiMjE3Iiwic2NvcGVzIjpbXX0.wB9yYWnaKvB9VVlTyZfx2XQXoIkkWKMHRINf9xtvdIy2LuHgTx366YMnWROFWv4ppY9n2MiMUmMLbUIYjDlCztMeBfXqxSVQ8hQgr3C180hMV1Yjg8gXbxZ7A_gTUsj3xDfhweUnoxFxbNPWXfjWFi-_suJ3g2wQaR_v-GTZNiq-UBDmnDWjHxXc84ewEHNtiG1cT3FxbwSttD63J2_JYzZIaCzzHE5NrrFf1SaCRyWH9Adqf4ELS5qUgVL_vUTYoShvwigYWurf7CZXIGVms9uXslxFlTk64GPp6QF2jiNSAhUE70DvDjD2gX9vWvWnhsDdjJuUllyamAkRmpyXZsbI78J84XdBKwC9nLvs76WcmxWff8PVm1x-aCa-9cXne1UzvlGh_h6GszfQB48IsFMlf4GU02FctKxHk7D67ILUzxC5jbuagt-DbK3axz4nFV462iDHnj6WR4fcwn36b_qp1Ol9lZdaZw5jsbyLCcN_6MsYno2qS7pdO3Oys-OXmRiDHBuoAugE3YGGuwT41brXH3Db7MGo_pEv86UH4h3rylr_ffN15X6ZCnkEEoKbBA1wLT9YelWmw_5ngpafmS3cIzpZ0iq7GoMfiys8ZYB0AI0nRZRX2cKMb36chpG0q5CJbvFPxKkMFstmjdBbn-iDJ1yCjPkH5bfxO3FP1ys"
+              },
+              {
+                "name": "origin",
+                "value": "https://app.dev.gosharpei.com"
+              },
+              {
+                "name": "referer",
+                "value": "https://app.dev.gosharpei.com/"
+              },
+              {
+                "name": "sec-ch-ua",
+                "value": "\"Not A(Brand\";v=\"99\", \"Google Chrome\";v=\"121\", \"Chromium\";v=\"121\""
+              },
+              {
+                "name": "sec-ch-ua-mobile",
+                "value": "?0"
+              },
+              {
+                "name": "sec-ch-ua-platform",
+                "value": "\"Windows\""
+              },
+              {
+                "name": "sec-fetch-dest",
+                "value": "empty"
+              },
+              {
+                "name": "sec-fetch-mode",
+                "value": "cors"
+              },
+              {
+                "name": "sec-fetch-site",
+                "value": "same-site"
+              },
+              {
+                "name": "user-agent",
+                "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36"
+              }
+            ]
+          },
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={\n  \"title\": \"{{ $('Execute Workflow Trigger').item.json.WooCommerce_Body.body.name }}\",\n  \"body\": \"{{ $('Execute Workflow Trigger').item.json.WooCommerce_Body.body.yoast_head_json.og_description }}\",\n  \"status_pid\" : \"{{ $json.data.status[0].pid }}\"\n}\n\n          ",
+          "options": {}
+        },
+        "id": "d92b558e-7006-4831-8baa-3d2095bd8dc1",
+        "name": "Update Product",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.1,
+        "position": [
+          1120,
+          180
+        ]
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "string": [
+              {
+                "value1": "={{ $('Execute Workflow Trigger').item.json.data.title }}",
+                "operation": "notEqual",
+                "value2": "={{ $('Execute Workflow Trigger').item.json.WooCommerce_Body.body.name }}"
+              },
+              {
+                "value1": "={{ $('Execute Workflow Trigger').item.json.data.body }}",
+                "operation": "notEqual",
+                "value2": "={{ $('Execute Workflow Trigger').item.json.WooCommerce_Body.body.yoast_head_json.og_description }}"
+              }
+            ]
+          },
+          "combineOperation": "any"
+        },
+        "id": "6a339225-17de-4315-abe2-aaa5f6dfeeb8",
+        "name": "Check Product WooCommerce",
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 1,
+        "position": [
+          940,
+          180
+        ]
+      },
+      {
+        "parameters": {
+          "method": "PUT",
+          "url": "=https://api.dev.gosharpei.com/api/products/{{ $('Execute Workflow Trigger').item.json.data.pid }}",
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "authority",
+                "value": "api.dev.gosharpei.com"
+              },
+              {
+                "name": "accept",
+                "value": "application/json, text/plain, */*"
+              },
+              {
+                "name": "accept-language",
+                "value": "es-ES,es;q=0.9"
+              },
+              {
+                "name": "Authorization",
+                "value": "BearereyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI5YjkxY2NjZS1mMjg3LTQ2YjUtOWYwNC0zYWIxZmYyMjhjN2UiLCJqdGkiOiI1OWM3NDM1MjllZGIzODlmNTJkYzMzZDQ3ZTIzNjJiYzZkM2U1M2IwZWM5NWU2Njk3ZmMwYTUyNTUyOTNiNTA4NGQ0ZThkNWQ5MDE4NGM1NSIsImlhdCI6MTcxNDQ1MTIyNS44MjY2NzgsIm5iZiI6MTcxNDQ1MTIyNS44MjY2OCwiZXhwIjoxNzQ1OTg3MjI1LjgxODUyOSwic3ViIjoiMjE3Iiwic2NvcGVzIjpbXX0.NhGLzbh5QUQSxpHouK-AmX5zfdwfvGvKY9A_z7ouUAOyb9J7B7GsMvYlheycey0jrJFoWADUoh0ycjk_pbx-g5e1Bm6KAiD26-FSxoS4zIegtW1X7ZYrnmdo9DxDo1wa5pLzOoDsR5IoqhexgVxvTtyyncQLm31LzjCN9sawvSDaIdHuTi_AiDN_5EB9dp7P7GzOCvRv9Ytj8JxN42tO7JmPgk8_MHSlTDjhI23y1XDdOMRIX_xm_R2NUD8YUKxbe8G1GIi5-IQfiN2uBKKfP0WnyMLcCMPzN-fmE2IWB5JdBO1JzVv-KO9kNQ7-imI3W3iOPRB9MrFAvQLu_SOHsT1uiU8zgxUAxxdH-uuo7vJXKJ6OVLA8Nii9zVrg87LrEgMlkgxfy-sJ-6N2tNrUMkVyn89OT6eF1_DXbiZy1LI8KNuH6ksU6XkgSfDc7-HSlje9SbJJ3mrgu1s4oyNBP6HN0pPCqgRDnNvnwXFZkba--rIX7o3zVz7R9eK9GuIvT1det3f9ppJdCf9qzmt-FPrsgR0aAqiS13MxKODCHl9_LK0ijDh6oHgPP9igj89sWJTy_XuzPLfPgTSnl_Ot_lf7fFmDVtfaxR_U5RLOTBHdSUjQSG9zXIvE_wYjhHGOqQ-D48YRWFKLENQk09BKrQjNg9vpfJB9EH2e4Z47hZ4"
+              },
+              {
+                "name": "origin",
+                "value": "https://app.dev.gosharpei.com"
+              },
+              {
+                "name": "referer",
+                "value": "https://app.dev.gosharpei.com/"
+              },
+              {
+                "name": "sec-ch-ua",
+                "value": "\"Not A(Brand\";v=\"99\", \"Google Chrome\";v=\"121\", \"Chromium\";v=\"121\""
+              },
+              {
+                "name": "sec-ch-ua-mobile",
+                "value": "?0"
+              },
+              {
+                "name": "sec-ch-ua-platform",
+                "value": "\"Windows\""
+              },
+              {
+                "name": "sec-fetch-dest",
+                "value": "empty"
+              },
+              {
+                "name": "sec-fetch-mode",
+                "value": "cors"
+              },
+              {
+                "name": "sec-fetch-site",
+                "value": "same-site"
+              },
+              {
+                "name": "user-agent",
+                "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36"
+              }
+            ]
+          },
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={  \n  \"status_pid\": \"{{ $json.data.status[1].pid }}\",\n  \"title\" : \"{{ $('Execute Workflow Trigger').item.json.WooCommerce_Body.body.name }}\",\n  \"remote_id\": \"{{ $('Execute Workflow Trigger').item.json.WooCommerce_Body.body.id }}\"\n}\n       ",
+          "options": {}
+        },
+        "id": "360cb28a-fa39-4539-9abc-eab09daf65b3",
+        "name": "Draft Product",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.1,
+        "position": [
+          740,
+          180
+        ]
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "number": [
+              {
+                "value1": "={{ $('Execute Workflow Trigger').item.json.WooCommerce_Body.body.stock_quantity }}",
+                "operation": "smallerEqual"
+              }
+            ]
+          }
+        },
+        "id": "a7ceef8e-cc0f-4438-93a4-a4e97a9dcdab",
+        "name": "Check Stock",
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 1,
+        "position": [
+          560,
+          180
+        ]
+      },
+      {
+        "parameters": {
+          "url": "https://api.dev.gosharpei.com/api/status",
+          "sendQuery": true,
+          "queryParameters": {
+            "parameters": [
+              {
+                "name": "type",
+                "value": "product"
+              }
+            ]
+          },
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "authority",
+                "value": "api.dev.gosharpei.com"
+              },
+              {
+                "name": "accept",
+                "value": "application/json, text/plain, */*"
+              },
+              {
+                "name": "accept-language",
+                "value": "en-US,en;q=0.9"
+              },
+              {
+                "name": "origin",
+                "value": "https://appdev.gosharpei.com"
+              },
+              {
+                "name": "referer",
+                "value": "https://appdev.gosharpei.com/"
+              },
+              {
+                "name": "sec-ch-ua",
+                "value": "\"Chromium\";v=\"104\", \" Not A;Brand\";v=\"99\", \"Google Chrome\";v=\"104\""
+              },
+              {
+                "name": "sec-ch-ua-mobile",
+                "value": "?0"
+              },
+              {
+                "name": "sec-ch-ua-platform",
+                "value": "\"Linux\""
+              },
+              {
+                "name": "sec-fetch-dest",
+                "value": "empty"
+              },
+              {
+                "name": "sec-fetch-mode",
+                "value": "cors"
+              },
+              {
+                "name": "sec-fetch-site",
+                "value": "same-site"
+              },
+              {
+                "name": "user-agent",
+                "value": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36"
+              }
+            ]
+          },
+          "options": {
+            "redirect": {
+              "redirect": {}
+            }
+          }
+        },
+        "id": "be9f5547-ec3c-4224-bc0e-480468f514a4",
+        "name": "Get Status1",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.1,
+        "position": [
+          380,
+          180
+        ]
+      },
+      {
+        "parameters": {
+          "workflowId": "iYCkWTiFfEQE26eU"
+        },
+        "id": "f7d7720e-3e19-4537-9019-ca0527db8c05",
+        "name": "Execute Workflow",
+        "type": "n8n-nodes-base.executeWorkflow",
+        "typeVersion": 1,
+        "position": [
+          740,
+          920
+        ]
+      },
+      {
+        "parameters": {
+          "keepOnlySet": true,
+          "values": {
+            "string": [
+              {
+                "name": "product_pid",
+                "value": "={{ $('Execute Workflow Trigger').item.json.data.pid }}"
+              },
+              {
+                "name": "WooCommerce_Body",
+                "value": "={{ $json.WooCommerce_Body }}"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "id": "fb1bb634-7087-4be4-8d41-37ecf0a3709d",
+        "name": "Set1",
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 2,
+        "position": [
+          560,
+          920
+        ]
+      },
+      {
+        "parameters": {
+          "jsCode": "return {\n  WooCommerce_Body: items[0].json\n};\n"
+        },
+        "id": "895c59ab-c9e7-4148-8396-b189c0c1b0ba",
+        "name": "Get Full Json",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          380,
+          920
+        ]
+      },
+      {
+        "parameters": {
+          "method": "DELETE",
+          "url": "=https://api.dev.gosharpei.com/api/products/{{ $('Get Product by Remote ID').item.json.data.pid }}/variants/{{ $json.pid }}    ",
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "Accept",
+                "value": "application/json"
+              },
+              {
+                "name": "Authorization",
+                "value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI5YjkxY2NjZS1mMjg3LTQ2YjUtOWYwNC0zYWIxZmYyMjhjN2UiLCJqdGkiOiIwZmVjMjBjMjU2ZjNjODhlNjM3MGQwZWZjZjYzZDVjZjBiMTczZWNjYjdiNDJmOGU2MmU2Zjk0ODAxMDFhOGNmMDRjN2I1N2RhN2Q3MWVhZSIsImlhdCI6MTcxNTAyNjE5NS4wMjk2NywibmJmIjoxNzE1MDI2MTk1LjAyOTY3MiwiZXhwIjoxNzQ2NTYyMTk1LjAyMzA3OSwic3ViIjoiMjE3Iiwic2NvcGVzIjpbXX0.PTC1As6mTLmtg_MQDrSEZEUBho4ar3EJx_UWE9tc_3wQcGD5hknypEPHzkGB5kc30mZzAwCLtm2XKFn-kqiDTNvQ5AMy9Qr4sdhbJftPYyjCLpdLfSsuu02TUN_pWj0zeUXOsOJTnAsWOokib-Cz6yLgDxeZ-KOkeBW8W2B-RZvagMxm8_kkHBzVqAaPLzwNkBZRA8z03N30gTOw4jPLj09h4xF7GJMrXT8Vj8IQtFcFCrIwVqwCV8jDkrFSv8sUz8Qx0gkLSVHc6X4aw6u8tbvChXPZy7Swz0DGskqmPEu11nA3yoIIQ-xuozgJ6TX5X0QdKvo2EjuoPCeqULTjPlr_Xzld-FETJ5MYJyx1ZrZ9Ue50l1ygs09RP6cGlrtROZ1X0mWrA0Yej_IDlko2BYaStgVmcS2hWwe9Ss3FXJX9B5-1q-APUD2ynHHRvRHz5BAKDS96vHBt0Bo_0p9t8i1UfKabjGKGFNUvHZ1K4-JSiQsL_W8VwUj8Bm6cQj7nQnzfhucJ36l9SoPb0kXFuh2DL4at4-vUZX0twvOOtRag0-r-8Yr_ndYIz5opSuRbfhwILa4yYFM7ljhsZLu5lyCpx0NAAa3yczWZsK7GnKyewrPC6mPtYRhIwMFoZ8P6CKg8i1HWZfzoMGiQvwype-7_5azpeNqv5i877BJ-ofY"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "id": "07b139f0-b998-4c70-9918-e099395f01c7",
+        "name": "delete a variant",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.1,
+        "position": [
+          1120,
+          680
+        ]
+      },
+      {
+        "parameters": {
+          "values": {
+            "number": [
+              {
+                "name": "index",
+                "value": "={{ $runIndex }}"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "id": "cc284bab-fad6-46ba-826b-074f6057efad",
+        "name": "Set2",
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 2,
+        "position": [
+          940,
+          680
+        ]
+      },
+      {
+        "parameters": {
+          "batchSize": 1,
+          "options": {}
+        },
+        "id": "8efd1db5-fadc-4d27-abca-ecaae6f8c2d5",
+        "name": "Split In Batches",
+        "type": "n8n-nodes-base.splitInBatches",
+        "typeVersion": 1,
+        "position": [
+          740,
+          680
+        ]
+      },
+      {
+        "parameters": {
+          "fieldToSplitOut": "data.variants",
+          "options": {}
+        },
+        "id": "58e26e32-fb5a-42b6-8115-2a4c37f3ee58",
+        "name": "Item Lists1",
+        "type": "n8n-nodes-base.itemLists",
+        "typeVersion": 3,
+        "position": [
+          560,
+          680
+        ]
+      },
+      {
+        "parameters": {
+          "url": "=https://api.dev.gosharpei.com/api/products/{{ $('Execute Workflow Trigger').item.json.WooCommerce_Body.body.id }}",
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "Accept",
+                "value": "application/json"
+              },
+              {
+                "name": "authentication",
+                "value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI5YjkxY2NjZS1mMjg3LTQ2YjUtOWYwNC0zYWIxZmYyMjhjN2UiLCJqdGkiOiIwZmVjMjBjMjU2ZjNjODhlNjM3MGQwZWZjZjYzZDVjZjBiMTczZWNjYjdiNDJmOGU2MmU2Zjk0ODAxMDFhOGNmMDRjN2I1N2RhN2Q3MWVhZSIsImlhdCI6MTcxNTAyNjE5NS4wMjk2NywibmJmIjoxNzE1MDI2MTk1LjAyOTY3MiwiZXhwIjoxNzQ2NTYyMTk1LjAyMzA3OSwic3ViIjoiMjE3Iiwic2NvcGVzIjpbXX0.PTC1As6mTLmtg_MQDrSEZEUBho4ar3EJx_UWE9tc_3wQcGD5hknypEPHzkGB5kc30mZzAwCLtm2XKFn-kqiDTNvQ5AMy9Qr4sdhbJftPYyjCLpdLfSsuu02TUN_pWj0zeUXOsOJTnAsWOokib-Cz6yLgDxeZ-KOkeBW8W2B-RZvagMxm8_kkHBzVqAaPLzwNkBZRA8z03N30gTOw4jPLj09h4xF7GJMrXT8Vj8IQtFcFCrIwVqwCV8jDkrFSv8sUz8Qx0gkLSVHc6X4aw6u8tbvChXPZy7Swz0DGskqmPEu11nA3yoIIQ-xuozgJ6TX5X0QdKvo2EjuoPCeqULTjPlr_Xzld-FETJ5MYJyx1ZrZ9Ue50l1ygs09RP6cGlrtROZ1X0mWrA0Yej_IDlko2BYaStgVmcS2hWwe9Ss3FXJX9B5-1q-APUD2ynHHRvRHz5BAKDS96vHBt0Bo_0p9t8i1UfKabjGKGFNUvHZ1K4-JSiQsL_W8VwUj8Bm6cQj7nQnzfhucJ36l9SoPb0kXFuh2DL4at4-vUZX0twvOOtRag0-r-8Yr_ndYIz5opSuRbfhwILa4yYFM7ljhsZLu5lyCpx0NAAa3yczWZsK7GnKyewrPC6mPtYRhIwMFoZ8P6CKg8i1HWZfzoMGiQvwype-7_5azpeNqv5i877BJ-ofY"
+              }
+            ]
+          },
+          "options": {
+            "redirect": {
+              "redirect": {}
+            }
+          }
+        },
+        "id": "df5d1b44-2e58-4799-83c5-59975347996a",
+        "name": "Get Product by Remote ID",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.1,
+        "position": [
+          380,
+          680
+        ],
+        "alwaysOutputData": false,
+        "executeOnce": true,
+        "continueOnFail": true
+      },
+      {
+        "parameters": {
+          "method": "PUT",
+          "url": "=https://api.dev.gosharpei.com/api/products/{{ $('Execute Workflow Trigger').item.json.data.pid }}/variants/{{ $('Execute Workflow Trigger').item.json.data.variants[$('Set5').item.json.counter].pid }}   ",
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "Accept",
+                "value": "application/json"
+              },
+              {
+                "name": "Authorization",
+                "value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI5YjkxY2NjZS1mMjg3LTQ2YjUtOWYwNC0zYWIxZmYyMjhjN2UiLCJqdGkiOiI1OWM3NDM1MjllZGIzODlmNTJkYzMzZDQ3ZTIzNjJiYzZkM2U1M2IwZWM5NWU2Njk3ZmMwYTUyNTUyOTNiNTA4NGQ0ZThkNWQ5MDE4NGM1NSIsImlhdCI6MTcxNDQ1MTIyNS44MjY2NzgsIm5iZiI6MTcxNDQ1MTIyNS44MjY2OCwiZXhwIjoxNzQ1OTg3MjI1LjgxODUyOSwic3ViIjoiMjE3Iiwic2NvcGVzIjpbXX0.NhGLzbh5QUQSxpHouK-AmX5zfdwfvGvKY9A_z7ouUAOyb9J7B7GsMvYlheycey0jrJFoWADUoh0ycjk_pbx-g5e1Bm6KAiD26-FSxoS4zIegtW1X7ZYrnmdo9DxDo1wa5pLzOoDsR5IoqhexgVxvTtyyncQLm31LzjCN9sawvSDaIdHuTi_AiDN_5EB9dp7P7GzOCvRv9Ytj8JxN42tO7JmPgk8_MHSlTDjhI23y1XDdOMRIX_xm_R2NUD8YUKxbe8G1GIi5-IQfiN2uBKKfP0WnyMLcCMPzN-fmE2IWB5JdBO1JzVv-KO9kNQ7-imI3W3iOPRB9MrFAvQLu_SOHsT1uiU8zgxUAxxdH-uuo7vJXKJ6OVLA8Nii9zVrg87LrEgMlkgxfy-sJ-6N2tNrUMkVyn89OT6eF1_DXbiZy1LI8KNuH6ksU6XkgSfDc7-HSlje9SbJJ3mrgu1s4oyNBP6HN0pPCqgRDnNvnwXFZkba--rIX7o3zVz7R9eK9GuIvT1det3f9ppJdCf9qzmt-FPrsgR0aAqiS13MxKODCHl9_LK0ijDh6oHgPP9igj89sWJTy_XuzPLfPgTSnl_Ot_lf7fFmDVtfaxR_U5RLOTBHdSUjQSG9zXIvE_wYjhHGOqQ-D48YRWFKLENQk09BKrQjNg9vpfJB9EH2e4Z47hZ4"
+              }
+            ]
+          },
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={  \n  \"status_pid\": \"bbd48b9d-672a-4f0a-8c54-f51af0b2cdd6\", \n  \"title\": \"{{ $('WooCommerce').item.json.name }}\",\n  \"cost\": \"0\",\n  \"selling_price\" : \"{{ $('WooCommerce').item.json.price }}\"\n    }      ",
+          "options": {}
+        },
+        "id": "4bd3cb3f-6f96-446c-909e-fa70b60828da",
+        "name": "Draft a Variant",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.1,
+        "position": [
+          1860,
+          220
+        ]
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "number": [
+              {
+                "value1": "={{ $json.stock_quantity }}",
+                "operation": "smallerEqual"
+              }
+            ]
+          }
+        },
+        "id": "dcf6087c-0e96-462f-8d14-6dd98b0a4980",
+        "name": "Check Variant Stock",
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 1,
+        "position": [
+          1660,
+          220
+        ]
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "=https://api.dev.gosharpei.com/api/products/{{ $('Execute Workflow Trigger').item.json.data.pid }}/variants/{{ $('Execute Workflow Trigger').item.json.data.variants[$('Set5').item.json.counter].pid }}/images      ",
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "accept",
+                "value": "application/json, text/plain, */*"
+              },
+              {
+                "name": "accept-language",
+                "value": "es-ES,es;q=0.9"
+              },
+              {
+                "name": "authorization",
+                "value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI5YjkxY2NjZS1mMjg3LTQ2YjUtOWYwNC0zYWIxZmYyMjhjN2UiLCJqdGkiOiI1OWM3NDM1MjllZGIzODlmNTJkYzMzZDQ3ZTIzNjJiYzZkM2U1M2IwZWM5NWU2Njk3ZmMwYTUyNTUyOTNiNTA4NGQ0ZThkNWQ5MDE4NGM1NSIsImlhdCI6MTcxNDQ1MTIyNS44MjY2NzgsIm5iZiI6MTcxNDQ1MTIyNS44MjY2OCwiZXhwIjoxNzQ1OTg3MjI1LjgxODUyOSwic3ViIjoiMjE3Iiwic2NvcGVzIjpbXX0.NhGLzbh5QUQSxpHouK-AmX5zfdwfvGvKY9A_z7ouUAOyb9J7B7GsMvYlheycey0jrJFoWADUoh0ycjk_pbx-g5e1Bm6KAiD26-FSxoS4zIegtW1X7ZYrnmdo9DxDo1wa5pLzOoDsR5IoqhexgVxvTtyyncQLm31LzjCN9sawvSDaIdHuTi_AiDN_5EB9dp7P7GzOCvRv9Ytj8JxN42tO7JmPgk8_MHSlTDjhI23y1XDdOMRIX_xm_R2NUD8YUKxbe8G1GIi5-IQfiN2uBKKfP0WnyMLcCMPzN-fmE2IWB5JdBO1JzVv-KO9kNQ7-imI3W3iOPRB9MrFAvQLu_SOHsT1uiU8zgxUAxxdH-uuo7vJXKJ6OVLA8Nii9zVrg87LrEgMlkgxfy-sJ-6N2tNrUMkVyn89OT6eF1_DXbiZy1LI8KNuH6ksU6XkgSfDc7-HSlje9SbJJ3mrgu1s4oyNBP6HN0pPCqgRDnNvnwXFZkba--rIX7o3zVz7R9eK9GuIvT1det3f9ppJdCf9qzmt-FPrsgR0aAqiS13MxKODCHl9_LK0ijDh6oHgPP9igj89sWJTy_XuzPLfPgTSnl_Ot_lf7fFmDVtfaxR_U5RLOTBHdSUjQSG9zXIvE_wYjhHGOqQ-D48YRWFKLENQk09BKrQjNg9vpfJB9EH2e4Z47hZ4"
+              },
+              {
+                "name": "origin",
+                "value": "https://app.dev.gosharpei.com"
+              },
+              {
+                "name": "referer",
+                "value": "https://app.dev.gosharpei.com/"
+              },
+              {
+                "name": "sec-ch-ua",
+                "value": "\"Google Chrome\";v=\"123\", \"Not:A-Brand\";v=\"8\", \"Chromium\";v=\"123\""
+              },
+              {
+                "name": "sec-ch-ua-mobile",
+                "value": "?0"
+              },
+              {
+                "name": "sec-ch-ua-platform",
+                "value": "\"Windows\""
+              },
+              {
+                "name": "sec-fetch-dest",
+                "value": "empty"
+              },
+              {
+                "name": "sec-fetch-mode",
+                "value": "cors"
+              },
+              {
+                "name": "sec-fetch-site",
+                "value": "same-site"
+              },
+              {
+                "name": "user-agent",
+                "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36"
+              }
+            ]
+          },
+          "sendBody": true,
+          "contentType": "multipart-form-data",
+          "bodyParameters": {
+            "parameters": [
+              {
+                "parameterType": "formBinaryData",
+                "name": "attachment",
+                "inputDataFieldName": "data"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "id": "15cfc96d-3c2c-45ca-bb49-012568dfcefb",
+        "name": "Add an image to a product variant1",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.1,
+        "position": [
+          2500,
+          420
+        ]
+      },
+      {
+        "parameters": {
+          "url": "={{ $('WooCommerce').item.json.images[0].src }}",
+          "sendQuery": true,
+          "queryParameters": {
+            "parameters": [
+              {}
+            ]
+          },
+          "options": {
+            "redirect": {
+              "redirect": {}
+            }
+          }
+        },
+        "id": "97b93fe2-0d36-478c-abfe-4586feca6d4a",
+        "name": "Upload3",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.1,
+        "position": [
+          2360,
+          420
+        ]
+      },
+      {
+        "parameters": {
+          "method": "DELETE",
+          "url": "=https://api.dev.gosharpei.com/api/images/{{ $('Execute Workflow Trigger').item.json.data.variants[$('Set5').item.json.counter].images[0].pid }}",
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "authority",
+                "value": "z908y1zf95.execute-api.us-west-1.amazonaws.com"
+              },
+              {
+                "name": "accept",
+                "value": "application/json, text/plain, */*"
+              },
+              {
+                "name": "accept-language",
+                "value": "es-ES,es;q=0.9"
+              },
+              {
+                "name": "authorization",
+                "value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI5YjkxY2NjZS1mMjg3LTQ2YjUtOWYwNC0zYWIxZmYyMjhjN2UiLCJqdGkiOiI1OWM3NDM1MjllZGIzODlmNTJkYzMzZDQ3ZTIzNjJiYzZkM2U1M2IwZWM5NWU2Njk3ZmMwYTUyNTUyOTNiNTA4NGQ0ZThkNWQ5MDE4NGM1NSIsImlhdCI6MTcxNDQ1MTIyNS44MjY2NzgsIm5iZiI6MTcxNDQ1MTIyNS44MjY2OCwiZXhwIjoxNzQ1OTg3MjI1LjgxODUyOSwic3ViIjoiMjE3Iiwic2NvcGVzIjpbXX0.NhGLzbh5QUQSxpHouK-AmX5zfdwfvGvKY9A_z7ouUAOyb9J7B7GsMvYlheycey0jrJFoWADUoh0ycjk_pbx-g5e1Bm6KAiD26-FSxoS4zIegtW1X7ZYrnmdo9DxDo1wa5pLzOoDsR5IoqhexgVxvTtyyncQLm31LzjCN9sawvSDaIdHuTi_AiDN_5EB9dp7P7GzOCvRv9Ytj8JxN42tO7JmPgk8_MHSlTDjhI23y1XDdOMRIX_xm_R2NUD8YUKxbe8G1GIi5-IQfiN2uBKKfP0WnyMLcCMPzN-fmE2IWB5JdBO1JzVv-KO9kNQ7-imI3W3iOPRB9MrFAvQLu_SOHsT1uiU8zgxUAxxdH-uuo7vJXKJ6OVLA8Nii9zVrg87LrEgMlkgxfy-sJ-6N2tNrUMkVyn89OT6eF1_DXbiZy1LI8KNuH6ksU6XkgSfDc7-HSlje9SbJJ3mrgu1s4oyNBP6HN0pPCqgRDnNvnwXFZkba--rIX7o3zVz7R9eK9GuIvT1det3f9ppJdCf9qzmt-FPrsgR0aAqiS13MxKODCHl9_LK0ijDh6oHgPP9igj89sWJTy_XuzPLfPgTSnl_Ot_lf7fFmDVtfaxR_U5RLOTBHdSUjQSG9zXIvE_wYjhHGOqQ-D48YRWFKLENQk09BKrQjNg9vpfJB9EH2e4Z47hZ4"
+              },
+              {
+                "name": "origin",
+                "value": "https://901.dev.gosharpei.com"
+              },
+              {
+                "name": "referer",
+                "value": "https://901.dev.gosharpei.com/"
+              },
+              {
+                "name": "sec-ch-ua",
+                "value": "\"Chromium\";v=\"122\", \"Not(A:Brand\";v=\"24\", \"Google Chrome\";v=\"122\""
+              },
+              {
+                "name": "sec-ch-ua-mobile",
+                "value": "?0"
+              },
+              {
+                "name": "sec-ch-ua-platform",
+                "value": "\"Windows\""
+              },
+              {
+                "name": "sec-fetch-dest",
+                "value": "empty"
+              },
+              {
+                "name": "sec-fetch-mode",
+                "value": "cors"
+              },
+              {
+                "name": "sec-fetch-site",
+                "value": "cross-site"
+              },
+              {
+                "name": "user-agent",
+                "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36"
+              }
+            ]
+          },
+          "options": {
+            "redirect": {
+              "redirect": {}
+            }
+          }
+        },
+        "id": "de580205-5b0d-4219-b4cf-cbd6e73c9585",
+        "name": "Delete Image",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.1,
+        "position": [
+          2200,
+          420
+        ],
+        "continueOnFail": true
+      },
+      {
+        "parameters": {
+          "method": "PUT",
+          "url": "=https://api.dev.gosharpei.com/api/products/{{ $('Execute Workflow Trigger').item.json.data.pid }}/variants/{{ $('Execute Workflow Trigger').item.json.data.variants[$('Set5').item.json.counter].pid }} ",
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "Accept",
+                "value": "application/json"
+              },
+              {
+                "name": "Authorization",
+                "value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI5YjkxY2NjZS1mMjg3LTQ2YjUtOWYwNC0zYWIxZmYyMjhjN2UiLCJqdGkiOiI1OWM3NDM1MjllZGIzODlmNTJkYzMzZDQ3ZTIzNjJiYzZkM2U1M2IwZWM5NWU2Njk3ZmMwYTUyNTUyOTNiNTA4NGQ0ZThkNWQ5MDE4NGM1NSIsImlhdCI6MTcxNDQ1MTIyNS44MjY2NzgsIm5iZiI6MTcxNDQ1MTIyNS44MjY2OCwiZXhwIjoxNzQ1OTg3MjI1LjgxODUyOSwic3ViIjoiMjE3Iiwic2NvcGVzIjpbXX0.NhGLzbh5QUQSxpHouK-AmX5zfdwfvGvKY9A_z7ouUAOyb9J7B7GsMvYlheycey0jrJFoWADUoh0ycjk_pbx-g5e1Bm6KAiD26-FSxoS4zIegtW1X7ZYrnmdo9DxDo1wa5pLzOoDsR5IoqhexgVxvTtyyncQLm31LzjCN9sawvSDaIdHuTi_AiDN_5EB9dp7P7GzOCvRv9Ytj8JxN42tO7JmPgk8_MHSlTDjhI23y1XDdOMRIX_xm_R2NUD8YUKxbe8G1GIi5-IQfiN2uBKKfP0WnyMLcCMPzN-fmE2IWB5JdBO1JzVv-KO9kNQ7-imI3W3iOPRB9MrFAvQLu_SOHsT1uiU8zgxUAxxdH-uuo7vJXKJ6OVLA8Nii9zVrg87LrEgMlkgxfy-sJ-6N2tNrUMkVyn89OT6eF1_DXbiZy1LI8KNuH6ksU6XkgSfDc7-HSlje9SbJJ3mrgu1s4oyNBP6HN0pPCqgRDnNvnwXFZkba--rIX7o3zVz7R9eK9GuIvT1det3f9ppJdCf9qzmt-FPrsgR0aAqiS13MxKODCHl9_LK0ijDh6oHgPP9igj89sWJTy_XuzPLfPgTSnl_Ot_lf7fFmDVtfaxR_U5RLOTBHdSUjQSG9zXIvE_wYjhHGOqQ-D48YRWFKLENQk09BKrQjNg9vpfJB9EH2e4Z47hZ4"
+              }
+            ]
+          },
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={\"status_pid\":\"{{ $('Get Status2').item.json.data.status[0].pid }}\",\n\"title\":\"{{ $('Set5').item.json.name }}\",\n\"cost\":\"0\",\n\"SKU\": \"{{ $('WooCommerce').item.json.sku }}\",\n\"selling_price\":\"{{ $('Set5').item.json.price }}\"\n}            ",
+          "options": {}
+        },
+        "id": "771966c0-db3d-4b85-b294-28986177d202",
+        "name": "Update a Variant",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.1,
+        "position": [
+          2040,
+          420
+        ]
+      },
+      {
+        "parameters": {
+          "url": "https://api.dev.gosharpei.com/api/status",
+          "sendQuery": true,
+          "queryParameters": {
+            "parameters": [
+              {
+                "name": "type",
+                "value": "product"
+              }
+            ]
+          },
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "authority",
+                "value": "api.dev.gosharpei.com"
+              },
+              {
+                "name": "accept",
+                "value": "application/json, text/plain, */*"
+              },
+              {
+                "name": "accept-language",
+                "value": "en-US,en;q=0.9"
+              },
+              {
+                "name": "origin",
+                "value": "https://appdev.gosharpei.com"
+              },
+              {
+                "name": "referer",
+                "value": "https://appdev.gosharpei.com/"
+              },
+              {
+                "name": "sec-ch-ua",
+                "value": "\"Chromium\";v=\"104\", \" Not A;Brand\";v=\"99\", \"Google Chrome\";v=\"104\""
+              },
+              {
+                "name": "sec-ch-ua-mobile",
+                "value": "?0"
+              },
+              {
+                "name": "sec-ch-ua-platform",
+                "value": "\"Linux\""
+              },
+              {
+                "name": "sec-fetch-dest",
+                "value": "empty"
+              },
+              {
+                "name": "sec-fetch-mode",
+                "value": "cors"
+              },
+              {
+                "name": "sec-fetch-site",
+                "value": "same-site"
+              },
+              {
+                "name": "user-agent",
+                "value": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36"
+              }
+            ]
+          },
+          "options": {
+            "redirect": {
+              "redirect": {}
+            }
+          }
+        },
+        "id": "c0c4b678-48fd-4e0e-b302-1ffe5debdef4",
+        "name": "Get Status2",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.1,
+        "position": [
+          1860,
+          420
+        ]
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "number": [
+              {
+                "value1": "={{ $json.price}}",
+                "operation": "notEqual",
+                "value2": "={{ $('Execute Workflow Trigger').item.json.data.variants[$('Set5').item.json.counter].selling_price.slice(0,2)}}"
+              },
+              {
+                "value1": "={{ $json.sku }}",
+                "operation": "notEqual",
+                "value2": "={{ $('Execute Workflow Trigger').item.json.data.variants[$json.counter].SKU }}"
+              }
+            ],
+            "string": [
+              {
+                "value1": "={{ $json.images[0].src }}",
+                "operation": "notContains",
+                "value2": "={{ $json.images[0].name }}"
+              }
+            ]
+          },
+          "combineOperation": "any"
+        },
+        "id": "8bf834ed-5620-4503-85ce-36b55d2cdf8a",
+        "name": "IF",
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 1,
+        "position": [
+          1660,
+          420
+        ]
+      },
+      {
+        "parameters": {
+          "values": {
+            "number": [
+              {
+                "name": "counter",
+                "value": "={{ $runIndex }}"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "id": "c1f9372d-f911-43ff-8ade-41b72758fc51",
+        "name": "Set5",
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 2,
+        "position": [
+          1480,
+          420
+        ]
+      },
+      {
+        "parameters": {
+          "operation": "get",
+          "productId": "={{ $json[\"WooCommerce_Body.body.variations\"] }}"
+        },
+        "id": "ddba581f-5a45-47c6-9a84-dff33ddaad9b",
+        "name": "WooCommerce",
+        "type": "n8n-nodes-base.wooCommerce",
+        "typeVersion": 1,
+        "position": [
+          1300,
+          420
+        ],
+        "credentials": {
+          "wooCommerceApi": {
+            "id": "mTv9Ol4GUWyVymen",
+            "name": "WooCommerce account 6"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "options": {}
+        },
+        "id": "c2b19e28-8e0d-44b8-bfe9-b59634e360f7",
+        "name": "Set",
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 2,
+        "position": [
+          1120,
+          420
+        ]
+      },
+      {
+        "parameters": {
+          "batchSize": 1,
+          "options": {}
+        },
+        "id": "98871fdd-c309-48d3-90fb-4370dde361d0",
+        "name": "Split In Batches1",
+        "type": "n8n-nodes-base.splitInBatches",
+        "typeVersion": 1,
+        "position": [
+          940,
+          420
+        ]
+      },
+      {
+        "parameters": {
+          "fieldToSplitOut": "WooCommerce_Body.body.variations",
+          "options": {}
+        },
+        "id": "c43184b0-f420-48b8-85b2-3481a6a19fdd",
+        "name": "Item Lists",
+        "type": "n8n-nodes-base.itemLists",
+        "typeVersion": 3,
+        "position": [
+          740,
+          420
+        ]
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "number": [
+              {
+                "value1": "={{ $('Execute Workflow Trigger').item.json.data.variants.length }}",
+                "operation": "equal",
+                "value2": "={{ $('Execute Workflow Trigger').item.json.WooCommerce_Body.body.variations.length }}"
+              }
+            ]
+          }
+        },
+        "id": "0dedf629-ab82-48fe-8c4c-0d18e4038b13",
+        "name": "IF1",
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 1,
+        "position": [
+          560,
+          420
+        ]
+      },
+      {
+        "parameters": {
+          "jsCode": "return {\n  WooCommerce_Body: items[0].json.WooCommerce_Body\n};\n"
+        },
+        "id": "8b8cb2d1-39bf-499a-ab3a-5198f241b5c9",
+        "name": "Get Full Json1",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          380,
+          420
+        ]
+      },
+      {
+        "parameters": {},
+        "id": "a70beea2-cb56-4353-985c-13f9ced85985",
+        "name": "Execute Workflow Trigger",
+        "type": "n8n-nodes-base.executeWorkflowTrigger",
+        "typeVersion": 1,
+        "position": [
+          140,
+          420
+        ]
+      }
+    ],
+    "connections": {
+      "Check Product WooCommerce": {
+        "main": [
+          [
+            {
+              "node": "Update Product",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Check Stock": {
+        "main": [
+          [
+            {
+              "node": "Draft Product",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Check Product WooCommerce",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Get Status1": {
+        "main": [
+          [
+            {
+              "node": "Check Stock",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Set1": {
+        "main": [
+          [
+            {
+              "node": "Execute Workflow",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Get Full Json": {
+        "main": [
+          [
+            {
+              "node": "Set1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Set2": {
+        "main": [
+          [
+            {
+              "node": "Split In Batches",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "delete a variant",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Split In Batches": {
+        "main": [
+          [
+            {
+              "node": "Set2",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Item Lists1": {
+        "main": [
+          [
+            {
+              "node": "Split In Batches",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Get Product by Remote ID": {
+        "main": [
+          [
+            {
+              "node": "Item Lists1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Check Variant Stock": {
+        "main": [
+          [
+            {
+              "node": "Draft a Variant",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Upload3": {
+        "main": [
+          [
+            {
+              "node": "Add an image to a product variant1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Delete Image": {
+        "main": [
+          [
+            {
+              "node": "Upload3",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Update a Variant": {
+        "main": [
+          [
+            {
+              "node": "Delete Image",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Get Status2": {
+        "main": [
+          [
+            {
+              "node": "Update a Variant",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "IF": {
+        "main": [
+          [
+            {
+              "node": "Get Status2",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Set5": {
+        "main": [
+          [
+            {
+              "node": "IF",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "Check Variant Stock",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "WooCommerce": {
+        "main": [
+          [
+            {
+              "node": "Set5",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Set": {
+        "main": [
+          [
+            {
+              "node": "Split In Batches1",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "WooCommerce",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Split In Batches1": {
+        "main": [
+          [
+            {
+              "node": "Set",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Item Lists": {
+        "main": [
+          [
+            {
+              "node": "Split In Batches1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "IF1": {
+        "main": [
+          [
+            {
+              "node": "Item Lists",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Get Product by Remote ID",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "Get Full Json",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Get Full Json1": {
+        "main": [
+          [
+            {
+              "node": "IF1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Execute Workflow Trigger": {
+        "main": [
+          [
+            {
+              "node": "Get Full Json1",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "Get Status1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    }
+  }

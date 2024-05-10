@@ -1,0 +1,323 @@
+{
+  "meta": {
+    "instanceId": "c4f4146b469720be37fccfa9decbb4bd3e7ee280c05e7522ace5122567557b3a"
+  },
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "76955b3b-b612-4665-bc53-59a88f0f94b8",
+      "name": "No Operation, do nothing",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        1740,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "workflowId": "Ly0ESMjRunVqjd6q"
+      },
+      "id": "6dbe7b04-0154-4c39-a978-17e0a1184c24",
+      "name": "Execute Create Product Workflow1",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1,
+      "position": [
+        1940,
+        100
+      ]
+    },
+    {
+      "parameters": {
+        "keepOnlySet": true,
+        "values": {
+          "string": [
+            {
+              "name": "WooCommerce_Body",
+              "value": "={{ $('Get Full Json').item.json.WooCommerce_Body }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "a1a590be-94d3-4ffa-85ea-c862f53e3b9e",
+      "name": "Set",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [
+        1740,
+        100
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $('WooCommerce').item.json.body.status }}",
+              "value2": "publish"
+            },
+            {
+              "value1": "={{ $('WooCommerce').item.json.headers[\"x-wc-webhook-topic\"] }}",
+              "value2": "product.created"
+            }
+          ],
+          "number": [
+            {
+              "value1": "={{ $('WooCommerce').item.json.body.parent_id }}",
+              "operation": "equal"
+            }
+          ]
+        }
+      },
+      "id": "1c1b54b0-51e0-4b17-a2aa-74578f3df28c",
+      "name": "IF1",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        1520,
+        100
+      ]
+    },
+    {
+      "parameters": {
+        "amount": 10,
+        "unit": "seconds"
+      },
+      "id": "00b53b52-e7ed-468a-be81-c9fdfb6c72b3",
+      "name": "Wait",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1,
+      "position": [
+        1940,
+        -100
+      ],
+      "webhookId": "c6b02d27-e37d-47da-bd5c-3ca9eea6ba57"
+    },
+    {
+      "parameters": {
+        "workflowId": "RTGXxliKv82uUhUT"
+      },
+      "id": "27cdd644-51c4-43ed-8ac4-db33d6424b5e",
+      "name": "Execute Update Workflow1",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1,
+      "position": [
+        1740,
+        -100
+      ]
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "WooCommerce_Body",
+              "value": "={{ $('Get Full Json').item.json.WooCommerce_Body }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "c359d8f8-3086-4662-9e67-9b5dbdfaea22",
+      "name": "Set7",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [
+        1520,
+        -100
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "number": [
+            {
+              "value1": "={{ $json.status }}",
+              "operation": "equal",
+              "value2": 200
+            },
+            {
+              "value1": "={{ $json.data.products.length }}",
+              "operation": "isEmpty"
+            }
+          ]
+        }
+      },
+      "id": "1a432d6b-7bbd-49e8-a5b4-5a2ca19bfe13",
+      "name": "IF",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        1300,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "url": "=https://api.dev.gosharpei.com/api/products/{{ $json.WooCommerce_Body.body.id }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Accept",
+              "value": "application/json"
+            },
+            {
+              "name": "authentication",
+              "value": "$2y$10$GGPFLul3EUBlfhbMn9tAg.0cpQb89e05S8Vw7tcja6JQ3wcvqqBxC"
+            }
+          ]
+        },
+        "options": {
+          "redirect": {
+            "redirect": {}
+          }
+        }
+      },
+      "id": "35bc27b5-987d-4f26-af45-b1ecafb75983",
+      "name": "Get Product by Remote ID",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        1100,
+        0
+      ],
+      "alwaysOutputData": false,
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "jsCode": "return {\n  WooCommerce_Body: items[0].json\n};\n\n"
+      },
+      "id": "3e713276-169c-4043-88af-f1af707c1dfe",
+      "name": "Get Full Json",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        900,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "woocommerce",
+        "options": {}
+      },
+      "id": "add12fa3-792d-4add-92df-605b18415afc",
+      "name": "WooCommerce",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        720,
+        0
+      ],
+      "webhookId": "6e7f58ef-025d-46a9-9ed8-0498a23f6d60"
+    }
+  ],
+  "connections": {
+    "Set": {
+      "main": [
+        [
+          {
+            "node": "Execute Create Product Workflow1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF1": {
+      "main": [
+        [
+          {
+            "node": "Set",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute Update Workflow1": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set7": {
+      "main": [
+        [
+          {
+            "node": "Execute Update Workflow1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF": {
+      "main": [
+        [
+          {
+            "node": "Set7",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "IF1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Product by Remote ID": {
+      "main": [
+        [
+          {
+            "node": "IF",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Full Json": {
+      "main": [
+        [
+          {
+            "node": "Get Product by Remote ID",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "WooCommerce": {
+      "main": [
+        [
+          {
+            "node": "Get Full Json",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  }
+}

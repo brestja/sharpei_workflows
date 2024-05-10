@@ -1,0 +1,324 @@
+{
+    "meta": {
+      "instanceId": "c4f4146b469720be37fccfa9decbb4bd3e7ee280c05e7522ace5122567557b3a"
+    },
+    "nodes": [
+      {
+        "parameters": {
+          "workflowId": "RcZKtdv565gxviwp"
+        },
+        "id": "02dd350c-66f2-4093-b0c1-e08cda52601a",
+        "name": "Execute Workflow",
+        "type": "n8n-nodes-base.executeWorkflow",
+        "typeVersion": 1,
+        "position": [
+          1460,
+          540
+        ]
+      },
+      {
+        "parameters": {
+          "keepOnlySet": true,
+          "values": {
+            "string": [
+              {
+                "name": "=product_pid ",
+                "value": "={{ $('Create a Product Shopify').item.json.data.pid }}"
+              },
+              {
+                "name": "PrestaShop_Body",
+                "value": "={{ $('Get Full Json').item.json.Shopify_Body.Shopify_Body }}"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "id": "f0e437d7-eb59-4ee8-8a89-739fe97da59b",
+        "name": "Set",
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 2,
+        "position": [
+          1300,
+          540
+        ]
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "=https://api.dev.gosharpei.com/api/products/{{ $json.data.pid }}/options ",
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "Accept",
+                "value": "application/json"
+              },
+              {
+                "name": "Authorization",
+                "value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI5YjkxY2NjZS1mMjg3LTQ2YjUtOWYwNC0zYWIxZmYyMjhjN2UiLCJqdGkiOiJiYzhhODBjYTRhYjI1NDhlNzJmNWM2YmVjOGM3OGY0YjU3NmRmYWM4MGFkNzgwMDNmYmU5M2YyMjIyYTM2MjVhM2ZkMzc5MTBjNzJiYWFmOSIsImlhdCI6MTcxMTkzOTA2Ny4zNjg2NCwibmJmIjoxNzExOTM5MDY3LjM2ODY0MywiZXhwIjoxNzQzNDc1MDY3LjM2MDA0OSwic3ViIjoiMjE3Iiwic2NvcGVzIjpbXX0.kRN8oAC7ZOmhRMAJr4z4w260auNEFVZ1MV1HBAOevRnBKO6XxfwAnRFO3VdWL04d_4bozh4sJZf3lbVh6wk4sFLrOA1HRSZzDsBc3G1yLDaizljuknYwlwLGi2y6ci8IgUX51L3w_d4q9LXulnf1A3TulkAfa7ViDlSBGa4hZ8M3TZUHBKTQO0HYq12j4R8_heHfMMGCMrOVIehpZfqKuk81Ch5wuRv2FDDNfIcOuBnAWmLCHodkx2PrPrTXmTe00VeAD2KYLl4Xea81silBwu0u_UDEl2rw0mjb5sPqx9ggXyCUfxQZuqjzzhTWQEuYDeVZnS3eDNGsi2kQ4XnJmJHM-YEycUcc9VNRHsyyEnKpLmRIOIZcNzI3GFXhXHZ4bg7-JMw_q4NBqXlWX9yYkHte7H8_BbT9JisxPRl374n_QFARt_pEzt6utP1HqQ37kzrEoEUcw-GkdgIu2MKnd-XG5qTe90hYncNO1kSibAkVaOjWwKt19fI7ZdxwJXVXEaJKcsPeqnaawTF7QV4HPU2w_UMm9SWadsK4ZOxTeMCs7wIA9zWTgwniiE85T3QGJwVesmUhI48aN4Q5CARLUwaBoENNJIIyTnOvJY02fBQhJbCTRcOW1oYOlKl2GEAOf1y2DDUxllPMyfg3LNVapESvBFHMBANacNUmO-9-SEQ"
+              }
+            ]
+          },
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={\n    \"name\": \"Size\",\n    \"options_lines\": [\n        { \"value\": \"{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.variants[0].option1 }}\" },\n        { \"value\": \"{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.variants[1].option1 }}\" },\n        { \"value\": \"{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.variants[2].option1 }}\" }\n    ]\n}\n   ",
+          "options": {}
+        },
+        "id": "092c4a60-a606-4840-a208-ba7e366444da",
+        "name": "Create Options",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.1,
+        "position": [
+          1140,
+          540
+        ]
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "https://api.dev.gosharpei.com/api/products",
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "authority",
+                "value": "api.dev.gosharpei.com"
+              },
+              {
+                "name": "accept",
+                "value": "*/*"
+              },
+              {
+                "name": "accept-language",
+                "value": "es-ES,es;q=0.9"
+              },
+              {
+                "name": "authorization",
+                "value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI5YjkxY2NjZS1mMjg3LTQ2YjUtOWYwNC0zYWIxZmYyMjhjN2UiLCJqdGkiOiI1OWM3NDM1MjllZGIzODlmNTJkYzMzZDQ3ZTIzNjJiYzZkM2U1M2IwZWM5NWU2Njk3ZmMwYTUyNTUyOTNiNTA4NGQ0ZThkNWQ5MDE4NGM1NSIsImlhdCI6MTcxNDQ1MTIyNS44MjY2NzgsIm5iZiI6MTcxNDQ1MTIyNS44MjY2OCwiZXhwIjoxNzQ1OTg3MjI1LjgxODUyOSwic3ViIjoiMjE3Iiwic2NvcGVzIjpbXX0.NhGLzbh5QUQSxpHouK-AmX5zfdwfvGvKY9A_z7ouUAOyb9J7B7GsMvYlheycey0jrJFoWADUoh0ycjk_pbx-g5e1Bm6KAiD26-FSxoS4zIegtW1X7ZYrnmdo9DxDo1wa5pLzOoDsR5IoqhexgVxvTtyyncQLm31LzjCN9sawvSDaIdHuTi_AiDN_5EB9dp7P7GzOCvRv9Ytj8JxN42tO7JmPgk8_MHSlTDjhI23y1XDdOMRIX_xm_R2NUD8YUKxbe8G1GIi5-IQfiN2uBKKfP0WnyMLcCMPzN-fmE2IWB5JdBO1JzVv-KO9kNQ7-imI3W3iOPRB9MrFAvQLu_SOHsT1uiU8zgxUAxxdH-uuo7vJXKJ6OVLA8Nii9zVrg87LrEgMlkgxfy-sJ-6N2tNrUMkVyn89OT6eF1_DXbiZy1LI8KNuH6ksU6XkgSfDc7-HSlje9SbJJ3mrgu1s4oyNBP6HN0pPCqgRDnNvnwXFZkba--rIX7o3zVz7R9eK9GuIvT1det3f9ppJdCf9qzmt-FPrsgR0aAqiS13MxKODCHl9_LK0ijDh6oHgPP9igj89sWJTy_XuzPLfPgTSnl_Ot_lf7fFmDVtfaxR_U5RLOTBHdSUjQSG9zXIvE_wYjhHGOqQ-D48YRWFKLENQk09BKrQjNg9vpfJB9EH2e4Z47hZ4"
+              },
+              {
+                "name": "origin",
+                "value": "https://app.dev.gosharpei.com"
+              },
+              {
+                "name": "referer",
+                "value": "https://app.dev.gosharpei.com/"
+              },
+              {
+                "name": "sec-ch-ua",
+                "value": "\"Not A(Brand\";v=\"99\", \"Google Chrome\";v=\"121\", \"Chromium\";v=\"121\""
+              },
+              {
+                "name": "sec-ch-ua-mobile",
+                "value": "?0"
+              },
+              {
+                "name": "sec-ch-ua-platform",
+                "value": "\"Windows\""
+              },
+              {
+                "name": "sec-fetch-dest",
+                "value": "empty"
+              },
+              {
+                "name": "sec-fetch-mode",
+                "value": "cors"
+              },
+              {
+                "name": "sec-fetch-site",
+                "value": "same-site"
+              },
+              {
+                "name": "user-agent",
+                "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36"
+              }
+            ]
+          },
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={ \n\"body\": \"{{ $('Execute Workflow Trigger').item.json.Shopify_Body.description }}\",\n\"status_pid\":\"{{ $('Get Status').item.json.data.status[0].pid }}\",\n\"title\":\"{{ $('Execute Workflow Trigger').item.json.Shopify_Body.title }}\",\n\"slug\":\"Test\",\n\"remote_id\": \"{{ $('Execute Workflow Trigger').item.json.Shopify_Body.id }}\",\n\"value\": \"{{ $('Execute Workflow Trigger').item.json.Shopify_Body.price }}\",\n\"tags\": [{\"value\": \"{{ $('Execute Workflow Trigger').item.json.Shopify_Body.tags }}\"} ]\n}               \n\n\n    ",
+          "options": {}
+        },
+        "id": "4af5e517-a3e8-4cf3-bc10-ba55d3002314",
+        "name": "Create a Product Shopify",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.1,
+        "position": [
+          980,
+          540
+        ]
+      },
+      {
+        "parameters": {
+          "url": "https://api.dev.gosharpei.com/api/status",
+          "sendQuery": true,
+          "queryParameters": {
+            "parameters": [
+              {
+                "name": "type",
+                "value": "product"
+              }
+            ]
+          },
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "authority",
+                "value": "api.dev.gosharpei.com"
+              },
+              {
+                "name": "accept",
+                "value": "application/json, text/plain, */*"
+              },
+              {
+                "name": "accept-language",
+                "value": "en-US,en;q=0.9"
+              },
+              {
+                "name": "origin",
+                "value": "https://appdev.gosharpei.com"
+              },
+              {
+                "name": "referer",
+                "value": "https://appdev.gosharpei.com/"
+              },
+              {
+                "name": "sec-ch-ua",
+                "value": "\"Chromium\";v=\"104\", \" Not A;Brand\";v=\"99\", \"Google Chrome\";v=\"104\""
+              },
+              {
+                "name": "sec-ch-ua-mobile",
+                "value": "?0"
+              },
+              {
+                "name": "sec-ch-ua-platform",
+                "value": "\"Linux\""
+              },
+              {
+                "name": "sec-fetch-dest",
+                "value": "empty"
+              },
+              {
+                "name": "sec-fetch-mode",
+                "value": "cors"
+              },
+              {
+                "name": "sec-fetch-site",
+                "value": "same-site"
+              },
+              {
+                "name": "user-agent",
+                "value": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36"
+              }
+            ]
+          },
+          "options": {
+            "redirect": {
+              "redirect": {}
+            }
+          }
+        },
+        "id": "ea5f003d-f1f2-4d7f-bbc8-d4076627786c",
+        "name": "Get Status",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.1,
+        "position": [
+          820,
+          540
+        ]
+      },
+      {
+        "parameters": {
+          "jsCode": "return {\n  Shopify_Body: items[0].json\n};\n"
+        },
+        "id": "6a8d33ee-6a6c-4108-8c2a-ccda16cf3a79",
+        "name": "Get Full Json",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          640,
+          540
+        ]
+      },
+      {
+        "parameters": {},
+        "id": "cc37793a-e4d1-4a2c-b3b9-ad971631e969",
+        "name": "Execute Workflow Trigger",
+        "type": "n8n-nodes-base.executeWorkflowTrigger",
+        "typeVersion": 1,
+        "position": [
+          480,
+          540
+        ]
+      }
+    ],
+    "connections": {
+      "Set": {
+        "main": [
+          [
+            {
+              "node": "Execute Workflow",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Create Options": {
+        "main": [
+          [
+            {
+              "node": "Set",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Create a Product Shopify": {
+        "main": [
+          [
+            {
+              "node": "Create Options",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Get Status": {
+        "main": [
+          [
+            {
+              "node": "Create a Product Shopify",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Get Full Json": {
+        "main": [
+          [
+            {
+              "node": "Get Status",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Execute Workflow Trigger": {
+        "main": [
+          [
+            {
+              "node": "Get Full Json",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    }
+  }
