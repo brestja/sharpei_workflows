@@ -1,398 +1,720 @@
 {
-    "meta": {
-      "instanceId": "c4f4146b469720be37fccfa9decbb4bd3e7ee280c05e7522ace5122567557b3a"
-    },
-    "nodes": [
-      {
-        "parameters": {
-          "method": "POST",
-          "url": "=https://api.dev.gosharpei.com/api/products/{{ $('Execute Workflow Trigger').item.json[\"product_pid \"] }}/variants/{{ $('Create Multiple Variants(1)').item.json.data[0].pid }}/images      ",
-          "sendHeaders": true,
-          "headerParameters": {
-            "parameters": [
-              {
-                "name": "accept",
-                "value": "application/json, text/plain, */*"
-              },
-              {
-                "name": "accept-language",
-                "value": "es-ES,es;q=0.9"
-              },
-              {
-                "name": "authorization",
-                "value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI5YjkxY2NjZS1mMjg3LTQ2YjUtOWYwNC0zYWIxZmYyMjhjN2UiLCJqdGkiOiI4MzYwZTUwMDg4YWE1YWU0ZWY1NjEwMTk5YWM4ODBkZTJlMjJiMTM5NzUzNTgwZTY0N2Q2NDhiNjAyNWYyZGExYjE1ZDI1OTlmMGU5OTYzYiIsImlhdCI6MTcxMjE2ODUwNy4wNzYwNywibmJmIjoxNzEyMTY4NTA3LjA3NjA3MiwiZXhwIjoxNzQzNzA0NTA3LjA3MDY5Nywic3ViIjoiMjE3Iiwic2NvcGVzIjpbXX0.6g737MhETWsuUeEEEt3_J-m0AqpgElZFtg8eroBc1lhtVcCievgU7E5a4k1wN6bDoSftiASGUYU0sQQahlJzQrSEM_qWbKysRrE5YjocwWFa_YnXzTC5md9vw1MrjUHHbMSJDiRn366dlSW89T7lOiWCOTwLsDSEgkTNfG8mktpvfls0jsrUQ5cDkLXcbd_bHwICuTUHkSvV0ir5nGC017Xurvpxpc_3xQ2ZuUHh5G2rHNQthgzRLfhMgTO7rKgFwzFm9Ctn7-mh-Xb7d6qfPSiMTneGAemZH2oQXaeeA2B-Z9rP9-_rEj2XOSROvADLHXd0aOJNMjWBt9VKewcE54Xqjt3-3lxKOCnozTQwzBCWSypG5yI_XebsWW2xP4gsqdwu04zuVflEina0PBKdFmgnc3oINGX_sTuDGYYCejuVWuwTO9YAF-3oYdBGBRKujNdxfkTfCCUXjIi4A4AJKuwf3oUC2foG2Nj82hBGwtyTBYY77f5Ce9jqTtISBnd8I23Y36_5UPnouasOMDnQLATdjWw23xplRdNysiXjraeWCSTgkfNAhimegLD2tKai5oOdcHC5rkS2kcgIjGMZ9RQYqdgQU6pkq9ux_guQgOhN3iFFQ89JeNgrLpQWHyyusvSw9FpUkxz5epTJVoBVWVYmCqx5ZF_5VWnyaIol4V0"
-              },
-              {
-                "name": "origin",
-                "value": "https://app.dev.gosharpei.com"
-              },
-              {
-                "name": "referer",
-                "value": "https://app.dev.gosharpei.com/"
-              },
-              {
-                "name": "sec-ch-ua",
-                "value": "\"Google Chrome\";v=\"123\", \"Not:A-Brand\";v=\"8\", \"Chromium\";v=\"123\""
-              },
-              {
-                "name": "sec-ch-ua-mobile",
-                "value": "?0"
-              },
-              {
-                "name": "sec-ch-ua-platform",
-                "value": "\"Windows\""
-              },
-              {
-                "name": "sec-fetch-dest",
-                "value": "empty"
-              },
-              {
-                "name": "sec-fetch-mode",
-                "value": "cors"
-              },
-              {
-                "name": "sec-fetch-site",
-                "value": "same-site"
-              },
-              {
-                "name": "user-agent",
-                "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36"
-              }
-            ]
-          },
-          "sendBody": true,
-          "contentType": "multipart-form-data",
-          "bodyParameters": {
-            "parameters": [
-              {
-                "parameterType": "formBinaryData",
-                "name": "attachment",
-                "inputDataFieldName": "data"
-              }
-            ]
-          },
-          "options": {}
-        },
-        "id": "307a9860-97ae-41ea-939f-7ea8f4e5d38c",
-        "name": "Add an image to a product variant",
-        "type": "n8n-nodes-base.httpRequest",
-        "typeVersion": 4.1,
-        "position": [
-          1680,
-          200
-        ]
-      },
-      {
-        "parameters": {
-          "url": "=http:{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.featured_image }}",
-          "sendQuery": true,
-          "queryParameters": {
-            "parameters": [
-              {}
-            ]
-          },
-          "options": {
-            "redirect": {
-              "redirect": {}
-            }
-          }
-        },
-        "id": "5c841d5a-6f55-4bc3-80d6-d262db3265e1",
-        "name": "Upload3",
-        "type": "n8n-nodes-base.httpRequest",
-        "typeVersion": 4.1,
-        "position": [
-          1500,
-          200
-        ]
-      },
-      {
-        "parameters": {
-          "method": "PUT",
-          "url": "=https://api.dev.gosharpei.com/api/products/{{ $('Execute Workflow Trigger').item.json[\"product_pid \"] }}/variants/{{ $json.data[0].pid }}",
-          "sendHeaders": true,
-          "headerParameters": {
-            "parameters": [
-              {
-                "name": "Accept",
-                "value": "application/json"
-              },
-              {
-                "name": "Authorization",
-                "value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI5YjkxY2NjZS1mMjg3LTQ2YjUtOWYwNC0zYWIxZmYyMjhjN2UiLCJqdGkiOiI1MjM3MGFiMjAwZDFmY2ZmZDFiNjAyMTJmMDFlZWQzYTk5MDY3NmJhN2IxY2MyZWIzMTJjY2IxZjgyYTcxNmU5ODc0MWNkYWNlOGE3YmY3YyIsImlhdCI6MTcxMjY5NDkyNS44MDE3NzcsIm5iZiI6MTcxMjY5NDkyNS44MDE3NzgsImV4cCI6MTc0NDIzMDkyNS43OTYyMiwic3ViIjoiMjE3Iiwic2NvcGVzIjpbXX0.wB9yYWnaKvB9VVlTyZfx2XQXoIkkWKMHRINf9xtvdIy2LuHgTx366YMnWROFWv4ppY9n2MiMUmMLbUIYjDlCztMeBfXqxSVQ8hQgr3C180hMV1Yjg8gXbxZ7A_gTUsj3xDfhweUnoxFxbNPWXfjWFi-_suJ3g2wQaR_v-GTZNiq-UBDmnDWjHxXc84ewEHNtiG1cT3FxbwSttD63J2_JYzZIaCzzHE5NrrFf1SaCRyWH9Adqf4ELS5qUgVL_vUTYoShvwigYWurf7CZXIGVms9uXslxFlTk64GPp6QF2jiNSAhUE70DvDjD2gX9vWvWnhsDdjJuUllyamAkRmpyXZsbI78J84XdBKwC9nLvs76WcmxWff8PVm1x-aCa-9cXne1UzvlGh_h6GszfQB48IsFMlf4GU02FctKxHk7D67ILUzxC5jbuagt-DbK3axz4nFV462iDHnj6WR4fcwn36b_qp1Ol9lZdaZw5jsbyLCcN_6MsYno2qS7pdO3Oys-OXmRiDHBuoAugE3YGGuwT41brXH3Db7MGo_pEv86UH4h3rylr_ffN15X6ZCnkEEoKbBA1wLT9YelWmw_5ngpafmS3cIzpZ0iq7GoMfiys8ZYB0AI0nRZRX2cKMb36chpG0q5CJbvFPxKkMFstmjdBbn-iDJ1yCjPkH5bfxO3FP1ys"
-              }
-            ]
-          },
-          "sendBody": true,
-          "specifyBody": "json",
-          "jsonBody": "={\n    \"selling_price\": \"{{ $json.data[0].selling_price }}\",\n    \"title\": \"{{ $json.data[0].title }}\",\n    \"remote_id\": \"{{ $json.data[0].remote_id }}\",\n    \"status_pid\" : \"{{ $('Get Status').item.json.data.status[6].pid }}\",\n    \"cost\": 0\n  }        ",
-          "options": {
-            "redirect": {
-              "redirect": {}
-            }
-          }
-        },
-        "id": "7635982d-3e7c-4bb7-a196-d4d638ab320e",
-        "name": "Update a variant",
-        "type": "n8n-nodes-base.httpRequest",
-        "typeVersion": 4.1,
-        "position": [
-          1340,
-          200
-        ]
-      },
-      {
-        "parameters": {
-          "method": "POST",
-          "url": "=https://api.dev.gosharpei.com/api/products/{{ $('Execute Workflow Trigger').item.json[\"product_pid \"] }}/variants/multiple   ",
-          "sendHeaders": true,
-          "headerParameters": {
-            "parameters": [
-              {
-                "name": "Accept",
-                "value": "application/json"
-              },
-              {
-                "name": "Authorization",
-                "value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI5YjkxY2NjZS1mMjg3LTQ2YjUtOWYwNC0zYWIxZmYyMjhjN2UiLCJqdGkiOiI1MjM3MGFiMjAwZDFmY2ZmZDFiNjAyMTJmMDFlZWQzYTk5MDY3NmJhN2IxY2MyZWIzMTJjY2IxZjgyYTcxNmU5ODc0MWNkYWNlOGE3YmY3YyIsImlhdCI6MTcxMjY5NDkyNS44MDE3NzcsIm5iZiI6MTcxMjY5NDkyNS44MDE3NzgsImV4cCI6MTc0NDIzMDkyNS43OTYyMiwic3ViIjoiMjE3Iiwic2NvcGVzIjpbXX0.wB9yYWnaKvB9VVlTyZfx2XQXoIkkWKMHRINf9xtvdIy2LuHgTx366YMnWROFWv4ppY9n2MiMUmMLbUIYjDlCztMeBfXqxSVQ8hQgr3C180hMV1Yjg8gXbxZ7A_gTUsj3xDfhweUnoxFxbNPWXfjWFi-_suJ3g2wQaR_v-GTZNiq-UBDmnDWjHxXc84ewEHNtiG1cT3FxbwSttD63J2_JYzZIaCzzHE5NrrFf1SaCRyWH9Adqf4ELS5qUgVL_vUTYoShvwigYWurf7CZXIGVms9uXslxFlTk64GPp6QF2jiNSAhUE70DvDjD2gX9vWvWnhsDdjJuUllyamAkRmpyXZsbI78J84XdBKwC9nLvs76WcmxWff8PVm1x-aCa-9cXne1UzvlGh_h6GszfQB48IsFMlf4GU02FctKxHk7D67ILUzxC5jbuagt-DbK3axz4nFV462iDHnj6WR4fcwn36b_qp1Ol9lZdaZw5jsbyLCcN_6MsYno2qS7pdO3Oys-OXmRiDHBuoAugE3YGGuwT41brXH3Db7MGo_pEv86UH4h3rylr_ffN15X6ZCnkEEoKbBA1wLT9YelWmw_5ngpafmS3cIzpZ0iq7GoMfiys8ZYB0AI0nRZRX2cKMb36chpG0q5CJbvFPxKkMFstmjdBbn-iDJ1yCjPkH5bfxO3FP1ys"
-              }
-            ]
-          },
-          "sendBody": true,
-          "specifyBody": "json",
-          "jsonBody": "=[\n  {\n    \"selling_price\": \"{{ $('Set1').item.json.price }}\",\n    \"title\": \"{{ $('Set1').item.json.title }}\",\n    \"remote_id\": \"{{ $('Set1').item.json.id }}\",\n    \"sku\": \"{{ $('Set1').item.json.sku }}\",\n    \"barcode\": \"{{ $('Set1').item.json.barcode }}\",\n    \"cost\" : \"0\"\n\n  }\n]         ",
-          "options": {}
-        },
-        "id": "b1d92e69-7294-44c6-b48b-1906257c47bd",
-        "name": "Create Multiple Variants(1)",
-        "type": "n8n-nodes-base.httpRequest",
-        "typeVersion": 4.1,
-        "position": [
-          1160,
-          200
-        ]
-      },
-      {
-        "parameters": {
-          "url": "https://api.dev.gosharpei.com/api/status",
-          "sendQuery": true,
-          "queryParameters": {
-            "parameters": [
-              {}
-            ]
-          },
-          "sendHeaders": true,
-          "headerParameters": {
-            "parameters": [
-              {
-                "name": "authority",
-                "value": "api.dev.gosharpei.com"
-              },
-              {
-                "name": "accept",
-                "value": "application/json, text/plain, */*"
-              },
-              {
-                "name": "accept-language",
-                "value": "en-US,en;q=0.9"
-              },
-              {
-                "name": "origin",
-                "value": "https://appdev.gosharpei.com"
-              },
-              {
-                "name": "referer",
-                "value": "https://appdev.gosharpei.com/"
-              },
-              {
-                "name": "sec-ch-ua",
-                "value": "\"Chromium\";v=\"104\", \" Not A;Brand\";v=\"99\", \"Google Chrome\";v=\"104\""
-              },
-              {
-                "name": "sec-ch-ua-mobile",
-                "value": "?0"
-              },
-              {
-                "name": "sec-ch-ua-platform",
-                "value": "\"Linux\""
-              },
-              {
-                "name": "sec-fetch-dest",
-                "value": "empty"
-              },
-              {
-                "name": "sec-fetch-mode",
-                "value": "cors"
-              },
-              {
-                "name": "sec-fetch-site",
-                "value": "same-site"
-              },
-              {
-                "name": "user-agent",
-                "value": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36"
-              }
-            ]
-          },
-          "options": {}
-        },
-        "id": "628756ea-2aa2-495a-8b8d-1960bc73c088",
-        "name": "Get Status",
-        "type": "n8n-nodes-base.httpRequest",
-        "typeVersion": 4.1,
-        "position": [
-          960,
-          200
-        ]
-      },
-      {
-        "parameters": {
-          "options": {
-            "dotNotation": true
-          }
-        },
-        "id": "fb380585-6f5e-466a-b2d6-c07ae14676de",
-        "name": "Set1",
-        "type": "n8n-nodes-base.set",
-        "typeVersion": 2,
-        "position": [
-          760,
-          200
-        ]
-      },
-      {
-        "parameters": {
-          "batchSize": 1,
-          "options": {}
-        },
-        "id": "5a1b449f-3c0b-4615-820e-b649ead3661a",
-        "name": "Split In Batches",
-        "type": "n8n-nodes-base.splitInBatches",
-        "typeVersion": 1,
-        "position": [
-          580,
-          200
-        ]
-      },
-      {
-        "parameters": {
-          "fieldToSplitOut": "PrestaShop_Body.variants",
-          "options": {}
-        },
-        "id": "b77ad08c-ec43-42a0-9e91-e818727a7ef1",
-        "name": "Item Lists1",
-        "type": "n8n-nodes-base.itemLists",
-        "typeVersion": 3,
-        "position": [
-          400,
-          200
-        ]
-      },
-      {
-        "parameters": {},
-        "id": "42895f16-ce89-4a50-a1ca-43c2c3f72c1d",
-        "name": "Execute Workflow Trigger",
-        "type": "n8n-nodes-base.executeWorkflowTrigger",
-        "typeVersion": 1,
-        "position": [
-          200,
-          200
-        ]
-      }
-    ],
-    "connections": {
-      "Upload3": {
-        "main": [
-          [
+  "meta": {
+    "instanceId": "c4f4146b469720be37fccfa9decbb4bd3e7ee280c05e7522ace5122567557b3a"
+  },
+  "nodes": [
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://api.dev.gosharpei.com/api/products/{{ $('Execute Workflow Trigger').item.json.product_pid }}/variants/{{ $('Create Default Variant').item.json.data[0].pid }}/images      ",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
             {
-              "node": "Add an image to a product variant",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      },
-      "Update a variant": {
-        "main": [
-          [
-            {
-              "node": "Upload3",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      },
-      "Create Multiple Variants(1)": {
-        "main": [
-          [
-            {
-              "node": "Update a variant",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      },
-      "Get Status": {
-        "main": [
-          [
-            {
-              "node": "Create Multiple Variants(1)",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      },
-      "Set1": {
-        "main": [
-          [
-            {
-              "node": "Split In Batches",
-              "type": "main",
-              "index": 0
+              "name": "accept",
+              "value": "application/json, text/plain, */*"
             },
             {
-              "node": "Get Status",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      },
-      "Split In Batches": {
-        "main": [
-          [
+              "name": "accept-language",
+              "value": "es-ES,es;q=0.9"
+            },
             {
-              "node": "Set1",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      },
-      "Item Lists1": {
-        "main": [
-          [
+              "name": "Authorization",
+              "value": "={{ $('Execute Workflow Trigger').item.json.Shopify_Body.headers.authentication }}"
+            },
             {
-              "node": "Split In Batches",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      },
-      "Execute Workflow Trigger": {
-        "main": [
-          [
+              "name": "origin",
+              "value": "https://app.dev.gosharpei.com"
+            },
             {
-              "node": "Item Lists1",
-              "type": "main",
-              "index": 0
+              "name": "referer",
+              "value": "https://app.dev.gosharpei.com/"
+            },
+            {
+              "name": "sec-ch-ua",
+              "value": "\"Google Chrome\";v=\"123\", \"Not:A-Brand\";v=\"8\", \"Chromium\";v=\"123\""
+            },
+            {
+              "name": "sec-ch-ua-mobile",
+              "value": "?0"
+            },
+            {
+              "name": "sec-ch-ua-platform",
+              "value": "\"Windows\""
+            },
+            {
+              "name": "sec-fetch-dest",
+              "value": "empty"
+            },
+            {
+              "name": "sec-fetch-mode",
+              "value": "cors"
+            },
+            {
+              "name": "sec-fetch-site",
+              "value": "same-site"
+            },
+            {
+              "name": "user-agent",
+              "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36"
             }
           ]
+        },
+        "sendBody": true,
+        "contentType": "multipart-form-data",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "parameterType": "formBinaryData",
+              "name": "attachment",
+              "inputDataFieldName": "data"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "b8796d45-800b-4125-b689-00f712d3260f",
+      "name": "Add an image to a product variant1",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        1320,
+        420
+      ]
+    },
+    {
+      "parameters": {
+        "url": "=http:{{ $('Execute Workflow Trigger').item.json.Shopify_Body.body.featured_image }}",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {}
+          ]
+        },
+        "options": {
+          "redirect": {
+            "redirect": {}
+          }
+        }
+      },
+      "id": "8bae5bab-22d3-4fe6-bb18-716b15fafe5f",
+      "name": "Upload",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        1140,
+        420
+      ]
+    },
+    {
+      "parameters": {
+        "method": "PUT",
+        "url": "=https://api.dev.gosharpei.com/api/products/{{ $('Execute Workflow Trigger').item.json.product_pid }}/variants/{{ $json.data[0].pid }}   ",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Accept",
+              "value": "application/json"
+            },
+            {
+              "name": "Authorization",
+              "value": "={{ $('Execute Workflow Trigger').item.json.Shopify_Body.headers.authentication }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n    \"selling_price\": \"{{ $json.data[0].selling_price }}\",\n    \"title\": \"{{ $json.data[0].title }}\",\n    \"remote_id\": \"{{ $json.data[0].remote_id }}\",\n    \"status_pid\" : \"{{ $('Get Status1').item.json.data.status[6].pid }}\",\n    \"cost\": 0\n\n  } ",
+        "options": {}
+      },
+      "id": "4369c5aa-224b-44ea-a536-fc55d3104d8b",
+      "name": "Update a variant1",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        960,
+        420
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://api.dev.gosharpei.com/api/products/{{ $('Execute Workflow Trigger').item.json.product_pid }}/variants/multiple        ",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Accept",
+              "value": "application/json"
+            },
+            {
+              "name": "Authorization",
+              "value": "={{ $('Execute Workflow Trigger').item.json.Shopify_Body.headers.authentication }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "=[\n  {\n    \"selling_price\": \"{{ $('Execute Workflow Trigger').item.json.Shopify_Body.body.price }}\",\n    \"title\": \"{{ $('Execute Workflow Trigger').item.json.Shopify_Body.body.title }}\",\n    \"remote_id\": \"{{ $('Execute Workflow Trigger').item.json.Shopify_Body.body.id }}\",\n    \"status_pid\" : \"{{ $json.data.status[6].pid }}\",\n    \"cost\": 0\n\n  }\n]           ",
+        "options": {}
+      },
+      "id": "6d3cbc3c-f4c8-496c-95e5-90d45483973d",
+      "name": "Create Default Variant",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        780,
+        420
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "number": [
+            {
+              "value1": "={{ $('Execute Workflow Trigger').item.json.Shopify_Body.body.variants.length }}",
+              "operation": "equal"
+            }
+          ]
+        }
+      },
+      "id": "a547fb87-b2f4-40b6-ab9c-c3b1b2f69caf",
+      "name": "IF1",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        600,
+        420
+      ]
+    },
+    {
+      "parameters": {
+        "url": "https://api.dev.gosharpei.com/api/status",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {}
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "authority",
+              "value": "api.dev.gosharpei.com"
+            },
+            {
+              "name": "accept",
+              "value": "application/json, text/plain, */*"
+            },
+            {
+              "name": "accept-language",
+              "value": "en-US,en;q=0.9"
+            },
+            {
+              "name": "origin",
+              "value": "https://appdev.gosharpei.com"
+            },
+            {
+              "name": "referer",
+              "value": "https://appdev.gosharpei.com/"
+            },
+            {
+              "name": "sec-ch-ua",
+              "value": "\"Chromium\";v=\"104\", \" Not A;Brand\";v=\"99\", \"Google Chrome\";v=\"104\""
+            },
+            {
+              "name": "sec-ch-ua-mobile",
+              "value": "?0"
+            },
+            {
+              "name": "sec-ch-ua-platform",
+              "value": "\"Linux\""
+            },
+            {
+              "name": "sec-fetch-dest",
+              "value": "empty"
+            },
+            {
+              "name": "sec-fetch-mode",
+              "value": "cors"
+            },
+            {
+              "name": "sec-fetch-site",
+              "value": "same-site"
+            },
+            {
+              "name": "user-agent",
+              "value": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "e5ae45a5-2b32-4bc0-941f-d384db22b750",
+      "name": "Get Status1",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        420,
+        420
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://api.dev.gosharpei.com/api/products/{{ $('Execute Workflow Trigger').item.json.product_pid }}/variants/{{ $('Create Multiple Variants(1)').item.json.data[0].pid }}/images      ",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "accept",
+              "value": "application/json, text/plain, */*"
+            },
+            {
+              "name": "accept-language",
+              "value": "es-ES,es;q=0.9"
+            },
+            {
+              "name": "Authorization",
+              "value": "={{ $('Execute Workflow Trigger').item.json.Shopify_Body.headers.authentication }}"
+            },
+            {
+              "name": "origin",
+              "value": "https://app.dev.gosharpei.com"
+            },
+            {
+              "name": "referer",
+              "value": "https://app.dev.gosharpei.com/"
+            },
+            {
+              "name": "sec-ch-ua",
+              "value": "\"Google Chrome\";v=\"123\", \"Not:A-Brand\";v=\"8\", \"Chromium\";v=\"123\""
+            },
+            {
+              "name": "sec-ch-ua-mobile",
+              "value": "?0"
+            },
+            {
+              "name": "sec-ch-ua-platform",
+              "value": "\"Windows\""
+            },
+            {
+              "name": "sec-fetch-dest",
+              "value": "empty"
+            },
+            {
+              "name": "sec-fetch-mode",
+              "value": "cors"
+            },
+            {
+              "name": "sec-fetch-site",
+              "value": "same-site"
+            },
+            {
+              "name": "user-agent",
+              "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "multipart-form-data",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "parameterType": "formBinaryData",
+              "name": "attachment",
+              "inputDataFieldName": "data"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "307a9860-97ae-41ea-939f-7ea8f4e5d38c",
+      "name": "Add an image to a product variant",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        1680,
+        200
+      ]
+    },
+    {
+      "parameters": {
+        "url": "=http:{{ $('Execute Workflow Trigger').item.json.Shopify_Body.body.featured_image }}",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {}
+          ]
+        },
+        "options": {
+          "redirect": {
+            "redirect": {}
+          }
+        }
+      },
+      "id": "5c841d5a-6f55-4bc3-80d6-d262db3265e1",
+      "name": "Upload3",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        1500,
+        200
+      ]
+    },
+    {
+      "parameters": {
+        "method": "PUT",
+        "url": "=https://api.dev.gosharpei.com/api/products/{{ $('Execute Workflow Trigger').item.json.product_pid }}/variants/{{ $json.data[0].pid }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Accept",
+              "value": "application/json"
+            },
+            {
+              "name": "Authorization",
+              "value": "={{ $('Execute Workflow Trigger').item.json.Shopify_Body.headers.authentication }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n    \"selling_price\": \"{{ $json.data[0].selling_price }}\",\n    \"title\": \"{{ $json.data[0].title }}\",\n    \"remote_id\": \"{{ $json.data[0].remote_id }}\",\n    \"status_pid\" : \"{{ $('Get Status').item.json.data.status[6].pid }}\",\n    \"cost\": 0\n  }        ",
+        "options": {
+          "redirect": {
+            "redirect": {}
+          }
+        }
+      },
+      "id": "7635982d-3e7c-4bb7-a196-d4d638ab320e",
+      "name": "Update a variant",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        1320,
+        200
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://api.dev.gosharpei.com/api/products/{{ $('Execute Workflow Trigger').item.json.product_pid }}/variants/multiple",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Accept",
+              "value": "application/json"
+            },
+            {
+              "name": "Authorization",
+              "value": "={{ $('Execute Workflow Trigger').item.json.Shopify_Body.headers.authentication }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "=[\n  {\n    \"selling_price\": \"{{ $('Set1').item.json.price }}\",\n    \"title\": \"{{ $('Set1').item.json.title }}\",\n    \"remote_id\": \"{{ $('Set1').item.json.id }}\",\n    \"sku\": \"{{ $('Set1').item.json.sku }}\",\n    \"barcode\": \"{{ $('Set1').item.json.barcode }}\",\n    \"cost\" : \"0\"\n\n  }\n]    ",
+        "options": {
+          "redirect": {
+            "redirect": {}
+          }
+        }
+      },
+      "id": "1cece6a6-a00f-4424-8bc3-e5e1a9ec1a79",
+      "name": "Create Multiple Variants(1)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        1140,
+        200
+      ]
+    },
+    {
+      "parameters": {
+        "url": "https://api.dev.gosharpei.com/api/status",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {}
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "authority",
+              "value": "api.dev.gosharpei.com"
+            },
+            {
+              "name": "accept",
+              "value": "application/json, text/plain, */*"
+            },
+            {
+              "name": "accept-language",
+              "value": "en-US,en;q=0.9"
+            },
+            {
+              "name": "origin",
+              "value": "https://appdev.gosharpei.com"
+            },
+            {
+              "name": "referer",
+              "value": "https://appdev.gosharpei.com/"
+            },
+            {
+              "name": "sec-ch-ua",
+              "value": "\"Chromium\";v=\"104\", \" Not A;Brand\";v=\"99\", \"Google Chrome\";v=\"104\""
+            },
+            {
+              "name": "sec-ch-ua-mobile",
+              "value": "?0"
+            },
+            {
+              "name": "sec-ch-ua-platform",
+              "value": "\"Linux\""
+            },
+            {
+              "name": "sec-fetch-dest",
+              "value": "empty"
+            },
+            {
+              "name": "sec-fetch-mode",
+              "value": "cors"
+            },
+            {
+              "name": "sec-fetch-site",
+              "value": "same-site"
+            },
+            {
+              "name": "user-agent",
+              "value": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "628756ea-2aa2-495a-8b8d-1960bc73c088",
+      "name": "Get Status",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        960,
+        200
+      ]
+    },
+    {
+      "parameters": {
+        "options": {
+          "dotNotation": true
+        }
+      },
+      "id": "fb380585-6f5e-466a-b2d6-c07ae14676de",
+      "name": "Set1",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [
+        780,
+        200
+      ]
+    },
+    {
+      "parameters": {
+        "batchSize": 1,
+        "options": {}
+      },
+      "id": "5a1b449f-3c0b-4615-820e-b649ead3661a",
+      "name": "Split In Batches",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 1,
+      "position": [
+        600,
+        200
+      ]
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "Shopify_Body.body.variants",
+        "options": {}
+      },
+      "id": "b77ad08c-ec43-42a0-9e91-e818727a7ef1",
+      "name": "Item Lists1",
+      "type": "n8n-nodes-base.itemLists",
+      "typeVersion": 3,
+      "position": [
+        420,
+        200
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "42895f16-ce89-4a50-a1ca-43c2c3f72c1d",
+      "name": "Execute Workflow Trigger",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1,
+      "position": [
+        240,
+        200
+      ]
+    }
+  ],
+  "connections": {
+    "Upload": {
+      "main": [
+        [
+          {
+            "node": "Add an image to a product variant1",
+            "type": "main",
+            "index": 0
+          }
         ]
-      }
+      ]
+    },
+    "Update a variant1": {
+      "main": [
+        [
+          {
+            "node": "Upload",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Default Variant": {
+      "main": [
+        [
+          {
+            "node": "Update a variant1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF1": {
+      "main": [
+        [
+          {
+            "node": "Create Default Variant",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Status1": {
+      "main": [
+        [
+          {
+            "node": "IF1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upload3": {
+      "main": [
+        [
+          {
+            "node": "Add an image to a product variant",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update a variant": {
+      "main": [
+        [
+          {
+            "node": "Upload3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Multiple Variants(1)": {
+      "main": [
+        [
+          {
+            "node": "Update a variant",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Status": {
+      "main": [
+        [
+          {
+            "node": "Create Multiple Variants(1)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set1": {
+      "main": [
+        [
+          {
+            "node": "Split In Batches",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Get Status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split In Batches": {
+      "main": [
+        [
+          {
+            "node": "Set1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Item Lists1": {
+      "main": [
+        [
+          {
+            "node": "Split In Batches",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute Workflow Trigger": {
+      "main": [
+        [
+          {
+            "node": "Item Lists1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Get Status1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   }
+}
