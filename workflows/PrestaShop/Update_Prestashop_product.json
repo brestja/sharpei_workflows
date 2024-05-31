@@ -22,7 +22,7 @@
         },
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={\n    \"selling_price\": \"{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.price }}\",\n    \"title\": \"{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.name }}\",\n    \"remote_id\": \"{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.id }}\",\n    \"status_pid\" : \"{{ $('Get Status1').item.json.data.status[6].pid }}\",\n    \"cost\": 0\n\n  } ",
+        "jsonBody": "={\n    \"selling_price\": \"{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.price }}\",\n    \"title\": \"{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.name.replace(/['\"]+/g,'')}}\",\n    \"remote_id\": \"{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.id }}\",\n    \"status_pid\" : \"{{ $('Code').item.json.pid }}\",\n    \"cost\": 0\n\n  }  ",
         "options": {}
       },
       "id": "bd3fa5ef-14a2-4160-9974-d5758f055c71",
@@ -30,8 +30,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        1560,
-        -140
+        1580,
+        -100
       ]
     },
     {
@@ -53,7 +53,7 @@
         },
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "=[\n  {\n    \"selling_price\": \"{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.price }}\",\n    \"title\": \"{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.name }}\",\n    \"remote_id\": \"{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.id }}\",\n    \"status_pid\" : \"{{ $json.data.status[6].pid }}\",\n    \"cost\": 0\n\n  }\n]    ",
+        "jsonBody": "=[\n  {\n    \"selling_price\": \"{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.price }}\",\n    \"title\": \"{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.name.replace(/['\"]+/g,'')}}\",\n    \"remote_id\": \"{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.id }}\",\n    \"status_pid\" : \"{{ $('Code').item.json.pid }}\",\n    \"cost\": 0\n\n  }\n]     ",
         "options": {}
       },
       "id": "530a866d-cfe2-407f-9fd4-b21f8fe929c7",
@@ -62,7 +62,7 @@
       "typeVersion": 4.1,
       "position": [
         1380,
-        -140
+        -100
       ]
     },
     {
@@ -82,7 +82,7 @@
       "typeVersion": 1,
       "position": [
         1200,
-        -140
+        -100
       ]
     },
     {
@@ -148,7 +148,7 @@
         },
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={\n  \"title\": \"{{ $('Execute Workflow Trigger').item.json.data.title }}\",\n  \"body\": \"\",\n  \"status_pid\" : \"{{ $('Get Status1').item.json.data.status[4].pid }}\",\n  \"quantity\": \"{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.quantity }}\"\n}\n\n             ",
+        "jsonBody": "={\n  \"title\": \"{{ $('Execute Workflow Trigger').item.json.data.title.replace(/['\"]+/g,'')}}\",\n  \"body\": \"\",\n  \"status_pid\" : \"{{ $('Code').item.json.pid }}\",\n  \"quantity\": \"{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.quantity }}\"\n}\n\n              ",
         "options": {}
       },
       "id": "3b76129d-1f77-47ef-a1f0-136f4e74b2f3",
@@ -156,7 +156,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        1740,
+        1800,
         -320
       ]
     },
@@ -177,7 +177,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 1,
       "position": [
-        1560,
+        1580,
         -320
       ]
     },
@@ -244,7 +244,7 @@
         },
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={\n  \"title\": \"{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.name }}\",\n  \"body\": \"{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.description_short }}\",\n  \"status_pid\" : \"{{ $('Get Status1').item.json.data.status[4].pid }}\",\n  \"quantity\": \"{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.quantity }}\"\n}\n\n             ",
+        "jsonBody": "={\n  \"title\": \"{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.name.replace(/['\"]+/g,'') }}\",\n  \"body\": \"{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.description_short.replace(/['\"]+/g,'') }}\",\n  \"status_pid\" : \"{{ $('Code').item.json.pid }}\",\n  \"quantity\": \"{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.quantity }}\"\n}\n\n              ",
         "options": {}
       },
       "id": "df98a749-b33c-463c-9e0e-e7776ec292bf",
@@ -252,8 +252,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        2100,
-        -320
+        2020,
+        -520
       ]
     },
     {
@@ -284,8 +284,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 1,
       "position": [
-        1920,
-        -320
+        1800,
+        -520
       ]
     },
     {
@@ -371,7 +371,7 @@
         },
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={  \n  \"status_pid\": \"{{ $('Get Status1').item.json.data.status[5].pid }}\",\n  \"title\" : \"{{ $('Execute Workflow Trigger').item.json.data.title }}\"\n}     ",
+        "jsonBody": "={  \n  \"status_pid\": \"{{ $json.pid }}\",\n  \"title\" : \"{{ $('Execute Workflow Trigger').item.json.data.title.replace(/['\"]+/g,'') }}\"\n}      ",
         "options": {}
       },
       "id": "5d74201f-d612-4c09-937b-d15fd5403ce1",
@@ -379,8 +379,97 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
+        1580,
+        -520
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "\n\n const elements = items[0]?.json?.data?.status;\n\nconst draftElement = elements.find(element => element.name === \"Draft\");\n\nif (draftElement) {\n    return [{ pid: draftElement.pid }];\n} else {\n    return [];\n}\n\n\n\n\n\n\n\n\n\n\n\n\n"
+      },
+      "id": "c024b7b3-399e-4ef1-8a6f-f48d231a112f",
+      "name": "Code1",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
         1380,
-        -460
+        -520
+      ]
+    },
+    {
+      "parameters": {
+        "url": "=https://api.{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.env }}.gosharpei.com/api/status ",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "type",
+              "value": "product"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "authority",
+              "value": "api.dev.gosharpei.com"
+            },
+            {
+              "name": "accept",
+              "value": "application/json, text/plain, */*"
+            },
+            {
+              "name": "accept-language",
+              "value": "en-US,en;q=0.9"
+            },
+            {
+              "name": "origin",
+              "value": "https://appdev.gosharpei.com"
+            },
+            {
+              "name": "referer",
+              "value": "https://appdev.gosharpei.com/"
+            },
+            {
+              "name": "sec-ch-ua",
+              "value": "\"Chromium\";v=\"104\", \" Not A;Brand\";v=\"99\", \"Google Chrome\";v=\"104\""
+            },
+            {
+              "name": "sec-ch-ua-mobile",
+              "value": "?0"
+            },
+            {
+              "name": "sec-ch-ua-platform",
+              "value": "\"Linux\""
+            },
+            {
+              "name": "sec-fetch-dest",
+              "value": "empty"
+            },
+            {
+              "name": "sec-fetch-mode",
+              "value": "cors"
+            },
+            {
+              "name": "sec-fetch-site",
+              "value": "same-site"
+            },
+            {
+              "name": "user-agent",
+              "value": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "ec64631f-1cfb-4c33-8830-1bc2f76e6e17",
+      "name": "Get Status",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        1200,
+        -520
       ]
     },
     {
@@ -405,11 +494,27 @@
     },
     {
       "parameters": {
+        "jsCode": "\n\n const elements = items[0]?.json?.data?.status;\n\nconst activeElement = elements.find(element => element.name === \"Active\");\n\nif (activeElement) {\n    return [{ pid: activeElement.pid }];\n} else {\n    return [];\n}\n\n\n\n\n\n\n\n\n\n\n\n\n"
+      },
+      "id": "23804fd1-2eb3-4db5-922a-f733118f6248",
+      "name": "Code",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1020,
+        -320
+      ]
+    },
+    {
+      "parameters": {
         "url": "=https://api.{{ $json.PrestaShop_Body.env }}.gosharpei.com/api/status ",
         "sendQuery": true,
         "queryParameters": {
           "parameters": [
-            {}
+            {
+              "name": "type",
+              "value": "product"
+            }
           ]
         },
         "sendHeaders": true,
@@ -472,7 +577,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        1020,
+        840,
         -320
       ]
     },
@@ -483,7 +588,7 @@
       "type": "n8n-nodes-base.executeWorkflowTrigger",
       "typeVersion": 1,
       "position": [
-        840,
+        620,
         -320
       ]
     }
@@ -551,11 +656,33 @@
         ]
       ]
     },
-    "Check Stock1": {
+    "Code1": {
       "main": [
         [
           {
             "node": "Draft Product",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Status": {
+      "main": [
+        [
+          {
+            "node": "Code1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Stock1": {
+      "main": [
+        [
+          {
+            "node": "Get Status",
             "type": "main",
             "index": 0
           }
@@ -569,7 +696,7 @@
         ]
       ]
     },
-    "Get Status1": {
+    "Code": {
       "main": [
         [
           {
@@ -579,6 +706,17 @@
           },
           {
             "node": "IF1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Status1": {
+      "main": [
+        [
+          {
+            "node": "Code",
             "type": "main",
             "index": 0
           }
