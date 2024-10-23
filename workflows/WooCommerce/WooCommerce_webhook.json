@@ -1,161 +1,52 @@
 {
   "meta": {
-    "instanceId": "c4f4146b469720be37fccfa9decbb4bd3e7ee280c05e7522ace5122567557b3a"
+    "instanceId": "0c0beacef8877bbf2416eb00f2b5dc96354e26dd1df5517320459b1236860f8c"
   },
   "nodes": [
     {
-      "parameters": {},
-      "id": "76955b3b-b612-4665-bc53-59a88f0f94b8",
-      "name": "No Operation, do nothing",
-      "type": "n8n-nodes-base.noOp",
-      "typeVersion": 1,
-      "position": [
-        1740,
-        300
-      ]
-    },
-    {
       "parameters": {
-        "workflowId": "Ly0ESMjRunVqjd6q"
+        "workflowId": "Ly0ESMjRunVqjd6q",
+        "options": {}
       },
       "id": "6dbe7b04-0154-4c39-a978-17e0a1184c24",
       "name": "Execute Create Product Workflow1",
       "type": "n8n-nodes-base.executeWorkflow",
       "typeVersion": 1,
       "position": [
-        1940,
-        100
+        2440,
+        260
       ]
     },
     {
       "parameters": {
-        "keepOnlySet": true,
-        "values": {
-          "string": [
-            {
-              "name": "WooCommerce_Body",
-              "value": "={{ $('Get Full Json').item.json.WooCommerce_Body }}"
-            }
-          ]
-        },
+        "workflowId": "RTGXxliKv82uUhUT",
         "options": {}
-      },
-      "id": "a1a590be-94d3-4ffa-85ea-c862f53e3b9e",
-      "name": "Set",
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 2,
-      "position": [
-        1740,
-        100
-      ]
-    },
-    {
-      "parameters": {
-        "conditions": {
-          "string": [
-            {
-              "value1": "={{ $('WooCommerce').item.json.body.status }}",
-              "value2": "publish"
-            },
-            {
-              "value1": "={{ $('WooCommerce').item.json.headers[\"x-wc-webhook-topic\"] }}",
-              "value2": "product.created"
-            }
-          ],
-          "number": [
-            {
-              "value1": "={{ $('WooCommerce').item.json.body.parent_id }}",
-              "operation": "equal"
-            }
-          ]
-        }
-      },
-      "id": "1c1b54b0-51e0-4b17-a2aa-74578f3df28c",
-      "name": "IF1",
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 1,
-      "position": [
-        1520,
-        100
-      ]
-    },
-    {
-      "parameters": {
-        "amount": 10,
-        "unit": "seconds"
-      },
-      "id": "00b53b52-e7ed-468a-be81-c9fdfb6c72b3",
-      "name": "Wait",
-      "type": "n8n-nodes-base.wait",
-      "typeVersion": 1,
-      "position": [
-        1940,
-        -100
-      ],
-      "webhookId": "c6b02d27-e37d-47da-bd5c-3ca9eea6ba57"
-    },
-    {
-      "parameters": {
-        "workflowId": "RTGXxliKv82uUhUT"
       },
       "id": "27cdd644-51c4-43ed-8ac4-db33d6424b5e",
       "name": "Execute Update Workflow1",
       "type": "n8n-nodes-base.executeWorkflow",
       "typeVersion": 1,
       "position": [
-        1740,
-        -100
+        2240,
+        60
       ]
     },
     {
       "parameters": {
-        "values": {
-          "string": [
-            {
-              "name": "WooCommerce_Body",
-              "value": "={{ $('Get Full Json').item.json.WooCommerce_Body }}"
-            }
-          ]
-        },
-        "options": {}
+        "jsCode": "// Obtener el body de la carga útil\nconst bodyField = items[0].json.body; // Esto accederá al campo 'body'\n\n// Calcular la longitud del campo 'body'\nconst bodyLength = Object.keys(bodyField).length; // Obtiene el número de propiedades en el objeto 'body'\n\n// Devolver el WooCommerce Body y la longitud del campo 'body'\nreturn {\n    WooCommerce_Body: items[0].json, // Devolver todo el cuerpo\n    bodyLength: bodyLength, // Longitud del campo 'body'\n    env: \"prod\",\n    webhook:\"WooCommerce-Prod\"\n};\n\n\n\n"
       },
-      "id": "c359d8f8-3086-4662-9e67-9b5dbdfaea22",
-      "name": "Set7",
-      "type": "n8n-nodes-base.set",
+      "id": "3e713276-169c-4043-88af-f1af707c1dfe",
+      "name": "Get Full Json",
+      "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        1520,
-        -100
+        840,
+        -140
       ]
     },
     {
       "parameters": {
-        "conditions": {
-          "number": [
-            {
-              "value1": "={{ $json.status }}",
-              "operation": "equal",
-              "value2": 200
-            },
-            {
-              "value1": "={{ $json.data.products.length }}",
-              "operation": "isEmpty"
-            }
-          ]
-        }
-      },
-      "id": "1a432d6b-7bbd-49e8-a5b4-5a2ca19bfe13",
-      "name": "IF",
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 1,
-      "position": [
-        1300,
-        0
-      ]
-    },
-    {
-      "parameters": {
-        "url": "=https://api.dev.gosharpei.com/api/products/{{ $json.WooCommerce_Body.body.id }}",
+        "url": "=https://api.{{ $json.env }}.gosharpei.com/api/products/{{ $json.id }} ",
         "sendHeaders": true,
         "headerParameters": {
           "parameters": [
@@ -164,8 +55,8 @@
               "value": "application/json"
             },
             {
-              "name": "authentication",
-              "value": "$2y$10$GGPFLul3EUBlfhbMn9tAg.0cpQb89e05S8Vw7tcja6JQ3wcvqqBxC"
+              "name": "Authorization",
+              "value": "={{ $($('Update Data').item.json.webhook).item.json.query.api_key }}"
             }
           ]
         },
@@ -180,77 +71,274 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        1100,
-        0
+        1580,
+        160
       ],
       "alwaysOutputData": false,
       "continueOnFail": true
     },
     {
       "parameters": {
-        "jsCode": "return {\n  WooCommerce_Body: items[0].json\n};\n\n"
+        "values": {
+          "string": [
+            {
+              "name": "WooCommerce_Body",
+              "value": "={{ $('Update Data').item.json.WooCommerce_Body.WooCommerce_Body }}"
+            },
+            {
+              "name": "env",
+              "value": "={{ $('Update Data').item.json.env }}"
+            }
+          ]
+        },
+        "options": {}
       },
-      "id": "3e713276-169c-4043-88af-f1af707c1dfe",
-      "name": "Get Full Json",
+      "id": "c359d8f8-3086-4662-9e67-9b5dbdfaea22",
+      "name": "Set7",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [
+        2020,
+        60
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "number": [
+            {
+              "value1": "={{ $json.status }}",
+              "operation": "equal",
+              "value2": 200
+            }
+          ]
+        }
+      },
+      "id": "1a432d6b-7bbd-49e8-a5b4-5a2ca19bfe13",
+      "name": "IF",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        1800,
+        160
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "76955b3b-b612-4665-bc53-59a88f0f94b8",
+      "name": "No Operation, do nothing",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        2240,
+        460
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const bodyField = items[0].json.body; // Esto accederá al campo 'body'\n\nconst bodyLength = Object.keys(bodyField).length; \nreturn {\n  WooCommerce_Body: items[0].json,\n  env: \"dev\",\n  webhook:\"WooCommerce-Dev\",\n  bodyLength\n};\n\n"
+      },
+      "id": "009cc9e1-6f82-45f7-9d9e-6de0d3245159",
+      "name": "Get Full Json1",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        900,
+        840,
+        140
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "b41a978e-e942-4697-a08e-0f8db0418e62",
+              "name": "=WooCommerce_Body",
+              "value": "={{ $('Update Data').item.json.WooCommerce_Body.WooCommerce_Body }}",
+              "type": "object"
+            },
+            {
+              "id": "ad15f205-e1ec-48ba-8316-4b7d7cf5c955",
+              "name": "env",
+              "value": "={{ $('Update Data').item.json.env }}",
+              "type": "string"
+            },
+            {
+              "id": "62c00d57-3519-4877-be9e-17cce301b0f9",
+              "name": "WooCommerce_Body.WooCommerce_Body.query.api_key",
+              "value": "={{ $('Update Data').item.json.WooCommerce_Body.WooCommerce_Body.query.api_key }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "a0db626f-5c2b-4070-8b7a-6db7428ca1ca",
+      "name": "Edit Fields",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2240,
+        260
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "6e1554b0-ec7a-4292-b375-9cc5c1235bd3",
+              "leftValue": "={{ $json.WooCommerce_Body.bodyLength }}",
+              "rightValue": 1,
+              "operator": {
+                "type": "number",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "ffcca6b3-5c40-4c39-b812-cc1c4f4439fa",
+      "name": "If",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        1420,
         0
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "ceacd6f1-7d25-41b5-a1ad-a5d300a90378",
+      "name": "No Operation, do nothing1",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        1600,
+        -180
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Initialize the name field with an empty default value\n\nlet env = items[0].json.env;\nlet id = items[0].json.WooCommerce_Body.body.id;\nlet sku = items[0].json.WooCommerce_Body.body.sku;\n\n\nlet auth = items[0].json.WooCommerce_Body.query.api_key;\n\nlet webhook = items[0].json.webhook;\n\nlet quantity = items[0].json.WooCommerce_Body.body.stock_quantity;\nlet price = items[0].json.WooCommerce_Body.body.price;\nlet WooCommerce_Body = items[0].json;\nlet length = items[0].json.WooCommerce_Body.body.bodyLength;\n\n\n\n\n// Return the object with the name field\nreturn {\n    json: {\n        \n        env,\n        id,\n        sku,\n        auth,\n        webhook,\n        quantity,\n        price,\n        WooCommerce_Body,\n     \n      \n        \n    }\n};\n\n"
+      },
+      "id": "556324ed-0a93-44c9-84fc-736c1ec4bc9e",
+      "name": "Update Data",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1080,
+        -20
+      ],
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "woocommerce-prod",
+        "options": {}
+      },
+      "id": "add12fa3-792d-4add-92df-605b18415afc",
+      "name": "WooCommerce-Prod",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        620,
+        -140
+      ],
+      "webhookId": "6e7f58ef-025d-46a9-9ed8-0498a23f6d60"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "824a82e7-4c57-40ab-9f15-fc2070a793ea",
+              "leftValue": "={{ $($('Update Data').item.json.webhook).item.json.body.status }}",
+              "rightValue": "publish",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            },
+            {
+              "id": "9dd89fe1-f5e7-45fe-b7d5-b9fe917e8d35",
+              "leftValue": "={{ $($('Update Data').item.json.webhook).item.json.headers[\"x-wc-webhook-topic\"] }}",
+              "rightValue": "=product.created",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            },
+            {
+              "id": "2c5fe389-08fc-4778-85b2-ada5054ff80c",
+              "leftValue": "={{ $($('Update Data').item.json.webhook).item.json.body.parent_id }}",
+              "rightValue": 0,
+              "operator": {
+                "type": "number",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "076de83a-43d5-44e1-8738-eda14ebd3b94",
+      "name": "If1",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        2020,
+        280
       ]
     },
     {
       "parameters": {
         "httpMethod": "POST",
-        "path": "woocommerce",
+        "path": "woocommerce-dev",
         "options": {}
       },
-      "id": "add12fa3-792d-4add-92df-605b18415afc",
-      "name": "WooCommerce",
+      "id": "b18e3bf9-fc41-41e7-b8c7-a619d542a45e",
+      "name": "WooCommerce-Dev",
       "type": "n8n-nodes-base.webhook",
-      "typeVersion": 1,
+      "typeVersion": 2,
       "position": [
-        720,
-        0
+        620,
+        140
       ],
-      "webhookId": "6e7f58ef-025d-46a9-9ed8-0498a23f6d60"
+      "webhookId": "d22d1599-da03-4c43-81b7-d823f01005fe"
     }
   ],
   "connections": {
-    "Set": {
+    "Get Full Json": {
       "main": [
         [
           {
-            "node": "Execute Create Product Workflow1",
+            "node": "Update Data",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "IF1": {
+    "Get Product by Remote ID": {
       "main": [
         [
           {
-            "node": "Set",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "No Operation, do nothing",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Execute Update Workflow1": {
-      "main": [
-        [
-          {
-            "node": "Wait",
+            "node": "IF",
             "type": "main",
             "index": 0
           }
@@ -279,26 +367,44 @@
         ],
         [
           {
-            "node": "IF1",
+            "node": "If1",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Get Product by Remote ID": {
+    "Get Full Json1": {
       "main": [
         [
           {
-            "node": "IF",
+            "node": "Update Data",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Get Full Json": {
+    "Edit Fields": {
       "main": [
+        [
+          {
+            "node": "Execute Create Product Workflow1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "No Operation, do nothing1",
+            "type": "main",
+            "index": 0
+          }
+        ],
         [
           {
             "node": "Get Product by Remote ID",
@@ -308,7 +414,18 @@
         ]
       ]
     },
-    "WooCommerce": {
+    "Update Data": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "WooCommerce-Prod": {
       "main": [
         [
           {
@@ -318,6 +435,285 @@
           }
         ]
       ]
+    },
+    "If1": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "WooCommerce-Dev": {
+      "main": [
+        [
+          {
+            "node": "Get Full Json1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
+  },
+  "pinData": {
+    "WooCommerce-Dev": [
+      {
+        "headers": {
+          "x-forwarded-for": "43.241.70.75",
+          "x-forwarded-proto": "https",
+          "x-forwarded-port": "443",
+          "host": "automation.prod.gosharpei.com",
+          "x-amzn-trace-id": "Root=1-6716ba44-77742e9226bfd6e349570de0",
+          "content-length": "7622",
+          "user-agent": "WooCommerce/9.3.3 Hookshot (WordPress/6.6.2)",
+          "accept": "*/*",
+          "accept-encoding": "deflate, gzip, br",
+          "content-type": "application/json",
+          "x-wc-webhook-source": "https://sharpei.wisdmlabs.net/",
+          "x-wc-webhook-topic": "product.updated",
+          "x-wc-webhook-resource": "product",
+          "x-wc-webhook-event": "updated",
+          "x-wc-webhook-signature": "yr99L5G5bQLRnPdovlchATH0RPkeXMae4yRWQqwXW3w=",
+          "x-wc-webhook-id": "41",
+          "x-wc-webhook-delivery-id": "48a2c4edaeb3fb44506e24ec2819ebc3"
+        },
+        "params": {},
+        "query": {
+          "api_key": "$2y$10$HJyJLei5Pe5EkOtdTbDf1eGQc.JWCLFhAvoAaGfkYntEUiFFckkDe"
+        },
+        "body": {
+          "id": 378,
+          "name": "producto con variantes 21/10",
+          "slug": "producto-con-variantes-21-10",
+          "permalink": "https://sharpei.wisdmlabs.net/product/producto-con-variantes-21-10/",
+          "date_created": "2024-10-21T20:08:43",
+          "date_created_gmt": "2024-10-21T20:08:43",
+          "date_modified": "2024-10-21T20:32:03",
+          "date_modified_gmt": "2024-10-21T20:32:03",
+          "type": "variable",
+          "status": "publish",
+          "featured": false,
+          "catalog_visibility": "visible",
+          "description": "<p>variante update</p>\n",
+          "short_description": "",
+          "sku": "2",
+          "price": "44",
+          "regular_price": "",
+          "sale_price": "",
+          "date_on_sale_from": null,
+          "date_on_sale_from_gmt": null,
+          "date_on_sale_to": null,
+          "date_on_sale_to_gmt": null,
+          "on_sale": true,
+          "purchasable": true,
+          "total_sales": 0,
+          "virtual": false,
+          "downloadable": false,
+          "downloads": [],
+          "download_limit": -1,
+          "download_expiry": -1,
+          "external_url": "",
+          "button_text": "",
+          "tax_status": "taxable",
+          "tax_class": "",
+          "manage_stock": true,
+          "stock_quantity": 12,
+          "backorders": "no",
+          "backorders_allowed": false,
+          "backordered": false,
+          "low_stock_amount": null,
+          "sold_individually": false,
+          "weight": "",
+          "dimensions": {
+            "length": "",
+            "width": "",
+            "height": ""
+          },
+          "shipping_required": true,
+          "shipping_taxable": true,
+          "shipping_class": "",
+          "shipping_class_id": 0,
+          "reviews_allowed": true,
+          "average_rating": "0.00",
+          "rating_count": 0,
+          "upsell_ids": [],
+          "cross_sell_ids": [],
+          "parent_id": 0,
+          "purchase_note": "",
+          "categories": [
+            {
+              "id": 15,
+              "name": "Uncategorized",
+              "slug": "uncategorized"
+            }
+          ],
+          "tags": [],
+          "images": [],
+          "attributes": [
+            {
+              "id": 1,
+              "name": "Brand",
+              "slug": "pa_brand",
+              "position": 0,
+              "visible": true,
+              "variation": true,
+              "options": [
+                "Divi Engine",
+                "WooCommerce"
+              ]
+            }
+          ],
+          "default_attributes": [],
+          "variations": [
+            379,
+            380
+          ],
+          "grouped_products": [],
+          "menu_order": 0,
+          "price_html": "",
+          "related_ids": [
+            315,
+            326
+          ],
+          "meta_data": [
+            {
+              "id": 6932,
+              "key": "_yoast_wpseo_primary_product_cat",
+              "value": ""
+            },
+            {
+              "id": 6933,
+              "key": "_yoast_wpseo_estimated-reading-time-minutes",
+              "value": "1"
+            },
+            {
+              "id": 6934,
+              "key": "_yoast_wpseo_wordproof_timestamp",
+              "value": ""
+            }
+          ],
+          "stock_status": "instock",
+          "has_options": true,
+          "post_password": "",
+          "global_unique_id": "",
+          "yoast_head": "",
+          "yoast_head_json": {
+            "robots": {
+              "index": "index",
+              "follow": "follow",
+              "max-snippet": "max-snippet:-1",
+              "max-image-preview": "max-image-preview:large",
+              "max-video-preview": "max-video-preview:-1"
+            },
+            "canonical": "https://sharpei.wisdmlabs.net/product/producto-con-variantes-21-10/",
+            "og_locale": "en_US",
+            "og_type": "article",
+            "og_title": "producto con variantes 21/10 - sharpei.wisdmlabs.net",
+            "og_description": "variante update",
+            "og_url": "https://sharpei.wisdmlabs.net/product/producto-con-variantes-21-10/",
+            "og_site_name": "sharpei.wisdmlabs.net",
+            "article_modified_time": "2024-10-21T20:32:03+00:00",
+            "twitter_card": "summary_large_image",
+            "twitter_misc": {
+              "Est. reading time": "1 minute"
+            },
+            "schema": {
+              "@context": "https://schema.org",
+              "@graph": [
+                {
+                  "@type": "WebPage",
+                  "@id": "https://sharpei.wisdmlabs.net/product/producto-con-variantes-21-10/",
+                  "url": "https://sharpei.wisdmlabs.net/product/producto-con-variantes-21-10/",
+                  "name": "producto con variantes 21/10 - sharpei.wisdmlabs.net",
+                  "isPartOf": {
+                    "@id": "https://sharpei.wisdmlabs.net/#website"
+                  },
+                  "datePublished": "2024-10-21T20:08:43+00:00",
+                  "dateModified": "2024-10-21T20:32:03+00:00",
+                  "breadcrumb": {
+                    "@id": "https://sharpei.wisdmlabs.net/product/producto-con-variantes-21-10/#breadcrumb"
+                  },
+                  "inLanguage": "en-US",
+                  "potentialAction": [
+                    {
+                      "@type": "ReadAction",
+                      "target": [
+                        "https://sharpei.wisdmlabs.net/product/producto-con-variantes-21-10/"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "@type": "BreadcrumbList",
+                  "@id": "https://sharpei.wisdmlabs.net/product/producto-con-variantes-21-10/#breadcrumb",
+                  "itemListElement": [
+                    {
+                      "@type": "ListItem",
+                      "position": 1,
+                      "name": "Home",
+                      "item": "https://sharpei.wisdmlabs.net/"
+                    },
+                    {
+                      "@type": "ListItem",
+                      "position": 2,
+                      "name": "Products",
+                      "item": "https://sharpei.wisdmlabs.net/shop/"
+                    },
+                    {
+                      "@type": "ListItem",
+                      "position": 3,
+                      "name": "producto con variantes 21/10"
+                    }
+                  ]
+                },
+                {
+                  "@type": "WebSite",
+                  "@id": "https://sharpei.wisdmlabs.net/#website",
+                  "url": "https://sharpei.wisdmlabs.net/",
+                  "name": "sharpei.wisdmlabs.net",
+                  "description": "",
+                  "potentialAction": [
+                    {
+                      "@type": "SearchAction",
+                      "target": {
+                        "@type": "EntryPoint",
+                        "urlTemplate": "https://sharpei.wisdmlabs.net/?s={search_term_string}"
+                      },
+                      "query-input": "required name=search_term_string"
+                    }
+                  ],
+                  "inLanguage": "en-US"
+                }
+              ]
+            }
+          },
+          "_links": {
+            "self": [
+              {
+                "href": "https://sharpei.wisdmlabs.net/wp-json/wc/v3/products/378"
+              }
+            ],
+            "collection": [
+              {
+                "href": "https://sharpei.wisdmlabs.net/wp-json/wc/v3/products"
+              }
+            ]
+          }
+        },
+        "webhookUrl": "http://https://automation.prod.gosharpei.com:5678/webhook/woocommerce-dev",
+        "executionMode": "production"
+      }
+    ]
   }
 }

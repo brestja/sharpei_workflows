@@ -1,1244 +1,2028 @@
 {
-    "meta": {
-      "instanceId": "c4f4146b469720be37fccfa9decbb4bd3e7ee280c05e7522ace5122567557b3a"
+  "meta": {
+    "instanceId": "0c0beacef8877bbf2416eb00f2b5dc96354e26dd1df5517320459b1236860f8c"
+  },
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "a70beea2-cb56-4353-985c-13f9ced85985",
+      "name": "Execute Workflow Trigger",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1,
+      "position": [
+        -40,
+        1120
+      ]
     },
-    "nodes": [
-      {
-        "parameters": {
-          "method": "PUT",
-          "url": "=https://api.dev.gosharpei.com/api/products/{{ $('Execute Workflow Trigger').item.json.data.pid }} ",
-          "sendHeaders": true,
-          "headerParameters": {
-            "parameters": [
-              {
-                "name": "authority",
-                "value": "api.dev.gosharpei.com"
-              },
-              {
-                "name": "accept",
-                "value": "application/json, text/plain, */*"
-              },
-              {
-                "name": "accept-language",
-                "value": "es-ES,es;q=0.9"
-              },
-              {
-                "name": "authorization",
-                "value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI5YjkxY2NjZS1mMjg3LTQ2YjUtOWYwNC0zYWIxZmYyMjhjN2UiLCJqdGkiOiI1MjM3MGFiMjAwZDFmY2ZmZDFiNjAyMTJmMDFlZWQzYTk5MDY3NmJhN2IxY2MyZWIzMTJjY2IxZjgyYTcxNmU5ODc0MWNkYWNlOGE3YmY3YyIsImlhdCI6MTcxMjY5NDkyNS44MDE3NzcsIm5iZiI6MTcxMjY5NDkyNS44MDE3NzgsImV4cCI6MTc0NDIzMDkyNS43OTYyMiwic3ViIjoiMjE3Iiwic2NvcGVzIjpbXX0.wB9yYWnaKvB9VVlTyZfx2XQXoIkkWKMHRINf9xtvdIy2LuHgTx366YMnWROFWv4ppY9n2MiMUmMLbUIYjDlCztMeBfXqxSVQ8hQgr3C180hMV1Yjg8gXbxZ7A_gTUsj3xDfhweUnoxFxbNPWXfjWFi-_suJ3g2wQaR_v-GTZNiq-UBDmnDWjHxXc84ewEHNtiG1cT3FxbwSttD63J2_JYzZIaCzzHE5NrrFf1SaCRyWH9Adqf4ELS5qUgVL_vUTYoShvwigYWurf7CZXIGVms9uXslxFlTk64GPp6QF2jiNSAhUE70DvDjD2gX9vWvWnhsDdjJuUllyamAkRmpyXZsbI78J84XdBKwC9nLvs76WcmxWff8PVm1x-aCa-9cXne1UzvlGh_h6GszfQB48IsFMlf4GU02FctKxHk7D67ILUzxC5jbuagt-DbK3axz4nFV462iDHnj6WR4fcwn36b_qp1Ol9lZdaZw5jsbyLCcN_6MsYno2qS7pdO3Oys-OXmRiDHBuoAugE3YGGuwT41brXH3Db7MGo_pEv86UH4h3rylr_ffN15X6ZCnkEEoKbBA1wLT9YelWmw_5ngpafmS3cIzpZ0iq7GoMfiys8ZYB0AI0nRZRX2cKMb36chpG0q5CJbvFPxKkMFstmjdBbn-iDJ1yCjPkH5bfxO3FP1ys"
-              },
-              {
-                "name": "origin",
-                "value": "https://app.dev.gosharpei.com"
-              },
-              {
-                "name": "referer",
-                "value": "https://app.dev.gosharpei.com/"
-              },
-              {
-                "name": "sec-ch-ua",
-                "value": "\"Not A(Brand\";v=\"99\", \"Google Chrome\";v=\"121\", \"Chromium\";v=\"121\""
-              },
-              {
-                "name": "sec-ch-ua-mobile",
-                "value": "?0"
-              },
-              {
-                "name": "sec-ch-ua-platform",
-                "value": "\"Windows\""
-              },
-              {
-                "name": "sec-fetch-dest",
-                "value": "empty"
-              },
-              {
-                "name": "sec-fetch-mode",
-                "value": "cors"
-              },
-              {
-                "name": "sec-fetch-site",
-                "value": "same-site"
-              },
-              {
-                "name": "user-agent",
-                "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36"
-              }
-            ]
-          },
-          "sendBody": true,
-          "specifyBody": "json",
-          "jsonBody": "={\n  \"title\": \"{{ $('Execute Workflow Trigger').item.json.WooCommerce_Body.body.name }}\",\n  \"body\": \"{{ $('Execute Workflow Trigger').item.json.WooCommerce_Body.body.yoast_head_json.og_description }}\",\n  \"status_pid\" : \"{{ $json.data.status[0].pid }}\"\n}\n\n          ",
-          "options": {}
-        },
-        "id": "d92b558e-7006-4831-8baa-3d2095bd8dc1",
-        "name": "Update Product",
-        "type": "n8n-nodes-base.httpRequest",
-        "typeVersion": 4.1,
-        "position": [
-          1120,
-          180
-        ]
-      },
-      {
-        "parameters": {
-          "conditions": {
-            "string": [
-              {
-                "value1": "={{ $('Execute Workflow Trigger').item.json.data.title }}",
-                "operation": "notEqual",
-                "value2": "={{ $('Execute Workflow Trigger').item.json.WooCommerce_Body.body.name }}"
-              },
-              {
-                "value1": "={{ $('Execute Workflow Trigger').item.json.data.body }}",
-                "operation": "notEqual",
-                "value2": "={{ $('Execute Workflow Trigger').item.json.WooCommerce_Body.body.yoast_head_json.og_description }}"
-              }
-            ]
-          },
-          "combineOperation": "any"
-        },
-        "id": "6a339225-17de-4315-abe2-aaa5f6dfeeb8",
-        "name": "Check Product WooCommerce",
-        "type": "n8n-nodes-base.if",
-        "typeVersion": 1,
-        "position": [
-          940,
-          180
-        ]
-      },
-      {
-        "parameters": {
-          "method": "PUT",
-          "url": "=https://api.dev.gosharpei.com/api/products/{{ $('Execute Workflow Trigger').item.json.data.pid }}",
-          "sendHeaders": true,
-          "headerParameters": {
-            "parameters": [
-              {
-                "name": "authority",
-                "value": "api.dev.gosharpei.com"
-              },
-              {
-                "name": "accept",
-                "value": "application/json, text/plain, */*"
-              },
-              {
-                "name": "accept-language",
-                "value": "es-ES,es;q=0.9"
-              },
-              {
-                "name": "Authorization",
-                "value": "BearereyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI5YjkxY2NjZS1mMjg3LTQ2YjUtOWYwNC0zYWIxZmYyMjhjN2UiLCJqdGkiOiI1OWM3NDM1MjllZGIzODlmNTJkYzMzZDQ3ZTIzNjJiYzZkM2U1M2IwZWM5NWU2Njk3ZmMwYTUyNTUyOTNiNTA4NGQ0ZThkNWQ5MDE4NGM1NSIsImlhdCI6MTcxNDQ1MTIyNS44MjY2NzgsIm5iZiI6MTcxNDQ1MTIyNS44MjY2OCwiZXhwIjoxNzQ1OTg3MjI1LjgxODUyOSwic3ViIjoiMjE3Iiwic2NvcGVzIjpbXX0.NhGLzbh5QUQSxpHouK-AmX5zfdwfvGvKY9A_z7ouUAOyb9J7B7GsMvYlheycey0jrJFoWADUoh0ycjk_pbx-g5e1Bm6KAiD26-FSxoS4zIegtW1X7ZYrnmdo9DxDo1wa5pLzOoDsR5IoqhexgVxvTtyyncQLm31LzjCN9sawvSDaIdHuTi_AiDN_5EB9dp7P7GzOCvRv9Ytj8JxN42tO7JmPgk8_MHSlTDjhI23y1XDdOMRIX_xm_R2NUD8YUKxbe8G1GIi5-IQfiN2uBKKfP0WnyMLcCMPzN-fmE2IWB5JdBO1JzVv-KO9kNQ7-imI3W3iOPRB9MrFAvQLu_SOHsT1uiU8zgxUAxxdH-uuo7vJXKJ6OVLA8Nii9zVrg87LrEgMlkgxfy-sJ-6N2tNrUMkVyn89OT6eF1_DXbiZy1LI8KNuH6ksU6XkgSfDc7-HSlje9SbJJ3mrgu1s4oyNBP6HN0pPCqgRDnNvnwXFZkba--rIX7o3zVz7R9eK9GuIvT1det3f9ppJdCf9qzmt-FPrsgR0aAqiS13MxKODCHl9_LK0ijDh6oHgPP9igj89sWJTy_XuzPLfPgTSnl_Ot_lf7fFmDVtfaxR_U5RLOTBHdSUjQSG9zXIvE_wYjhHGOqQ-D48YRWFKLENQk09BKrQjNg9vpfJB9EH2e4Z47hZ4"
-              },
-              {
-                "name": "origin",
-                "value": "https://app.dev.gosharpei.com"
-              },
-              {
-                "name": "referer",
-                "value": "https://app.dev.gosharpei.com/"
-              },
-              {
-                "name": "sec-ch-ua",
-                "value": "\"Not A(Brand\";v=\"99\", \"Google Chrome\";v=\"121\", \"Chromium\";v=\"121\""
-              },
-              {
-                "name": "sec-ch-ua-mobile",
-                "value": "?0"
-              },
-              {
-                "name": "sec-ch-ua-platform",
-                "value": "\"Windows\""
-              },
-              {
-                "name": "sec-fetch-dest",
-                "value": "empty"
-              },
-              {
-                "name": "sec-fetch-mode",
-                "value": "cors"
-              },
-              {
-                "name": "sec-fetch-site",
-                "value": "same-site"
-              },
-              {
-                "name": "user-agent",
-                "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36"
-              }
-            ]
-          },
-          "sendBody": true,
-          "specifyBody": "json",
-          "jsonBody": "={  \n  \"status_pid\": \"{{ $json.data.status[1].pid }}\",\n  \"title\" : \"{{ $('Execute Workflow Trigger').item.json.WooCommerce_Body.body.name }}\",\n  \"remote_id\": \"{{ $('Execute Workflow Trigger').item.json.WooCommerce_Body.body.id }}\"\n}\n       ",
-          "options": {}
-        },
-        "id": "360cb28a-fa39-4539-9abc-eab09daf65b3",
-        "name": "Draft Product",
-        "type": "n8n-nodes-base.httpRequest",
-        "typeVersion": 4.1,
-        "position": [
-          740,
-          180
-        ]
-      },
-      {
-        "parameters": {
-          "conditions": {
-            "number": [
-              {
-                "value1": "={{ $('Execute Workflow Trigger').item.json.WooCommerce_Body.body.stock_quantity }}",
-                "operation": "smallerEqual"
-              }
-            ]
-          }
-        },
-        "id": "a7ceef8e-cc0f-4438-93a4-a4e97a9dcdab",
-        "name": "Check Stock",
-        "type": "n8n-nodes-base.if",
-        "typeVersion": 1,
-        "position": [
-          560,
-          180
-        ]
-      },
-      {
-        "parameters": {
-          "url": "https://api.dev.gosharpei.com/api/status",
-          "sendQuery": true,
-          "queryParameters": {
-            "parameters": [
-              {
-                "name": "type",
-                "value": "product"
-              }
-            ]
-          },
-          "sendHeaders": true,
-          "headerParameters": {
-            "parameters": [
-              {
-                "name": "authority",
-                "value": "api.dev.gosharpei.com"
-              },
-              {
-                "name": "accept",
-                "value": "application/json, text/plain, */*"
-              },
-              {
-                "name": "accept-language",
-                "value": "en-US,en;q=0.9"
-              },
-              {
-                "name": "origin",
-                "value": "https://appdev.gosharpei.com"
-              },
-              {
-                "name": "referer",
-                "value": "https://appdev.gosharpei.com/"
-              },
-              {
-                "name": "sec-ch-ua",
-                "value": "\"Chromium\";v=\"104\", \" Not A;Brand\";v=\"99\", \"Google Chrome\";v=\"104\""
-              },
-              {
-                "name": "sec-ch-ua-mobile",
-                "value": "?0"
-              },
-              {
-                "name": "sec-ch-ua-platform",
-                "value": "\"Linux\""
-              },
-              {
-                "name": "sec-fetch-dest",
-                "value": "empty"
-              },
-              {
-                "name": "sec-fetch-mode",
-                "value": "cors"
-              },
-              {
-                "name": "sec-fetch-site",
-                "value": "same-site"
-              },
-              {
-                "name": "user-agent",
-                "value": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36"
-              }
-            ]
-          },
-          "options": {
-            "redirect": {
-              "redirect": {}
+    {
+      "parameters": {
+        "method": "PUT",
+        "url": "=https://api.{{ $('Execute Workflow Trigger').item.json.env }}.gosharpei.com/api/products/{{ $('Execute Workflow Trigger').item.json.data.pid }}  ",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "={{ $('Execute Workflow Trigger').item.json.WooCommerce_Body.query.api_key }}"
             }
-          }
+          ]
         },
-        "id": "be9f5547-ec3c-4224-bc0e-480468f514a4",
-        "name": "Get Status1",
-        "type": "n8n-nodes-base.httpRequest",
-        "typeVersion": 4.1,
-        "position": [
-          380,
-          180
-        ]
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"title\": \"{{ $('Execute Workflow Trigger').item.json.WooCommerce_Body.body.name }}\",\n  \"body\": \"{{ $('Execute Workflow Trigger').item.json.WooCommerce_Body.body.description.replace(/['\"]+/g,'').replace(/<[^>]+>/g, '').replace(/\\n/g, ' ').trim()}}\",\n  \"status_pid\" : \"{{ $json.data.status[0].pid }}\"\n}\n\n          ",
+        "options": {}
       },
-      {
-        "parameters": {
-          "workflowId": "iYCkWTiFfEQE26eU"
-        },
-        "id": "f7d7720e-3e19-4537-9019-ca0527db8c05",
-        "name": "Execute Workflow",
-        "type": "n8n-nodes-base.executeWorkflow",
-        "typeVersion": 1,
-        "position": [
-          740,
-          920
-        ]
-      },
-      {
-        "parameters": {
-          "keepOnlySet": true,
-          "values": {
-            "string": [
-              {
-                "name": "product_pid",
-                "value": "={{ $('Execute Workflow Trigger').item.json.data.pid }}"
-              },
-              {
-                "name": "WooCommerce_Body",
-                "value": "={{ $json.WooCommerce_Body }}"
-              }
-            ]
-          },
-          "options": {}
-        },
-        "id": "fb1bb634-7087-4be4-8d41-37ecf0a3709d",
-        "name": "Set1",
-        "type": "n8n-nodes-base.set",
-        "typeVersion": 2,
-        "position": [
-          560,
-          920
-        ]
-      },
-      {
-        "parameters": {
-          "jsCode": "return {\n  WooCommerce_Body: items[0].json\n};\n"
-        },
-        "id": "895c59ab-c9e7-4148-8396-b189c0c1b0ba",
-        "name": "Get Full Json",
-        "type": "n8n-nodes-base.code",
-        "typeVersion": 2,
-        "position": [
-          380,
-          920
-        ]
-      },
-      {
-        "parameters": {
-          "method": "DELETE",
-          "url": "=https://api.dev.gosharpei.com/api/products/{{ $('Get Product by Remote ID').item.json.data.pid }}/variants/{{ $json.pid }}    ",
-          "sendHeaders": true,
-          "headerParameters": {
-            "parameters": [
-              {
-                "name": "Accept",
-                "value": "application/json"
-              },
-              {
-                "name": "Authorization",
-                "value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI5YjkxY2NjZS1mMjg3LTQ2YjUtOWYwNC0zYWIxZmYyMjhjN2UiLCJqdGkiOiIwZmVjMjBjMjU2ZjNjODhlNjM3MGQwZWZjZjYzZDVjZjBiMTczZWNjYjdiNDJmOGU2MmU2Zjk0ODAxMDFhOGNmMDRjN2I1N2RhN2Q3MWVhZSIsImlhdCI6MTcxNTAyNjE5NS4wMjk2NywibmJmIjoxNzE1MDI2MTk1LjAyOTY3MiwiZXhwIjoxNzQ2NTYyMTk1LjAyMzA3OSwic3ViIjoiMjE3Iiwic2NvcGVzIjpbXX0.PTC1As6mTLmtg_MQDrSEZEUBho4ar3EJx_UWE9tc_3wQcGD5hknypEPHzkGB5kc30mZzAwCLtm2XKFn-kqiDTNvQ5AMy9Qr4sdhbJftPYyjCLpdLfSsuu02TUN_pWj0zeUXOsOJTnAsWOokib-Cz6yLgDxeZ-KOkeBW8W2B-RZvagMxm8_kkHBzVqAaPLzwNkBZRA8z03N30gTOw4jPLj09h4xF7GJMrXT8Vj8IQtFcFCrIwVqwCV8jDkrFSv8sUz8Qx0gkLSVHc6X4aw6u8tbvChXPZy7Swz0DGskqmPEu11nA3yoIIQ-xuozgJ6TX5X0QdKvo2EjuoPCeqULTjPlr_Xzld-FETJ5MYJyx1ZrZ9Ue50l1ygs09RP6cGlrtROZ1X0mWrA0Yej_IDlko2BYaStgVmcS2hWwe9Ss3FXJX9B5-1q-APUD2ynHHRvRHz5BAKDS96vHBt0Bo_0p9t8i1UfKabjGKGFNUvHZ1K4-JSiQsL_W8VwUj8Bm6cQj7nQnzfhucJ36l9SoPb0kXFuh2DL4at4-vUZX0twvOOtRag0-r-8Yr_ndYIz5opSuRbfhwILa4yYFM7ljhsZLu5lyCpx0NAAa3yczWZsK7GnKyewrPC6mPtYRhIwMFoZ8P6CKg8i1HWZfzoMGiQvwype-7_5azpeNqv5i877BJ-ofY"
-              }
-            ]
-          },
-          "options": {}
-        },
-        "id": "07b139f0-b998-4c70-9918-e099395f01c7",
-        "name": "delete a variant",
-        "type": "n8n-nodes-base.httpRequest",
-        "typeVersion": 4.1,
-        "position": [
-          1120,
-          680
-        ]
-      },
-      {
-        "parameters": {
-          "values": {
-            "number": [
-              {
-                "name": "index",
-                "value": "={{ $runIndex }}"
-              }
-            ]
-          },
-          "options": {}
-        },
-        "id": "cc284bab-fad6-46ba-826b-074f6057efad",
-        "name": "Set2",
-        "type": "n8n-nodes-base.set",
-        "typeVersion": 2,
-        "position": [
-          940,
-          680
-        ]
-      },
-      {
-        "parameters": {
-          "batchSize": 1,
-          "options": {}
-        },
-        "id": "8efd1db5-fadc-4d27-abca-ecaae6f8c2d5",
-        "name": "Split In Batches",
-        "type": "n8n-nodes-base.splitInBatches",
-        "typeVersion": 1,
-        "position": [
-          740,
-          680
-        ]
-      },
-      {
-        "parameters": {
-          "fieldToSplitOut": "data.variants",
-          "options": {}
-        },
-        "id": "58e26e32-fb5a-42b6-8115-2a4c37f3ee58",
-        "name": "Item Lists1",
-        "type": "n8n-nodes-base.itemLists",
-        "typeVersion": 3,
-        "position": [
-          560,
-          680
-        ]
-      },
-      {
-        "parameters": {
-          "url": "=https://api.dev.gosharpei.com/api/products/{{ $('Execute Workflow Trigger').item.json.WooCommerce_Body.body.id }}",
-          "sendHeaders": true,
-          "headerParameters": {
-            "parameters": [
-              {
-                "name": "Accept",
-                "value": "application/json"
-              },
-              {
-                "name": "authentication",
-                "value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI5YjkxY2NjZS1mMjg3LTQ2YjUtOWYwNC0zYWIxZmYyMjhjN2UiLCJqdGkiOiIwZmVjMjBjMjU2ZjNjODhlNjM3MGQwZWZjZjYzZDVjZjBiMTczZWNjYjdiNDJmOGU2MmU2Zjk0ODAxMDFhOGNmMDRjN2I1N2RhN2Q3MWVhZSIsImlhdCI6MTcxNTAyNjE5NS4wMjk2NywibmJmIjoxNzE1MDI2MTk1LjAyOTY3MiwiZXhwIjoxNzQ2NTYyMTk1LjAyMzA3OSwic3ViIjoiMjE3Iiwic2NvcGVzIjpbXX0.PTC1As6mTLmtg_MQDrSEZEUBho4ar3EJx_UWE9tc_3wQcGD5hknypEPHzkGB5kc30mZzAwCLtm2XKFn-kqiDTNvQ5AMy9Qr4sdhbJftPYyjCLpdLfSsuu02TUN_pWj0zeUXOsOJTnAsWOokib-Cz6yLgDxeZ-KOkeBW8W2B-RZvagMxm8_kkHBzVqAaPLzwNkBZRA8z03N30gTOw4jPLj09h4xF7GJMrXT8Vj8IQtFcFCrIwVqwCV8jDkrFSv8sUz8Qx0gkLSVHc6X4aw6u8tbvChXPZy7Swz0DGskqmPEu11nA3yoIIQ-xuozgJ6TX5X0QdKvo2EjuoPCeqULTjPlr_Xzld-FETJ5MYJyx1ZrZ9Ue50l1ygs09RP6cGlrtROZ1X0mWrA0Yej_IDlko2BYaStgVmcS2hWwe9Ss3FXJX9B5-1q-APUD2ynHHRvRHz5BAKDS96vHBt0Bo_0p9t8i1UfKabjGKGFNUvHZ1K4-JSiQsL_W8VwUj8Bm6cQj7nQnzfhucJ36l9SoPb0kXFuh2DL4at4-vUZX0twvOOtRag0-r-8Yr_ndYIz5opSuRbfhwILa4yYFM7ljhsZLu5lyCpx0NAAa3yczWZsK7GnKyewrPC6mPtYRhIwMFoZ8P6CKg8i1HWZfzoMGiQvwype-7_5azpeNqv5i877BJ-ofY"
-              }
-            ]
-          },
-          "options": {
-            "redirect": {
-              "redirect": {}
+      "id": "82bf58ca-964c-45a5-b105-f955625e4ce8",
+      "name": "Update Product1",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        1420,
+        1120
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $('Execute Workflow Trigger').item.json.data.title }}",
+              "operation": "notEqual",
+              "value2": "={{ $('Execute Workflow Trigger').item.json.WooCommerce_Body.body.name }}"
+            },
+            {
+              "value1": "={{ $('Execute Workflow Trigger').item.json.data.body }}",
+              "operation": "notEqual",
+              "value2": "={{ $('Execute Workflow Trigger').item.json.WooCommerce_Body.body.yoast_head_json.og_description }}"
             }
-          }
+          ]
         },
-        "id": "df5d1b44-2e58-4799-83c5-59975347996a",
-        "name": "Get Product by Remote ID",
-        "type": "n8n-nodes-base.httpRequest",
-        "typeVersion": 4.1,
-        "position": [
-          380,
-          680
-        ],
-        "alwaysOutputData": false,
-        "executeOnce": true,
-        "continueOnFail": true
+        "combineOperation": "any"
       },
-      {
-        "parameters": {
-          "method": "PUT",
-          "url": "=https://api.dev.gosharpei.com/api/products/{{ $('Execute Workflow Trigger').item.json.data.pid }}/variants/{{ $('Execute Workflow Trigger').item.json.data.variants[$('Set5').item.json.counter].pid }}   ",
-          "sendHeaders": true,
-          "headerParameters": {
-            "parameters": [
-              {
-                "name": "Accept",
-                "value": "application/json"
-              },
-              {
-                "name": "Authorization",
-                "value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI5YjkxY2NjZS1mMjg3LTQ2YjUtOWYwNC0zYWIxZmYyMjhjN2UiLCJqdGkiOiI1OWM3NDM1MjllZGIzODlmNTJkYzMzZDQ3ZTIzNjJiYzZkM2U1M2IwZWM5NWU2Njk3ZmMwYTUyNTUyOTNiNTA4NGQ0ZThkNWQ5MDE4NGM1NSIsImlhdCI6MTcxNDQ1MTIyNS44MjY2NzgsIm5iZiI6MTcxNDQ1MTIyNS44MjY2OCwiZXhwIjoxNzQ1OTg3MjI1LjgxODUyOSwic3ViIjoiMjE3Iiwic2NvcGVzIjpbXX0.NhGLzbh5QUQSxpHouK-AmX5zfdwfvGvKY9A_z7ouUAOyb9J7B7GsMvYlheycey0jrJFoWADUoh0ycjk_pbx-g5e1Bm6KAiD26-FSxoS4zIegtW1X7ZYrnmdo9DxDo1wa5pLzOoDsR5IoqhexgVxvTtyyncQLm31LzjCN9sawvSDaIdHuTi_AiDN_5EB9dp7P7GzOCvRv9Ytj8JxN42tO7JmPgk8_MHSlTDjhI23y1XDdOMRIX_xm_R2NUD8YUKxbe8G1GIi5-IQfiN2uBKKfP0WnyMLcCMPzN-fmE2IWB5JdBO1JzVv-KO9kNQ7-imI3W3iOPRB9MrFAvQLu_SOHsT1uiU8zgxUAxxdH-uuo7vJXKJ6OVLA8Nii9zVrg87LrEgMlkgxfy-sJ-6N2tNrUMkVyn89OT6eF1_DXbiZy1LI8KNuH6ksU6XkgSfDc7-HSlje9SbJJ3mrgu1s4oyNBP6HN0pPCqgRDnNvnwXFZkba--rIX7o3zVz7R9eK9GuIvT1det3f9ppJdCf9qzmt-FPrsgR0aAqiS13MxKODCHl9_LK0ijDh6oHgPP9igj89sWJTy_XuzPLfPgTSnl_Ot_lf7fFmDVtfaxR_U5RLOTBHdSUjQSG9zXIvE_wYjhHGOqQ-D48YRWFKLENQk09BKrQjNg9vpfJB9EH2e4Z47hZ4"
-              }
-            ]
-          },
-          "sendBody": true,
-          "specifyBody": "json",
-          "jsonBody": "={  \n  \"status_pid\": \"bbd48b9d-672a-4f0a-8c54-f51af0b2cdd6\", \n  \"title\": \"{{ $('WooCommerce').item.json.name }}\",\n  \"cost\": \"0\",\n  \"selling_price\" : \"{{ $('WooCommerce').item.json.price }}\"\n    }      ",
-          "options": {}
-        },
-        "id": "4bd3cb3f-6f96-446c-909e-fa70b60828da",
-        "name": "Draft a Variant",
-        "type": "n8n-nodes-base.httpRequest",
-        "typeVersion": 4.1,
-        "position": [
-          1860,
-          220
-        ]
-      },
-      {
-        "parameters": {
-          "conditions": {
-            "number": [
-              {
-                "value1": "={{ $json.stock_quantity }}",
-                "operation": "smallerEqual"
-              }
-            ]
-          }
-        },
-        "id": "dcf6087c-0e96-462f-8d14-6dd98b0a4980",
-        "name": "Check Variant Stock",
-        "type": "n8n-nodes-base.if",
-        "typeVersion": 1,
-        "position": [
-          1660,
-          220
-        ]
-      },
-      {
-        "parameters": {
-          "method": "POST",
-          "url": "=https://api.dev.gosharpei.com/api/products/{{ $('Execute Workflow Trigger').item.json.data.pid }}/variants/{{ $('Execute Workflow Trigger').item.json.data.variants[$('Set5').item.json.counter].pid }}/images      ",
-          "sendHeaders": true,
-          "headerParameters": {
-            "parameters": [
-              {
-                "name": "accept",
-                "value": "application/json, text/plain, */*"
-              },
-              {
-                "name": "accept-language",
-                "value": "es-ES,es;q=0.9"
-              },
-              {
-                "name": "authorization",
-                "value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI5YjkxY2NjZS1mMjg3LTQ2YjUtOWYwNC0zYWIxZmYyMjhjN2UiLCJqdGkiOiI1OWM3NDM1MjllZGIzODlmNTJkYzMzZDQ3ZTIzNjJiYzZkM2U1M2IwZWM5NWU2Njk3ZmMwYTUyNTUyOTNiNTA4NGQ0ZThkNWQ5MDE4NGM1NSIsImlhdCI6MTcxNDQ1MTIyNS44MjY2NzgsIm5iZiI6MTcxNDQ1MTIyNS44MjY2OCwiZXhwIjoxNzQ1OTg3MjI1LjgxODUyOSwic3ViIjoiMjE3Iiwic2NvcGVzIjpbXX0.NhGLzbh5QUQSxpHouK-AmX5zfdwfvGvKY9A_z7ouUAOyb9J7B7GsMvYlheycey0jrJFoWADUoh0ycjk_pbx-g5e1Bm6KAiD26-FSxoS4zIegtW1X7ZYrnmdo9DxDo1wa5pLzOoDsR5IoqhexgVxvTtyyncQLm31LzjCN9sawvSDaIdHuTi_AiDN_5EB9dp7P7GzOCvRv9Ytj8JxN42tO7JmPgk8_MHSlTDjhI23y1XDdOMRIX_xm_R2NUD8YUKxbe8G1GIi5-IQfiN2uBKKfP0WnyMLcCMPzN-fmE2IWB5JdBO1JzVv-KO9kNQ7-imI3W3iOPRB9MrFAvQLu_SOHsT1uiU8zgxUAxxdH-uuo7vJXKJ6OVLA8Nii9zVrg87LrEgMlkgxfy-sJ-6N2tNrUMkVyn89OT6eF1_DXbiZy1LI8KNuH6ksU6XkgSfDc7-HSlje9SbJJ3mrgu1s4oyNBP6HN0pPCqgRDnNvnwXFZkba--rIX7o3zVz7R9eK9GuIvT1det3f9ppJdCf9qzmt-FPrsgR0aAqiS13MxKODCHl9_LK0ijDh6oHgPP9igj89sWJTy_XuzPLfPgTSnl_Ot_lf7fFmDVtfaxR_U5RLOTBHdSUjQSG9zXIvE_wYjhHGOqQ-D48YRWFKLENQk09BKrQjNg9vpfJB9EH2e4Z47hZ4"
-              },
-              {
-                "name": "origin",
-                "value": "https://app.dev.gosharpei.com"
-              },
-              {
-                "name": "referer",
-                "value": "https://app.dev.gosharpei.com/"
-              },
-              {
-                "name": "sec-ch-ua",
-                "value": "\"Google Chrome\";v=\"123\", \"Not:A-Brand\";v=\"8\", \"Chromium\";v=\"123\""
-              },
-              {
-                "name": "sec-ch-ua-mobile",
-                "value": "?0"
-              },
-              {
-                "name": "sec-ch-ua-platform",
-                "value": "\"Windows\""
-              },
-              {
-                "name": "sec-fetch-dest",
-                "value": "empty"
-              },
-              {
-                "name": "sec-fetch-mode",
-                "value": "cors"
-              },
-              {
-                "name": "sec-fetch-site",
-                "value": "same-site"
-              },
-              {
-                "name": "user-agent",
-                "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36"
-              }
-            ]
-          },
-          "sendBody": true,
-          "contentType": "multipart-form-data",
-          "bodyParameters": {
-            "parameters": [
-              {
-                "parameterType": "formBinaryData",
-                "name": "attachment",
-                "inputDataFieldName": "data"
-              }
-            ]
-          },
-          "options": {}
-        },
-        "id": "15cfc96d-3c2c-45ca-bb49-012568dfcefb",
-        "name": "Add an image to a product variant1",
-        "type": "n8n-nodes-base.httpRequest",
-        "typeVersion": 4.1,
-        "position": [
-          2500,
-          420
-        ]
-      },
-      {
-        "parameters": {
-          "url": "={{ $('WooCommerce').item.json.images[0].src }}",
-          "sendQuery": true,
-          "queryParameters": {
-            "parameters": [
-              {}
-            ]
-          },
-          "options": {
-            "redirect": {
-              "redirect": {}
+      "id": "bef91bd4-fb41-46e3-aa91-a1f741d6d150",
+      "name": "Check Product WooCommerce1",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        1220,
+        1120
+      ]
+    },
+    {
+      "parameters": {
+        "method": "PUT",
+        "url": "=https://api.{{ $('Execute Workflow Trigger').item.json.env }}.gosharpei.com/api/products/{{ $('Execute Workflow Trigger').item.json.data.pid }} ",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "={{ $('Execute Workflow Trigger').item.json.WooCommerce_Body.query.api_key }}"
+            },
+            {
+              "name": "user-agent",
+              "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36"
             }
-          }
+          ]
         },
-        "id": "97b93fe2-0d36-478c-abfe-4586feca6d4a",
-        "name": "Upload3",
-        "type": "n8n-nodes-base.httpRequest",
-        "typeVersion": 4.1,
-        "position": [
-          2360,
-          420
-        ]
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={  \n  \"status_pid\": \"{{ $json.data.status[1].pid }}\",\n  \"title\" : \"{{ $('Execute Workflow Trigger').item.json.WooCommerce_Body.body.name }}\",\n  \"remote_id\": \"{{ $('Execute Workflow Trigger').item.json.WooCommerce_Body.body.id }}\"\n}\n       ",
+        "options": {}
       },
-      {
-        "parameters": {
-          "method": "DELETE",
-          "url": "=https://api.dev.gosharpei.com/api/images/{{ $('Execute Workflow Trigger').item.json.data.variants[$('Set5').item.json.counter].images[0].pid }}",
-          "sendHeaders": true,
-          "headerParameters": {
-            "parameters": [
-              {
-                "name": "authority",
-                "value": "z908y1zf95.execute-api.us-west-1.amazonaws.com"
-              },
-              {
-                "name": "accept",
-                "value": "application/json, text/plain, */*"
-              },
-              {
-                "name": "accept-language",
-                "value": "es-ES,es;q=0.9"
-              },
-              {
-                "name": "authorization",
-                "value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI5YjkxY2NjZS1mMjg3LTQ2YjUtOWYwNC0zYWIxZmYyMjhjN2UiLCJqdGkiOiI1OWM3NDM1MjllZGIzODlmNTJkYzMzZDQ3ZTIzNjJiYzZkM2U1M2IwZWM5NWU2Njk3ZmMwYTUyNTUyOTNiNTA4NGQ0ZThkNWQ5MDE4NGM1NSIsImlhdCI6MTcxNDQ1MTIyNS44MjY2NzgsIm5iZiI6MTcxNDQ1MTIyNS44MjY2OCwiZXhwIjoxNzQ1OTg3MjI1LjgxODUyOSwic3ViIjoiMjE3Iiwic2NvcGVzIjpbXX0.NhGLzbh5QUQSxpHouK-AmX5zfdwfvGvKY9A_z7ouUAOyb9J7B7GsMvYlheycey0jrJFoWADUoh0ycjk_pbx-g5e1Bm6KAiD26-FSxoS4zIegtW1X7ZYrnmdo9DxDo1wa5pLzOoDsR5IoqhexgVxvTtyyncQLm31LzjCN9sawvSDaIdHuTi_AiDN_5EB9dp7P7GzOCvRv9Ytj8JxN42tO7JmPgk8_MHSlTDjhI23y1XDdOMRIX_xm_R2NUD8YUKxbe8G1GIi5-IQfiN2uBKKfP0WnyMLcCMPzN-fmE2IWB5JdBO1JzVv-KO9kNQ7-imI3W3iOPRB9MrFAvQLu_SOHsT1uiU8zgxUAxxdH-uuo7vJXKJ6OVLA8Nii9zVrg87LrEgMlkgxfy-sJ-6N2tNrUMkVyn89OT6eF1_DXbiZy1LI8KNuH6ksU6XkgSfDc7-HSlje9SbJJ3mrgu1s4oyNBP6HN0pPCqgRDnNvnwXFZkba--rIX7o3zVz7R9eK9GuIvT1det3f9ppJdCf9qzmt-FPrsgR0aAqiS13MxKODCHl9_LK0ijDh6oHgPP9igj89sWJTy_XuzPLfPgTSnl_Ot_lf7fFmDVtfaxR_U5RLOTBHdSUjQSG9zXIvE_wYjhHGOqQ-D48YRWFKLENQk09BKrQjNg9vpfJB9EH2e4Z47hZ4"
-              },
-              {
-                "name": "origin",
-                "value": "https://901.dev.gosharpei.com"
-              },
-              {
-                "name": "referer",
-                "value": "https://901.dev.gosharpei.com/"
-              },
-              {
-                "name": "sec-ch-ua",
-                "value": "\"Chromium\";v=\"122\", \"Not(A:Brand\";v=\"24\", \"Google Chrome\";v=\"122\""
-              },
-              {
-                "name": "sec-ch-ua-mobile",
-                "value": "?0"
-              },
-              {
-                "name": "sec-ch-ua-platform",
-                "value": "\"Windows\""
-              },
-              {
-                "name": "sec-fetch-dest",
-                "value": "empty"
-              },
-              {
-                "name": "sec-fetch-mode",
-                "value": "cors"
-              },
-              {
-                "name": "sec-fetch-site",
-                "value": "cross-site"
-              },
-              {
-                "name": "user-agent",
-                "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36"
-              }
-            ]
-          },
-          "options": {
-            "redirect": {
-              "redirect": {}
+      "id": "0555ad58-0eb8-46f1-a759-a214a009d855",
+      "name": "Draft Product1",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        1020,
+        1020
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "number": [
+            {
+              "value1": "={{ $('Execute Workflow Trigger').item.json.WooCommerce_Body.body.stock_quantity }}",
+              "operation": "smallerEqual"
             }
-          }
-        },
-        "id": "de580205-5b0d-4219-b4cf-cbd6e73c9585",
-        "name": "Delete Image",
-        "type": "n8n-nodes-base.httpRequest",
-        "typeVersion": 4.1,
-        "position": [
-          2200,
-          420
-        ],
-        "continueOnFail": true
+          ]
+        }
       },
-      {
-        "parameters": {
-          "method": "PUT",
-          "url": "=https://api.dev.gosharpei.com/api/products/{{ $('Execute Workflow Trigger').item.json.data.pid }}/variants/{{ $('Execute Workflow Trigger').item.json.data.variants[$('Set5').item.json.counter].pid }} ",
-          "sendHeaders": true,
-          "headerParameters": {
-            "parameters": [
-              {
-                "name": "Accept",
-                "value": "application/json"
-              },
-              {
-                "name": "Authorization",
-                "value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI5YjkxY2NjZS1mMjg3LTQ2YjUtOWYwNC0zYWIxZmYyMjhjN2UiLCJqdGkiOiI1OWM3NDM1MjllZGIzODlmNTJkYzMzZDQ3ZTIzNjJiYzZkM2U1M2IwZWM5NWU2Njk3ZmMwYTUyNTUyOTNiNTA4NGQ0ZThkNWQ5MDE4NGM1NSIsImlhdCI6MTcxNDQ1MTIyNS44MjY2NzgsIm5iZiI6MTcxNDQ1MTIyNS44MjY2OCwiZXhwIjoxNzQ1OTg3MjI1LjgxODUyOSwic3ViIjoiMjE3Iiwic2NvcGVzIjpbXX0.NhGLzbh5QUQSxpHouK-AmX5zfdwfvGvKY9A_z7ouUAOyb9J7B7GsMvYlheycey0jrJFoWADUoh0ycjk_pbx-g5e1Bm6KAiD26-FSxoS4zIegtW1X7ZYrnmdo9DxDo1wa5pLzOoDsR5IoqhexgVxvTtyyncQLm31LzjCN9sawvSDaIdHuTi_AiDN_5EB9dp7P7GzOCvRv9Ytj8JxN42tO7JmPgk8_MHSlTDjhI23y1XDdOMRIX_xm_R2NUD8YUKxbe8G1GIi5-IQfiN2uBKKfP0WnyMLcCMPzN-fmE2IWB5JdBO1JzVv-KO9kNQ7-imI3W3iOPRB9MrFAvQLu_SOHsT1uiU8zgxUAxxdH-uuo7vJXKJ6OVLA8Nii9zVrg87LrEgMlkgxfy-sJ-6N2tNrUMkVyn89OT6eF1_DXbiZy1LI8KNuH6ksU6XkgSfDc7-HSlje9SbJJ3mrgu1s4oyNBP6HN0pPCqgRDnNvnwXFZkba--rIX7o3zVz7R9eK9GuIvT1det3f9ppJdCf9qzmt-FPrsgR0aAqiS13MxKODCHl9_LK0ijDh6oHgPP9igj89sWJTy_XuzPLfPgTSnl_Ot_lf7fFmDVtfaxR_U5RLOTBHdSUjQSG9zXIvE_wYjhHGOqQ-D48YRWFKLENQk09BKrQjNg9vpfJB9EH2e4Z47hZ4"
-              }
-            ]
-          },
-          "sendBody": true,
-          "specifyBody": "json",
-          "jsonBody": "={\"status_pid\":\"{{ $('Get Status2').item.json.data.status[0].pid }}\",\n\"title\":\"{{ $('Set5').item.json.name }}\",\n\"cost\":\"0\",\n\"SKU\": \"{{ $('WooCommerce').item.json.sku }}\",\n\"selling_price\":\"{{ $('Set5').item.json.price }}\"\n}            ",
-          "options": {}
-        },
-        "id": "771966c0-db3d-4b85-b294-28986177d202",
-        "name": "Update a Variant",
-        "type": "n8n-nodes-base.httpRequest",
-        "typeVersion": 4.1,
-        "position": [
-          2040,
-          420
-        ]
-      },
-      {
-        "parameters": {
-          "url": "https://api.dev.gosharpei.com/api/status",
-          "sendQuery": true,
-          "queryParameters": {
-            "parameters": [
-              {
-                "name": "type",
-                "value": "product"
-              }
-            ]
-          },
-          "sendHeaders": true,
-          "headerParameters": {
-            "parameters": [
-              {
-                "name": "authority",
-                "value": "api.dev.gosharpei.com"
-              },
-              {
-                "name": "accept",
-                "value": "application/json, text/plain, */*"
-              },
-              {
-                "name": "accept-language",
-                "value": "en-US,en;q=0.9"
-              },
-              {
-                "name": "origin",
-                "value": "https://appdev.gosharpei.com"
-              },
-              {
-                "name": "referer",
-                "value": "https://appdev.gosharpei.com/"
-              },
-              {
-                "name": "sec-ch-ua",
-                "value": "\"Chromium\";v=\"104\", \" Not A;Brand\";v=\"99\", \"Google Chrome\";v=\"104\""
-              },
-              {
-                "name": "sec-ch-ua-mobile",
-                "value": "?0"
-              },
-              {
-                "name": "sec-ch-ua-platform",
-                "value": "\"Linux\""
-              },
-              {
-                "name": "sec-fetch-dest",
-                "value": "empty"
-              },
-              {
-                "name": "sec-fetch-mode",
-                "value": "cors"
-              },
-              {
-                "name": "sec-fetch-site",
-                "value": "same-site"
-              },
-              {
-                "name": "user-agent",
-                "value": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36"
-              }
-            ]
-          },
-          "options": {
-            "redirect": {
-              "redirect": {}
+      "id": "c863d1a8-7a1e-4ba9-ade2-cd43cc84388d",
+      "name": "Check Stock1",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        700,
+        1120
+      ]
+    },
+    {
+      "parameters": {
+        "url": "=https://api.{{ $('Execute Workflow Trigger').item.json.env }}.gosharpei.com/api/status  ",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "type",
+              "value": "product"
             }
-          }
+          ]
         },
-        "id": "c0c4b678-48fd-4e0e-b302-1ffe5debdef4",
-        "name": "Get Status2",
-        "type": "n8n-nodes-base.httpRequest",
-        "typeVersion": 4.1,
-        "position": [
-          1860,
-          420
-        ]
-      },
-      {
-        "parameters": {
-          "conditions": {
-            "number": [
-              {
-                "value1": "={{ $json.price}}",
-                "operation": "notEqual",
-                "value2": "={{ $('Execute Workflow Trigger').item.json.data.variants[$('Set5').item.json.counter].selling_price.slice(0,2)}}"
-              },
-              {
-                "value1": "={{ $json.sku }}",
-                "operation": "notEqual",
-                "value2": "={{ $('Execute Workflow Trigger').item.json.data.variants[$json.counter].SKU }}"
-              }
-            ],
-            "string": [
-              {
-                "value1": "={{ $json.images[0].src }}",
-                "operation": "notContains",
-                "value2": "={{ $json.images[0].name }}"
-              }
-            ]
-          },
-          "combineOperation": "any"
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "authority",
+              "value": "api.dev.gosharpei.com"
+            },
+            {
+              "name": "accept",
+              "value": "application/json, text/plain, */*"
+            },
+            {
+              "name": "accept-language",
+              "value": "en-US,en;q=0.9"
+            },
+            {
+              "name": "origin",
+              "value": "https://appdev.gosharpei.com"
+            },
+            {
+              "name": "referer",
+              "value": "https://appdev.gosharpei.com/"
+            },
+            {
+              "name": "sec-ch-ua",
+              "value": "\"Chromium\";v=\"104\", \" Not A;Brand\";v=\"99\", \"Google Chrome\";v=\"104\""
+            },
+            {
+              "name": "sec-ch-ua-mobile",
+              "value": "?0"
+            },
+            {
+              "name": "sec-ch-ua-platform",
+              "value": "\"Linux\""
+            },
+            {
+              "name": "sec-fetch-dest",
+              "value": "empty"
+            },
+            {
+              "name": "sec-fetch-mode",
+              "value": "cors"
+            },
+            {
+              "name": "sec-fetch-site",
+              "value": "same-site"
+            },
+            {
+              "name": "user-agent",
+              "value": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36"
+            }
+          ]
         },
-        "id": "8bf834ed-5620-4503-85ce-36b55d2cdf8a",
-        "name": "IF",
-        "type": "n8n-nodes-base.if",
-        "typeVersion": 1,
-        "position": [
-          1660,
-          420
-        ]
-      },
-      {
-        "parameters": {
-          "values": {
-            "number": [
-              {
-                "name": "counter",
-                "value": "={{ $runIndex }}"
-              }
-            ]
-          },
-          "options": {}
-        },
-        "id": "c1f9372d-f911-43ff-8ade-41b72758fc51",
-        "name": "Set5",
-        "type": "n8n-nodes-base.set",
-        "typeVersion": 2,
-        "position": [
-          1480,
-          420
-        ]
-      },
-      {
-        "parameters": {
-          "operation": "get",
-          "productId": "={{ $json[\"WooCommerce_Body.body.variations\"] }}"
-        },
-        "id": "ddba581f-5a45-47c6-9a84-dff33ddaad9b",
-        "name": "WooCommerce",
-        "type": "n8n-nodes-base.wooCommerce",
-        "typeVersion": 1,
-        "position": [
-          1300,
-          420
-        ],
-        "credentials": {
-          "wooCommerceApi": {
-            "id": "mTv9Ol4GUWyVymen",
-            "name": "WooCommerce account 6"
+        "options": {
+          "redirect": {
+            "redirect": {}
           }
         }
       },
-      {
-        "parameters": {
-          "options": {}
-        },
-        "id": "c2b19e28-8e0d-44b8-bfe9-b59634e360f7",
-        "name": "Set",
-        "type": "n8n-nodes-base.set",
-        "typeVersion": 2,
-        "position": [
-          1120,
-          420
-        ]
+      "id": "2fd70602-8425-450f-8f4f-44a89f3c01c7",
+      "name": "Get Status",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        360,
+        1120
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "return {\n  WooCommerce_Body: items[0].json.WooCommerce_Body\n};\n"
       },
-      {
-        "parameters": {
-          "batchSize": 1,
-          "options": {}
+      "id": "921278b5-87d0-4adc-be79-b67fdfb804cc",
+      "name": "Get Full Json3",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        160,
+        1120
+      ]
+    },
+    {
+      "parameters": {
+        "method": "PUT",
+        "url": "=https://api.{{ $('Execute Workflow Trigger').item.json.env }}.gosharpei.com/api/products/{{ $('Execute Workflow Trigger').item.json.data.pid }}/variants/{{ $('Execute Workflow Trigger').item.json.data.variants[0].pid }}        ",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Accept",
+              "value": "application/json"
+            },
+            {
+              "name": "Authorization",
+              "value": "={{ $('Execute Workflow Trigger').item.json.WooCommerce_Body.query.api_key }}"
+            }
+          ]
         },
-        "id": "98871fdd-c309-48d3-90fb-4370dde361d0",
-        "name": "Split In Batches1",
-        "type": "n8n-nodes-base.splitInBatches",
-        "typeVersion": 1,
-        "position": [
-          940,
-          420
-        ]
-      },
-      {
-        "parameters": {
-          "fieldToSplitOut": "WooCommerce_Body.body.variations",
-          "options": {}
-        },
-        "id": "c43184b0-f420-48b8-85b2-3481a6a19fdd",
-        "name": "Item Lists",
-        "type": "n8n-nodes-base.itemLists",
-        "typeVersion": 3,
-        "position": [
-          740,
-          420
-        ]
-      },
-      {
-        "parameters": {
-          "conditions": {
-            "number": [
-              {
-                "value1": "={{ $('Execute Workflow Trigger').item.json.data.variants.length }}",
-                "operation": "equal",
-                "value2": "={{ $('Execute Workflow Trigger').item.json.WooCommerce_Body.body.variations.length }}"
-              }
-            ]
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n    \"selling_price\": \"{{ $('Execute Workflow Trigger').item.json.WooCommerce_Body.body.sale_price }}\",\n    \"title\": \"{{ $('Execute Workflow Trigger').item.json.WooCommerce_Body.body.name.replace(/['\"]+/g,'') }}\",\n    \"remote_id\": \"{{ $('Execute Workflow Trigger').item.json.WooCommerce_Body.body.id }}\",\n    \"status_pid\" : \"{{ $('Execute Workflow Trigger').item.json.WooCommerce_Body.body.stock_quantity > 0 ? 'f1554bbc-3159-4044-8974-1da26a573ea3' : '8ccef96e-5eb3-4b66-bd16-86fec78ab575'}}\",\n    \"cost\": 0,\n    \"SKU\": \"{{ $('Execute Workflow Trigger').item.json.WooCommerce_Body?.body?.sku ? $('Execute Workflow Trigger').item.json.WooCommerce_Body.body.sku : 'n/a' }}\"\n\n  }            ",
+        "options": {
+          "batching": {
+            "batch": {
+              "batchSize": 0,
+              "batchInterval": 3000
+            }
           }
-        },
-        "id": "0dedf629-ab82-48fe-8c4c-0d18e4038b13",
-        "name": "IF1",
-        "type": "n8n-nodes-base.if",
-        "typeVersion": 1,
-        "position": [
-          560,
-          420
-        ]
+        }
       },
-      {
-        "parameters": {
-          "jsCode": "return {\n  WooCommerce_Body: items[0].json.WooCommerce_Body\n};\n"
-        },
-        "id": "8b8cb2d1-39bf-499a-ab3a-5198f241b5c9",
-        "name": "Get Full Json1",
-        "type": "n8n-nodes-base.code",
-        "typeVersion": 2,
-        "position": [
-          380,
-          420
-        ]
-      },
-      {
-        "parameters": {},
-        "id": "a70beea2-cb56-4353-985c-13f9ced85985",
-        "name": "Execute Workflow Trigger",
-        "type": "n8n-nodes-base.executeWorkflowTrigger",
-        "typeVersion": 1,
-        "position": [
-          140,
-          420
-        ]
-      }
-    ],
-    "connections": {
-      "Check Product WooCommerce": {
-        "main": [
-          [
+      "id": "86ef7ebe-ad43-4bc8-b300-1e6c59d08936",
+      "name": "Update variant1",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        2500,
+        1580
+      ],
+      "retryOnFail": false,
+      "maxTries": 2
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://api.{{ $('Execute Workflow Trigger').item.json.env }}.gosharpei.com/api/products/{{ $('Execute Workflow Trigger').item.json.data.pid }}/variants/{{ $('Execute Workflow Trigger').item.json.data.variants[0].pid }}/images                ",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
             {
-              "node": "Update Product",
-              "type": "main",
-              "index": 0
+              "name": "Authorization",
+              "value": "={{ $('Execute Workflow Trigger').item.json.WooCommerce_Body.query.api_key }}"
             }
           ]
-        ]
-      },
-      "Check Stock": {
-        "main": [
-          [
+        },
+        "sendBody": true,
+        "contentType": "multipart-form-data",
+        "bodyParameters": {
+          "parameters": [
             {
-              "node": "Draft Product",
-              "type": "main",
-              "index": 0
+              "parameterType": "formBinaryData",
+              "name": "attachment",
+              "inputDataFieldName": "data"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "5308434c-8017-4aaf-b073-cc3106fd6424",
+      "name": "Add Image2",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        2300,
+        1580
+      ],
+      "retryOnFail": true,
+      "maxTries": 2
+    },
+    {
+      "parameters": {
+        "url": "={{ $('Execute Workflow Trigger').item.json.WooCommerce_Body.body.images[0].src }}",
+        "options": {}
+      },
+      "id": "312d50c3-196e-4a54-9d54-f2e6f6d56ca9",
+      "name": "Upload2",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        2120,
+        1580
+      ],
+      "retryOnFail": true,
+      "maxTries": 2
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "a576428b-ad16-4417-aa93-9a39b1976c21",
+              "leftValue": "={{ $('Execute Workflow Trigger').item.json.data.variants[0].image_url }}",
+              "rightValue": "=https://assets.gosharpei.com/placeholders/empty_image.svg",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
             }
           ],
-          [
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "1503d12f-9d5c-4181-95a5-f32bf6e2c027",
+      "name": "If no image",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        1880,
+        1580
+      ]
+    },
+    {
+      "parameters": {
+        "method": "PUT",
+        "url": "=https://api.{{ $('Execute Workflow Trigger').item.json.env }}.gosharpei.com/api/products/{{ $('Execute Workflow Trigger').item.json.data.pid }} ",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
             {
-              "node": "Check Product WooCommerce",
-              "type": "main",
-              "index": 0
+              "name": "Authorization",
+              "value": "={{ $('Execute Workflow Trigger').item.json.WooCommerce_Body.query.api_key }}"
             }
           ]
-        ]
-      },
-      "Get Status1": {
-        "main": [
-          [
-            {
-              "node": "Check Stock",
-              "type": "main",
-              "index": 0
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"pid\": \"{{ $('Execute Workflow Trigger').item.json.data.pid }}\",\n  \"title\": \"{{ $('Execute Workflow Trigger').item.json.WooCommerce_Body.body.name.replace(/['\"]+/g,'') }}\",\n  \"body\": \"{{ $('Execute Workflow Trigger').item.json.WooCommerce_Body.body.description.replace(/['\"]+/g,'').replace(/<[^>]+>/g, '').replace(/\\n/g, ' ') }}\",\n  \"status_pid\" : \"{{ $('Get Status').item.json.data.status[0].pid }}\"\n}\n               ",
+        "options": {
+          "batching": {
+            "batch": {
+              "batchSize": 0,
+              "batchInterval": 3000
             }
-          ]
-        ]
+          }
+        }
       },
-      "Set1": {
-        "main": [
-          [
+      "id": "17247aea-b683-4b45-92ac-9db6ad6a51c1",
+      "name": "Update Product",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        1880,
+        1740
+      ],
+      "retryOnFail": false,
+      "maxTries": 2
+    },
+    {
+      "parameters": {
+        "method": "PUT",
+        "url": "=https://api.{{ $('Execute Workflow Trigger').item.json.env }}.gosharpei.com/api/products/{{ $('Execute Workflow Trigger').item.json.data.pid }}/variants/{{ $('Execute Workflow Trigger').item.json.data.variants[0].pid }}     ",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
             {
-              "node": "Execute Workflow",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      },
-      "Get Full Json": {
-        "main": [
-          [
-            {
-              "node": "Set1",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      },
-      "Set2": {
-        "main": [
-          [
-            {
-              "node": "Split In Batches",
-              "type": "main",
-              "index": 0
+              "name": "Accept",
+              "value": "application/json"
             },
             {
-              "node": "delete a variant",
-              "type": "main",
-              "index": 0
+              "name": "Authorization",
+              "value": "={{ $('Execute Workflow Trigger').item.json.WooCommerce_Body.query.api_key }}"
             }
           ]
-        ]
-      },
-      "Split In Batches": {
-        "main": [
-          [
-            {
-              "node": "Set2",
-              "type": "main",
-              "index": 0
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n    \"selling_price\": \"{{ $('Execute Workflow Trigger').item.json.WooCommerce_Body.body.sale_price }}\",\n    \"title\": \"{{ $('Execute Workflow Trigger').item.json.WooCommerce_Body.body.name.replace(/['\"]+/g,'') }}\",\n    \"remote_id\": \"{{ $('Execute Workflow Trigger').item.json.WooCommerce_Body.body.id }}\",\n    \"status_pid\" : \"{{ $('Get Status').item.json.data.status[0].pid }}\",\n    \"cost\": 0,\n    \"SKU\": \"{{ $('Execute Workflow Trigger').item.json.WooCommerce_Body?.body?.sku ? $('Execute Workflow Trigger').item.json.WooCommerce_Body.body.sku : 'n/a' }}\"\n}                           ",
+        "options": {
+          "batching": {
+            "batch": {
+              "batchSize": 0,
+              "batchInterval": 3000
             }
-          ]
-        ]
+          }
+        }
       },
-      "Item Lists1": {
-        "main": [
-          [
+      "id": "6ee57117-7960-422b-89d5-0d0163acaecc",
+      "name": "Update a variant7",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        1680,
+        1740
+      ],
+      "retryOnFail": false,
+      "maxTries": 2
+    },
+    {
+      "parameters": {
+        "method": "PUT",
+        "url": "=https://api.{{ $('Execute Workflow Trigger').item.json.env }}.gosharpei.com/api/products/{{ $('Execute Workflow Trigger').item.json.data.pid }} ",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
             {
-              "node": "Split In Batches",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      },
-      "Get Product by Remote ID": {
-        "main": [
-          [
-            {
-              "node": "Item Lists1",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      },
-      "Check Variant Stock": {
-        "main": [
-          [
-            {
-              "node": "Draft a Variant",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      },
-      "Upload3": {
-        "main": [
-          [
-            {
-              "node": "Add an image to a product variant1",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      },
-      "Delete Image": {
-        "main": [
-          [
-            {
-              "node": "Upload3",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      },
-      "Update a Variant": {
-        "main": [
-          [
-            {
-              "node": "Delete Image",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      },
-      "Get Status2": {
-        "main": [
-          [
-            {
-              "node": "Update a Variant",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      },
-      "IF": {
-        "main": [
-          [
-            {
-              "node": "Get Status2",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      },
-      "Set5": {
-        "main": [
-          [
-            {
-              "node": "IF",
-              "type": "main",
-              "index": 0
+              "name": "accept",
+              "value": "application/json, text/plain, */*"
             },
             {
-              "node": "Check Variant Stock",
-              "type": "main",
-              "index": 0
+              "name": "Authorization",
+              "value": "={{ $('Execute Workflow Trigger').item.json.WooCommerce_Body.query.api_key }}"
             }
           ]
-        ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"pid\": \"{{ $('Execute Workflow Trigger').item.json.data.pid }}\",\n  \"title\": \"{{ $('Execute Workflow Trigger').item.json.WooCommerce_Body.body.name.replace(/['\"]+/g,'') }}\",\n  \"body\": \"{{ $('Execute Workflow Trigger').item.json.WooCommerce_Body.body.description.replace(/['\"]+/g,'').replace(/<[^>]+>/g, '').replace(/\\n/g, ' ') }}\",\n  \"status_pid\" : \"{{ $('Get Status').item.json.data.status[1].pid }}\"\n}\n                   \n\n ",
+        "options": {}
       },
-      "WooCommerce": {
-        "main": [
-          [
+      "id": "3d99777c-f0a7-4853-8dca-cdc0bcfb1522",
+      "name": "Draft Product",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        1680,
+        1580
+      ],
+      "retryOnFail": true,
+      "maxTries": 2
+    },
+    {
+      "parameters": {
+        "method": "PUT",
+        "url": "=https://api.{{ $('Execute Workflow Trigger').item.json.env }}.gosharpei.com/api/products/{{ $('Execute Workflow Trigger').item.json.data.pid }}/variants/{{ $('Execute Workflow Trigger').item.json.data.variants[0].pid }} ",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
             {
-              "node": "Set5",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      },
-      "Set": {
-        "main": [
-          [
-            {
-              "node": "Split In Batches1",
-              "type": "main",
-              "index": 0
+              "name": "Accept",
+              "value": "application/json"
             },
             {
-              "node": "WooCommerce",
-              "type": "main",
-              "index": 0
+              "name": "Authorization",
+              "value": "={{ $('Execute Workflow Trigger').item.json.WooCommerce_Body.query.api_key }}"
             }
           ]
-        ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n    \"selling_price\": \"{{ $('Execute Workflow Trigger').item.json.WooCommerce_Body.body.price }}\",\n    \"title\": \"{{ $('Execute Workflow Trigger').item.json.WooCommerce_Body.body.name.replace(/['\"]+/g,'') }}\",\n    \"remote_id\": \"{{ $('Execute Workflow Trigger').item.json.WooCommerce_Body.body.id }}\",\n    \"status_pid\" : \"{{ $('Get Status').item.json.data.status[1].pid }}\",\n    \"cost\": 0\n\n  }                   ",
+        "options": {}
       },
-      "Split In Batches1": {
-        "main": [
-          [
+      "id": "e6fba04b-19f8-49ef-8136-3da2cb6b0ae8",
+      "name": "Draft default variant",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        1420,
+        1700
+      ],
+      "retryOnFail": true,
+      "maxTries": 2
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
             {
-              "node": "Set",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      },
-      "Item Lists": {
-        "main": [
-          [
-            {
-              "node": "Split In Batches1",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      },
-      "IF1": {
-        "main": [
-          [
-            {
-              "node": "Item Lists",
-              "type": "main",
-              "index": 0
+              "id": "29a3d429-1022-4690-94fd-696badbbb24c",
+              "leftValue": "={{ $('Execute Workflow Trigger').item.json.WooCommerce_Body.body.stock_quantity }}",
+              "rightValue": 0,
+              "operator": {
+                "type": "number",
+                "operation": "lte"
+              }
             }
           ],
-          [
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "6c095b0f-01b5-47c1-ba8a-4509db663b67",
+      "name": "If7",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        1220,
+        1700
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "number": [
             {
-              "node": "Get Product by Remote ID",
-              "type": "main",
-              "index": 0
+              "value1": "={{ $('Execute Workflow Trigger').item.json.data.variants_count }}",
+              "operation": "equal",
+              "value2": 1
+            }
+          ],
+          "string": [
+            {
+              "value1": "={{ $('Execute Workflow Trigger').item.json.WooCommerce_Body.body.type }}",
+              "value2": "simple"
+            }
+          ]
+        }
+      },
+      "id": "3f5cccbb-f4e7-44cf-bccb-941d853e2b6f",
+      "name": "IF equal 1",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        1020,
+        1700
+      ]
+    },
+    {
+      "parameters": {
+        "url": "=https://api.{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.env }}.gosharpei.com/api/products/{{ $('Execute Workflow Trigger').item.json.data.pid }}/variants/{{ $('Create Deafault Variant').item.json.data[0].pid }}  ",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Accept",
+              "value": "application/json"
             },
             {
-              "node": "Get Full Json",
-              "type": "main",
-              "index": 0
+              "name": "Authorization",
+              "value": "={{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.headers.authorization }}"
             }
           ]
-        ]
+        },
+        "options": {
+          "redirect": {
+            "redirect": {}
+          }
+        }
       },
-      "Get Full Json1": {
-        "main": [
-          [
+      "id": "f41d1147-56c3-4d9b-b039-88db7fa6744f",
+      "name": "validate",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2120,
+        1400
+      ]
+    },
+    {
+      "parameters": {
+        "method": "PUT",
+        "url": "=https://api.{{ $('Execute Workflow Trigger').item.json.env }}.gosharpei.com/api/products/{{ $('Execute Workflow Trigger').item.json.data.pid }}/variants/{{ $('Create Deafault Variant').item.json.data[0].pid }}       ",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
             {
-              "node": "IF1",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      },
-      "Execute Workflow Trigger": {
-        "main": [
-          [
-            {
-              "node": "Get Full Json1",
-              "type": "main",
-              "index": 0
+              "name": "Accept",
+              "value": "application/json"
             },
             {
-              "node": "Get Status1",
-              "type": "main",
-              "index": 0
+              "name": "Authorization",
+              "value": "={{ $('Execute Workflow Trigger').item.json.WooCommerce_Body.query.api_key }}"
             }
           ]
-        ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n    \"selling_price\": \"{{ $('Create Deafault Variant').item.json.data[0].selling_price }}\",\n    \"title\": \"{{ $('Execute Workflow Trigger').item.json.WooCommerce_Body.body.name.replace(/['\"]+/g,'') }}\",\n    \"remote_id\": \"{{ $('Create Deafault Variant').item.json.data[0].remote_id }}\",\n    \"status_pid\" : \"{{ $('Execute Workflow Trigger').item.json.WooCommerce_Body.body.stock_quantity > 0 ? $('Get Status').item.json.data.status[0].pid : $('Get Status').item.json.data.status[1].pid}}\",\n    \"cost\": 0,\n    \"SKU\": \"{{ $('Execute Workflow Trigger').item.json.WooCommerce_Body?.body?.sku ? $('Execute Workflow Trigger').item.json.WooCommerce_Body.body.sku : 'n/a' }}\"\n    \n\n  }  ",
+        "options": {}
+      },
+      "id": "5f9db335-f079-4273-8b71-e3e8aaed5e4e",
+      "name": "Update variant",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        1880,
+        1400
+      ],
+      "retryOnFail": false,
+      "maxTries": 2
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://api.{{ $('Execute Workflow Trigger').item.json.env }}.gosharpei.com/api/products/{{ $('Execute Workflow Trigger').item.json.data.pid }}/variants/{{ $('Create Deafault Variant').item.json.data[0].pid }}/images               ",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "={{ $('Execute Workflow Trigger').item.json.WooCommerce_Body.query.api_key }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "multipart-form-data",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "parameterType": "formBinaryData",
+              "name": "attachment",
+              "inputDataFieldName": "data"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "747b93f4-d003-4f58-beff-8d832229a5a3",
+      "name": "Add Image1",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        1680,
+        1400
+      ],
+      "retryOnFail": true,
+      "maxTries": 2
+    },
+    {
+      "parameters": {
+        "url": "={{ $('Execute Workflow Trigger').item.json.WooCommerce_Body.body.images[0].src }}",
+        "options": {}
+      },
+      "id": "b80f0081-a394-4010-b657-83adae763264",
+      "name": "Upload1",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        1420,
+        1400
+      ],
+      "retryOnFail": true,
+      "maxTries": 2
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://api.{{ $('Execute Workflow Trigger').item.json.env }}.gosharpei.com/api/products/{{ $('Execute Workflow Trigger').item.json.data.pid }}/variants/multiple          ",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Accept",
+              "value": "application/json"
+            },
+            {
+              "name": "Authorization",
+              "value": "={{ $('Execute Workflow Trigger').item.json.WooCommerce_Body.query.api_key }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "=[\n  {\n    \"selling_price\": \"{{ $('Execute Workflow Trigger').item.json.WooCommerce_Body.body.sale_price}}\",\n    \"title\": \"{{ $('Execute Workflow Trigger').item.json.WooCommerce_Body.body.name.replace(/['\"]+/g,'').replace(/<[^>]+>/g, '').replace(/\\n/g, ' ')  }}\",\n    \"remote_id\": \"{{ $('Execute Workflow Trigger').item.json.WooCommerce_Body.body.id }}\",\n    \"status_pid\" : \"{{ $('Get Status').item.json.data.status[0].pid }}\",\n    \"cost\": 0\n\n  }\n]      \n                    ",
+        "options": {}
+      },
+      "id": "9b349e66-7909-4b5e-b051-77d16c0c77f3",
+      "name": "Create Deafault Variant",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        1220,
+        1400
+      ],
+      "retryOnFail": true,
+      "maxTries": 2
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "number": [
+            {
+              "value1": "={{ $('Execute Workflow Trigger').item.json.data.variants_count }}",
+              "operation": "equal"
+            }
+          ],
+          "string": [
+            {
+              "value1": "={{ $('Execute Workflow Trigger').item.json.WooCommerce_Body.body.type }}",
+              "value2": "simple"
+            }
+          ]
+        }
+      },
+      "id": "c0cf4fc8-5dea-484c-bad0-b63cca51ff6b",
+      "name": "IF equal ",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        1020,
+        1400
+      ]
+    },
+    {
+      "parameters": {
+        "content": "$2y$10$Z.PtkWIp./jqB.JlH5mq2uMvr2ifcAc2RutXhSFljCZvbb8wU9R9i"
+      },
+      "id": "b5a14b72-0c0b-4a05-a878-61336455e84e",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1680,
+        1040
+      ]
+    },
+    {
+      "parameters": {
+        "method": "PUT",
+        "url": "=https://api.{{ $('Execute Workflow Trigger').item.json.env }}.gosharpei.com/api/products/{{ $('Execute Workflow Trigger').item.json.data.pid }}/variants/{{ $('Execute Workflow Trigger').item.json.data.variants[$('Set6').item.json.counter].pid }}    ",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Accept",
+              "value": "application/json"
+            },
+            {
+              "name": "Authorization",
+              "value": "={{ $('Execute Workflow Trigger').item.json.WooCommerce_Body.query.api_key }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n    \"selling_price\": \"{{ $json.price }}\",\n    \"title\": \"{{ $('Execute Workflow Trigger').item.json.WooCommerce_Body.body.name }} / {{ $json.attributes[0].option }}\",\n    \"remote_id\": \"{{ $json.id }}\",\n    \"status_pid\" : \"{{ $('Get Status').item.json.data.status[0].pid }}\",\n    \"cost\": 0,\n    \"SKU\": \"{{ $json.sku  ? $json.sku  : 'n/a' }}\",\n    \"barcode\": \"n/a\"\n\n  }                       ",
+        "options": {}
+      },
+      "id": "1815a840-0d7b-4256-9c83-0e4327d10568",
+      "name": "Update a variant",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        3300,
+        2040
+      ],
+      "retryOnFail": true,
+      "maxTries": 2
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "f55abc1a-0001-4624-b044-6d39ee160bdd",
+              "leftValue": "={{ $('Execute Workflow Trigger').item.json.data.variants[$('Set6').item.json.counter].selling_price }}",
+              "rightValue": "={{ $json.price }}",
+              "operator": {
+                "type": "string",
+                "operation": "notEquals"
+              }
+            },
+            {
+              "id": "9e199800-51eb-460d-8068-1d86379824da",
+              "leftValue": "={{ $('Execute Workflow Trigger').item.json.data.variants[$('Set6').item.json.counter].title }}",
+              "rightValue": "={{ $json.name }}",
+              "operator": {
+                "type": "string",
+                "operation": "notEquals"
+              }
+            },
+            {
+              "id": "fcd269ed-4515-42b9-9abf-92d45eea9e54",
+              "leftValue": "={{ $('Execute Workflow Trigger').item.json.data.variants[$('Set6').item.json.counter].status.name }}",
+              "rightValue": "Draft",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "options": {}
+      },
+      "id": "5c61e12b-95f0-4aca-878f-4fc1bb59daf0",
+      "name": "If",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        3080,
+        2040
+      ]
+    },
+    {
+      "parameters": {
+        "method": "PUT",
+        "url": "=https://api.{{ $('Execute Workflow Trigger').item.json.env }}.gosharpei.com/api/products/{{ $('Execute Workflow Trigger').item.json.data.pid }}/variants/{{ $('Execute Workflow Trigger').item.json.data.variants[$('Set6').item.json.counter].pid }}    ",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Accept",
+              "value": "application/json"
+            },
+            {
+              "name": "Authorization",
+              "value": "={{ $('Execute Workflow Trigger').item.json.WooCommerce_Body.query.api_key }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n    \"selling_price\": \"{{ $json.price }}\",\n    \"title\": \"{{ $('Execute Workflow Trigger').item.json.data.title }} / {{ $json.attributes[0].option }}\",\n    \"remote_id\": \"{{ $json.id }}\",\n    \"status_pid\" : \"{{ $('Get Status').item.json.data.status[1].pid }}\",\n    \"cost\": 0,\n    \"SKU\": \"{{ $json.sku ? $json.sku : 'n/a' }}\",\n    \"barcode\": \"n/a\"\n  }                     ",
+        "options": {}
+      },
+      "id": "7bd16c46-8ff2-4d47-9d12-0eb2e9e89938",
+      "name": "Update a variant1",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        3080,
+        1860
+      ],
+      "retryOnFail": true,
+      "maxTries": 2
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "29a3d429-1022-4690-94fd-696badbbb24c",
+              "leftValue": "={{ $('WooCommerce').item.json.stock_quantity }}",
+              "rightValue": 0,
+              "operator": {
+                "type": "number",
+                "operation": "lte"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "9aec6df1-c15c-4a45-9f6e-c71c13019ff0",
+      "name": "If2",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        2900,
+        2040
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "775a315f-6128-4c04-a71b-8a298a997ab7",
+              "leftValue": "={{ $json.activeVariantsCount }}",
+              "rightValue": "={{ $('Execute Workflow Trigger').item.json.WooCommerce_Body.body.variations.length }}",
+              "operator": {
+                "type": "number",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "70055664-b660-4c2e-83bf-a5b4c49d8987",
+      "name": "If10",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        1440,
+        2040
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## Woocommerce",
+        "color": 4
+      },
+      "id": "1a2ac811-0764-4faf-83c2-07da33a97163",
+      "name": "Sticky Note1",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        3460,
+        2280
+      ]
+    },
+    {
+      "parameters": {
+        "method": "PUT",
+        "url": "=https://api.{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.env }}.gosharpei.com/api/products/{{ $('Execute Workflow Trigger').item.json.data.pid }}/variants/{{ $('Loop Over Items1').item.json.pid }}\n ",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Accept",
+              "value": "application/json"
+            },
+            {
+              "name": "Authorization",
+              "value": "={{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.headers.authorization }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n    \"selling_price\": \"{{ $('Loop Over Items1').item.json.selling_price }}\",\n    \"title\": \"{{ $('Loop Over Items1').item.json.title.replace(/['\"]+/g, '') }}\",\n    \"remote_id\": \"{{ $('Loop Over Items1').item.json.remote_id }}\",\n    \"status_pid\" : \"d486da45-af0e-45e5-92ab-319a7fe7e782\",\n    \"cost\": 0\n\n  }                   ",
+        "options": {}
+      },
+      "id": "ed6c942b-e1cf-4667-92c6-f43ad96a8679",
+      "name": "Archive  variant",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        2560,
+        2300
+      ],
+      "retryOnFail": true,
+      "maxTries": 2
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "ddcea84e-3907-491c-8560-283840f30272",
+      "name": "Edit Fields3",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2340,
+        2300
+      ]
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "fad6652c-1295-42b2-b06c-0c8dffc0e69a",
+      "name": "Loop Over Items1",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        2120,
+        2300
+      ]
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "nonMatchingVariants",
+        "options": {}
+      },
+      "id": "77f3f7f1-da1a-45af-aef3-59b4fdc45e98",
+      "name": "Split Out1",
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        1840,
+        2300
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = $input.all();\n\n// Imprimir los datos recibidos para verificar la estructura\nconsole.log('Datos recibidos:', items);\n\nconst result = items.map(item => {\n    // Imprimir el contenido de cada item para verificar su estructura\n    console.log('Item:', item);\n\n    // Verificar que el objeto tiene la propiedad 'nonMatchingVariants'\n    const nonMatchingVariants = item.json.nonMatchingVariants ? item.json.nonMatchingVariants : [];\n\n    // Imprimir nonMatchingVariants para verificar que se están obteniendo correctamente\n    console.log('NonMatchingVariants:', nonMatchingVariants);\n\n    if (!nonMatchingVariants.length) {\n        return []; // Si no hay variantes no coincidentes, devolver un array vacío\n    }\n\n    // Filtrar variantes con estado 'Active' o 'Draft'\n    const filteredVariants = nonMatchingVariants.filter(variant => \n        variant.status.name === 'Active' || variant.status.name === 'Draft'\n    );\n\n    // Devolver las variantes filtradas bajo un campo específico\n    return [{ json: { nonMatchingVariants: filteredVariants } }];\n}).flat(); // Aplanar el array resultante\n\nconsole.log('Resultado:', result);\n\nreturn result;\n"
+      },
+      "id": "3f8c8073-8ff4-41f4-9b4c-a53035a556a7",
+      "name": "Code5",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1640,
+        2300
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Obtén los datos de la entrada del nodo\nconst items = $input.all();\n\nconst result = items.map(item => {\n    const data = item.json;\n    const fields = data.fields;\n    const variants = data.data.variants;\n\n    const resultFields = [];\n    const resultVariants = [];\n    const nonMatchingVariants = [];\n\n    fields.forEach(field => {\n        const matchingVariant = variants.find(variant => variant.remote_id === field.id_product_attribute.toString());\n        if (matchingVariant) {\n            resultFields.push(field);\n            resultVariants.push(matchingVariant);\n        }\n    });\n\n    variants.forEach(variant => {\n        const matchingField = fields.find(field => field.id_product_attribute.toString() === variant.remote_id);\n        if (!matchingField) {\n            nonMatchingVariants.push(variant);\n        }\n    });\n\n    return {\n        json: {\n            fields: resultFields,\n            matchingVariants: resultVariants,\n            nonMatchingVariants: nonMatchingVariants\n        }\n    };\n});\n\nreturn result;\n\n"
+      },
+      "id": "ef447cc6-6ba4-4d29-ad06-4bb454036334",
+      "name": "Code1",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1440,
+        2300
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "7b25ff3d-080b-4e9a-bdb7-605b3e623691",
+              "name": "data.variants",
+              "value": "={{ $('Execute Workflow Trigger').item.json.data.variants }}",
+              "type": "array"
+            },
+            {
+              "id": "68cb1464-54a3-48ba-b568-c78bedf23f20",
+              "name": "WooCommerce_Body.body.variations",
+              "value": "={{ $('Execute Workflow Trigger').item.json.WooCommerce_Body.body.variations }}",
+              "type": "array"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "1cad39d0-37a8-4588-bbed-93d194d5d2e8",
+      "name": "Edit Fields1",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1220,
+        2300
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "productId": "={{ $json.variations }}"
+      },
+      "id": "8735bc99-a246-4857-aee7-5a6b191e061e",
+      "name": "WooCommerce",
+      "type": "n8n-nodes-base.wooCommerce",
+      "typeVersion": 1,
+      "position": [
+        2300,
+        2040
+      ],
+      "credentials": {
+        "wooCommerceApi": {
+          "id": "yF8Z8x2jleeBRXTc",
+          "name": "WooCommerce account 7"
+        }
       }
+    },
+    {
+      "parameters": {
+        "values": {
+          "number": [
+            {
+              "name": "counter",
+              "value": "={{ $runIndex }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "5e47e401-c0a1-4785-84f8-ccebdb32cd8b",
+      "name": "Set6",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [
+        2540,
+        2040
+      ]
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "b058abe6-3e01-45a8-adbf-f966c7d2e65c",
+      "name": "Loop Over Items2",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        2100,
+        2040
+      ]
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "variations",
+        "options": {}
+      },
+      "id": "be33455b-dbaa-47ee-83b4-247e3a1990f3",
+      "name": "Split Out2",
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        1840,
+        2040
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "productId": "={{ $('Execute Workflow Trigger').item.json.WooCommerce_Body.body.id }}"
+      },
+      "id": "051b1a9b-6c73-4a7b-8244-1c9cd415ca1c",
+      "name": "WooCommerce1",
+      "type": "n8n-nodes-base.wooCommerce",
+      "typeVersion": 1,
+      "position": [
+        1640,
+        2040
+      ],
+      "credentials": {
+        "wooCommerceApi": {
+          "id": "yF8Z8x2jleeBRXTc",
+          "name": "WooCommerce account 7"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict"
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $('Execute Workflow Trigger').item.json.WooCommerce_Body.body.variations }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "array",
+                      "operation": "empty",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict"
+                },
+                "conditions": [
+                  {
+                    "id": "07ac3c3d-2f9a-4920-9c83-85eb119c3668",
+                    "leftValue": "={{ $('Execute Workflow Trigger').item.json.WooCommerce_Body.body.variations }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "array",
+                      "operation": "notEmpty",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "b3f02b4c-09f7-42e2-8719-0bc467ed5a08",
+      "name": "Switch1",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3,
+      "position": [
+        360,
+        1360
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Obtener el primer elemento de los datos de entrada\nconst input = items[0];\n\n// Verificar si 'input' y la estructura de variantes existen\nif (input && input.json && input.json.data && input.json.data.variants) {\n\n    // Obtener la lista de variantes\n    const variants = input.json.data.variants;\n\n    // Filtrar las variantes activas\n    const activeVariantsCount = variants.filter(v => v.status.name !== 'Inactive').length;\n\n    // Retornar el conteo de variantes activas\n    return [{\n        json: {\n            activeVariantsCount: activeVariantsCount // Conteo de variantes activas\n        }\n    }];\n}\n\n// Si no se encuentran variantes, retornar los items originales\nreturn items;\n\n"
+      },
+      "id": "a7f91f76-4cb8-430b-b38b-7e9152bdf91e",
+      "name": "Code2",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1220,
+        2040
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "c7d7bb08-debf-4c8c-be4b-be304696d5d7",
+              "name": "data.variants",
+              "value": "={{ $('Execute Workflow Trigger').item.json.data.variants }}",
+              "type": "array"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "cd04bcf8-4811-466c-a011-aebbd0cf4df6",
+      "name": "Edit Fields",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1020,
+        2040
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "7e752085-4938-4e5f-a766-29c2063cbe46",
+      "name": "Sticky Note2",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        720,
+        2200
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "0ec5666a-83ba-41c9-ae9b-ddd8e28a09e6",
+              "leftValue": "={{ $json.activeVariantsCount }}",
+              "rightValue": "={{ $('Execute Workflow Trigger').item.json.WooCommerce_Body.body.variations.length }}",
+              "operator": {
+                "type": "number",
+                "operation": "gt"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "c17283ff-ee0d-4568-a221-844893b32f68",
+      "name": "If1",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        1020,
+        2300
+      ]
     }
+  ],
+  "connections": {
+    "Execute Workflow Trigger": {
+      "main": [
+        [
+          {
+            "node": "Get Full Json3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Product WooCommerce1": {
+      "main": [
+        [
+          {
+            "node": "Update Product1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Stock1": {
+      "main": [
+        [
+          {
+            "node": "Draft Product1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Check Product WooCommerce1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Status": {
+      "main": [
+        [
+          {
+            "node": "Check Stock1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "IF equal ",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Full Json3": {
+      "main": [
+        [
+          {
+            "node": "Get Status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Add Image2": {
+      "main": [
+        [
+          {
+            "node": "Update variant1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upload2": {
+      "main": [
+        [
+          {
+            "node": "Add Image2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If no image": {
+      "main": [
+        [
+          {
+            "node": "Upload2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Product": {
+      "main": [
+        [
+          {
+            "node": "If no image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update a variant7": {
+      "main": [
+        [
+          {
+            "node": "Update Product",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Draft Product": {
+      "main": [
+        [
+          {
+            "node": "If no image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Draft default variant": {
+      "main": [
+        [
+          {
+            "node": "Draft Product",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If7": {
+      "main": [
+        [
+          {
+            "node": "Draft default variant",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Update a variant7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF equal 1": {
+      "main": [
+        [
+          {
+            "node": "If7",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Add Image1": {
+      "main": [
+        [
+          {
+            "node": "Update variant",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upload1": {
+      "main": [
+        [
+          {
+            "node": "Add Image1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Deafault Variant": {
+      "main": [
+        [
+          {
+            "node": "Upload1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF equal ": {
+      "main": [
+        [
+          {
+            "node": "Create Deafault Variant",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "IF equal 1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Update a variant",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If2": {
+      "main": [
+        [
+          {
+            "node": "Update a variant1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If10": {
+      "main": [
+        [
+          {
+            "node": "WooCommerce1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "If1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields3": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Archive  variant",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items1": {
+      "main": [
+        null,
+        [
+          {
+            "node": "Edit Fields3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out1": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code5": {
+      "main": [
+        [
+          {
+            "node": "Split Out1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code1": {
+      "main": [
+        [
+          {
+            "node": "Code5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "Code1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "WooCommerce": {
+      "main": [
+        [
+          {
+            "node": "Set6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set6": {
+      "main": [
+        [
+          {
+            "node": "If2",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Loop Over Items2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items2": {
+      "main": [
+        null,
+        [
+          {
+            "node": "WooCommerce",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out2": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "WooCommerce1": {
+      "main": [
+        [
+          {
+            "node": "Split Out2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code2": {
+      "main": [
+        [
+          {
+            "node": "If10",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Code2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If1": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {
+    "Execute Workflow Trigger": [
+      {
+        "status": 200,
+        "message": "success",
+        "data": {
+          "pid": "300567ec-1fdf-41d8-898b-60f853a60c88",
+          "title": "variantes add",
+          "body": "variante update desc",
+          "vendor": null,
+          "updated_at": "2024-10-22T17:49:14.000000Z",
+          "created_at": "2024-10-21T20:08:54.000000Z",
+          "remote_id": "378",
+          "variants_count": 2,
+          "image_url": "https://assets.dev.gosharpei.com/products/2706/1729541339_DE-Pins-4.jpg",
+          "category": null,
+          "subcategory": null,
+          "tags": [
+            {
+              "pid": "0efb396f-0773-498c-a696-46e64c9cd596",
+              "value": "WooCommerce"
+            }
+          ],
+          "status": {
+            "pid": "20ba684b-2d5b-46de-bfc3-07aa6d40caaa",
+            "name": "Active"
+          },
+          "variants": [
+            {
+              "pid": "3215081a-571e-4fd8-983b-10f62c816428",
+              "title": "variantes update / Divi Engine",
+              "SKU": "78",
+              "barcode": "n/a",
+              "cost": "0.00",
+              "selling_price": "444.00",
+              "remote_id": "379",
+              "image_url": "https://assets.dev.gosharpei.com/products/2706/1729541339_DE-Pins-4.jpg",
+              "images": [
+                {
+                  "pid": "0dcfe55b-872c-4023-a91a-99ad4c500928",
+                  "url": "https://assets.dev.gosharpei.com/products/2706/1729541339_DE-Pins-4.jpg"
+                }
+              ],
+              "status": {
+                "pid": "20ba684b-2d5b-46de-bfc3-07aa6d40caaa",
+                "name": "Active"
+              }
+            },
+            {
+              "pid": "2f6a4095-5a5b-4cde-8875-1099e03811dd",
+              "title": "variantes update / WooCommerce",
+              "SKU": "79",
+              "barcode": "n/a",
+              "cost": "0.00",
+              "selling_price": "774.00",
+              "remote_id": "380",
+              "image_url": "https://assets.dev.gosharpei.com/products/2706/1729541344_DE-Pins-2.jpg",
+              "images": [
+                {
+                  "pid": "6c30f90a-7cb2-47f8-963e-b52c927b781e",
+                  "url": "https://assets.dev.gosharpei.com/products/2706/1729541344_DE-Pins-2.jpg"
+                }
+              ],
+              "status": {
+                "pid": "bbd48b9d-672a-4f0a-8c54-f51af0b2cdd6",
+                "name": "Draft"
+              }
+            }
+          ],
+          "options": []
+        },
+        "WooCommerce_Body": {
+          "headers": {
+            "x-forwarded-for": "43.241.70.75",
+            "x-forwarded-proto": "https",
+            "x-forwarded-port": "443",
+            "host": "automation.prod.gosharpei.com",
+            "x-amzn-trace-id": "Root=1-6717f8e2-3c0ff3744de6ac845acd51a0",
+            "content-length": "7724",
+            "user-agent": "WooCommerce/9.3.3 Hookshot (WordPress/6.6.2)",
+            "accept": "*/*",
+            "accept-encoding": "deflate, gzip, br",
+            "content-type": "application/json",
+            "x-wc-webhook-source": "https://sharpei.wisdmlabs.net/",
+            "x-wc-webhook-topic": "product.updated",
+            "x-wc-webhook-resource": "product",
+            "x-wc-webhook-event": "updated",
+            "x-wc-webhook-signature": "PLVV8HsMMmnekX+6z72tetKYrPwxs8dFsskHQ8Kv5bA=",
+            "x-wc-webhook-id": "41",
+            "x-wc-webhook-delivery-id": "6ceb7c914d28468751d1c71553cca599"
+          },
+          "params": {},
+          "query": {
+            "api_key": "$2y$10$HJyJLei5Pe5EkOtdTbDf1eGQc.JWCLFhAvoAaGfkYntEUiFFckkDe"
+          },
+          "body": {
+            "id": 378,
+            "name": "variantes add one",
+            "slug": "producto-con-variantes-21-10",
+            "permalink": "https://sharpei.wisdmlabs.net/product/producto-con-variantes-21-10/",
+            "date_created": "2024-10-21T20:08:43",
+            "date_created_gmt": "2024-10-21T20:08:43",
+            "date_modified": "2024-10-22T19:09:05",
+            "date_modified_gmt": "2024-10-22T19:09:05",
+            "type": "variable",
+            "status": "publish",
+            "featured": false,
+            "catalog_visibility": "visible",
+            "description": "<p>variante update desc</p>\n",
+            "short_description": "",
+            "sku": "2",
+            "price": "79",
+            "regular_price": "",
+            "sale_price": "",
+            "date_on_sale_from": null,
+            "date_on_sale_from_gmt": null,
+            "date_on_sale_to": null,
+            "date_on_sale_to_gmt": null,
+            "on_sale": true,
+            "purchasable": true,
+            "total_sales": 0,
+            "virtual": false,
+            "downloadable": false,
+            "downloads": [],
+            "download_limit": -1,
+            "download_expiry": -1,
+            "external_url": "",
+            "button_text": "",
+            "tax_status": "taxable",
+            "tax_class": "",
+            "manage_stock": true,
+            "stock_quantity": 12,
+            "backorders": "no",
+            "backorders_allowed": false,
+            "backordered": false,
+            "low_stock_amount": null,
+            "sold_individually": false,
+            "weight": "",
+            "dimensions": {
+              "length": "",
+              "width": "",
+              "height": ""
+            },
+            "shipping_required": true,
+            "shipping_taxable": true,
+            "shipping_class": "",
+            "shipping_class_id": 0,
+            "reviews_allowed": true,
+            "average_rating": "0.00",
+            "rating_count": 0,
+            "upsell_ids": [],
+            "cross_sell_ids": [],
+            "parent_id": 0,
+            "purchase_note": "",
+            "categories": [
+              {
+                "id": 15,
+                "name": "Uncategorized",
+                "slug": "uncategorized"
+              }
+            ],
+            "tags": [],
+            "images": [],
+            "attributes": [
+              {
+                "id": 1,
+                "name": "Brand",
+                "slug": "pa_brand",
+                "position": 0,
+                "visible": true,
+                "variation": true,
+                "options": [
+                  "Divi Engine",
+                  "WooCommerce",
+                  "WordPress"
+                ]
+              }
+            ],
+            "default_attributes": [],
+            "variations": [
+              386,
+              379,
+              380
+            ],
+            "grouped_products": [],
+            "menu_order": 0,
+            "price_html": "",
+            "related_ids": [
+              315,
+              326
+            ],
+            "meta_data": [
+              {
+                "id": 6932,
+                "key": "_yoast_wpseo_primary_product_cat",
+                "value": ""
+              },
+              {
+                "id": 6933,
+                "key": "_yoast_wpseo_estimated-reading-time-minutes",
+                "value": "1"
+              },
+              {
+                "id": 6934,
+                "key": "_yoast_wpseo_wordproof_timestamp",
+                "value": ""
+              }
+            ],
+            "stock_status": "instock",
+            "has_options": true,
+            "post_password": "",
+            "global_unique_id": "",
+            "yoast_head": "",
+            "yoast_head_json": {
+              "canonical": "https://sharpei.wisdmlabs.net/product/producto-con-variantes-21-10/",
+              "og_locale": "en_US",
+              "og_type": "article",
+              "og_title": "variantes add one - sharpei.wisdmlabs.net",
+              "og_description": "variante update desc",
+              "og_url": "https://sharpei.wisdmlabs.net/product/producto-con-variantes-21-10/",
+              "og_site_name": "sharpei.wisdmlabs.net",
+              "article_modified_time": "2024-10-22T19:09:05+00:00",
+              "twitter_card": "summary_large_image",
+              "twitter_misc": {
+                "Est. reading time": "1 minute"
+              },
+              "schema": {
+                "@context": "https://schema.org",
+                "@graph": [
+                  {
+                    "@type": "WebPage",
+                    "@id": "https://sharpei.wisdmlabs.net/product/producto-con-variantes-21-10/",
+                    "url": "https://sharpei.wisdmlabs.net/product/producto-con-variantes-21-10/",
+                    "name": "variantes add one - sharpei.wisdmlabs.net",
+                    "isPartOf": {
+                      "@id": "https://sharpei.wisdmlabs.net/#website"
+                    },
+                    "datePublished": "2024-10-21T20:08:43+00:00",
+                    "dateModified": "2024-10-22T19:09:05+00:00",
+                    "breadcrumb": {
+                      "@id": "https://sharpei.wisdmlabs.net/product/producto-con-variantes-21-10/#breadcrumb"
+                    },
+                    "inLanguage": "en-US",
+                    "potentialAction": []
+                  },
+                  {
+                    "@type": "BreadcrumbList",
+                    "@id": "https://sharpei.wisdmlabs.net/product/producto-con-variantes-21-10/#breadcrumb",
+                    "itemListElement": [
+                      {
+                        "@type": "ListItem",
+                        "position": 1,
+                        "name": "Home",
+                        "item": "https://sharpei.wisdmlabs.net/"
+                      },
+                      {
+                        "@type": "ListItem",
+                        "position": 2,
+                        "name": "Shop",
+                        "item": "https://sharpei.wisdmlabs.net/shop/"
+                      },
+                      {
+                        "@type": "ListItem",
+                        "position": 3,
+                        "name": "variantes add one"
+                      }
+                    ]
+                  },
+                  {
+                    "@type": "WebSite",
+                    "@id": "https://sharpei.wisdmlabs.net/#website",
+                    "url": "https://sharpei.wisdmlabs.net/",
+                    "name": "sharpei.wisdmlabs.net",
+                    "description": "",
+                    "potentialAction": [],
+                    "inLanguage": "en-US"
+                  }
+                ]
+              }
+            },
+            "_links": {
+              "self": [
+                {
+                  "href": "https://sharpei.wisdmlabs.net/wp-json/wc/v3/products/378"
+                }
+              ],
+              "collection": [
+                {
+                  "href": "https://sharpei.wisdmlabs.net/wp-json/wc/v3/products"
+                }
+              ]
+            }
+          },
+          "webhookUrl": "http://https://automation.prod.gosharpei.com:5678/webhook/woocommerce-dev",
+          "executionMode": "production"
+        },
+        "env": "dev"
+      }
+    ]
   }
+}
