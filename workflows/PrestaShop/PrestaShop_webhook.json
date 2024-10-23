@@ -1,56 +1,361 @@
 {
   "meta": {
-    "instanceId": "e5f1d9b3815a8cfef7cf0a8d59087d1ac8781ee3595dfcf6f7824be046e85102"
+    "instanceId": "0c0beacef8877bbf2416eb00f2b5dc96354e26dd1df5517320459b1236860f8c"
   },
   "nodes": [
     {
       "parameters": {
-        "workflowId": "SjB76PkH2zf2sYxX"
+        "method": "PUT",
+        "url": "=https://api.{{ $('Update name1').item.json.env }}.gosharpei.com/api/products/{{ $('Create  Product').item.json.data.pid }}/variants/{{ $('Create combination').item.json.data[0].pid }}    ",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Accept",
+              "value": "application/json"
+            },
+            {
+              "name": "Authorization",
+              "value": "={{ $('Update name1').item.json.auth }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n    \"selling_price\": \"{{ $('Create combination').item.json.data[0].selling_price == 0 ? $('Update name1').item.json.price : $('Create combination').item.json.data[0].selling_price }}\",\n    \"title\": \"{{ $('Create combination').item.json.data[0].title }}\",\n    \"remote_id\": \"{{ $('Create combination').item.json.data[0].remote_id }}\",\n    \"status_pid\" : \"{{ $('Set6').item.json.quantity > 0 ? $('Get Status').item.json.data.status[0].pid : $('Get Status').item.json.data.status[1].pid }}\",\n    \"barcode\":\"{{ $('Update name1').item.json.barcode ? $('Update name1').item.json.barcode : 'n/a' }}\",\n    \"cost\": {{ $('Update name1').item.json.cost }},\n    \"SKU\": \"{{ $('Update name1').item.json.sku ? $('Update name1').item.json.sku : 'n/a' }}\"\n\n  }        ",
+        "options": {}
       },
-      "id": "35ece1bc-71af-40a8-8cd6-3c7d076d122e",
-      "name": "Execute Update Workflow",
-      "type": "n8n-nodes-base.executeWorkflow",
-      "typeVersion": 1,
+      "id": "2367d386-df36-422d-b10e-f820739913aa",
+      "name": "Update combination",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
       "position": [
-        1820,
-        -100
+        3560,
+        1280
+      ],
+      "retryOnFail": true,
+      "maxTries": 2
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://api.{{ $('Update name1').item.json.env }}.gosharpei.com/api/products/{{ $('Create  Product').item.json.data.pid }}/variants/{{ $('Create combination').item.json.data[0].pid }}/images            ",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "={{ $('Update name1').item.json.auth }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "multipart-form-data",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "parameterType": "formBinaryData",
+              "name": "attachment",
+              "inputDataFieldName": "data"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "3a9492bc-89ed-466c-b99f-7b6e4ce077df",
+      "name": "Add Image1",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        3360,
+        1280
+      ],
+      "retryOnFail": true,
+      "maxTries": 2
+    },
+    {
+      "parameters": {
+        "url": "={{ $('Loop Over Items').item.json.image && $('Loop Over Items').item.json.image.length > 0 ? $('Loop Over Items').item.json.image[0].url : $('Edit Fields').item.json.body.images[0].url }}",
+        "options": {}
+      },
+      "id": "ec2bdea5-4fb7-49fc-baa4-e919cda14212",
+      "name": "Upload1",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        3180,
+        1280
+      ],
+      "retryOnFail": true,
+      "maxTries": 2
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://api.{{ $('Update name1').item.json.env }}.gosharpei.com/api/products/{{ $('Create  Product').item.json.data.pid }}/variants/multiple        ",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Accept",
+              "value": "application/json"
+            },
+            {
+              "name": "Authorization",
+              "value": "={{ $('Update name1').item.json.auth }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "=[\n  {\n    \"selling_price\": \"{{ $json.price }}\",\n    \"title\": \"/ {{ $json.attributes.map(attr => attr.attribute).join(' - ') }}\",\n    \"remote_id\": \"{{ $json.id_product_attribute }}\",\n    \"status_pid\" : \"{{ $('Code1').item.json.pid }}\",\n    \"cost\": {{ $('Update name1').item.json.cost }},\n    \"barcode\": \"{{ $('Update name1').item.json.barcode ? $('Update name1').item.json.barcode : 'n/a' }}\",\n    \"SKU\": \"{{ $('Update name1').item.json.sku ? $('Update name1').item.json.sku : 'n/a' }}\" \n\n  }\n]       \n              ",
+        "options": {}
+      },
+      "id": "d46413dd-5aa1-47c2-aa3b-7728ee568fe7",
+      "name": "Create combination",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        3000,
+        1280
+      ],
+      "retryOnFail": true,
+      "maxTries": 2
+    },
+    {
+      "parameters": {
+        "values": {
+          "number": [
+            {
+              "name": "counter",
+              "value": "={{ $runIndex }}"
+            },
+            {
+              "name": "images_len",
+              "value": "={{ $($('Update name1').item.json.webhook).item.json.body.images.length }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "e33ddfea-ec72-4115-9e54-6e64679e656b",
+      "name": "Set6",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [
+        2820,
+        1280
       ]
     },
     {
       "parameters": {
-        "workflowId": "5yMMTBI0XN8FSCQI"
+        "options": {}
       },
-      "id": "5a6c6620-cadd-4460-8bfd-15b99b1d4b20",
-      "name": "Execute Create Product Workflow",
-      "type": "n8n-nodes-base.executeWorkflow",
-      "typeVersion": 1,
+      "id": "47ed4103-7e23-48b4-9600-b856159652d9",
+      "name": "Loop Over Items",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
       "position": [
-        1620,
-        160
+        2620,
+        1280
       ]
     },
     {
       "parameters": {
-        "jsCode": "return {\n  PrestaShop_Body: items[0].json,\n  env: \"prod\"\n};"
+        "fieldToSplitOut": "fields",
+        "options": {}
       },
-      "id": "d7672d47-b806-481a-9e05-e45396a59280",
-      "name": "Get Full Json",
+      "id": "68bd131f-6a44-4dd4-8d2c-88ea1e0c2ca9",
+      "name": "Split Out",
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        2440,
+        1280
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Obtener el primer elemento de los datos de entrada\nconst input = items[0];\n\n// Verificar si 'input' y 'input.json' están definidos\nif (input && input.json && input.json.body && input.json.body.combinations) {\n    // Obtener el objeto 'combinations'\n    const combinations = input.json.body.combinations;\n\n    // Inicializar un arreglo para almacenar los resultados\n    const fieldsArray = [];\n\n\n    // Iterar sobre las propiedades del objeto 'combinations'\n    for (const key in combinations) {\n        if (combinations.hasOwnProperty(key)) {\n            // Acceder a cada combinación usando su clave\n            const combination = combinations[key];\n            \n            // Añadir la combinación al arreglo de fields\n            fieldsArray.push({\n                id_product_attribute: combination.id_product_attribute,\n                attributes: combination.attributes,\n                price: combination.price,\n                quantity: combination.quantity,\n                image:\ncombination.images\n            });\n        }\n    }\n\n    // Retornar un solo objeto con el campo 'fields' que contiene el arreglo de combinaciones\n    return [{\n        json: {\n            fields: fieldsArray\n        }\n    }];\n}\n\n// Si no se encuentran combinaciones, retornar los items originales\nreturn items;\n"
+      },
+      "id": "3c912547-2eb5-43c7-85e1-04d97df4c9d0",
+      "name": "Convert Object",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        540,
-        200
+        2260,
+        1280
       ]
     },
     {
-      "parameters": {},
-      "id": "021ab2a5-a21e-4b6a-a40b-a396fe486df9",
-      "name": "No Operation, do nothing",
-      "type": "n8n-nodes-base.noOp",
-      "typeVersion": 1,
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "76f6b88d-a7a0-4691-b478-d628b949e814",
+              "name": "body.combinations",
+              "value": "={{ $($('Update name1').item.json.webhook).item.json.body.combinations }}",
+              "type": "object"
+            },
+            {
+              "id": "cf8e13f9-a3ab-426d-b185-e15006dae151",
+              "name": "headers.authorization",
+              "value": "={{ $('Update name1').item.json.auth }}",
+              "type": "string"
+            },
+            {
+              "id": "25985538-7ac6-4559-9256-d2618f3b6e43",
+              "name": "pid",
+              "value": "={{ $('Code1').item.json.pid }}",
+              "type": "string"
+            },
+            {
+              "id": "6d65e2bf-60a4-4f39-8dc7-7cab62b9a213",
+              "name": "data.pid",
+              "value": "={{ $json.data.pid }}",
+              "type": "string"
+            },
+            {
+              "id": "14832a9a-70b0-4af8-8276-f60da1318266",
+              "name": "body.images",
+              "value": "={{ $($('Update name1').item.json.webhook).item.json.body.images }}",
+              "type": "array"
+            },
+            {
+              "id": "d86ca947-c211-49b7-acfb-d504b50079ec",
+              "name": "",
+              "value": "",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "4c3fd38f-45b7-409f-9c19-5ecd68ddf252",
+      "name": "Edit Fields",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
       "position": [
-        1340,
-        -120
+        2080,
+        1280
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://api.{{ $('Update name1').item.json.env }}.gosharpei.com/api/products ",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "={{ $('Update name1').item.json.auth }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"title\": \"{{ $('Update name1').item.json.name.replace(/['\"]+/g,'') }}\",\n  \"description_short\": \"{{ $('Update name1').item.json.description_short.replace(/<[^>]+>/g, '').replace(/\\n/g, ' ').trim() }}\",\n  \"quantity\": {{ $('Update name1').item.json.quantity }},\n  \"price\": \"{{ $('Update name1').item.json.price }}\",\n  \"status_pid\" : \"{{ $('Code1').item.json.pid }}\",\n  \"tags\": [\n    {\n      \"value\": \"Combinations\"\n    }\n  ],\n  \"remote_id\": {{ $('Update name1').item.json.id }},\n  \"default_variant\": false\n}         ",
+        "options": {
+          "redirect": {
+            "redirect": {}
+          }
+        }
+      },
+      "id": "223e5c8f-7f44-4e5c-8b88-dcfc7e52c065",
+      "name": "Create  Product",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        1880,
+        1280
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "802b5b1d-0fd0-42e6-84bb-d374684919f4",
+              "leftValue": "={{ $($('Update name1').item.json.webhook).item.json.query.create === \"true\" && !Array.isArray($($('Update name1').item.json.webhook).item.json.body.combinations) }}\n\n\n",
+              "rightValue": "true",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            },
+            {
+              "id": "55ac3001-17c9-4162-a447-9ffcb64c1075",
+              "leftValue": "={{ $('Update name1').item.json.name }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "774b6936-7041-4669-b23e-1e996006c382",
+      "name": "Combinations",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        1680,
+        1280
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose"
+          },
+          "conditions": [
+            {
+              "id": "7533afef-4753-4c5c-a11e-664a589119ea",
+              "leftValue": "={{  $( $('Update name1').item.json.webhook).item.json.query.create === 'true' && Array.isArray($($('Update name1').item.json.webhook).item.json.body.combinations)}}\n\n  ",
+              "rightValue": "true",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            },
+            {
+              "id": "9a926615-6feb-4934-b3db-82425f55c283",
+              "leftValue": "={{ $('Update name1').item.json.name }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {
+          "ignoreCase": false,
+          "looseTypeValidation": true
+        }
+      },
+      "id": "a28760b1-bebb-4d7b-b55f-73d1b6f6db25",
+      "name": "if1",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        1680,
+        1020
       ]
     },
     {
@@ -59,34 +364,612 @@
           "string": [
             {
               "name": "PrestaShop_Body",
-              "value": "={{ $('Get Full Json1').item.json }}"
+              "value": "={{ $('Update name1').item.json.PrestaShop_Body }}"
+            },
+            {
+              "name": "sku",
+              "value": "={{ $('Update name1').item.json.sku }}"
+            },
+            {
+              "name": "barcode",
+              "value": "={{ $('Update name1').item.json.barcode }}"
+            },
+            {
+              "name": "cost",
+              "value": "={{ $('Update name1').item.json.cost }}"
             }
           ]
         },
         "options": {}
       },
-      "id": "a9884d8d-994f-48b4-b8d1-6a02e01f13df",
-      "name": "Set7",
+      "id": "150e8ca6-f3e4-48a0-8bb1-0f7699bf247d",
+      "name": "Set",
       "type": "n8n-nodes-base.set",
       "typeVersion": 2,
       "position": [
-        1340,
-        -300
+        1880,
+        660
       ],
       "continueOnFail": true
     },
     {
       "parameters": {
-        "jsCode": "return {\n  PrestaShop_Body: items[0].json,\n  env: \"dev\"\n};\n"
+        "jsCode": "// Obtener los datos de entrada\nconst inputData = $input.all();\n\n// Asumir que siempre habrá al menos un elemento en items\nconst firstItem = inputData[0].json;\n\n// Procesar los datos para obtener el ID correcto\nconst body = firstItem.body;\nconst id = body.id !== undefined ? body.id : body.id_product;\n\n// Construir el objeto final\nconst result = {\n  PrestaShop_Body: firstItem,\n  env: \"prod\",\n  id\n};\n\n\nreturn {\n  \n  PrestaShop_Body: items[0].json,\n  env: \"prod\",\n  id,\n  webhook:\"PrestaShop\"\n  \n};\n\n\n\n\n"
       },
-      "id": "26b60242-ac13-491c-8dd0-4ff89a6d3d0c",
+      "id": "074049bb-cf5b-4138-b6b6-27c0d8559893",
+      "name": "Get Full Json",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        260,
+        1160
+      ]
+    },
+    {
+      "parameters": {
+        "method": "PUT",
+        "url": "=https://api.{{ $('Update name1').item.json.env }}.gosharpei.com/api/products/{{ $('Get Product by Remote Id / Json Update Stock2').item.json.data.pid }}/variants/{{ $('Get Product by Remote Id / Json Update Stock2').item.json.data.variants[0].pid }} ",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Accept",
+              "value": "application/json"
+            },
+            {
+              "name": "Authorization",
+              "value": "={{ $('Update name1').item.json.auth }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n    \"selling_price\": \"{{ $('Update name1').item.json.price }}\",\n    \"title\": \"{{ $('Update name1').item.json.name.replace(/['\"]+/g,'') }}\",\n    \"remote_id\": \"{{ $('Update name1').item.json.id }}\",\n    \"status_pid\" : \"{{ $($('Update name1').item.json.webhook).item.json.body.stock_available > 0 ? $('Get Status').item.json.data.status[0].pid : $('Get Status').item.json.data.status[1].pid }}\",\n    \"barcode\":\"{{ $('Update name1').item.json.barcode ? $('Update name1').item.json.barcode : 'n/a' }}\",\n    \"cost\": {{ $('Update name1').item.json.cost }},\n    \"SKU\": \"{{ $('Update name1').item.json.sku ? $('Update name1').item.json.sku : 'n/a' }}\"\n\n  }           ",
+        "options": {}
+      },
+      "id": "f6b93949-5a9d-43fa-bb34-dad0885a7bc3",
+      "name": "Update a variant1",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        2620,
+        1020
+      ],
+      "retryOnFail": true,
+      "maxTries": 2
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://api.{{ $('Update name1').item.json.env }}.gosharpei.com/api/products/{{ $('Get Product by Remote Id / Json Update Stock2').item.json.data.pid }}/variants/{{ $('Get Product by Remote Id / Json Update Stock2').item.json.data.variants[0].pid }}/images          ",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "={{ $('Update name1').item.json.auth }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "multipart-form-data",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "parameterType": "formBinaryData",
+              "name": "attachment",
+              "inputDataFieldName": "data"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "ad3fabae-c935-4d95-b6d8-3fbaa026ce13",
+      "name": "Add Image2",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        2440,
+        1020
+      ],
+      "retryOnFail": true,
+      "maxTries": 2
+    },
+    {
+      "parameters": {
+        "url": "={{ $($('Update name1').item.json.webhook).item.json.body.images[0].url }} ",
+        "options": {}
+      },
+      "id": "d48a58cf-6eeb-4709-b0fa-a89fe459b4a5",
+      "name": "Upload2",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        2260,
+        1020
+      ],
+      "retryOnFail": true,
+      "maxTries": 2
+    },
+    {
+      "parameters": {
+        "url": "=https://api.{{ $('Update name1').item.json.env }}.gosharpei.com/api/products/{{ $json.data.remote_id }}  ",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Accept",
+              "value": "application/json"
+            },
+            {
+              "name": "Authorization",
+              "value": "={{ $('Update name1').item.json.auth }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "ba39cb1e-cd52-46e4-b82a-bf7aa796e9c4",
+      "name": "Get Product by Remote Id / Json Update Stock2",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        2080,
+        1020
+      ],
+      "alwaysOutputData": false,
+      "retryOnFail": true,
+      "maxTries": 2,
+      "continueOnFail": true,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://api.{{ $('Update name1').item.json.env }}.gosharpei.com/api/products ",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "={{ $('Update name1').item.json.auth }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"title\": \"{{ $('Update name1').item.json.name.replace(/['\"]+/g,'').trim() }}\",\n  \"description_short\": \"{{ $('Update name1').item.json.description_short.replace(/['\"]+/g,'').replace(/\\n/g, ' ').trim() }}\",\n  \"quantity\": \"{{ $('Update name1').item.json.quantity }}\",\n  \"price\": \"{{ $('Update name1').item.json.price }}\",\n  \"status_pid\" : \"{{ $($('Update name1').item.json.webhook).item.json.body.stock_available > 0 ? $('Get Status').item.json.data.status[0].pid : $('Get Status').item.json.data.status[1].pid }}\",\n  \"tags\": [\n    {\n      \"value\": \"Default\"\n    }\n  ],\n  \"remote_id\": {{ $('Update name1').item.json.id }},\n  \"vendor\": \"\",\n  \"image_url\": \"https://example.com/image.jpg\",\n  \"variants\": [],\n  \"default_variant\": true\n}        ",
+        "options": {
+          "redirect": {
+            "redirect": {}
+          }
+        }
+      },
+      "id": "3caadd8d-2a19-4c29-a0f2-834921b78c6d",
+      "name": "Create  Product and default variant1",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        1880,
+        1020
+      ]
+    },
+    {
+      "parameters": {
+        "workflowId": "SjB76PkH2zf2sYxX",
+        "options": {}
+      },
+      "id": "b394c992-c45b-4260-831e-9a683e6a8a87",
+      "name": "Execute Update Workflow",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1,
+      "position": [
+        2080,
+        660
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "number": [
+            {
+              "value1": "={{ $json.error.status }}",
+              "operation": "equal",
+              "value2": 404
+            }
+          ]
+        }
+      },
+      "id": "b0a2ddfb-3fc1-4be8-baf2-833a247264bb",
+      "name": "IF",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        1300,
+        1020
+      ]
+    },
+    {
+      "parameters": {
+        "url": "=https://api.{{ $('Update name1').item.json.env }}.gosharpei.com/api/products/{{ $('Update name1').item.json.id }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Accept",
+              "value": "application/json"
+            },
+            {
+              "name": "Authorization",
+              "value": "={{ $('Update name1').item.json.auth }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "f7bc6234-abe2-4789-bcc6-74df8cb1dce2",
+      "name": "Get Product by Remote Id / Json Update Stock3",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        1100,
+        1020
+      ],
+      "alwaysOutputData": false,
+      "retryOnFail": true,
+      "maxTries": 2,
+      "continueOnFail": true,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "\n\n const elements = items[0]?.json?.data?.status;\n\nconst activeElement = elements.find(element => element.name === \"Active\");\n\nif (activeElement) {\n    return [{ pid: activeElement.pid }];\n} else {\n    return [];\n}\n\n\n\n\n\n\n\n\n\n\n\n\n"
+      },
+      "id": "eeee06f0-9027-486d-a522-a63eb365f37c",
+      "name": "Code1",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        780,
+        1020
+      ]
+    },
+    {
+      "parameters": {
+        "url": "=https://api.{{ $json.env }}.gosharpei.com/api/status ",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "type",
+              "value": "product"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "value": "="
+            }
+          ]
+        },
+        "options": {
+          "batching": {
+            "batch": {
+              "batchSize": 0,
+              "batchInterval": 3000
+            }
+          }
+        }
+      },
+      "id": "7c4afa87-d79e-41d0-9f8f-d79090cc5eb4",
+      "name": "Get Status",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        620,
+        1020
+      ],
+      "retryOnFail": true,
+      "maxTries": 2,
+      "executeOnce": false,
+      "waitBetweenTries": 5000
+    },
+    {
+      "parameters": {
+        "jsCode": "// Initialize the name field with an empty default value\nlet id_tax_rules_group = items[0].json.PrestaShop_Body.body.id_tax_rules_group;\nlet name = \"\";\nlet description_short = \"\";\nlet env = items[0].json.env;\nlet sku = items[0].json.PrestaShop_Body.body.reference;\nlet barcode = items[0].json.PrestaShop_Body.body.upc;\nlet cost = items[0].json.PrestaShop_Body.body.wholesale_price;\nlet status = items[0].json.PrestaShop_Body.body.active;\nlet auth = items[0].json.PrestaShop_Body.headers.authorization;\nlet id = items[0].json.id;\nlet webhook = items[0].json.webhook;\nlet quantity = items[0].json.PrestaShop_Body.body.stock_available;\nlet price = items[0].json.PrestaShop_Body.body.price;\nlet PrestaShop_Body = items[0].json;\n\n// Check if the name field is in object format with an index \"1\"\nif (typeof items[0].json.PrestaShop_Body.body.name === 'object' && items[0].json.PrestaShop_Body.body.name.hasOwnProperty(\"1\")) {\n    // Extract the value from index \"1\"\n    name = items[0].json.PrestaShop_Body.body.name[\"1\"];\n} else if (typeof items[0].json.PrestaShop_Body.body.name === 'string') {\n    // If it's already in the desired format, assign the value directly\n    name = items[0].json.PrestaShop_Body.body.name;\n}\n\n// Check if the description_short field is in object format with an index \"1\"\nif (typeof items[0].json.PrestaShop_Body.body.description_short === 'object' && items[0].json.PrestaShop_Body.body.description_short.hasOwnProperty(\"1\")) {\n    // Extract the value from index \"1\"\n    description_short = items[0].json.PrestaShop_Body.body.description_short[\"1\"];\n} else if (typeof items[0].json.PrestaShop_Body.body.description_short === 'string') {\n    // If it's already in the desired format, assign the value directly\n    description_short = items[0].json.PrestaShop_Body.body.description_short;\n}\n\n// Modify price based on id_tax_rules_group\nif ([1, 10, 11, 18, 32, 41, 46, 50].includes(id_tax_rules_group)) {\n    price = price * 1.04;  // 4% increase\n} else if ([2, 7, 8, 26, 29, 37].includes(id_tax_rules_group)) {\n    price = price * 1;  // 0% increase\n} else if (id_tax_rules_group === 3) {\n    price = price * 1.066;  // 6.6% increase\n} else if ([4, 9, 12, 15, 17, 20, 22, 38, 40, 45, 48, 52].includes(id_tax_rules_group)) {\n    price = price * 1.06;  // 6% increase\n} else if (id_tax_rules_group === 5) {\n    price = price * 1.0825;  // 8.25% increase\n} else if (id_tax_rules_group === 6) {\n    price = price * 1.029;  // 2.9% increase\n} else if ([13, 21, 43].includes(id_tax_rules_group)) {\n    price = price * 1.0625;  // 6.25% increase\n} else if ([14, 24, 30, 39, 42].includes(id_tax_rules_group)) {\n    price = price * 1.07;  // 7% increase\n} else if (id_tax_rules_group === 16) {\n    price = price * 1.053;  // 5.3% increase\n} else if ([19, 34, 49].includes(id_tax_rules_group)) {\n    price = price * 1.05;  // 5% increase\n} else if (id_tax_rules_group === 23) {\n    price = price * 1.06875;  // 6.875% increase\n} else if (id_tax_rules_group === 25) {\n    price = price * 1.04225;  // 4.225% increase\n} else if ([27, 33, 35, 51].includes(id_tax_rules_group)) {\n    price = price * 1.055;  // 5.5% increase\n} else if (id_tax_rules_group === 28) {\n    price = price * 1.0685;  // 6.85% increase\n} else if (id_tax_rules_group === 31) {\n    price = price * 1.05125;  // 5.125% increase\n} else if (id_tax_rules_group === 36) {\n    price = price * 1.045;  // 4.5% increase\n} else if (id_tax_rules_group === 44) {\n    price = price * 1.0475;  // 4.75% increase\n} else if (id_tax_rules_group === 47) {\n    price = price * 1.065;  // 6.5% increase\n}\n\n\n// Update the original PrestaShop_Body price\nitems[0].json.PrestaShop_Body.body.price = price;\n\n\n// Return the object with the name field\nreturn {\n    json: {\n        name: name,\n        description_short: description_short,\n        env,\n        auth,\n        id,\n        webhook,\n        quantity,\n        price,\n        sku,\n        barcode,\n        cost,\n        status,\n        PrestaShop_Body\n        \n    }\n};\n\n"
+      },
+      "id": "a9d569d2-ede0-47f3-9ad9-86b2038179d2",
+      "name": "Update name1",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        460,
+        1020
+      ],
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "number": [
+            {
+              "value1": "={{ $json.status }}",
+              "operation": "equal",
+              "value2": 200
+            }
+          ]
+        }
+      },
+      "id": "f10ce7af-ea30-4f59-93f4-b83665da577b",
+      "name": "IF1",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        1300,
+        660
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Obtener los datos de entrada\nconst inputData = $input.all();\n\n// Asumir que siempre habrá al menos un elemento en items\nconst firstItem = inputData[0].json;\n\n// Procesar los datos para obtener el ID correcto\nconst body = firstItem.body;\nconst id = body.id !== undefined ? body.id : body.id_product;\n\n// Construir el objeto final\nconst result = {\n  PrestaShop_Body: firstItem,\n  env: \"prod\",\n  id\n};\n\n\nreturn {\n  \n  PrestaShop_Body: items[0].json,\n  env: \"dev\",\n  id,\n  webhook:\"Prestashop-Dev\"\n  \n};\n\n\n\n\n"
+      },
+      "id": "0f9a486e-2e41-4819-a704-8a921e886fd5",
       "name": "Get Full Json1",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        540,
-        -200
+        260,
+        880
       ]
+    },
+    {
+      "parameters": {
+        "url": "=https://api.{{ $('Update name1').item.json.env }}.gosharpei.com/api/products/{{ $('Update name1').item.json.id }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Accept",
+              "value": "application/json"
+            },
+            {
+              "name": "Authorization",
+              "value": "={{ $('Update name1').item.json.auth }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "284cd148-bfea-4a0e-9442-b1656ba24321",
+      "name": "Validate product",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        2820,
+        1020
+      ],
+      "alwaysOutputData": false,
+      "retryOnFail": true,
+      "maxTries": 2,
+      "continueOnFail": true,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "url": "=https://api.{{ $('Update name1').item.json.env }}.gosharpei.com/api/products/{{ $('Update name1').item.json.id }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Accept",
+              "value": "application/json"
+            },
+            {
+              "name": "Authorization",
+              "value": "={{ $('Update name1').item.json.auth }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "456e716f-aa99-44e1-86a3-2a4767bc14e6",
+      "name": "validate",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        4280,
+        1280
+      ],
+      "alwaysOutputData": false,
+      "retryOnFail": true,
+      "maxTries": 2,
+      "continueOnFail": true,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "bfc5157b-d7c4-4a26-8869-ec07584f31c5",
+              "name": "index",
+              "value": "={{$runIndex }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "06e3f28c-ba96-4ba9-8997-fb2e6da4b14b",
+      "name": "Edit Fields1",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        3740,
+        1280
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "a085716c-cd52-4784-958e-80291abc4d9d",
+              "leftValue": "={{$json.index}}",
+              "rightValue": "1",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "3ca714d1-df17-41a0-8c70-367271919f91",
+      "name": "If",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        3920,
+        1280
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "ee583abc-f9e0-4269-9937-856703b80d23",
+      "name": "No Operation, do nothing",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        4100,
+        1280
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "4de94dc7-cb94-4fb3-a097-ea6c676b6cec",
+      "name": "No Operation, do nothing1",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        1680,
+        840
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "number": [
+            {
+              "value1": "={{ $json.error.status }}",
+              "operation": "equal",
+              "value2": 401
+            }
+          ]
+        }
+      },
+      "id": "855c2057-1b4f-46fc-8fb8-5739d3f651fc",
+      "name": "IF2",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        1480,
+        660
+      ]
+    },
+    {
+      "parameters": {
+        "errorMessage": "Unauthorized"
+      },
+      "id": "71caf74b-7367-4d8a-abdb-7f2987355edb",
+      "name": "Stop and Error",
+      "type": "n8n-nodes-base.stopAndError",
+      "typeVersion": 1,
+      "position": [
+        1680,
+        660
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "28e5a682-51d9-4fe9-8fcc-1cc67eecd201",
+              "name": "=index",
+              "value": "={{$runIndex}}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "c2109438-1c48-404c-aa04-b48b6066e8a8",
+      "name": "Edit Fields2",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        940,
+        1020
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "415faff3-0212-47b4-8958-f5b0bc02da21",
+              "leftValue": "={{ $('Update name1').item.json.active }}",
+              "rightValue": "0",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "faa472e0-b09c-4703-997d-b653c1a8b9cb",
+      "name": "If1",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        1500,
+        1000
+      ]
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "dev-prestashop",
+        "options": {}
+      },
+      "id": "d5689678-dc9d-4b37-badc-46e27971038e",
+      "name": "Prestashop-Dev",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        60,
+        880
+      ],
+      "webhookId": "ef2312d3-0e66-4613-a1a6-ec797f6c043d"
     },
     {
       "parameters": {
@@ -99,300 +982,229 @@
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 1,
       "position": [
-        300,
-        200
+        60,
+        1160
       ],
       "webhookId": "5e39a3fb-9a6a-4544-9457-27a8800a9d45"
-    },
-    {
-      "parameters": {
-        "conditions": {
-          "number": [
-            {
-              "value1": "={{ $json.status }}",
-              "operation": "equal",
-              "value2": 200
-            },
-            {
-              "value1": "={{ $json.data.products.length }}",
-              "operation": "isEmpty"
-            }
-          ]
-        }
-      },
-      "id": "f71f52ac-0534-426d-8929-2c030770d7d6",
-      "name": "IF",
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 1,
-      "position": [
-        1100,
-        -200
-      ]
-    },
-    {
-      "parameters": {
-        "conditions": {
-          "number": [
-            {
-              "value1": "={{ $json.status }}",
-              "operation": "equal",
-              "value2": 200
-            },
-            {
-              "value1": "={{ $json.data.products.length }}",
-              "operation": "isEmpty"
-            }
-          ]
-        }
-      },
-      "id": "9203bca7-4ac0-4f06-b3e0-b4add6670b8e",
-      "name": "IF1",
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 1,
-      "position": [
-        1100,
-        200
-      ]
-    },
-    {
-      "parameters": {
-        "url": "=https://api.{{ $json.env }}.gosharpei.com/api/products/{{ $json.PrestaShop_Body.body.id_product }}",
-        "sendHeaders": true,
-        "headerParameters": {
-          "parameters": [
-            {
-              "name": "Accept",
-              "value": "application/json"
-            },
-            {
-              "name": "authentication",
-              "value": "={{ $('PrestaShop').item.json.headers.authorization}}"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "id": "b8657af8-bc0a-4979-acb9-cabc75f6bde8",
-      "name": "Get Product by Remote Id DEV 1",
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.1,
-      "position": [
-        860,
-        -300
-      ],
-      "alwaysOutputData": false,
-      "retryOnFail": true,
-      "maxTries": 2,
-      "continueOnFail": true
-    },
-    {
-      "parameters": {
-        "url": "=https://api.{{ $json.env }}.gosharpei.com/api/products/{{ $json.PrestaShop_Body.body.id_product }} ",
-        "sendHeaders": true,
-        "headerParameters": {
-          "parameters": [
-            {
-              "name": "Accept",
-              "value": "application/json"
-            },
-            {
-              "name": "authentication",
-              "value": "={{ $('PrestaShop').item.json.headers.authorization }}"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "id": "33e7af91-e299-4138-b361-96fb6e062e6c",
-      "name": "Get Product by Remote Id PROD 1",
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.1,
-      "position": [
-        860,
-        120
-      ],
-      "alwaysOutputData": false,
-      "executeOnce": false,
-      "retryOnFail": true,
-      "maxTries": 2,
-      "continueOnFail": true
-    },
-    {
-      "parameters": {
-        "url": "=https://api.{{ $('Get Full Json').item.json.env }}.gosharpei.com/api/products/{{ $('Get Full Json').item.json.PrestaShop_Body.body.id }}",
-        "sendHeaders": true,
-        "headerParameters": {
-          "parameters": [
-            {
-              "name": "Accept",
-              "value": "application/json"
-            },
-            {
-              "name": "authentication",
-              "value": "={{ $('PrestaShop').item.json.headers.authorization }}"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "id": "1a540842-267b-4987-b0a7-1a82edd8778b",
-      "name": "Get Product by Remote Id PROD 2",
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.1,
-      "position": [
-        860,
-        300
-      ],
-      "alwaysOutputData": false,
-      "executeOnce": false,
-      "retryOnFail": true,
-      "maxTries": 2,
-      "continueOnFail": true
-    },
-    {
-      "parameters": {
-        "values": {
-          "string": [
-            {
-              "name": "PrestaShop_Body",
-              "value": "={{ $('Get Full Json').item.json }}"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "id": "17ec0671-9ef7-4d52-a7be-8f72296b7f17",
-      "name": "Set",
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 2,
-      "position": [
-        1340,
-        120
-      ],
-      "continueOnFail": true
-    },
-    {
-      "parameters": {},
-      "id": "c10bbbf6-8892-4a53-afa8-327af2bd5094",
-      "name": "No Operation, do nothing1",
-      "type": "n8n-nodes-base.noOp",
-      "typeVersion": 1,
-      "position": [
-        1340,
-        300
-      ]
-    },
-    {
-      "parameters": {
-        "url": "=https://api.{{ $('Get Full Json1').item.json.env }}.gosharpei.com/api/products/{{ $('Get Full Json1').item.json.PrestaShop_Body.body.id }}",
-        "sendHeaders": true,
-        "headerParameters": {
-          "parameters": [
-            {
-              "name": "Accept",
-              "value": "application/json"
-            },
-            {
-              "name": "authentication",
-              "value": "={{ $('PrestaShop').item.json.headers.authorization}}"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "id": "2cfa95e2-fe6d-4dd3-875e-59e7a06fda0e",
-      "name": "Get Product by Remote Id DEV 2",
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.1,
-      "position": [
-        860,
-        -120
-      ],
-      "alwaysOutputData": false,
-      "retryOnFail": true,
-      "maxTries": 2,
-      "continueOnFail": true
-    },
-    {
-      "parameters": {
-        "httpMethod": "POST",
-        "path": "dev-prestashop",
-        "options": {}
-      },
-      "id": "e9ed21a0-715b-4866-a211-1b87d64562d0",
-      "name": "Prestashop-Dev",
-      "type": "n8n-nodes-base.webhook",
-      "typeVersion": 1,
-      "position": [
-        300,
-        -200
-      ],
-      "webhookId": "ef2312d3-0e66-4613-a1a6-ec797f6c043d"
-    },
-    {
-      "parameters": {
-        "unit": "seconds"
-      },
-      "id": "c85add26-48c8-420b-a3d9-311357a78b5f",
-      "name": "Wait",
-      "type": "n8n-nodes-base.wait",
-      "typeVersion": 1,
-      "position": [
-        1620,
-        -100
-      ],
-      "webhookId": "a0a29f54-926c-4ada-bf14-05b938b8fe0b"
     }
   ],
   "connections": {
+    "Update combination": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Add Image1": {
+      "main": [
+        [
+          {
+            "node": "Update combination",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upload1": {
+      "main": [
+        [
+          {
+            "node": "Add Image1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create combination": {
+      "main": [
+        [
+          {
+            "node": "Upload1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set6": {
+      "main": [
+        [
+          {
+            "node": "Create combination",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        null,
+        [
+          {
+            "node": "Set6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert Object": {
+      "main": [
+        [
+          {
+            "node": "Split Out",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Convert Object",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create  Product": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Combinations": {
+      "main": [
+        [
+          {
+            "node": "Create  Product",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "if1": {
+      "main": [
+        [
+          {
+            "node": "Create  Product and default variant1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Combinations",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set": {
+      "main": [
+        [
+          {
+            "node": "Execute Update Workflow",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
     "Get Full Json": {
       "main": [
         [
           {
-            "node": "Get Product by Remote Id PROD 1",
-            "type": "main",
-            "index": 0
-          },
-          {
-            "node": "Get Product by Remote Id PROD 2",
+            "node": "Update name1",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Set7": {
+    "Update a variant1": {
       "main": [
         [
           {
-            "node": "Wait",
+            "node": "Validate product",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Get Full Json1": {
+    "Add Image2": {
       "main": [
         [
           {
-            "node": "Get Product by Remote Id DEV 1",
-            "type": "main",
-            "index": 0
-          },
-          {
-            "node": "Get Product by Remote Id DEV 2",
+            "node": "Update a variant1",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "PrestaShop": {
+    "Upload2": {
       "main": [
         [
           {
-            "node": "Get Full Json",
+            "node": "Add Image2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Product by Remote Id / Json Update Stock2": {
+      "main": [
+        [
+          {
+            "node": "Upload2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create  Product and default variant1": {
+      "main": [
+        [
+          {
+            "node": "Get Product by Remote Id / Json Update Stock2",
             "type": "main",
             "index": 0
           }
@@ -403,14 +1215,58 @@
       "main": [
         [
           {
-            "node": "Set7",
+            "node": "If1",
             "type": "main",
             "index": 0
           }
         ],
         [
           {
-            "node": "No Operation, do nothing",
+            "node": "IF1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Product by Remote Id / Json Update Stock3": {
+      "main": [
+        [
+          {
+            "node": "IF",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code1": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Status": {
+      "main": [
+        [
+          {
+            "node": "Code1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update name1": {
+      "main": [
+        [
+          {
+            "node": "Get Status",
             "type": "main",
             "index": 0
           }
@@ -428,62 +1284,87 @@
         ],
         [
           {
+            "node": "IF2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Full Json1": {
+      "main": [
+        [
+          {
+            "node": "Update name1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "validate",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF2": {
+      "main": [
+        [
+          {
+            "node": "Stop and Error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields2": {
+      "main": [
+        [
+          {
+            "node": "Get Product by Remote Id / Json Update Stock3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If1": {
+      "main": [
+        [
+          {
             "node": "No Operation, do nothing1",
             "type": "main",
             "index": 0
           }
-        ]
-      ]
-    },
-    "Get Product by Remote Id DEV 1": {
-      "main": [
+        ],
         [
           {
-            "node": "IF",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Get Product by Remote Id PROD 1": {
-      "main": [
-        [
-          {
-            "node": "IF1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Get Product by Remote Id PROD 2": {
-      "main": [
-        [
-          {
-            "node": "IF1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Set": {
-      "main": [
-        [
-          {
-            "node": "Wait",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Get Product by Remote Id DEV 2": {
-      "main": [
-        [
-          {
-            "node": "IF",
+            "node": "if1",
             "type": "main",
             "index": 0
           }
@@ -501,16 +1382,1644 @@
         ]
       ]
     },
-    "Wait": {
+    "PrestaShop": {
       "main": [
         [
           {
-            "node": "Execute Update Workflow",
+            "node": "Get Full Json",
             "type": "main",
             "index": 0
           }
         ]
       ]
     }
+  },
+  "pinData": {
+    "Prestashop-Dev": [
+      {
+        "headers": {
+          "x-forwarded-for": "44.206.89.54",
+          "x-forwarded-proto": "https",
+          "x-forwarded-port": "443",
+          "host": "automation.prod.gosharpei.com",
+          "x-amzn-trace-id": "Root=1-6707f212-136fc67c05dda9c328b9c3f6",
+          "content-length": "11281",
+          "accept": "*/*",
+          "content-type": "application/json",
+          "authorization": "$2y$10$HJyJLei5Pe5EkOtdTbDf1eGQc.JWCLFhAvoAaGfkYntEUiFFckkDe"
+        },
+        "params": {},
+        "query": {
+          "create": "true"
+        },
+        "body": {
+          "id": 80001,
+          "*id_lang": null,
+          "*lang_associated": null,
+          "*id_shop": 1,
+          "id_shop_list": [],
+          "*get_shop_from_context": true,
+          "*table": "product",
+          "*identifier": "id_product",
+          "*fieldsRequired": [
+            "price"
+          ],
+          "*fieldsSize": {
+            "reference": 64,
+            "supplier_reference": 64,
+            "location": 255,
+            "ean13": 13,
+            "isbn": 32,
+            "upc": 12,
+            "mpn": 40
+          },
+          "*fieldsValidate": {
+            "id_shop_default": "isUnsignedId",
+            "id_manufacturer": "isUnsignedId",
+            "id_supplier": "isUnsignedId",
+            "reference": "isReference",
+            "supplier_reference": "isReference",
+            "location": "isString",
+            "width": "isUnsignedFloat",
+            "height": "isUnsignedFloat",
+            "depth": "isUnsignedFloat",
+            "weight": "isUnsignedFloat",
+            "quantity_discount": "isBool",
+            "ean13": "isEan13",
+            "isbn": "isIsbn",
+            "upc": "isUpc",
+            "mpn": "isMpn",
+            "cache_is_pack": "isBool",
+            "cache_has_attachments": "isBool",
+            "is_virtual": "isBool",
+            "state": "isUnsignedId",
+            "additional_delivery_times": "isUnsignedId",
+            "product_type": "isGenericName",
+            "id_category_default": "isUnsignedId",
+            "id_tax_rules_group": "isUnsignedId",
+            "on_sale": "isBool",
+            "online_only": "isBool",
+            "ecotax": "isPrice",
+            "minimal_quantity": "isPositiveInt",
+            "low_stock_threshold": "isInt",
+            "low_stock_alert": "isBool",
+            "price": "isPrice",
+            "wholesale_price": "isPrice",
+            "unity": "isString",
+            "unit_price": "isPrice",
+            "additional_shipping_cost": "isPrice",
+            "customizable": "isUnsignedInt",
+            "text_fields": "isUnsignedInt",
+            "uploadable_files": "isUnsignedInt",
+            "active": "isBool",
+            "redirect_type": "isString",
+            "id_type_redirected": "isUnsignedId",
+            "available_for_order": "isBool",
+            "available_date": "isDateFormat",
+            "show_condition": "isBool",
+            "condition": "isGenericName",
+            "show_price": "isBool",
+            "indexed": "isBool",
+            "visibility": "isProductVisibility",
+            "advanced_stock_management": "isBool",
+            "date_add": "isDate",
+            "date_upd": "isDate",
+            "pack_stock_type": "isUnsignedInt"
+          },
+          "*fieldsRequiredLang": [],
+          "*fieldsSizeLang": {
+            "delivery_in_stock": 255,
+            "delivery_out_stock": 255,
+            "meta_description": 512,
+            "meta_keywords": 255,
+            "meta_title": 255,
+            "link_rewrite": 128,
+            "name": 128,
+            "available_now": 255,
+            "available_later": 255
+          },
+          "*fieldsValidateLang": {
+            "delivery_in_stock": "isGenericName",
+            "delivery_out_stock": "isGenericName",
+            "meta_description": "isGenericName",
+            "meta_keywords": "isGenericName",
+            "meta_title": "isGenericName",
+            "link_rewrite": "isLinkRewrite",
+            "name": "isCatalogName",
+            "description": "isCleanHtml",
+            "description_short": "isCleanHtml",
+            "available_now": "isGenericName",
+            "available_later": "IsGenericName"
+          },
+          "*tables": [],
+          "*webserviceParameters": {
+            "objectMethods": {
+              "add": "addWs",
+              "update": "updateWs"
+            },
+            "objectNodeNames": "products",
+            "fields": {
+              "id_manufacturer": {
+                "xlink_resource": "manufacturers"
+              },
+              "id_supplier": {
+                "xlink_resource": "suppliers"
+              },
+              "id_category_default": {
+                "xlink_resource": "categories"
+              },
+              "new": [],
+              "cache_default_attribute": [],
+              "id_default_image": {
+                "getter": "getCoverWs",
+                "setter": "setCoverWs",
+                "xlink_resource": {
+                  "resourceName": "images",
+                  "subResourceName": "products"
+                }
+              },
+              "id_default_combination": {
+                "getter": "getWsDefaultCombination",
+                "setter": "setWsDefaultCombination",
+                "xlink_resource": {
+                  "resourceName": "combinations"
+                }
+              },
+              "id_tax_rules_group": {
+                "xlink_resource": {
+                  "resourceName": "tax_rule_groups"
+                }
+              },
+              "position_in_category": {
+                "getter": "getWsPositionInCategory",
+                "setter": "setWsPositionInCategory"
+              },
+              "manufacturer_name": {
+                "getter": "getWsManufacturerName",
+                "setter": false
+              },
+              "quantity": {
+                "getter": false,
+                "setter": false
+              },
+              "type": {
+                "getter": "getWsType",
+                "setter": "setWsType"
+              }
+            },
+            "associations": {
+              "categories": {
+                "resource": "category",
+                "fields": {
+                  "id": {
+                    "required": true
+                  }
+                }
+              },
+              "images": {
+                "resource": "image",
+                "fields": {
+                  "id": []
+                }
+              },
+              "combinations": {
+                "resource": "combination",
+                "fields": {
+                  "id": {
+                    "required": true
+                  }
+                }
+              },
+              "product_option_values": {
+                "resource": "product_option_value",
+                "fields": {
+                  "id": {
+                    "required": true
+                  }
+                }
+              },
+              "product_features": {
+                "resource": "product_feature",
+                "fields": {
+                  "id": {
+                    "required": true
+                  },
+                  "id_feature_value": {
+                    "required": true,
+                    "xlink_resource": "product_feature_values"
+                  }
+                }
+              },
+              "tags": {
+                "resource": "tag",
+                "fields": {
+                  "id": {
+                    "required": true
+                  }
+                }
+              },
+              "stock_availables": {
+                "resource": "stock_available",
+                "fields": {
+                  "id": {
+                    "required": true
+                  },
+                  "id_product_attribute": {
+                    "required": true
+                  }
+                },
+                "setter": false
+              },
+              "attachments": {
+                "resource": "attachment",
+                "api": "attachments",
+                "fields": {
+                  "id": {
+                    "required": true
+                  }
+                }
+              },
+              "accessories": {
+                "resource": "product",
+                "api": "products",
+                "fields": {
+                  "id": {
+                    "required": true,
+                    "xlink_resource": "products"
+                  }
+                }
+              },
+              "product_bundle": {
+                "resource": "product",
+                "api": "products",
+                "fields": {
+                  "id": {
+                    "required": true
+                  },
+                  "id_product_attribute": [],
+                  "quantity": []
+                }
+              }
+            }
+          },
+          "*image_dir": null,
+          "*image_format": "jpg",
+          "*translator": null,
+          "*def": {
+            "table": "product",
+            "primary": "id_product",
+            "multilang": true,
+            "multilang_shop": true,
+            "fields": {
+              "id_shop_default": {
+                "type": 1,
+                "validate": "isUnsignedId"
+              },
+              "id_manufacturer": {
+                "type": 1,
+                "validate": "isUnsignedId"
+              },
+              "id_supplier": {
+                "type": 1,
+                "validate": "isUnsignedId"
+              },
+              "reference": {
+                "type": 3,
+                "validate": "isReference",
+                "size": 64
+              },
+              "supplier_reference": {
+                "type": 3,
+                "validate": "isReference",
+                "size": 64
+              },
+              "location": {
+                "type": 3,
+                "validate": "isString",
+                "size": 255
+              },
+              "width": {
+                "type": 4,
+                "validate": "isUnsignedFloat"
+              },
+              "height": {
+                "type": 4,
+                "validate": "isUnsignedFloat"
+              },
+              "depth": {
+                "type": 4,
+                "validate": "isUnsignedFloat"
+              },
+              "weight": {
+                "type": 4,
+                "validate": "isUnsignedFloat"
+              },
+              "quantity_discount": {
+                "type": 2,
+                "validate": "isBool"
+              },
+              "ean13": {
+                "type": 3,
+                "validate": "isEan13",
+                "size": 13
+              },
+              "isbn": {
+                "type": 3,
+                "validate": "isIsbn",
+                "size": 32
+              },
+              "upc": {
+                "type": 3,
+                "validate": "isUpc",
+                "size": 12
+              },
+              "mpn": {
+                "type": 3,
+                "validate": "isMpn",
+                "size": 40
+              },
+              "cache_is_pack": {
+                "type": 2,
+                "validate": "isBool"
+              },
+              "cache_has_attachments": {
+                "type": 2,
+                "validate": "isBool"
+              },
+              "is_virtual": {
+                "type": 2,
+                "validate": "isBool"
+              },
+              "state": {
+                "type": 1,
+                "validate": "isUnsignedId"
+              },
+              "additional_delivery_times": {
+                "type": 1,
+                "validate": "isUnsignedId"
+              },
+              "delivery_in_stock": {
+                "type": 3,
+                "lang": true,
+                "validate": "isGenericName",
+                "size": 255
+              },
+              "delivery_out_stock": {
+                "type": 3,
+                "lang": true,
+                "validate": "isGenericName",
+                "size": 255
+              },
+              "product_type": {
+                "type": 3,
+                "validate": "isGenericName",
+                "values": [
+                  "standard",
+                  "pack",
+                  "virtual",
+                  "combinations",
+                  ""
+                ],
+                "default": ""
+              },
+              "id_category_default": {
+                "type": 1,
+                "shop": true,
+                "validate": "isUnsignedId"
+              },
+              "id_tax_rules_group": {
+                "type": 1,
+                "shop": true,
+                "validate": "isUnsignedId"
+              },
+              "on_sale": {
+                "type": 2,
+                "shop": true,
+                "validate": "isBool"
+              },
+              "online_only": {
+                "type": 2,
+                "shop": true,
+                "validate": "isBool"
+              },
+              "ecotax": {
+                "type": 4,
+                "shop": true,
+                "validate": "isPrice"
+              },
+              "minimal_quantity": {
+                "type": 1,
+                "shop": true,
+                "validate": "isPositiveInt"
+              },
+              "low_stock_threshold": {
+                "type": 1,
+                "shop": true,
+                "allow_null": true,
+                "validate": "isInt"
+              },
+              "low_stock_alert": {
+                "type": 2,
+                "shop": true,
+                "validate": "isBool"
+              },
+              "price": {
+                "type": 4,
+                "shop": true,
+                "validate": "isPrice",
+                "required": true
+              },
+              "wholesale_price": {
+                "type": 4,
+                "shop": true,
+                "validate": "isPrice"
+              },
+              "unity": {
+                "type": 3,
+                "shop": true,
+                "validate": "isString"
+              },
+              "unit_price": {
+                "type": 4,
+                "shop": true,
+                "validate": "isPrice"
+              },
+              "unit_price_ratio": {
+                "type": 4,
+                "shop": true
+              },
+              "additional_shipping_cost": {
+                "type": 4,
+                "shop": true,
+                "validate": "isPrice"
+              },
+              "customizable": {
+                "type": 1,
+                "shop": true,
+                "validate": "isUnsignedInt"
+              },
+              "text_fields": {
+                "type": 1,
+                "shop": true,
+                "validate": "isUnsignedInt"
+              },
+              "uploadable_files": {
+                "type": 1,
+                "shop": true,
+                "validate": "isUnsignedInt"
+              },
+              "active": {
+                "type": 2,
+                "shop": true,
+                "validate": "isBool"
+              },
+              "redirect_type": {
+                "type": 3,
+                "shop": true,
+                "validate": "isString"
+              },
+              "id_type_redirected": {
+                "type": 1,
+                "shop": true,
+                "validate": "isUnsignedId"
+              },
+              "available_for_order": {
+                "type": 2,
+                "shop": true,
+                "validate": "isBool"
+              },
+              "available_date": {
+                "type": 5,
+                "shop": true,
+                "validate": "isDateFormat"
+              },
+              "show_condition": {
+                "type": 2,
+                "shop": true,
+                "validate": "isBool"
+              },
+              "condition": {
+                "type": 3,
+                "shop": true,
+                "validate": "isGenericName",
+                "values": [
+                  "new",
+                  "used",
+                  "refurbished"
+                ],
+                "default": "new"
+              },
+              "show_price": {
+                "type": 2,
+                "shop": true,
+                "validate": "isBool"
+              },
+              "indexed": {
+                "type": 2,
+                "shop": true,
+                "validate": "isBool"
+              },
+              "visibility": {
+                "type": 3,
+                "shop": true,
+                "validate": "isProductVisibility",
+                "values": [
+                  "both",
+                  "catalog",
+                  "search",
+                  "none"
+                ],
+                "default": "both"
+              },
+              "cache_default_attribute": {
+                "type": 1,
+                "shop": true
+              },
+              "advanced_stock_management": {
+                "type": 2,
+                "shop": true,
+                "validate": "isBool"
+              },
+              "date_add": {
+                "type": 5,
+                "shop": true,
+                "validate": "isDate"
+              },
+              "date_upd": {
+                "type": 5,
+                "shop": true,
+                "validate": "isDate"
+              },
+              "pack_stock_type": {
+                "type": 1,
+                "shop": true,
+                "validate": "isUnsignedInt"
+              },
+              "meta_description": {
+                "type": 3,
+                "lang": true,
+                "validate": "isGenericName",
+                "size": 512
+              },
+              "meta_keywords": {
+                "type": 3,
+                "lang": true,
+                "validate": "isGenericName",
+                "size": 255
+              },
+              "meta_title": {
+                "type": 3,
+                "lang": true,
+                "validate": "isGenericName",
+                "size": 255
+              },
+              "link_rewrite": {
+                "type": 3,
+                "lang": true,
+                "validate": "isLinkRewrite",
+                "required": false,
+                "size": 128,
+                "ws_modifier": {
+                  "http_method": 2,
+                  "modifier": "modifierWsLinkRewrite"
+                }
+              },
+              "name": {
+                "type": 3,
+                "lang": true,
+                "validate": "isCatalogName",
+                "required": false,
+                "size": 128
+              },
+              "description": {
+                "type": 6,
+                "lang": true,
+                "validate": "isCleanHtml"
+              },
+              "description_short": {
+                "type": 6,
+                "lang": true,
+                "validate": "isCleanHtml"
+              },
+              "available_now": {
+                "type": 3,
+                "lang": true,
+                "validate": "isGenericName",
+                "size": 255
+              },
+              "available_later": {
+                "type": 3,
+                "lang": true,
+                "validate": "IsGenericName",
+                "size": 255
+              }
+            },
+            "associations": {
+              "manufacturer": {
+                "type": 1
+              },
+              "supplier": {
+                "type": 1
+              },
+              "default_category": {
+                "type": 1,
+                "field": "id_category_default",
+                "object": "Category"
+              },
+              "tax_rules_group": {
+                "type": 1
+              },
+              "categories": {
+                "type": 2,
+                "field": "id_category",
+                "object": "Category",
+                "association": "category_product"
+              },
+              "stock_availables": {
+                "type": 2,
+                "field": "id_stock_available",
+                "object": "StockAvailable",
+                "association": "stock_availables"
+              },
+              "attachments": {
+                "type": 2,
+                "field": "id_attachment",
+                "object": "Attachment",
+                "association": "product_attachment"
+              },
+              "l": {
+                "type": 2,
+                "field": "id_product",
+                "foreign_field": "id_product"
+              }
+            },
+            "classname": "Product"
+          },
+          "*update_fields": null,
+          "force_id": false,
+          "tax_name": null,
+          "tax_rate": null,
+          "id_manufacturer": 0,
+          "id_supplier": 0,
+          "id_category_default": 2,
+          "id_shop_default": 1,
+          "manufacturer_name": null,
+          "supplier_name": null,
+          "name": {
+            "1": "dev flow"
+          },
+          "description": {
+            "1": ""
+          },
+          "description_short": {
+            "1": ""
+          },
+          "quantity": 0,
+          "minimal_quantity": 1,
+          "low_stock_threshold": 0,
+          "low_stock_alert": "0",
+          "available_now": {
+            "1": ""
+          },
+          "available_later": {
+            "1": ""
+          },
+          "price": "456.000000",
+          "specificPrice": 0,
+          "additional_shipping_cost": "0.000000",
+          "wholesale_price": "0.000000",
+          "on_sale": "0",
+          "online_only": "0",
+          "unity": "",
+          "unit_price": "0.000000",
+          "unit_price_ratio": "0.000000",
+          "ecotax": "0.000000",
+          "reference": "456",
+          "supplier_reference": "",
+          "location": "",
+          "width": "0.000000",
+          "height": "0.000000",
+          "depth": "0.000000",
+          "weight": "0.000000",
+          "ean13": "",
+          "isbn": "",
+          "upc": "789",
+          "mpn": "",
+          "link_rewrite": {
+            "1": "dev-flow"
+          },
+          "meta_description": {
+            "1": ""
+          },
+          "meta_keywords": {
+            "1": ""
+          },
+          "meta_title": {
+            "1": ""
+          },
+          "quantity_discount": "0",
+          "customizable": 0,
+          "new": null,
+          "uploadable_files": 0,
+          "text_fields": 0,
+          "active": "1",
+          "redirect_type": "default",
+          "id_type_redirected": 0,
+          "available_for_order": "1",
+          "available_date": "0000-00-00",
+          "show_condition": "0",
+          "condition": "new",
+          "show_price": "1",
+          "indexed": "1",
+          "visibility": "both",
+          "date_add": "2024-10-10 08:23:52",
+          "date_upd": "2024-10-10 08:24:58",
+          "tags": null,
+          "state": 1,
+          "base_price": null,
+          "id_tax_rules_group": 0,
+          "id_color_default": 0,
+          "advanced_stock_management": "0",
+          "out_of_stock": 2,
+          "depends_on_stock": null,
+          "isFullyLoaded": false,
+          "cache_is_pack": "0",
+          "cache_has_attachments": "0",
+          "is_virtual": "0",
+          "id_pack_product_attribute": null,
+          "cache_default_attribute": 0,
+          "category": false,
+          "pack_stock_type": 3,
+          "additional_delivery_times": 1,
+          "delivery_in_stock": {
+            "1": ""
+          },
+          "delivery_out_stock": {
+            "1": ""
+          },
+          "product_type": "standard",
+          "stock_available": 2,
+          "combinations": [],
+          "images": [
+            {
+              "id_image": 424,
+              "position": 1,
+              "cover": 1,
+              "url": "https://presta.dev.gosharpei.com/424-home_default/247.jpg"
+            }
+          ]
+        },
+        "webhookUrl": "http://https://automation.prod.gosharpei.com:5678/webhook/dev-prestashop",
+        "executionMode": "production"
+      }
+    ],
+    "PrestaShop": [
+      {
+        "headers": {
+          "x-forwarded-for": "44.206.89.54",
+          "x-forwarded-proto": "https",
+          "x-forwarded-port": "443",
+          "host": "automation.prod.gosharpei.com",
+          "x-amzn-trace-id": "Root=1-66d7de8b-653a916313af764d7c0a5212",
+          "content-length": "12283",
+          "accept": "*/*",
+          "content-type": "application/json",
+          "authorization": "$2y$10$Z.PtkWIp./jqB.JlH5mq2uMvr2ifcAc2RutXhSFljCZvbb8wU9R9i"
+        },
+        "params": {},
+        "query": {
+          "create": "true"
+        },
+        "body": {
+          "id": 60005,
+          "*id_lang": null,
+          "*lang_associated": null,
+          "*id_shop": 1,
+          "id_shop_list": [],
+          "*get_shop_from_context": true,
+          "*table": "product",
+          "*identifier": "id_product",
+          "*fieldsRequired": [
+            "price"
+          ],
+          "*fieldsSize": {
+            "reference": 64,
+            "supplier_reference": 64,
+            "location": 255,
+            "ean13": 13,
+            "isbn": 32,
+            "upc": 12,
+            "mpn": 40
+          },
+          "*fieldsValidate": {
+            "id_shop_default": "isUnsignedId",
+            "id_manufacturer": "isUnsignedId",
+            "id_supplier": "isUnsignedId",
+            "reference": "isReference",
+            "supplier_reference": "isReference",
+            "location": "isString",
+            "width": "isUnsignedFloat",
+            "height": "isUnsignedFloat",
+            "depth": "isUnsignedFloat",
+            "weight": "isUnsignedFloat",
+            "quantity_discount": "isBool",
+            "ean13": "isEan13",
+            "isbn": "isIsbn",
+            "upc": "isUpc",
+            "mpn": "isMpn",
+            "cache_is_pack": "isBool",
+            "cache_has_attachments": "isBool",
+            "is_virtual": "isBool",
+            "state": "isUnsignedId",
+            "additional_delivery_times": "isUnsignedId",
+            "product_type": "isGenericName",
+            "id_category_default": "isUnsignedId",
+            "id_tax_rules_group": "isUnsignedId",
+            "on_sale": "isBool",
+            "online_only": "isBool",
+            "ecotax": "isPrice",
+            "minimal_quantity": "isPositiveInt",
+            "low_stock_threshold": "isInt",
+            "low_stock_alert": "isBool",
+            "price": "isPrice",
+            "wholesale_price": "isPrice",
+            "unity": "isString",
+            "unit_price": "isPrice",
+            "additional_shipping_cost": "isPrice",
+            "customizable": "isUnsignedInt",
+            "text_fields": "isUnsignedInt",
+            "uploadable_files": "isUnsignedInt",
+            "active": "isBool",
+            "redirect_type": "isString",
+            "id_type_redirected": "isUnsignedId",
+            "available_for_order": "isBool",
+            "available_date": "isDateFormat",
+            "show_condition": "isBool",
+            "condition": "isGenericName",
+            "show_price": "isBool",
+            "indexed": "isBool",
+            "visibility": "isProductVisibility",
+            "advanced_stock_management": "isBool",
+            "date_add": "isDate",
+            "date_upd": "isDate",
+            "pack_stock_type": "isUnsignedInt"
+          },
+          "*fieldsRequiredLang": [],
+          "*fieldsSizeLang": {
+            "delivery_in_stock": 255,
+            "delivery_out_stock": 255,
+            "meta_description": 512,
+            "meta_keywords": 255,
+            "meta_title": 255,
+            "link_rewrite": 128,
+            "name": 128,
+            "available_now": 255,
+            "available_later": 255
+          },
+          "*fieldsValidateLang": {
+            "delivery_in_stock": "isGenericName",
+            "delivery_out_stock": "isGenericName",
+            "meta_description": "isGenericName",
+            "meta_keywords": "isGenericName",
+            "meta_title": "isGenericName",
+            "link_rewrite": "isLinkRewrite",
+            "name": "isCatalogName",
+            "description": "isCleanHtml",
+            "description_short": "isCleanHtml",
+            "available_now": "isGenericName",
+            "available_later": "IsGenericName"
+          },
+          "*tables": [],
+          "*webserviceParameters": {
+            "objectMethods": {
+              "add": "addWs",
+              "update": "updateWs"
+            },
+            "objectNodeNames": "products",
+            "fields": {
+              "id_manufacturer": {
+                "xlink_resource": "manufacturers"
+              },
+              "id_supplier": {
+                "xlink_resource": "suppliers"
+              },
+              "id_category_default": {
+                "xlink_resource": "categories"
+              },
+              "new": [],
+              "cache_default_attribute": [],
+              "id_default_image": {
+                "getter": "getCoverWs",
+                "setter": "setCoverWs",
+                "xlink_resource": {
+                  "resourceName": "images",
+                  "subResourceName": "products"
+                }
+              },
+              "id_default_combination": {
+                "getter": "getWsDefaultCombination",
+                "setter": "setWsDefaultCombination",
+                "xlink_resource": {
+                  "resourceName": "combinations"
+                }
+              },
+              "id_tax_rules_group": {
+                "xlink_resource": {
+                  "resourceName": "tax_rule_groups"
+                }
+              },
+              "position_in_category": {
+                "getter": "getWsPositionInCategory",
+                "setter": "setWsPositionInCategory"
+              },
+              "manufacturer_name": {
+                "getter": "getWsManufacturerName",
+                "setter": false
+              },
+              "quantity": {
+                "getter": false,
+                "setter": false
+              },
+              "type": {
+                "getter": "getWsType",
+                "setter": "setWsType"
+              }
+            },
+            "associations": {
+              "categories": {
+                "resource": "category",
+                "fields": {
+                  "id": {
+                    "required": true
+                  }
+                }
+              },
+              "images": {
+                "resource": "image",
+                "fields": {
+                  "id": []
+                }
+              },
+              "combinations": {
+                "resource": "combination",
+                "fields": {
+                  "id": {
+                    "required": true
+                  }
+                }
+              },
+              "product_option_values": {
+                "resource": "product_option_value",
+                "fields": {
+                  "id": {
+                    "required": true
+                  }
+                }
+              },
+              "product_features": {
+                "resource": "product_feature",
+                "fields": {
+                  "id": {
+                    "required": true
+                  },
+                  "id_feature_value": {
+                    "required": true,
+                    "xlink_resource": "product_feature_values"
+                  }
+                }
+              },
+              "tags": {
+                "resource": "tag",
+                "fields": {
+                  "id": {
+                    "required": true
+                  }
+                }
+              },
+              "stock_availables": {
+                "resource": "stock_available",
+                "fields": {
+                  "id": {
+                    "required": true
+                  },
+                  "id_product_attribute": {
+                    "required": true
+                  }
+                },
+                "setter": false
+              },
+              "attachments": {
+                "resource": "attachment",
+                "api": "attachments",
+                "fields": {
+                  "id": {
+                    "required": true
+                  }
+                }
+              },
+              "accessories": {
+                "resource": "product",
+                "api": "products",
+                "fields": {
+                  "id": {
+                    "required": true,
+                    "xlink_resource": "products"
+                  }
+                }
+              },
+              "product_bundle": {
+                "resource": "product",
+                "api": "products",
+                "fields": {
+                  "id": {
+                    "required": true
+                  },
+                  "id_product_attribute": [],
+                  "quantity": []
+                }
+              }
+            }
+          },
+          "*image_dir": null,
+          "*image_format": "jpg",
+          "*translator": null,
+          "*def": {
+            "table": "product",
+            "primary": "id_product",
+            "multilang": true,
+            "multilang_shop": true,
+            "fields": {
+              "id_shop_default": {
+                "type": 1,
+                "validate": "isUnsignedId"
+              },
+              "id_manufacturer": {
+                "type": 1,
+                "validate": "isUnsignedId"
+              },
+              "id_supplier": {
+                "type": 1,
+                "validate": "isUnsignedId"
+              },
+              "reference": {
+                "type": 3,
+                "validate": "isReference",
+                "size": 64
+              },
+              "supplier_reference": {
+                "type": 3,
+                "validate": "isReference",
+                "size": 64
+              },
+              "location": {
+                "type": 3,
+                "validate": "isString",
+                "size": 255
+              },
+              "width": {
+                "type": 4,
+                "validate": "isUnsignedFloat"
+              },
+              "height": {
+                "type": 4,
+                "validate": "isUnsignedFloat"
+              },
+              "depth": {
+                "type": 4,
+                "validate": "isUnsignedFloat"
+              },
+              "weight": {
+                "type": 4,
+                "validate": "isUnsignedFloat"
+              },
+              "quantity_discount": {
+                "type": 2,
+                "validate": "isBool"
+              },
+              "ean13": {
+                "type": 3,
+                "validate": "isEan13",
+                "size": 13
+              },
+              "isbn": {
+                "type": 3,
+                "validate": "isIsbn",
+                "size": 32
+              },
+              "upc": {
+                "type": 3,
+                "validate": "isUpc",
+                "size": 12
+              },
+              "mpn": {
+                "type": 3,
+                "validate": "isMpn",
+                "size": 40
+              },
+              "cache_is_pack": {
+                "type": 2,
+                "validate": "isBool"
+              },
+              "cache_has_attachments": {
+                "type": 2,
+                "validate": "isBool"
+              },
+              "is_virtual": {
+                "type": 2,
+                "validate": "isBool"
+              },
+              "state": {
+                "type": 1,
+                "validate": "isUnsignedId"
+              },
+              "additional_delivery_times": {
+                "type": 1,
+                "validate": "isUnsignedId"
+              },
+              "delivery_in_stock": {
+                "type": 3,
+                "lang": true,
+                "validate": "isGenericName",
+                "size": 255
+              },
+              "delivery_out_stock": {
+                "type": 3,
+                "lang": true,
+                "validate": "isGenericName",
+                "size": 255
+              },
+              "product_type": {
+                "type": 3,
+                "validate": "isGenericName",
+                "values": [
+                  "standard",
+                  "pack",
+                  "virtual",
+                  "combinations",
+                  ""
+                ],
+                "default": ""
+              },
+              "id_category_default": {
+                "type": 1,
+                "shop": true,
+                "validate": "isUnsignedId"
+              },
+              "id_tax_rules_group": {
+                "type": 1,
+                "shop": true,
+                "validate": "isUnsignedId"
+              },
+              "on_sale": {
+                "type": 2,
+                "shop": true,
+                "validate": "isBool"
+              },
+              "online_only": {
+                "type": 2,
+                "shop": true,
+                "validate": "isBool"
+              },
+              "ecotax": {
+                "type": 4,
+                "shop": true,
+                "validate": "isPrice"
+              },
+              "minimal_quantity": {
+                "type": 1,
+                "shop": true,
+                "validate": "isPositiveInt"
+              },
+              "low_stock_threshold": {
+                "type": 1,
+                "shop": true,
+                "allow_null": true,
+                "validate": "isInt"
+              },
+              "low_stock_alert": {
+                "type": 2,
+                "shop": true,
+                "validate": "isBool"
+              },
+              "price": {
+                "type": 4,
+                "shop": true,
+                "validate": "isPrice",
+                "required": true
+              },
+              "wholesale_price": {
+                "type": 4,
+                "shop": true,
+                "validate": "isPrice"
+              },
+              "unity": {
+                "type": 3,
+                "shop": true,
+                "validate": "isString"
+              },
+              "unit_price": {
+                "type": 4,
+                "shop": true,
+                "validate": "isPrice"
+              },
+              "unit_price_ratio": {
+                "type": 4,
+                "shop": true
+              },
+              "additional_shipping_cost": {
+                "type": 4,
+                "shop": true,
+                "validate": "isPrice"
+              },
+              "customizable": {
+                "type": 1,
+                "shop": true,
+                "validate": "isUnsignedInt"
+              },
+              "text_fields": {
+                "type": 1,
+                "shop": true,
+                "validate": "isUnsignedInt"
+              },
+              "uploadable_files": {
+                "type": 1,
+                "shop": true,
+                "validate": "isUnsignedInt"
+              },
+              "active": {
+                "type": 2,
+                "shop": true,
+                "validate": "isBool"
+              },
+              "redirect_type": {
+                "type": 3,
+                "shop": true,
+                "validate": "isString"
+              },
+              "id_type_redirected": {
+                "type": 1,
+                "shop": true,
+                "validate": "isUnsignedId"
+              },
+              "available_for_order": {
+                "type": 2,
+                "shop": true,
+                "validate": "isBool"
+              },
+              "available_date": {
+                "type": 5,
+                "shop": true,
+                "validate": "isDateFormat"
+              },
+              "show_condition": {
+                "type": 2,
+                "shop": true,
+                "validate": "isBool"
+              },
+              "condition": {
+                "type": 3,
+                "shop": true,
+                "validate": "isGenericName",
+                "values": [
+                  "new",
+                  "used",
+                  "refurbished"
+                ],
+                "default": "new"
+              },
+              "show_price": {
+                "type": 2,
+                "shop": true,
+                "validate": "isBool"
+              },
+              "indexed": {
+                "type": 2,
+                "shop": true,
+                "validate": "isBool"
+              },
+              "visibility": {
+                "type": 3,
+                "shop": true,
+                "validate": "isProductVisibility",
+                "values": [
+                  "both",
+                  "catalog",
+                  "search",
+                  "none"
+                ],
+                "default": "both"
+              },
+              "cache_default_attribute": {
+                "type": 1,
+                "shop": true
+              },
+              "advanced_stock_management": {
+                "type": 2,
+                "shop": true,
+                "validate": "isBool"
+              },
+              "date_add": {
+                "type": 5,
+                "shop": true,
+                "validate": "isDate"
+              },
+              "date_upd": {
+                "type": 5,
+                "shop": true,
+                "validate": "isDate"
+              },
+              "pack_stock_type": {
+                "type": 1,
+                "shop": true,
+                "validate": "isUnsignedInt"
+              },
+              "meta_description": {
+                "type": 3,
+                "lang": true,
+                "validate": "isGenericName",
+                "size": 512
+              },
+              "meta_keywords": {
+                "type": 3,
+                "lang": true,
+                "validate": "isGenericName",
+                "size": 255
+              },
+              "meta_title": {
+                "type": 3,
+                "lang": true,
+                "validate": "isGenericName",
+                "size": 255
+              },
+              "link_rewrite": {
+                "type": 3,
+                "lang": true,
+                "validate": "isLinkRewrite",
+                "required": false,
+                "size": 128,
+                "ws_modifier": {
+                  "http_method": 2,
+                  "modifier": "modifierWsLinkRewrite"
+                }
+              },
+              "name": {
+                "type": 3,
+                "lang": true,
+                "validate": "isCatalogName",
+                "required": false,
+                "size": 128
+              },
+              "description": {
+                "type": 6,
+                "lang": true,
+                "validate": "isCleanHtml"
+              },
+              "description_short": {
+                "type": 6,
+                "lang": true,
+                "validate": "isCleanHtml"
+              },
+              "available_now": {
+                "type": 3,
+                "lang": true,
+                "validate": "isGenericName",
+                "size": 255
+              },
+              "available_later": {
+                "type": 3,
+                "lang": true,
+                "validate": "IsGenericName",
+                "size": 255
+              }
+            },
+            "associations": {
+              "manufacturer": {
+                "type": 1
+              },
+              "supplier": {
+                "type": 1
+              },
+              "default_category": {
+                "type": 1,
+                "field": "id_category_default",
+                "object": "Category"
+              },
+              "tax_rules_group": {
+                "type": 1
+              },
+              "categories": {
+                "type": 2,
+                "field": "id_category",
+                "object": "Category",
+                "association": "category_product"
+              },
+              "stock_availables": {
+                "type": 2,
+                "field": "id_stock_available",
+                "object": "StockAvailable",
+                "association": "stock_availables"
+              },
+              "attachments": {
+                "type": 2,
+                "field": "id_attachment",
+                "object": "Attachment",
+                "association": "product_attachment"
+              },
+              "l": {
+                "type": 2,
+                "field": "id_product",
+                "foreign_field": "id_product"
+              }
+            },
+            "classname": "Product"
+          },
+          "*update_fields": null,
+          "force_id": false,
+          "tax_name": null,
+          "tax_rate": null,
+          "id_manufacturer": 0,
+          "id_supplier": 0,
+          "id_category_default": 2,
+          "id_shop_default": 1,
+          "manufacturer_name": null,
+          "supplier_name": null,
+          "name": {
+            "1": "Mouse 03/09"
+          },
+          "description": {
+            "1": "<p>mouse</p>"
+          },
+          "description_short": {
+            "1": "<p>mouse</p>"
+          },
+          "quantity": 0,
+          "minimal_quantity": 1,
+          "low_stock_threshold": 0,
+          "low_stock_alert": "0",
+          "available_now": {
+            "1": ""
+          },
+          "available_later": {
+            "1": ""
+          },
+          "price": "100.000000",
+          "specificPrice": 0,
+          "additional_shipping_cost": "0.000000",
+          "wholesale_price": "25.000000",
+          "on_sale": "0",
+          "online_only": "0",
+          "unity": "",
+          "unit_price": "0.000000",
+          "unit_price_ratio": "0.000000",
+          "ecotax": "0.000000",
+          "reference": "78910",
+          "supplier_reference": "",
+          "location": "",
+          "width": "0.000000",
+          "height": "0.000000",
+          "depth": "0.000000",
+          "weight": "0.000000",
+          "ean13": "",
+          "isbn": "",
+          "upc": "111213",
+          "mpn": "",
+          "link_rewrite": {
+            "1": "mouse-03-09"
+          },
+          "meta_description": {
+            "1": ""
+          },
+          "meta_keywords": {
+            "1": ""
+          },
+          "meta_title": {
+            "1": ""
+          },
+          "quantity_discount": "0",
+          "customizable": 0,
+          "new": null,
+          "uploadable_files": 0,
+          "text_fields": 0,
+          "active": "1",
+          "redirect_type": "default",
+          "id_type_redirected": 0,
+          "available_for_order": "1",
+          "available_date": "0000-00-00",
+          "show_condition": "0",
+          "condition": "new",
+          "show_price": "1",
+          "indexed": "1",
+          "visibility": "both",
+          "date_add": "2024-09-03 21:11:19",
+          "date_upd": "2024-09-03 21:13:47",
+          "tags": null,
+          "state": 1,
+          "base_price": null,
+          "id_tax_rules_group": 1,
+          "id_color_default": 0,
+          "advanced_stock_management": "0",
+          "out_of_stock": 2,
+          "depends_on_stock": null,
+          "isFullyLoaded": false,
+          "cache_is_pack": "0",
+          "cache_has_attachments": "0",
+          "is_virtual": "0",
+          "id_pack_product_attribute": null,
+          "cache_default_attribute": 485,
+          "category": false,
+          "pack_stock_type": 3,
+          "additional_delivery_times": 1,
+          "delivery_in_stock": {
+            "1": ""
+          },
+          "delivery_out_stock": {
+            "1": ""
+          },
+          "product_type": "combinations",
+          "stock_available": 3,
+          "combinations": {
+            "485": {
+              "id_product_attribute": 485,
+              "attributes": [
+                {
+                  "id_attribute": 10,
+                  "attribute": "Red"
+                }
+              ],
+              "price": "0.000000",
+              "quantity": 1,
+              "images": [
+                {
+                  "id_image": 366,
+                  "position": 3,
+                  "cover": null,
+                  "url": "https://presta.dev.gosharpei.com/366-home_default/197.jpg"
+                }
+              ]
+            },
+            "486": {
+              "id_product_attribute": 486,
+              "attributes": [
+                {
+                  "id_attribute": 11,
+                  "attribute": "Black"
+                }
+              ],
+              "price": "0.000000",
+              "quantity": 1,
+              "images": [
+                {
+                  "id_image": 365,
+                  "position": 2,
+                  "cover": null,
+                  "url": "https://presta.dev.gosharpei.com/365-home_default/197.jpg"
+                }
+              ]
+            },
+            "487": {
+              "id_product_attribute": 487,
+              "attributes": [
+                {
+                  "id_attribute": 14,
+                  "attribute": "Blue"
+                }
+              ],
+              "price": "0.000000",
+              "quantity": 1,
+              "images": [
+                {
+                  "id_image": 364,
+                  "position": 1,
+                  "cover": 1,
+                  "url": "https://presta.dev.gosharpei.com/364-home_default/197.jpg"
+                }
+              ]
+            }
+          },
+          "images": [
+            {
+              "id_image": 364,
+              "position": 1,
+              "cover": 1,
+              "url": "https://presta.dev.gosharpei.com/364-home_default/197.jpg"
+            },
+            {
+              "id_image": 365,
+              "position": 2,
+              "cover": null,
+              "url": "https://presta.dev.gosharpei.com/365-home_default/197.jpg"
+            },
+            {
+              "id_image": 366,
+              "position": 3,
+              "cover": null,
+              "url": "https://presta.dev.gosharpei.com/366-home_default/197.jpg"
+            }
+          ]
+        },
+        "webhookUrl": "http://https://automation.prod.gosharpei.com:5678/webhook/prod-prestashop",
+        "executionMode": "production"
+      }
+    ]
   }
 }

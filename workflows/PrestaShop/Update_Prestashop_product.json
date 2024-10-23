@@ -4,9 +4,214 @@
   },
   "nodes": [
     {
+      "parameters": {},
+      "id": "86199c7d-db9c-498a-a682-49f8ae9b4e15",
+      "name": "Wait",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        3440,
+        600
+      ],
+      "webhookId": "57969218-41d4-4f8c-8628-e480f12686ca"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1tpg18UA9Zy_g1VWqzSwu1Gob5g-2g0d1TDJqOWKVncE",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Quantity Sheet",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1tpg18UA9Zy_g1VWqzSwu1Gob5g-2g0d1TDJqOWKVncE/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Stock": "={{ $json.PrestaShop_Body.PrestaShop_Body.body.quantity }}"
+          },
+          "matchingColumns": [
+            "Stock"
+          ],
+          "schema": [
+            {
+              "id": "Stock",
+              "displayName": "Stock",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Stock Available",
+              "displayName": "Stock Available",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "e7da97ed-1343-4a02-afc9-7071c7acc35a",
+      "name": "Google Sheets",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.4,
+      "position": [
+        3220,
+        600
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "OT8wMWyUPUaPSE6u",
+          "name": "Google Sheets account 5"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "9d8c6249-0678-4bfa-9c6e-72c1fa876afe",
+              "name": "PrestaShop_Body.PrestaShop_Body.body.quantity",
+              "value": "={{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.quantity }}",
+              "type": "number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "eb0fe685-e2e2-4596-be71-ace82d3e0582",
+      "name": "Edit Fields7",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        3000,
+        600
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "number": [
+            {
+              "value1": "={{ $('Execute Workflow Trigger').item.json.data.variants_count }}",
+              "operation": "equal",
+              "value2": 1
+            },
+            {
+              "value1": "={{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.id_product }}",
+              "operation": "isNotEmpty"
+            }
+          ]
+        }
+      },
+      "id": "26c84731-d3fd-4465-825f-88b8bb8795b9",
+      "name": "IF equal 2",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        2780,
+        600
+      ]
+    },
+    {
+      "parameters": {
+        "workflowId": "R6tILcIQGKOZ0HO4",
+        "options": {}
+      },
+      "id": "5415153a-b99e-4398-bf5d-760ecb3660c0",
+      "name": "Execute Workflow",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1,
+      "position": [
+        3860,
+        1880
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "4c3eaedf-a56c-4492-b804-4510bb5c259c",
+              "name": "=pid",
+              "value": "={{ $('Execute Workflow Trigger').item.json.data.pid }}",
+              "type": "string"
+            },
+            {
+              "id": "80cb8a27-eff8-40e6-846c-f76a01831570",
+              "name": "Authorization",
+              "value": "={{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.headers.authorization }}",
+              "type": "string"
+            },
+            {
+              "id": "b721d509-46f9-4644-9179-cb6cde139ae6",
+              "name": "env",
+              "value": "={{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.env }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "52d82880-a394-473f-97a0-bfd3b59c2d28",
+      "name": "Edit Fields2",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        3660,
+        1880
+      ]
+    },
+    {
+      "parameters": {
+        "method": "PUT",
+        "url": "=https://api.{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.env }}.gosharpei.com/api/products/{{ $('Execute Workflow Trigger').item.json.data.pid }}/variants/{{ $('Create combination').item.json.data[0].pid }}   ",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Accept",
+              "value": "application/json"
+            },
+            {
+              "name": "Authorization",
+              "value": "={{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.headers.authorization }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n    \"selling_price\": \"{{ $('Loop Over Items2').item.json.price == 0 ? $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.price : $('Loop Over Items2').item.json.price }}\",\n    \"title\": \"{{ $('Create combination').item.json.data[0].title }}\",\n    \"remote_id\": \"{{ $('Create combination').item.json.data[0].remote_id }}\",\n    \"status_pid\" : \"{{$('Loop Over Items2').item.json.quantity > 0 ? 'f1554bbc-3159-4044-8974-1da26a573ea3' : '8ccef96e-5eb3-4b66-bd16-86fec78ab575'}}\",\n    \"cost\": \"{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.wholesale_price }}\",\n    \"barcode\": \"{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body?.PrestaShop_Body?.body?.upc ? $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.upc : 'n/a' }}\",\n    \"SKU\": \"{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body?.PrestaShop_Body?.body?.reference ? $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.reference : 'n/a' }}\"\n\n  }       ",
+        "options": {}
+      },
+      "id": "335f7b84-9eea-4668-83c8-33f574fa58e6",
+      "name": "Update combination1",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        4940,
+        1620
+      ],
+      "retryOnFail": true,
+      "maxTries": 2
+    },
+    {
       "parameters": {
         "method": "POST",
-        "url": "=https://api.{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.env }}.gosharpei.com/api/products/{{ $('Execute Workflow Trigger').item.json.data.pid }}/variants/{{ $('Execute Workflow Trigger').item.json.data.variants[0].pid }}/images       ",
+        "url": "=https://api.{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.env }}.gosharpei.com/api/products/{{ $('Execute Workflow Trigger').item.json.data.pid }}/variants/{{ $('Create combination').item.json.data[0].pid }}/images            ",
         "sendHeaders": true,
         "headerParameters": {
           "parameters": [
@@ -29,29 +234,265 @@
         },
         "options": {}
       },
-      "id": "6f7495ed-0c8a-4600-95ec-8bcc7329f8a2",
-      "name": "Add Image1",
+      "id": "2e43e39e-a81a-408f-8701-a3cfa0594d83",
+      "name": "Add Image",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        1760,
-        680
+        4700,
+        1620
+      ],
+      "retryOnFail": true,
+      "maxTries": 2,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "url": "={{\n  $('Loop Over Items2').item.json.image && \n  $('Loop Over Items2').item.json.image[0] && \n  $('Loop Over Items2').item.json.image[0].url &&\n  $('Loop Over Items2').item.json.image[0].url.length > 0\n  ? $('Loop Over Items2').item.json.image[0].url\n  : $('Edit Fields5').item.json.PrestaShop_Body.PrestaShop_Body.body.images[0].url\n}}\n\n  ",
+        "options": {}
+      },
+      "id": "09ccfed5-33d0-49fd-af53-ae4e89d60e73",
+      "name": "Upload",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        4500,
+        1620
       ],
       "retryOnFail": true,
       "maxTries": 2
     },
     {
       "parameters": {
-        "url": "={{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.image_url }}",
+        "method": "POST",
+        "url": "=https://api.{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.env }}.gosharpei.com/api/products/{{ $('Execute Workflow Trigger').item.json.data.pid }}/variants/multiple        ",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Accept",
+              "value": "application/json"
+            },
+            {
+              "name": "Authorization",
+              "value": "={{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.headers.authorization }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "=[\n  {\n    \"selling_price\": \"{{ $('Loop Over Items2').item.json.price }}\",\n    \"title\": \"/ {{ $('Loop Over Items2').item.json.attributes.map(attr => attr.attribute).join(' - ') }}\",\n    \"status_pid\" : \"{{ $('Execute Workflow Trigger').item.json.data.status.pid }}\",\n    \"remote_id\": \"{{ $('Loop Over Items2').item.json.id_product_attribute }}\",\n    \"cost\": \"{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.wholesale_price }}\",\n    \"barcode\": {{ $('Execute Workflow Trigger').item.json.PrestaShop_Body?.PrestaShop_Body?.body?.upc ? $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.upc : '\"n/a\"' }},\n    \"SKU\": {{ $('Execute Workflow Trigger').item.json.PrestaShop_Body?.PrestaShop_Body?.body?.upc ? $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.upc : '\"n/a\"' }}\n\n  }\n]       \n                  ",
         "options": {}
       },
-      "id": "109d98f8-738d-486c-be33-0d4daebb8b7b",
-      "name": "Upload1",
+      "id": "50d967dc-235a-44f2-a2e9-ca81f7294e3a",
+      "name": "Create combination",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        1560,
-        680
+        4280,
+        1620
+      ],
+      "retryOnFail": true,
+      "maxTries": 2
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "231188d8-393e-4151-a132-424d2184c572",
+              "name": "index",
+              "value": "={{$runIndex}}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "edff6b31-9323-42e8-a12d-3dcfa9520d09",
+      "name": "Edit Fields6",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        4060,
+        1620
+      ]
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "0ef262c7-69a0-4000-be3e-46e5fa33f40d",
+      "name": "Loop Over Items2",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        3860,
+        1620
+      ]
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "new_combinations",
+        "options": {}
+      },
+      "id": "63c6259a-dffd-4d80-b932-5dfaabadb0a9",
+      "name": "Split Out2",
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        3660,
+        1620
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const input = items[0];\n\n// Verificar si 'input' y 'input.json' están definidos\nif (input && input.json) {\n    // Obtener los datos de 'fields' y 'products_variants'\n    const fields = input.json.fields || [];\n    const productsVariants = input.json.data.products_variants || [];\n\n    // Crear un conjunto de todos los remote_id en products_variants\n    const remoteIds = new Set(productsVariants.map(variant => variant.remote_id));\n\n    // Crear un array para almacenar todas las combinaciones no coincidentes\n    const nonMatchingCombinations = [];\n\n    // Recorrer todos los fields\n    fields.forEach(field => {\n        // Verificar si 'id_product_attribute' no coincide con ningún 'remote_id'\n        const idMatch = !remoteIds.has(field.id_product_attribute.toString());\n        \n        // Si no coincide, agregar al array de no coincidentes\n        if (idMatch) {\n            nonMatchingCombinations.push({\n                id_product_attribute: field.id_product_attribute,\n                attributes: field.attributes,\n                price: field.price,\n                quantity: field.quantity,\n                image: field.image || [],\n            });\n        }\n    });\n\n    // Devolver todas las combinaciones no coincidentes\n    if (nonMatchingCombinations.length > 0) {\n        return [{\n            json: {\n                new_combinations: nonMatchingCombinations\n            }\n        }];\n    }\n}\n\n// Si no se encuentran coincidencias, retornar los items originales\nreturn items;\n\n\n"
+      },
+      "id": "bcfff065-9e80-4bf9-9ae6-65aff909433e",
+      "name": "Convert Object",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3440,
+        1620
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "31622845-45d2-44ca-aa33-f2c271cfcb8e",
+              "name": "fields",
+              "value": "={{ $('If8').item.json.fields }}",
+              "type": "array"
+            },
+            {
+              "id": "53890f9b-8be3-4f3a-8557-d767b4734fb3",
+              "name": "data.products_variants",
+              "value": "={{ $('Execute Workflow Trigger').item.json.data.variants }}",
+              "type": "array"
+            },
+            {
+              "id": "99c91392-cbe0-44e7-8a05-4dcbbfbe63a5",
+              "name": "PrestaShop_Body.PrestaShop_Body.body.images",
+              "value": "={{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.images }}",
+              "type": "array"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "e7b29b17-4619-4a9a-ae9f-1c3dde58244b",
+      "name": "Edit Fields5",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        3180,
+        1620
+      ]
+    },
+    {
+      "parameters": {
+        "url": "=https://api.{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.env }}.gosharpei.com/api/products/{{ $('Execute Workflow Trigger').item.json.data.pid }}/variants ",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Accept",
+              "value": "application/json"
+            },
+            {
+              "name": "Authorization",
+              "value": "={{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.headers.authorization }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {}
+          ]
+        },
+        "options": {
+          "redirect": {
+            "redirect": {
+              "followRedirects": false
+            }
+          }
+        }
+      },
+      "id": "f67b3905-15d8-4bbd-a7d6-44a68ee2b571",
+      "name": "List Variants",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2980,
+        1620
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "775a315f-6128-4c04-a71b-8a298a997ab7",
+              "leftValue": "={{ $('Code2').item.json.activeVariantsCount }}",
+              "rightValue": "={{ $json.fields.length }}",
+              "operator": {
+                "type": "number",
+                "operation": "lt"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "98beffa5-224b-4ab5-acd8-d3d7d8c6cbdb",
+      "name": "If8",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        2780,
+        1620
+      ]
+    },
+    {
+      "parameters": {
+        "method": "PUT",
+        "url": "=https://api.{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.env }}.gosharpei.com/api/products/{{ $('Execute Workflow Trigger').item.json.data.pid }}/variants/{{ $('Ordered variants').item.json.orderedVariants[$('Set6').item.json.counter].pid }}    ",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Accept",
+              "value": "application/json"
+            },
+            {
+              "name": "Authorization",
+              "value": "={{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.headers.authorization }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n    \"selling_price\": \"{{ $('Loop Over Items').item.json.fields.price == 0 ? $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.price : $('Loop Over Items').item.json.fields.price }}\",\n    \"title\": \"{{ $('Update name1').item.json.name }} / {{ $('Loop Over Items').item.json.fields.attributes.map(attr => attr.attribute).join(' - ') }}\",\n    \"remote_id\": \"{{ $('Loop Over Items').item.json.fields.id_product_attribute }}\",\n    \"status_pid\" : \"{{ $('Code3').item.json.pid }}\",\n    \"cost\": \"{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.wholesale_price }}\",\n    \"barcode\": \"{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body?.PrestaShop_Body?.body?.upc ? $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.upc : 'n/a' }}\",\n    \"SKU\": \"{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body?.PrestaShop_Body?.body?.reference ? $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.reference : 'n/a' }}\"\n\n  }                    ",
+        "options": {}
+      },
+      "id": "8a9034ad-0a16-459b-a543-551b29a93b53",
+      "name": "Update a variant",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        4700,
+        1140
       ],
       "retryOnFail": true,
       "maxTries": 2
@@ -66,18 +507,605 @@
           },
           "conditions": [
             {
-              "id": "dfa87178-bf61-4f7a-90f9-8feb1582c7e7",
-              "leftValue": "={{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.headers.authorization }}",
-              "rightValue": "=2y$10$uIYEY6Q.Hk10YmSc68sKN..0nho1gc9tpzAgePdz/GbsIHA5oQn1.",
+              "id": "f55abc1a-0001-4624-b044-6d39ee160bdd",
+              "leftValue": "={{ $('Edit Fields').item.json.data.variants[$json.counter].selling_price }}",
+              "rightValue": "={{ $json.fields.price.slice(0,6) }}",
+              "operator": {
+                "type": "string",
+                "operation": "notEquals"
+              }
+            },
+            {
+              "id": "9e199800-51eb-460d-8068-1d86379824da",
+              "leftValue": "={{ $('Execute Workflow Trigger').item.json.data.title }}",
+              "rightValue": "={{ $('Update name1').item.json.name }}",
+              "operator": {
+                "type": "string",
+                "operation": "notEquals"
+              }
+            },
+            {
+              "id": "fcd269ed-4515-42b9-9abf-92d45eea9e54",
+              "leftValue": "={{ $('Edit Fields').item.json.data.variants[$json.counter].status.name }}",
+              "rightValue": "Draft",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "options": {}
+      },
+      "id": "72b1c34d-9e75-4d22-ad4a-d917f18d7ae8",
+      "name": "If",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        4500,
+        1140
+      ]
+    },
+    {
+      "parameters": {
+        "method": "PUT",
+        "url": "=https://api.{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.env }}.gosharpei.com/api/products/{{ $('Execute Workflow Trigger').item.json.data.pid }}/variants/{{ $('Ordered variants').item.json.orderedVariants[$('Set6').item.json.counter].pid }}  ",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Accept",
+              "value": "application/json"
+            },
+            {
+              "name": "Authorization",
+              "value": "={{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.headers.authorization }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n    \"selling_price\": \"{{ $('Loop Over Items').item.json.fields.price == 0 ? $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.price : $('Loop Over Items').item.json.fields.price }}\",\n    \"title\": \"{{ $('Update name1').item.json.name }} / {{ $('Loop Over Items').item.json.fields.attributes.map(attr => attr.attribute).join(' - ') }}\",\n    \"remote_id\": \"{{ $('Set6').item.json.fields.id_product_attribute }}\",\n    \"status_pid\" : \"{{ $('Get Status3').item.json.data.status[1].pid }}\",\n    \"cost\": \"{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.wholesale_price }}\",\n    \"barcode\": \"{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body?.PrestaShop_Body?.body?.upc ? $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.upc : 'n/a' }}\",\n    \"SKU\": \"{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body?.PrestaShop_Body?.body?.reference ? $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.reference : 'n/a' }}\"\n  }                ",
+        "options": {}
+      },
+      "id": "78656a15-afc8-49da-8060-819948215423",
+      "name": "Update a variant1",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        4500,
+        960
+      ],
+      "retryOnFail": true,
+      "maxTries": 2
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "29a3d429-1022-4690-94fd-696badbbb24c",
+              "leftValue": "={{ $('Loop Over Items').item.json.fields.quantity }}",
+              "rightValue": 0,
+              "operator": {
+                "type": "number",
+                "operation": "lte"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "80f995d2-44ed-4a12-bcb5-cacbbfa56f69",
+      "name": "If2",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        4280,
+        1140
+      ]
+    },
+    {
+      "parameters": {
+        "values": {
+          "number": [
+            {
+              "name": "counter",
+              "value": "={{ $runIndex }}"
+            },
+            {
+              "name": "image_len",
+              "value": "={{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.images.length }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "0d92ba06-f909-4258-bc18-5a993bc8bbc0",
+      "name": "Set6",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [
+        4060,
+        1140
+      ]
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "97bcfcc6-2788-4fab-933c-75ac654e90ac",
+      "name": "Loop Over Items",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        3860,
+        1140
+      ]
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "fields, matchingVariants , data.variants",
+        "options": {}
+      },
+      "id": "d9347375-c642-4f77-93e1-27943eae2337",
+      "name": "Split Out",
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        3660,
+        1140
+      ]
+    },
+    {
+      "parameters": {
+        "method": "PUT",
+        "url": "=https://api.{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.env }}.gosharpei.com/api/products/{{ $('Execute Workflow Trigger').item.json.data.pid }}/variants/{{ $('Loop Over Items1').item.json.pid }}\n ",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Accept",
+              "value": "application/json"
+            },
+            {
+              "name": "Authorization",
+              "value": "={{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.headers.authorization }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n    \"selling_price\": \"{{ $('Loop Over Items1').item.json.selling_price }}\",\n    \"title\": \"{{ $('Loop Over Items1').item.json.title.replace(/['\"]+/g, '') }}\",\n    \"remote_id\": \"{{ $('Loop Over Items1').item.json.remote_id }}\",\n    \"status_pid\" : \"d486da45-af0e-45e5-92ab-319a7fe7e782\",\n    \"cost\": 0\n\n  }                   ",
+        "options": {}
+      },
+      "id": "0726219a-76b2-4073-9682-d31668c205f4",
+      "name": "Archive  variant",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        4280,
+        1360
+      ],
+      "retryOnFail": true,
+      "maxTries": 2
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "38ce905f-64a5-4851-93fe-56588d2a41e5",
+      "name": "Edit Fields3",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        4060,
+        1360
+      ]
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "a94b984e-b949-4ec8-88d2-ed88237a87ca",
+      "name": "Loop Over Items1",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        3860,
+        1360
+      ]
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "nonMatchingVariants",
+        "options": {}
+      },
+      "id": "040ba8b7-f9c3-42b2-8c09-8bf02b54bb3e",
+      "name": "Split Out1",
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        3660,
+        1360
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = $input.all();\n\n// Imprimir los datos recibidos para verificar la estructura\nconsole.log('Datos recibidos:', items);\n\nconst result = items.map(item => {\n    // Imprimir el contenido de cada item para verificar su estructura\n    console.log('Item:', item);\n\n    // Verificar que el objeto tiene la propiedad 'nonMatchingVariants'\n    const nonMatchingVariants = item.json.nonMatchingVariants ? item.json.nonMatchingVariants : [];\n\n    // Imprimir nonMatchingVariants para verificar que se están obteniendo correctamente\n    console.log('NonMatchingVariants:', nonMatchingVariants);\n\n    if (!nonMatchingVariants.length) {\n        return []; // Si no hay variantes no coincidentes, devolver un array vacío\n    }\n\n    // Filtrar variantes con estado 'Active' o 'Draft'\n    const filteredVariants = nonMatchingVariants.filter(variant => \n        variant.status.name === 'Active' || variant.status.name === 'Draft'\n    );\n\n    // Devolver las variantes filtradas bajo un campo específico\n    return [{ json: { nonMatchingVariants: filteredVariants } }];\n}).flat(); // Aplanar el array resultante\n\nconsole.log('Resultado:', result);\n\nreturn result;\n"
+      },
+      "id": "904769f1-41e6-428c-8018-c9b7b2da0f47",
+      "name": "Code5",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3440,
+        1360
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Obtén los datos de la entrada del nodo\nconst items = $input.all();\n\nconst result = items.map(item => {\n    const data = item.json;\n    const fields = data.fields;\n    const variants = data.data.variants;\n\n    const resultFields = [];\n    const resultVariants = [];\n    const nonMatchingVariants = [];\n\n    fields.forEach(field => {\n        const matchingVariant = variants.find(variant => variant.remote_id === field.id_product_attribute.toString());\n        if (matchingVariant) {\n            resultFields.push(field);\n            resultVariants.push(matchingVariant);\n        }\n    });\n\n    variants.forEach(variant => {\n        const matchingField = fields.find(field => field.id_product_attribute.toString() === variant.remote_id);\n        if (!matchingField) {\n            nonMatchingVariants.push(variant);\n        }\n    });\n\n    return {\n        json: {\n            fields: resultFields,\n            matchingVariants: resultVariants,\n            nonMatchingVariants: nonMatchingVariants\n        }\n    };\n});\n\nreturn result;\n\n"
+      },
+      "id": "8692d181-5bd4-4f2d-b449-4b47f8467454",
+      "name": "Code1",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3180,
+        1360
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "267e6afe-7a1b-4ce4-9312-8d29725ad279",
+              "name": "fields",
+              "value": "={{ $json.fields }}",
+              "type": "array"
+            },
+            {
+              "id": "7b25ff3d-080b-4e9a-bdb7-605b3e623691",
+              "name": "data.variants",
+              "value": "={{ $('Execute Workflow Trigger').item.json.data.variants }}",
+              "type": "array"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "b89ecad9-4c2c-41c9-87a1-66920727558f",
+      "name": "Edit Fields1",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2980,
+        1360
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "775a315f-6128-4c04-a71b-8a298a997ab7",
+              "leftValue": "={{ $('Code2').item.json.activeVariantsCount }}",
+              "rightValue": "={{ $json.fields.length }}",
+              "operator": {
+                "type": "number",
+                "operation": "gt"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "f7c38ee5-fda0-4dd2-b1dc-177af9c9d1da",
+      "name": "If3",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        2780,
+        1360
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "775a315f-6128-4c04-a71b-8a298a997ab7",
+              "leftValue": "={{ $json.activeVariantsCount }}",
+              "rightValue": "={{ $json.fields.length }}",
+              "operator": {
+                "type": "number",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "6635fce8-c20e-4e26-8ec4-51bdd8abe821",
+      "name": "If10",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        3420,
+        1140
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Obtener el primer elemento de los datos de entrada\nconst input = items[0];\n\n// Verificar si 'input' y 'input.json' están definidos\nif (input && input.json && input.json.body && input.json.body.combinations) {\n    // Obtener el objeto 'combinations'\n    const combinations = input.json.body.combinations;\n\n    // Inicializar un arreglo para almacenar los resultados\n    const fieldsArray = [];\n\n    // Iterar sobre las propiedades del objeto 'combinations'\n    for (const key in combinations) {\n        if (combinations.hasOwnProperty(key)) {\n            // Acceder a cada combinación usando su clave\n            const combination = combinations[key];\n            \n            // Añadir la combinación al arreglo de fields\n            fieldsArray.push({\n                id_product_attribute: combination.id_product_attribute,\n                attributes: combination.attributes,\n                price: combination.price,\n                quantity: combination.quantity,\n                image: combination.images\n              \n            });\n        }\n    }\n\n    // Obtener la lista de variantes\n    const variants = input.json.data && input.json.data.variants ? input.json.data.variants : [];\n\n    // Filtrar las variantes activas\n    const activeVariantsCount = variants.filter(v => v.status.name !== 'Inactive').length;\n\n    // Retornar un solo objeto con el campo 'fields' que contiene el arreglo de combinaciones\n    return [{\n        json: {\n            fields: fieldsArray,\n            activeVariantsCount: activeVariantsCount // Añadir el conteo de variantes activas\n        }\n    }];\n}\n\n// Si no se encuentran combinaciones, retornar los items originales\nreturn items;\n"
+      },
+      "id": "f46c72af-ca2b-47bc-95b6-e1c7029474af",
+      "name": "Code2",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3180,
+        1140
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "39c1b12f-3d3a-44d7-9a17-69e4f606bfba",
+      "name": "No Operation, do nothing",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        3180,
+        980
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "775a315f-6128-4c04-a71b-8a298a997ab7",
+              "leftValue": "={{ $json.body.combinations === null ? 'empty' : $json.body.combinations }}\n\n\n",
+              "rightValue": "=empty",
               "operator": {
                 "type": "string",
                 "operation": "equals"
               }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "655f155f-9a01-4464-9cf9-e59dbc2c90f5",
+      "name": "If11",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        2980,
+        1140
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "2fe0eaaf-5b15-4704-96b3-d710d1e6e62d",
+              "name": "body.combinations",
+              "value": "={{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.combinations }}",
+              "type": "object"
             },
             {
-              "id": "5af4affd-bf1a-4a9e-85f5-b7349b4a87cc",
+              "id": "c7d7bb08-debf-4c8c-be4b-be304696d5d7",
+              "name": "data.variants",
+              "value": "={{ $('Execute Workflow Trigger').item.json.data.variants }}",
+              "type": "array"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "694d9da3-c77c-4d86-9115-c5e588d43f72",
+      "name": "Edit Fields",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2780,
+        1140
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "number": [
+            {
+              "value1": "={{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.id_product}}",
+              "operation": "isEmpty"
+            },
+            {
+              "value1": "={{ $('Execute Workflow Trigger').item.json.data.variants_count }} ",
+              "operation": "largerEqual",
+              "value2": 2
+            }
+          ]
+        }
+      },
+      "id": "5f4207a6-b16b-4a5d-a109-d35a343c01b4",
+      "name": "IF larger than ",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        2780,
+        880
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "clear",
+        "documentId": {
+          "__rl": true,
+          "value": "1tpg18UA9Zy_g1VWqzSwu1Gob5g-2g0d1TDJqOWKVncE",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Quantity Sheet",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1tpg18UA9Zy_g1VWqzSwu1Gob5g-2g0d1TDJqOWKVncE/edit#gid=0"
+        },
+        "clear": "specificRange",
+        "range": "A2"
+      },
+      "id": "66e26102-c98b-4de4-b174-85ad66c16edf",
+      "name": "Google Sheets5",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.4,
+      "position": [
+        3240,
+        140
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "OT8wMWyUPUaPSE6u",
+          "name": "Google Sheets account 5"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "PUT",
+        "url": "=https://api.{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.env }}.gosharpei.com/api/products/{{ $('Execute Workflow Trigger').item.json.data.pid }}/variants/{{ $('Execute Workflow Trigger').item.json.data.variants[0].pid }}       ",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Accept",
+              "value": "application/json"
+            },
+            {
+              "name": "Authorization",
+              "value": "={{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.headers.authorization }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n    \"selling_price\": \"{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.price }}\",\n    \"title\": \"{{ $('Update name1').item.json.name.replace(/['\"]+/g,'') }}\",\n    \"remote_id\": \"{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.id }}\",\n    \"status_pid\" : \"{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.stock_available > 0 ? 'f1554bbc-3159-4044-8974-1da26a573ea3' : '8ccef96e-5eb3-4b66-bd16-86fec78ab575'}}\",\n    \"cost\": \"{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.wholesale_price }}\",\n    \"SKU\": \"{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body?.PrestaShop_Body?.body?.reference ? $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.reference : 'n/a' }}\",\n    \"barcode\": \"{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body?.PrestaShop_Body?.body?.upc ? $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.upc : 'n/a' }}\"\n\n  }          ",
+        "options": {
+          "batching": {
+            "batch": {
+              "batchSize": 0,
+              "batchInterval": 3000
+            }
+          }
+        }
+      },
+      "id": "ff43949d-11a1-4a27-912f-933f903afc30",
+      "name": "Update variant2",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        5000,
+        320
+      ],
+      "retryOnFail": false,
+      "maxTries": 2
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://api.{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.env }}.gosharpei.com/api/products/{{ $('Execute Workflow Trigger').item.json.data.pid }}/variants/{{ $('Execute Workflow Trigger').item.json.data.variants[0].pid }}/images               ",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "={{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.headers.authorization }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "multipart-form-data",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "parameterType": "formBinaryData",
+              "name": "attachment",
+              "inputDataFieldName": "data"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "88789d7c-40ce-4f2d-ae10-a811e574443b",
+      "name": "Add Image3",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        4800,
+        320
+      ],
+      "retryOnFail": true,
+      "maxTries": 2
+    },
+    {
+      "parameters": {
+        "url": "={{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.image_url || $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.images[0].url }}\n",
+        "options": {}
+      },
+      "id": "972accce-6e96-4062-b291-ecf51ab3140e",
+      "name": "Upload3",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        4620,
+        320
+      ],
+      "retryOnFail": true,
+      "maxTries": 2
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "a576428b-ad16-4417-aa93-9a39b1976c21",
               "leftValue": "={{ $('Execute Workflow Trigger').item.json.data.variants[0].image_url }}",
-              "rightValue": "https://assets.gosharpei.com/placeholders/empty_image.svg",
+              "rightValue": "=https://assets.gosharpei.com/placeholders/empty_image.svg",
               "operator": {
                 "type": "string",
                 "operation": "equals",
@@ -89,14 +1117,191 @@
         },
         "options": {}
       },
-      "id": "56897ff8-125a-48a8-afff-08c4bb066e09",
-      "name": "If no image",
+      "id": "0e733000-894b-4bee-94a1-6ebbcd62f192",
+      "name": "If no image1",
       "type": "n8n-nodes-base.if",
       "typeVersion": 2,
       "position": [
-        1360,
-        680
+        4380,
+        320
       ]
+    },
+    {
+      "parameters": {
+        "method": "PUT",
+        "url": "=https://api.{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.env }}.gosharpei.com/api/products/{{ $('Execute Workflow Trigger').item.json.data.pid }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "accept",
+              "value": "application/json, text/plain, */*"
+            },
+            {
+              "name": "accept-language",
+              "value": "es-ES,es;q=0.9"
+            },
+            {
+              "name": "Authorization",
+              "value": "={{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.headers.authorization }}"
+            },
+            {
+              "name": "sec-ch-ua",
+              "value": "\"Not A(Brand\";v=\"99\", \"Google Chrome\";v=\"121\", \"Chromium\";v=\"121\""
+            },
+            {
+              "name": "sec-ch-ua-mobile",
+              "value": "?0"
+            },
+            {
+              "name": "sec-ch-ua-platform",
+              "value": "\"Windows\""
+            },
+            {
+              "name": "sec-fetch-dest",
+              "value": "empty"
+            },
+            {
+              "name": "sec-fetch-mode",
+              "value": "cors"
+            },
+            {
+              "name": "sec-fetch-site",
+              "value": "same-site"
+            },
+            {
+              "name": "user-agent",
+              "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"pid\": \"{{ $('Execute Workflow Trigger').item.json.data.pid }}\",\n  \"title\": \"{{ $('Update name1').item.json.name.replace(/['\"]+/g,'') }}\",\n  \"body\": \"{{ $('Update name1').item.json.description_short.replace(/['\"]+/g,'').replace(/<[^>]+>/g, '').replace(/\\n/g, ' ') }}\",\n  \"status_pid\" : \"{{ $('Code3').item.json.pid }}\"\n}\n                   \n\n  ",
+        "options": {
+          "batching": {
+            "batch": {
+              "batchSize": 0,
+              "batchInterval": 3000
+            }
+          }
+        }
+      },
+      "id": "f6772a81-b93d-4476-b92c-46ca7dddfd65",
+      "name": "Update Product2",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        4620,
+        500
+      ],
+      "retryOnFail": false,
+      "maxTries": 2
+    },
+    {
+      "parameters": {
+        "method": "PUT",
+        "url": "=https://api.{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.env }}.gosharpei.com/api/products/{{ $('Execute Workflow Trigger').item.json.data.pid }}/variants/{{ $('Execute Workflow Trigger').item.json.data.variants[0].pid }}    ",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Accept",
+              "value": "application/json"
+            },
+            {
+              "name": "Authorization",
+              "value": "={{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.headers.authorization }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n    \"selling_price\": \"{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.price }}\",\n    \"title\": \"{{ $('Update name1').item.json.name.replace(/['\"]+/g,'') }}\",\n    \"remote_id\": \"{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.id }}\",\n    \"status_pid\" : \"{{ $('Code3').item.json.pid }}\",\n    \"cost\": \"{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.wholesale_price }}\",\n    \"SKU\": \"{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body?.PrestaShop_Body?.body?.reference ? $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.reference : 'n/a' }}\",\n    \"barcode\": \"{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body?.PrestaShop_Body?.body?.upc ? $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.upc : 'n/a' }}\"\n\n\n  }                      ",
+        "options": {
+          "batching": {
+            "batch": {
+              "batchSize": 0,
+              "batchInterval": 3000
+            }
+          }
+        }
+      },
+      "id": "a86ef827-07a9-4f14-a1e8-8207ca5e76a3",
+      "name": "Update a variant8",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        4400,
+        500
+      ],
+      "retryOnFail": false,
+      "maxTries": 2
+    },
+    {
+      "parameters": {
+        "method": "PUT",
+        "url": "=https://api.{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.env }}.gosharpei.com/api/products/{{ $('Execute Workflow Trigger').item.json.data.pid }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "accept",
+              "value": "application/json, text/plain, */*"
+            },
+            {
+              "name": "accept-language",
+              "value": "es-ES,es;q=0.9"
+            },
+            {
+              "name": "Authorization",
+              "value": "={{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.headers.authorization }}"
+            },
+            {
+              "name": "sec-ch-ua",
+              "value": "\"Not A(Brand\";v=\"99\", \"Google Chrome\";v=\"121\", \"Chromium\";v=\"121\""
+            },
+            {
+              "name": "sec-ch-ua-mobile",
+              "value": "?0"
+            },
+            {
+              "name": "sec-ch-ua-platform",
+              "value": "\"Windows\""
+            },
+            {
+              "name": "sec-fetch-dest",
+              "value": "empty"
+            },
+            {
+              "name": "sec-fetch-mode",
+              "value": "cors"
+            },
+            {
+              "name": "sec-fetch-site",
+              "value": "same-site"
+            },
+            {
+              "name": "user-agent",
+              "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"pid\": \"{{ $('Execute Workflow Trigger').item.json.data.pid }}\",\n  \"title\": \"{{ $('Update name1').item.json.name.replace(/['\"]+/g,'') }}\",\n  \"body\": \"{{ $('Update name1').item.json.description_short.replace(/['\"]+/g,'').replace(/<[^>]+>/g, '').replace(/\\n/g, ' ') }}\",\n  \"status_pid\" : \"{{ $('Get Status3').item.json.data.status[1].pid }}\"\n}\n                   \n\n ",
+        "options": {}
+      },
+      "id": "cdf6f839-3f83-4a98-b45f-6f24646b6fcb",
+      "name": "Draft Product1",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        4140,
+        320
+      ],
+      "retryOnFail": true,
+      "maxTries": 2
     },
     {
       "parameters": {
@@ -117,16 +1322,16 @@
         },
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={\n    \"selling_price\": \"{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.price }}\",\n    \"title\": \"{{ $('Update name').item.json.name.replace(/['\"]+/g,'') }}\",\n    \"status_pid\" : \"{{ $('Get Product by Remote Id').item.json.data.status.pid }}\",\n    \"cost\": 0\n\n  }   ",
+        "jsonBody": "={\n    \"selling_price\": \"{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.price }}\",\n    \"title\": \"{{ $('Update name1').item.json.name.replace(/['\"]+/g,'') }}\",\n    \"remote_id\": \"{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.id }}\",\n    \"status_pid\" : \"{{ $('Get Status3').item.json.data.status[1].pid }}\",\n    \"cost\": 0\n\n  }                 ",
         "options": {}
       },
-      "id": "39e1b782-27ce-4392-850a-a296422b9efc",
-      "name": "Update a variant1",
+      "id": "ce13fd01-704e-4512-87fd-48b564c720bc",
+      "name": "Draft default variant1",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        1980,
-        480
+        3940,
+        320
       ],
       "retryOnFail": true,
       "maxTries": 2
@@ -134,91 +1339,89 @@
     {
       "parameters": {
         "conditions": {
-          "string": [
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
             {
-              "value1": "={{ $('Execute Workflow Trigger').item.json.data.variants[0].title }}",
-              "operation": "notEqual",
-              "value2": "={{ $('Update name').item.json.name.replace(/['\"]+/g,'') }}"
-            },
-            {
-              "value1": "={{ $('Execute Workflow Trigger').item.json.data.variants[0].selling_price }}",
-              "operation": "notEqual",
-              "value2": "={{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.price }}"
-            },
-            {
-              "value1": "={{ $json.data.variants[0].status.name }}",
-              "operation": "notEqual",
-              "value2": "={{ $json.data.status.name }}"
+              "id": "fbb16256-f922-4672-b077-1d03d6eb0453",
+              "leftValue": "={{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.stock_available}}",
+              "rightValue": 0,
+              "operator": {
+                "type": "number",
+                "operation": "lte"
+              }
             }
-          ]
+          ],
+          "combinator": "and"
         },
-        "combineOperation": "any"
+        "options": {}
       },
-      "id": "cb3a1826-8dd1-4c1a-a7ad-c3412d1cd93e",
-      "name": "Check Variant",
+      "id": "ec09d800-15fe-4088-b6ac-3570fd0989b6",
+      "name": "If6",
       "type": "n8n-nodes-base.if",
-      "typeVersion": 1,
+      "typeVersion": 2,
       "position": [
-        1760,
-        480
+        3680,
+        380
       ]
     },
     {
       "parameters": {
-        "url": "=https://api.{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.env }}.gosharpei.com/api/products/{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.id }}  ",
-        "sendHeaders": true,
-        "headerParameters": {
-          "parameters": [
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
             {
-              "name": "Accept",
-              "value": "application/json"
+              "id": "4b835e2c-3b6d-417c-b1c8-a6748efd9028",
+              "leftValue": "={{ $('Execute Workflow Trigger').item.json.data.variants[0].selling_price }}",
+              "rightValue": "={{ parseFloat($('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.price).toFixed(2) }}",
+              "operator": {
+                "type": "string",
+                "operation": "notEquals"
+              }
             },
             {
-              "name": "Authorization",
-              "value": "={{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.headers.authorization }}"
+              "id": "4958fe9f-7a7f-4dab-b1fc-320ee438d6fc",
+              "leftValue": "={{ $('Execute Workflow Trigger').item.json.data.variants[0].title }}",
+              "rightValue": "={{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.name[\"1\"] }}",
+              "operator": {
+                "type": "string",
+                "operation": "notEquals"
+              }
+            },
+            {
+              "id": "c2562d08-dcb9-47bf-b13c-6d0c21c1917b",
+              "leftValue": "={{ $('Execute Workflow Trigger').item.json.data.variants[0].SKU }}",
+              "rightValue": "={{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.reference }}",
+              "operator": {
+                "type": "string",
+                "operation": "notEquals"
+              }
             }
-          ]
+          ],
+          "combinator": "or"
         },
         "options": {}
       },
-      "id": "69b3ddb3-9b0c-4c40-bcac-108467e1bd5b",
-      "name": "Get Product by Remote Id",
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.1,
-      "position": [
-        1560,
-        480
-      ],
-      "alwaysOutputData": false,
-      "executeOnce": false,
-      "retryOnFail": true,
-      "maxTries": 2,
-      "continueOnFail": true
-    },
-    {
-      "parameters": {
-        "conditions": {
-          "number": [
-            {
-              "value1": "={{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.id_product}}",
-              "operation": "isEmpty"
-            }
-          ]
-        }
-      },
-      "id": "69aa86a7-f744-4e91-9c83-8600120ca0a3",
-      "name": "IF equal 1",
+      "id": "7b221b41-4a1d-46a5-95f6-bf9ff1f2f0f3",
+      "name": "If7",
       "type": "n8n-nodes-base.if",
-      "typeVersion": 1,
+      "typeVersion": 2,
       "position": [
-        1360,
-        480
+        3680,
+        140
       ]
     },
     {
       "parameters": {
         "method": "PUT",
-        "url": "=https://api.{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.env }}.gosharpei.com/api/products/{{ $('Execute Workflow Trigger').item.json.data.pid }}/variants/{{ $('Execute Workflow Trigger').item.json.data.variants[1].pid }}",
+        "url": "=https://api.{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.env }}.gosharpei.com/api/products/{{ $('Execute Workflow Trigger').item.json.data.pid }}/variants/{{ $('Execute Workflow Trigger').item.json.data.variants[0].pid }}       ",
         "sendHeaders": true,
         "headerParameters": {
           "parameters": [
@@ -234,146 +1437,31 @@
         },
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={\n    \"selling_price\": \"{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.price }}\",\n    \"title\": \"{{ $('Update name').item.json.name.replace(/['\"]+/g,'') }}\",\n    \"status_pid\" : \"{{ $('Code').item.json.pid }}\",\n    \"cost\": 0\n\n  }   ",
-        "options": {}
-      },
-      "id": "aa4ccbe8-40d3-4587-b7e5-28a150b10ef6",
-      "name": "Update a variant3",
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.1,
-      "position": [
-        2160,
-        260
-      ],
-      "retryOnFail": true,
-      "maxTries": 2
-    },
-    {
-      "parameters": {
-        "conditions": {
-          "string": [
-            {
-              "value1": "={{ $('Execute Workflow Trigger').item.json.data.variants[1].title }}",
-              "operation": "notEqual",
-              "value2": "={{ $('Update name').item.json.name.replace(/['\"]+/g,'') }}"
-            },
-            {
-              "value1": "={{ $('Execute Workflow Trigger').item.json.data.variants[1].selling_price }}",
-              "operation": "notEqual",
-              "value2": "={{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.price }}"
-            },
-            {
-              "value1": "={{ $json.data.variants[1].status.name }}",
-              "operation": "notEqual",
-              "value2": "={{ $json.data.status.name }}"
+        "jsonBody": "={\n    \"selling_price\": \"{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.price }}\",\n    \"title\": \"{{ $('Update name1').item.json.name.replace(/['\"]+/g,'') }}\",\n    \"remote_id\": \"{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.id }}\",\n    \"status_pid\" : \"{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.stock_available > 0 ? 'f1554bbc-3159-4044-8974-1da26a573ea3' : '8ccef96e-5eb3-4b66-bd16-86fec78ab575'}}\",\n    \"cost\": \"{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.wholesale_price }}\",\n    \"SKU\": \"{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body?.PrestaShop_Body?.body?.reference ? $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.reference : 'n/a' }}\",\n    \"barcode\": \"{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body?.PrestaShop_Body?.body?.upc ? $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.upc : 'n/a' }}\"\n\n  }          ",
+        "options": {
+          "batching": {
+            "batch": {
+              "batchSize": 0,
+              "batchInterval": 3000
             }
-          ]
-        },
-        "combineOperation": "any"
-      },
-      "id": "f13c0646-8899-47a4-98b6-7671ecb81fb3",
-      "name": "Check Variant1",
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 1,
-      "position": [
-        1960,
-        260
-      ]
-    },
-    {
-      "parameters": {
-        "url": "=https://api.{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.env }}.gosharpei.com/api/products/{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.id }}  ",
-        "sendHeaders": true,
-        "headerParameters": {
-          "parameters": [
-            {
-              "name": "Accept",
-              "value": "application/json"
-            },
-            {
-              "name": "Authorization",
-              "value": "={{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.headers.authorization }}"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "id": "d2867c6e-07b8-4641-9373-cf5cc849612d",
-      "name": "Get Product by Remote Id1",
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.1,
-      "position": [
-        1760,
-        260
-      ],
-      "alwaysOutputData": false,
-      "executeOnce": false,
-      "retryOnFail": true,
-      "maxTries": 2,
-      "continueOnFail": true
-    },
-    {
-      "parameters": {
-        "method": "PUT",
-        "url": "=https://api.{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.env }}.gosharpei.com/api/products/{{ $('Execute Workflow Trigger').item.json.data.pid }}/variants/{{ $('Execute Workflow Trigger').item.json.data.variants[0].pid}}  ",
-        "sendHeaders": true,
-        "headerParameters": {
-          "parameters": [
-            {
-              "name": "Accept",
-              "value": "application/json"
-            },
-            {
-              "name": "Authorization",
-              "value": "={{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.headers.authorization }}"
-            }
-          ]
-        },
-        "sendBody": true,
-        "specifyBody": "json",
-        "jsonBody": "={\n    \"selling_price\": \"{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.price }}\",\n    \"title\": \"{{ $('Update name').item.json.name.replace(/['\"]+/g,'') }}\",\n    \"remote_id\": \"{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.id }}\",\n    \"status_pid\" : \"{{ $('Get Status1').item.json.data.status[1].pid }}\",\n    \"cost\": 0\n\n  }   ",
-        "options": {}
-      },
-      "id": "096fe0d0-0577-40cd-a2a9-4ad19175b85d",
-      "name": "Update a variant2",
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.1,
-      "position": [
-        1560,
-        260
-      ],
-      "retryOnFail": true,
-      "maxTries": 2
-    },
-    {
-      "parameters": {
-        "conditions": {
-          "number": [
-            {
-              "value1": "={{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.id_product}}",
-              "operation": "isEmpty"
-            },
-            {
-              "value1": "={{ $('Execute Workflow Trigger').item.json.data.variants_count }} ",
-              "operation": "larger",
-              "value2": 1
-            }
-          ]
+          }
         }
       },
-      "id": "2fb7e59d-4083-46cb-bf93-ed65ef1376db",
-      "name": "IF larger than 1",
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 1,
+      "id": "6ed7600c-5381-4c29-a26b-3a867ba1a55a",
+      "name": "Update variant1",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
       "position": [
-        1360,
-        260
-      ]
+        5220,
+        -120
+      ],
+      "retryOnFail": false,
+      "maxTries": 2
     },
     {
       "parameters": {
         "method": "POST",
-        "url": "=https://api.{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.env }}.gosharpei.com/api/products/{{ $('Execute Workflow Trigger').item.json.data.pid }}/variants/{{ $('Create Default Variant').item.json.data[0].pid }}/images       ",
+        "url": "=https://api.{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.env }}.gosharpei.com/api/products/{{ $('Execute Workflow Trigger').item.json.data.pid }}/variants/{{ $('Execute Workflow Trigger').item.json.data.variants[0].pid }}/images               ",
         "sendHeaders": true,
         "headerParameters": {
           "parameters": [
@@ -396,29 +1484,29 @@
         },
         "options": {}
       },
-      "id": "9787c508-16ba-448f-b264-79144899f70f",
-      "name": "Add Image",
+      "id": "704bfc66-43ce-477d-9daa-b8d7d1d9142e",
+      "name": "Add Image2",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        2360,
-        0
+        5020,
+        -120
       ],
       "retryOnFail": true,
       "maxTries": 2
     },
     {
       "parameters": {
-        "url": "={{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.image_url }}",
+        "url": "={{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.image_url || $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.images[0].url }}\n",
         "options": {}
       },
-      "id": "093763a9-c688-46aa-800a-fb90be3fdd1c",
-      "name": "Upload",
+      "id": "1152fbc9-76d3-482f-ad14-8b231c533987",
+      "name": "Upload2",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        2160,
-        0
+        4840,
+        -120
       ],
       "retryOnFail": true,
       "maxTries": 2
@@ -433,12 +1521,13 @@
           },
           "conditions": [
             {
-              "id": "dfa87178-bf61-4f7a-90f9-8feb1582c7e7",
-              "leftValue": "={{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.headers.authorization }}",
-              "rightValue": "=2y$10$uIYEY6Q.Hk10YmSc68sKN..0nho1gc9tpzAgePdz/GbsIHA5oQn1.",
+              "id": "a576428b-ad16-4417-aa93-9a39b1976c21",
+              "leftValue": "={{ $('Execute Workflow Trigger').item.json.data.variants[0].image_url }}",
+              "rightValue": "=https://assets.gosharpei.com/placeholders/empty_image.svg",
               "operator": {
                 "type": "string",
-                "operation": "equals"
+                "operation": "equals",
+                "name": "filter.operator.equals"
               }
             }
           ],
@@ -446,19 +1535,91 @@
         },
         "options": {}
       },
-      "id": "9186240e-6182-4b23-8a13-5d2445f16bcb",
-      "name": "If",
+      "id": "a9056a82-4497-4ca7-b609-161c83c22b32",
+      "name": "If no image",
       "type": "n8n-nodes-base.if",
       "typeVersion": 2,
       "position": [
-        1960,
-        0
+        4600,
+        -120
       ]
     },
     {
       "parameters": {
         "method": "PUT",
-        "url": "=https://api.{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.env }}.gosharpei.com/api/products/{{ $('Execute Workflow Trigger').item.json.data.pid }}/variants/{{ $json.data[0].pid }}  ",
+        "url": "=https://api.{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.env }}.gosharpei.com/api/products/{{ $('Execute Workflow Trigger').item.json.data.pid }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "accept",
+              "value": "application/json, text/plain, */*"
+            },
+            {
+              "name": "accept-language",
+              "value": "es-ES,es;q=0.9"
+            },
+            {
+              "name": "Authorization",
+              "value": "={{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.headers.authorization }}"
+            },
+            {
+              "name": "sec-ch-ua",
+              "value": "\"Not A(Brand\";v=\"99\", \"Google Chrome\";v=\"121\", \"Chromium\";v=\"121\""
+            },
+            {
+              "name": "sec-ch-ua-mobile",
+              "value": "?0"
+            },
+            {
+              "name": "sec-ch-ua-platform",
+              "value": "\"Windows\""
+            },
+            {
+              "name": "sec-fetch-dest",
+              "value": "empty"
+            },
+            {
+              "name": "sec-fetch-mode",
+              "value": "cors"
+            },
+            {
+              "name": "sec-fetch-site",
+              "value": "same-site"
+            },
+            {
+              "name": "user-agent",
+              "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"pid\": \"{{ $('Execute Workflow Trigger').item.json.data.pid }}\",\n  \"title\": \"{{ $('Update name1').item.json.name.replace(/['\"]+/g,'') }}\",\n  \"body\": \"{{ $('Update name1').item.json.description_short.replace(/['\"]+/g,'').replace(/<[^>]+>/g, '').replace(/\\n/g, ' ') }}\",\n  \"status_pid\" : \"{{ $('Code3').item.json.pid }}\"\n}\n                   \n\n  ",
+        "options": {
+          "batching": {
+            "batch": {
+              "batchSize": 0,
+              "batchInterval": 3000
+            }
+          }
+        }
+      },
+      "id": "eb6f05e8-caa3-4001-9b71-d7d5e7838494",
+      "name": "Update Product",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        4840,
+        60
+      ],
+      "retryOnFail": false,
+      "maxTries": 2
+    },
+    {
+      "parameters": {
+        "method": "PUT",
+        "url": "=https://api.{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.env }}.gosharpei.com/api/products/{{ $('Execute Workflow Trigger').item.json.data.pid }}/variants/{{ $('Execute Workflow Trigger').item.json.data.variants[0].pid }}    ",
         "sendHeaders": true,
         "headerParameters": {
           "parameters": [
@@ -474,16 +1635,467 @@
         },
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={\n    \"selling_price\": \"{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.price }}\",\n    \"title\": \"{{ $('Update name').item.json.name.replace(/['\"]+/g,'') }}\",\n    \"remote_id\": \"{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.id }}\",\n    \"status_pid\" : \"{{ $('Code').item.json.pid }}\",\n    \"cost\": 0\n\n  }  ",
-        "options": {}
+        "jsonBody": "={\n    \"selling_price\": \"{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.price }}\",\n    \"title\": \"{{ $('Update name1').item.json.name.replace(/['\"]+/g,'') }}\",\n    \"remote_id\": \"{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.id }}\",\n    \"status_pid\" : \"{{ $('Code3').item.json.pid }}\",\n    \"cost\": \"{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.wholesale_price }}\",\n    \"SKU\": \"{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body?.PrestaShop_Body?.body?.reference ? $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.reference : 'n/a' }}\",\n    \"barcode\": \"{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body?.PrestaShop_Body?.body?.upc ? $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.upc : 'n/a' }}\"\n\n\n  }                      ",
+        "options": {
+          "batching": {
+            "batch": {
+              "batchSize": 0,
+              "batchInterval": 3000
+            }
+          }
+        }
       },
-      "id": "bd3fa5ef-14a2-4160-9974-d5758f055c71",
-      "name": "Update a variant",
+      "id": "a4c6c0fd-4690-442b-913f-bb3445e35306",
+      "name": "Update a variant7",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        1760,
-        0
+        4620,
+        60
+      ],
+      "retryOnFail": false,
+      "maxTries": 2
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "b89c8b08-1eec-4197-b4a5-9dc9b1eaf189",
+              "leftValue": "={{ $('If5').item.json.Stock }}",
+              "rightValue": "",
+              "operator": {
+                "type": "number",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "df63c774-1565-452c-8411-8eafb1509a88",
+      "name": "If4",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        4220,
+        60
+      ]
+    },
+    {
+      "parameters": {
+        "method": "PUT",
+        "url": "=https://api.{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.env }}.gosharpei.com/api/products/{{ $('Execute Workflow Trigger').item.json.data.pid }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "accept",
+              "value": "application/json, text/plain, */*"
+            },
+            {
+              "name": "accept-language",
+              "value": "es-ES,es;q=0.9"
+            },
+            {
+              "name": "Authorization",
+              "value": "={{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.headers.authorization }}"
+            },
+            {
+              "name": "sec-ch-ua",
+              "value": "\"Not A(Brand\";v=\"99\", \"Google Chrome\";v=\"121\", \"Chromium\";v=\"121\""
+            },
+            {
+              "name": "sec-ch-ua-mobile",
+              "value": "?0"
+            },
+            {
+              "name": "sec-ch-ua-platform",
+              "value": "\"Windows\""
+            },
+            {
+              "name": "sec-fetch-dest",
+              "value": "empty"
+            },
+            {
+              "name": "sec-fetch-mode",
+              "value": "cors"
+            },
+            {
+              "name": "sec-fetch-site",
+              "value": "same-site"
+            },
+            {
+              "name": "user-agent",
+              "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"pid\": \"{{ $('Execute Workflow Trigger').item.json.data.pid }}\",\n  \"title\": \"{{ $('Update name1').item.json.name.replace(/['\"]+/g,'') }}\",\n  \"body\": \"{{ $('Update name1').item.json.description_short.replace(/['\"]+/g,'').replace(/<[^>]+>/g, '').replace(/\\n/g, ' ') }}\",\n  \"status_pid\" : \"{{ $('Get Status3').item.json.data.status[1].pid }}\"\n}\n                   \n\n ",
+        "options": {}
+      },
+      "id": "c88821f9-28cf-41cb-ba70-fe05ce89bcc3",
+      "name": "Draft Product",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        4360,
+        -120
+      ],
+      "retryOnFail": true,
+      "maxTries": 2
+    },
+    {
+      "parameters": {
+        "method": "PUT",
+        "url": "=https://api.{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.env }}.gosharpei.com/api/products/{{ $('Execute Workflow Trigger').item.json.data.pid }}/variants/{{ $('Execute Workflow Trigger').item.json.data.variants[0].pid }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Accept",
+              "value": "application/json"
+            },
+            {
+              "name": "Authorization",
+              "value": "={{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.headers.authorization }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n    \"selling_price\": \"{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.price }}\",\n    \"title\": \"{{ $('Update name1').item.json.name.replace(/['\"]+/g,'') }}\",\n    \"remote_id\": \"{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.id }}\",\n    \"status_pid\" : \"{{ $('Get Status3').item.json.data.status[1].pid }}\",\n    \"cost\": 0\n\n  }                 ",
+        "options": {}
+      },
+      "id": "724eeb96-9b07-4320-9a2f-3a466d2e144f",
+      "name": "Draft default variant",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        4160,
+        -120
+      ],
+      "retryOnFail": true,
+      "maxTries": 2
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "f92491b6-52f9-435d-9778-e5af801efbcc",
+              "leftValue": "={{ $('If5').item.json.Stock }}",
+              "rightValue": 0,
+              "operator": {
+                "type": "number",
+                "operation": "lte"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "d37e6baf-ce9c-4241-a396-e1a8dfb58bd6",
+      "name": "If1",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        3940,
+        -80
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "cb916d3d-6a5e-4690-889a-99f9eb40ca79",
+              "leftValue": "={{ Number($json.Stock) }}",
+              "rightValue": "",
+              "operator": {
+                "type": "number",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "952fe74e-adf8-40cb-a5ff-976e221a1ec7",
+      "name": "If5",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        3680,
+        -80
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Devolver todo el arreglo tal como está\nreturn items[items.length - 1] ;\n\n"
+      },
+      "id": "4875e763-d4bf-4df9-aeb3-37a9ba3a42b9",
+      "name": "Code",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3480,
+        -80
+      ]
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1tpg18UA9Zy_g1VWqzSwu1Gob5g-2g0d1TDJqOWKVncE",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Quantity Sheet",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1tpg18UA9Zy_g1VWqzSwu1Gob5g-2g0d1TDJqOWKVncE/edit#gid=0"
+        },
+        "options": {}
+      },
+      "id": "86eb143a-0925-4560-8e1b-30655048a7cc",
+      "name": "Google Sheets1",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.4,
+      "position": [
+        3240,
+        -80
+      ],
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "OT8wMWyUPUaPSE6u",
+          "name": "Google Sheets account 5"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "id": "41491e83-0817-426a-ba20-cdab835c8846",
+      "name": "Wait1",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        3040,
+        -80
+      ],
+      "webhookId": "57969218-41d4-4f8c-8628-e480f12686ca"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "number": [
+            {
+              "value1": "={{ $('Execute Workflow Trigger').item.json.data.variants_count }}",
+              "operation": "equal",
+              "value2": 1
+            },
+            {
+              "value1": "={{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.id_product }}",
+              "operation": "isEmpty"
+            }
+          ]
+        }
+      },
+      "id": "677aa5fb-3863-4533-9dfe-3213a0aac3cc",
+      "name": "IF equal 1",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        2780,
+        -80
+      ]
+    },
+    {
+      "parameters": {
+        "workflowId": "R6tILcIQGKOZ0HO4",
+        "options": {}
+      },
+      "id": "9ac62ded-dc88-4ae5-838a-5c3b7a416223",
+      "name": "Execute Workflow1",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1,
+      "position": [
+        4300,
+        -420
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "4c3eaedf-a56c-4492-b804-4510bb5c259c",
+              "name": "=pid",
+              "value": "={{ $('Execute Workflow Trigger').item.json.data.pid }}",
+              "type": "string"
+            },
+            {
+              "id": "80cb8a27-eff8-40e6-846c-f76a01831570",
+              "name": "Authorization",
+              "value": "={{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.headers.authorization }}",
+              "type": "string"
+            },
+            {
+              "id": "b721d509-46f9-4644-9179-cb6cde139ae6",
+              "name": "env",
+              "value": "={{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.env }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "eaa9c853-cbb3-4f6f-b653-a7e649628120",
+      "name": "Edit Fields8",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        4100,
+        -420
+      ]
+    },
+    {
+      "parameters": {
+        "url": "=https://api.{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.env }}.gosharpei.com/api/products/{{ $('Execute Workflow Trigger').item.json.data.pid }}/variants/{{ $('Create Deafault Variant').item.json.data[0].pid }}  ",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Accept",
+              "value": "application/json"
+            },
+            {
+              "name": "Authorization",
+              "value": "={{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.headers.authorization }}"
+            }
+          ]
+        },
+        "options": {
+          "redirect": {
+            "redirect": {}
+          }
+        }
+      },
+      "id": "c8be8dc8-20fe-4ab3-a755-6aa3bc4c4ea4",
+      "name": "validate",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        3880,
+        -360
+      ]
+    },
+    {
+      "parameters": {
+        "method": "PUT",
+        "url": "=https://api.{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.env }}.gosharpei.com/api/products/{{ $('Execute Workflow Trigger').item.json.data.pid }}/variants/{{ $('Create Deafault Variant').item.json.data[0].pid }}      ",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Accept",
+              "value": "application/json"
+            },
+            {
+              "name": "Authorization",
+              "value": "={{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.headers.authorization }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n    \"selling_price\": \"{{ $('Create Deafault Variant').item.json.data[0].selling_price }}\",\n    \"title\": \"{{ $('Update name1').item.json.name.replace(/['\"]+/g,'') }}\",\n    \"remote_id\": \"{{ $('Create Deafault Variant').item.json.data[0].remote_id }}\",\n    \"status_pid\" : \"{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.stock_available > 0 ? $('Get Status3').item.json.data.status[0].pid : $('Get Status3').item.json.data.status[1].pid}}\",\n    \"cost\": \"{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.wholesale_price }}\",\n    \"SKU\": \"{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body?.PrestaShop_Body?.body?.reference ? $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.reference : 'n/a' }}\",\n    \"barcode\": \"{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body?.PrestaShop_Body?.body?.upc ? $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.upc: 'n/a' }}\"\n\n  }     ",
+        "options": {}
+      },
+      "id": "2afbeecb-beb7-4be2-b60b-7ea77992e0bc",
+      "name": "Update variant",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        3640,
+        -360
+      ],
+      "retryOnFail": false,
+      "maxTries": 2
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://api.{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.env }}.gosharpei.com/api/products/{{ $('Execute Workflow Trigger').item.json.data.pid }}/variants/{{ $('Create Deafault Variant').item.json.data[0].pid }}/images              ",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "={{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.headers.authorization }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "multipart-form-data",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "parameterType": "formBinaryData",
+              "name": "attachment",
+              "inputDataFieldName": "data"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "b79306d2-b0ce-4ed3-882e-fcdcf57e520a",
+      "name": "Add Image1",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        3440,
+        -360
+      ],
+      "retryOnFail": true,
+      "maxTries": 2
+    },
+    {
+      "parameters": {
+        "url": "={{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.image_url || $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.images[0].url }}",
+        "options": {}
+      },
+      "id": "dd76e01f-de3d-4254-bc08-206569a65569",
+      "name": "Upload1",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        3180,
+        -360
       ],
       "retryOnFail": true,
       "maxTries": 2
@@ -491,7 +2103,7 @@
     {
       "parameters": {
         "method": "POST",
-        "url": "=https://api.{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.env }}.gosharpei.com/api/products/{{ $('Execute Workflow Trigger').item.json.data.pid }}/variants/multiple     ",
+        "url": "=https://api.{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.env }}.gosharpei.com/api/products/{{ $('Execute Workflow Trigger').item.json.data.pid }}/variants/multiple         ",
         "sendHeaders": true,
         "headerParameters": {
           "parameters": [
@@ -507,16 +2119,16 @@
         },
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "=[\n  {\n    \"selling_price\": \"{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.price }}\",\n    \"title\": \"{{ $('Update name').item.json.name.replace(/['\"]+/g,'') }}\",\n    \"remote_id\": \"{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.id }}\",\n    \"status_pid\" : \"{{ $('Code').item.json.pid }}\",\n    \"cost\": 0\n\n  }\n]       \n",
+        "jsonBody": "=[\n  {\n    \"selling_price\": \"{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.price }}\",\n    \"title\": \"{{ $('Update name1').item.json.name.replace(/['\"]+/g,'').replace(/<[^>]+>/g, '').replace(/\\n/g, ' ')  }}\",\n    \"remote_id\": \"{{ $('Execute Workflow Trigger').item.json.data.remote_id }}\",\n    \"status_pid\" : \"{{ $json.pid }}\",\n    \"cost\": 0\n\n  }\n]       \n                ",
         "options": {}
       },
-      "id": "530a866d-cfe2-407f-9fd4-b21f8fe929c7",
-      "name": "Create Default Variant",
+      "id": "e694ff68-47c7-4912-afdc-39bfc8916204",
+      "name": "Create Deafault Variant",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        1560,
-        0
+        2980,
+        -360
       ],
       "retryOnFail": true,
       "maxTries": 2
@@ -536,19 +2148,19 @@
           ]
         }
       },
-      "id": "f119c168-ec12-43b5-a05c-8aa97304343c",
-      "name": "IF no variant",
+      "id": "5dc5798c-1410-4c43-a96c-cc1c0d4c7aa7",
+      "name": "IF equal ",
       "type": "n8n-nodes-base.if",
       "typeVersion": 1,
       "position": [
-        1360,
-        0
+        2780,
+        -360
       ]
     },
     {
       "parameters": {
         "method": "PUT",
-        "url": "=https://api.{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.env }}.gosharpei.com/api/products/{{ $('Execute Workflow Trigger').item.json.data.pid }}  ",
+        "url": "=https://api.{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.env }}.gosharpei.com/api/products/{{ $('Execute Workflow Trigger').item.json.data.pid }}",
         "sendHeaders": true,
         "headerParameters": {
           "parameters": [
@@ -596,40 +2208,26 @@
         },
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={\n  \"title\": \"{{ $('Execute Workflow Trigger').item.json.data.title.replace(/['\"]+/g,'')}}\",\n  \"body\": \"\",\n  \"status_pid\" : \"{{ $('Code').item.json.pid }}\",\n  \"quantity\": \"{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.quantity }}\"\n}\n\n              ",
-        "options": {}
+        "jsonBody": "={\n  \"pid\": \"{{ $('Execute Workflow Trigger').item.json.data.pid }}\",\n  \"title\": \"{{ $('Update name1').item.json.name.replace(/['\"]+/g,'') }}\",\n  \"body\": \"{{ $('Update name1').item.json.description_short.replace(/['\"]+/g,'').replace(/<[^>]+>/g, '').replace(/\\n/g, ' ') }}\",\n  \"status_pid\" : \"{{ $('Code3').item.json.pid }}\"\n}\n                   \n\n ",
+        "options": {
+          "batching": {
+            "batch": {
+              "batchSize": 0,
+              "batchInterval": 3000
+            }
+          }
+        }
       },
-      "id": "3b76129d-1f77-47ef-a1f0-136f4e74b2f3",
-      "name": "Activate Product",
+      "id": "23b9cbd4-f9ce-4049-828f-f53021afe5e3",
+      "name": "Update Product1",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        1760,
-        -200
+        3220,
+        -640
       ],
-      "retryOnFail": true,
+      "retryOnFail": false,
       "maxTries": 2
-    },
-    {
-      "parameters": {
-        "conditions": {
-          "string": [
-            {
-              "value1": "={{ $('Execute Workflow Trigger').item.json.data.status.name }}",
-              "operation": "notEqual",
-              "value2": "Active"
-            }
-          ]
-        }
-      },
-      "id": "aeb8bb90-0c5d-495a-ad8c-9848999e117a",
-      "name": "Check  Status",
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 1,
-      "position": [
-        1560,
-        -200
-      ]
     },
     {
       "parameters": {
@@ -638,24 +2236,24 @@
             {
               "value1": "={{ $('Execute Workflow Trigger').item.json.data.title }}",
               "operation": "notEqual",
-              "value2": "={{ $('Update name').item.json.name.replace(/['\"]+/g,'').replace(/<[^>]+>/g, '').replace(/\\n/g, ' ') }}"
+              "value2": "={{ $('Update name1').item.json.name.replace(/['\"]+/g,'').replace(/<[^>]+>/g, '').replace(/\\n/g, ' ') }}"
             },
             {
               "value1": "={{ $('Execute Workflow Trigger').item.json.data.body }}",
               "operation": "notEqual",
-              "value2": "={{ $('Update name').item.json.description_short.replace(/['\"]+/g,'').replace(/<[^>]+>/g, '').replace(/\\n/g, ' ') }}"
+              "value2": "={{ $('Update name1').item.json.description_short.replace(/['\"]+/g,'').replace(/<[^>]+>/g, '').replace(/\\n/g, ' ') }}"
             }
           ]
         },
         "combineOperation": "any"
       },
-      "id": "a282cd6d-cfc8-4fbf-9036-17de8cdc870c",
-      "name": "Check Product Prestashop",
+      "id": "4251bf71-5167-4a8e-8e6c-97714925b265",
+      "name": "Check Product Prestashop1",
       "type": "n8n-nodes-base.if",
       "typeVersion": 1,
       "position": [
-        1560,
-        -400
+        2980,
+        -640
       ]
     },
     {
@@ -669,19 +2267,193 @@
           ]
         }
       },
-      "id": "81f1b977-f592-4564-af83-6758f29c00ce",
-      "name": "Check Body id is present",
+      "id": "0cd95d8f-7d63-4312-96b7-465f2d576a5d",
+      "name": "Check Body id is present1",
       "type": "n8n-nodes-base.if",
       "typeVersion": 1,
       "position": [
-        1360,
-        -320
+        2780,
+        -640
       ]
     },
     {
       "parameters": {
+        "jsCode": "\n\n const elements = items[0]?.json?.data?.status;\n\nconst activeElement = elements.find(element => element.name === \"Active\");\n\nif (activeElement) {\n    return [{ pid: activeElement.pid }];\n} else {\n    return [];\n}\n\n\n\n\n\n\n\n\n\n\n\n\n"
+      },
+      "id": "7df9573e-1689-437c-9c6f-44531aaea2b4",
+      "name": "Code3",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2360,
+        -640
+      ]
+    },
+    {
+      "parameters": {
+        "url": "=https://api.{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.env }}.gosharpei.com/api/status ",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "type",
+              "value": "product"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "authority",
+              "value": "api.dev.gosharpei.com"
+            },
+            {
+              "name": "accept",
+              "value": "application/json, text/plain, */*"
+            },
+            {
+              "name": "accept-language",
+              "value": "en-US,en;q=0.9"
+            },
+            {
+              "name": "origin",
+              "value": "https://appdev.gosharpei.com"
+            },
+            {
+              "name": "referer",
+              "value": "https://appdev.gosharpei.com/"
+            },
+            {
+              "name": "sec-ch-ua",
+              "value": "\"Chromium\";v=\"104\", \" Not A;Brand\";v=\"99\", \"Google Chrome\";v=\"104\""
+            },
+            {
+              "name": "sec-ch-ua-mobile",
+              "value": "?0"
+            },
+            {
+              "name": "sec-ch-ua-platform",
+              "value": "\"Linux\""
+            },
+            {
+              "name": "sec-fetch-dest",
+              "value": "empty"
+            },
+            {
+              "name": "sec-fetch-mode",
+              "value": "cors"
+            },
+            {
+              "name": "sec-fetch-site",
+              "value": "same-site"
+            },
+            {
+              "name": "user-agent",
+              "value": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36"
+            }
+          ]
+        },
+        "options": {
+          "batching": {
+            "batch": {
+              "batchSize": 0,
+              "batchInterval": 3000
+            }
+          }
+        }
+      },
+      "id": "798700fa-f9b4-4917-8a95-bbab9a9c2904",
+      "name": "Get Status3",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        2180,
+        -640
+      ],
+      "retryOnFail": false,
+      "maxTries": 2
+    },
+    {
+      "parameters": {
+        "jsCode": "// Obtener los datos del nodo anterior\nconst data = items[0].json;\n\n// Acceder a la estructura de combinations y variants\nconst prestaShopBody = data.PrestaShop_Body ? data.PrestaShop_Body.PrestaShop_Body : {};\nconst combinations = prestaShopBody.body ? prestaShopBody.body.combinations : {};\nconst variants = data.data ? data.data.variants : [];\n\n// Imprimir datos para ver la estructura real\nconsole.log('Combinations:', JSON.stringify(combinations, null, 2));\nconsole.log('Variants:', JSON.stringify(variants, null, 2));\n\n// Crear un mapa para buscar variantes por remote_id\nconst variantMap = Object.fromEntries(variants.map(v => [v.remote_id, v]));\n\n// Imprimir el mapa de variantes para depuración\nconsole.log('Variant Map:', JSON.stringify(variantMap, null, 2));\n\n// Ordenar las variantes basadas en el id_product_attribute en combinations\nconst orderedVariants = Object.keys(combinations)\n    .map(id => {\n        // Buscar la variante correspondiente usando el mapa\n        const variant = variantMap[id];\n        console.log(`Buscando variante con id_product_attribute ${id}:`, variant);\n        return variant || null;\n    })\n    .filter(variant => variant !== null);\n\n// Imprimir variantes ordenadas para depuración\nconsole.log('Ordered Variants:', JSON.stringify(orderedVariants, null, 2));\n\n// Retornar el resultado\nreturn [\n    {\n        json: {\n            orderedVariants\n        }\n    }\n];\n\n\n\n\n\n"
+      },
+      "id": "25a8ed1e-9915-4185-b937-d7042a8689fd",
+      "name": "Ordered variants",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2000,
+        -640
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "40be9f45-d8de-426a-a451-8c79eeca12ce",
+              "name": "data.variants",
+              "value": "={{ $('Execute Workflow Trigger').item.json.data.variants }}",
+              "type": "array"
+            },
+            {
+              "id": "a7e00789-df2a-4e2a-b860-42df4843762a",
+              "name": "PrestaShop_Body.PrestaShop_Body.body.combinations",
+              "value": "={{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.combinations }}",
+              "type": "object"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "b1f11d28-0280-448f-a2be-5592d1dca4c8",
+      "name": "Edit Fields4",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1800,
+        -640
+      ],
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
         "method": "PUT",
-        "url": "=https://api.{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.env }}.gosharpei.com/api/products/{{ $('Execute Workflow Trigger').item.json.data.pid }} ",
+        "url": "=https://api.{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.env }}.gosharpei.com/api/products/{{ $('Execute Workflow Trigger').item.json.data.pid }}/variants/{{ $('Execute Workflow Trigger').item.json.data.variants[0].pid }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Accept",
+              "value": "application/json"
+            },
+            {
+              "name": "Authorization",
+              "value": "={{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.headers.authorization }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n    \"selling_price\": \"{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.price }}\",\n    \"title\": \"{{ $('Update name1').item.json.name.replace(/['\"]+/g,'') }}\",\n    \"remote_id\": \"{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.id }}\",\n    \"status_pid\" : \"19be3819-df3a-406a-9b89-f2412bf16ac4\",\n    \"cost\": 0\n\n  }                ",
+        "options": {}
+      },
+      "id": "10cd3a72-6e67-4357-8cf2-1e81280f1ecf",
+      "name": "Draft default variant3",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        2000,
+        -420
+      ],
+      "retryOnFail": true,
+      "maxTries": 2
+    },
+    {
+      "parameters": {
+        "method": "PUT",
+        "url": "=https://api.{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.env }}.gosharpei.com/api/products/{{ $('Execute Workflow Trigger').item.json.data.pid }}",
         "sendHeaders": true,
         "headerParameters": {
           "parameters": [
@@ -729,233 +2501,113 @@
         },
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={  \n  \"status_pid\": \"{{ $json.pid }}\",\n  \"title\" : \"{{ $('Execute Workflow Trigger').item.json.data.title.replace(/['\"]+/g,'') }}\"\n}      ",
+        "jsonBody": "={\n  \"pid\": \"{{ $('Execute Workflow Trigger').item.json.data.pid }}\",\n  \"title\": \"{{ $('Update name1').item.json.name.replace(/['\"]+/g,'') }}\",\n  \"body\": \"{{ $('Update name1').item.json.description_short.replace(/['\"]+/g,'').replace(/<[^>]+>/g, '').replace(/\\n/g, ' ') }}\",\n  \"status_pid\" : \"19be3819-df3a-406a-9b89-f2412bf16ac4\"\n}\n                   \n\n ",
         "options": {}
       },
-      "id": "5d74201f-d612-4c09-937b-d15fd5403ce1",
-      "name": "Draft Product",
+      "id": "80a01c89-371c-4608-b4e1-974b379b455f",
+      "name": "Update Product3",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        1760,
-        -580
+        1800,
+        -420
       ],
       "retryOnFail": true,
       "maxTries": 2
     },
     {
       "parameters": {
-        "jsCode": "\n\n const elements = items[0]?.json?.data?.status;\n\nconst draftElement = elements.find(element => element.name === \"Draft\");\n\nif (draftElement) {\n    return [{ pid: draftElement.pid }];\n} else {\n    return [];\n}\n\n\n\n\n\n\n\n\n\n\n\n\n"
-      },
-      "id": "c024b7b3-399e-4ef1-8a6f-f48d231a112f",
-      "name": "Code1",
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        1560,
-        -580
-      ]
-    },
-    {
-      "parameters": {
-        "url": "=https://api.{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.env }}.gosharpei.com/api/status ",
-        "sendQuery": true,
-        "queryParameters": {
-          "parameters": [
+        "rules": {
+          "values": [
             {
-              "name": "type",
-              "value": "product"
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict"
+                },
+                "conditions": [
+                  {
+                    "id": "f9c46c1f-ac75-4cd7-851e-f1750f2c7bb5",
+                    "leftValue": "={{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.active }}",
+                    "rightValue": "0",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict"
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ Array.isArray($('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.combinations) }}",
+                    "rightValue": true,
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict"
+                },
+                "conditions": [
+                  {
+                    "id": "0435ace1-6f8a-4893-b82f-d215459696e4",
+                    "leftValue": "={{ !Array.isArray($('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.combinations) && typeof $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.combinations === 'object' }}",
+                    "rightValue": true,
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
             }
           ]
         },
-        "sendHeaders": true,
-        "headerParameters": {
-          "parameters": [
-            {
-              "name": "authority",
-              "value": "api.dev.gosharpei.com"
-            },
-            {
-              "name": "accept",
-              "value": "application/json, text/plain, */*"
-            },
-            {
-              "name": "accept-language",
-              "value": "en-US,en;q=0.9"
-            },
-            {
-              "name": "origin",
-              "value": "https://appdev.gosharpei.com"
-            },
-            {
-              "name": "referer",
-              "value": "https://appdev.gosharpei.com/"
-            },
-            {
-              "name": "sec-ch-ua",
-              "value": "\"Chromium\";v=\"104\", \" Not A;Brand\";v=\"99\", \"Google Chrome\";v=\"104\""
-            },
-            {
-              "name": "sec-ch-ua-mobile",
-              "value": "?0"
-            },
-            {
-              "name": "sec-ch-ua-platform",
-              "value": "\"Linux\""
-            },
-            {
-              "name": "sec-fetch-dest",
-              "value": "empty"
-            },
-            {
-              "name": "sec-fetch-mode",
-              "value": "cors"
-            },
-            {
-              "name": "sec-fetch-site",
-              "value": "same-site"
-            },
-            {
-              "name": "user-agent",
-              "value": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "id": "ec64631f-1cfb-4c33-8830-1bc2f76e6e17",
-      "name": "Get Status",
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.1,
-      "position": [
-        1360,
-        -580
-      ],
-      "retryOnFail": true,
-      "maxTries": 2
-    },
-    {
-      "parameters": {
-        "conditions": {
-          "number": [
-            {
-              "value1": "={{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.quantity }}",
-              "operation": "smallerEqual"
-            }
-          ]
+        "options": {
+          "fallbackOutput": 1
         }
       },
-      "id": "8ef44f66-aab8-450a-9ccb-1d06b6300b4d",
-      "name": "Check Stock1",
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 1,
+      "id": "ad46a65e-08b7-4b6b-88b2-264953122e49",
+      "name": "Switch",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3,
       "position": [
-        1140,
-        -320
+        1600,
+        -640
       ]
-    },
-    {
-      "parameters": {
-        "jsCode": "\n\n const elements = items[0]?.json?.data?.status;\n\nconst activeElement = elements.find(element => element.name === \"Active\");\n\nif (activeElement) {\n    return [{ pid: activeElement.pid }];\n} else {\n    return [];\n}\n\n\n\n\n\n\n\n\n\n\n\n\n"
-      },
-      "id": "23804fd1-2eb3-4db5-922a-f733118f6248",
-      "name": "Code",
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        940,
-        -320
-      ]
-    },
-    {
-      "parameters": {
-        "url": "=https://api.{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.env }}.gosharpei.com/api/status ",
-        "sendQuery": true,
-        "queryParameters": {
-          "parameters": [
-            {
-              "name": "type",
-              "value": "product"
-            }
-          ]
-        },
-        "sendHeaders": true,
-        "headerParameters": {
-          "parameters": [
-            {
-              "name": "authority",
-              "value": "api.dev.gosharpei.com"
-            },
-            {
-              "name": "accept",
-              "value": "application/json, text/plain, */*"
-            },
-            {
-              "name": "accept-language",
-              "value": "en-US,en;q=0.9"
-            },
-            {
-              "name": "origin",
-              "value": "https://appdev.gosharpei.com"
-            },
-            {
-              "name": "referer",
-              "value": "https://appdev.gosharpei.com/"
-            },
-            {
-              "name": "sec-ch-ua",
-              "value": "\"Chromium\";v=\"104\", \" Not A;Brand\";v=\"99\", \"Google Chrome\";v=\"104\""
-            },
-            {
-              "name": "sec-ch-ua-mobile",
-              "value": "?0"
-            },
-            {
-              "name": "sec-ch-ua-platform",
-              "value": "\"Linux\""
-            },
-            {
-              "name": "sec-fetch-dest",
-              "value": "empty"
-            },
-            {
-              "name": "sec-fetch-mode",
-              "value": "cors"
-            },
-            {
-              "name": "sec-fetch-site",
-              "value": "same-site"
-            },
-            {
-              "name": "user-agent",
-              "value": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "id": "9f3cec6f-c68d-41f8-a8c9-39f006f9bbff",
-      "name": "Get Status1",
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.1,
-      "position": [
-        760,
-        -320
-      ],
-      "retryOnFail": true,
-      "maxTries": 2
     },
     {
       "parameters": {
         "jsCode": "// Initialize the name field with an empty default value\nlet name = \"\";\nlet description_short = \"\";\n\n// Check if the name field is in object format with an index \"1\"\nif (typeof items[0].json.PrestaShop_Body.PrestaShop_Body.body.name === 'object' && items[0].json.PrestaShop_Body.PrestaShop_Body.body.name.hasOwnProperty(\"1\")) {\n    // Extract the value from index \"1\"\n    name = items[0].json.PrestaShop_Body.PrestaShop_Body.body.name[\"1\"];\n} else if (typeof items[0].json.PrestaShop_Body.PrestaShop_Body.body.name === 'string') {\n    // If it's already in the desired format, assign the value directly\n    name = items[0].json.PrestaShop_Body.PrestaShop_Body.body.name;\n}\n\n// Check if the description_short field is in object format with an index \"1\"\nif (typeof items[0].json.PrestaShop_Body.PrestaShop_Body.body.description_short === 'object' && items[0].json.PrestaShop_Body.PrestaShop_Body.body.description_short.hasOwnProperty(\"1\")) {\n    // Extract the value from index \"1\"\n    description_short = items[0].json.PrestaShop_Body.PrestaShop_Body.body.description_short[\"1\"];\n} else if (typeof items[0].json.PrestaShop_Body.PrestaShop_Body.body.description_short === 'string') {\n    // If it's already in the desired format, assign the value directly\n    description_short = items[0].json.PrestaShop_Body.PrestaShop_Body.body.description_short;\n}\n\n// Return the object with the name field\nreturn {\n    json: {\n        name: name,\n        description_short: description_short\n    }\n};\n\n"
       },
-      "id": "73f5d8cb-c9eb-4caa-ab83-91e9cbde91fc",
-      "name": "Update name",
+      "id": "79f831fc-50e6-40a4-8788-f1e5d5732d0e",
+      "name": "Update name1",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        560,
-        -320
+        1400,
+        -640
       ],
       "alwaysOutputData": false
     },
@@ -966,112 +2618,72 @@
       "type": "n8n-nodes-base.executeWorkflowTrigger",
       "typeVersion": 1,
       "position": [
-        360,
-        -320
+        1180,
+        -640
       ]
     }
   ],
   "connections": {
-    "Upload1": {
+    "Google Sheets": {
       "main": [
         [
           {
-            "node": "Add Image1",
+            "node": "Wait",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "If no image": {
+    "Edit Fields7": {
       "main": [
         [
           {
-            "node": "Upload1",
+            "node": "Google Sheets",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Check Variant": {
+    "IF equal 2": {
       "main": [
         [
           {
-            "node": "Update a variant1",
+            "node": "Edit Fields7",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Get Product by Remote Id": {
+    "Edit Fields2": {
       "main": [
         [
           {
-            "node": "Check Variant",
+            "node": "Execute Workflow",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "IF equal 1": {
+    "Update combination1": {
       "main": [
         [
           {
-            "node": "Get Product by Remote Id",
+            "node": "Edit Fields2",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Check Variant1": {
+    "Add Image": {
       "main": [
         [
           {
-            "node": "Update a variant3",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Get Product by Remote Id1": {
-      "main": [
-        [
-          {
-            "node": "Check Variant1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Update a variant2": {
-      "main": [
-        [
-          {
-            "node": "Get Product by Remote Id1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "IF larger than 1": {
-      "main": [
-        [
-          {
-            "node": "Update a variant2",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "IF equal 1",
+            "node": "Update combination1",
             "type": "main",
             "index": 0
           }
@@ -1089,7 +2701,7 @@
         ]
       ]
     },
-    "If": {
+    "Create combination": {
       "main": [
         [
           {
@@ -1100,18 +2712,90 @@
         ]
       ]
     },
-    "Update a variant": {
+    "Edit Fields6": {
       "main": [
         [
           {
-            "node": "If",
+            "node": "Create combination",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Loop Over Items2",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Create Default Variant": {
+    "Loop Over Items2": {
+      "main": [
+        null,
+        [
+          {
+            "node": "Edit Fields6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out2": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert Object": {
+      "main": [
+        [
+          {
+            "node": "Split Out2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields5": {
+      "main": [
+        [
+          {
+            "node": "Convert Object",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "List Variants": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If8": {
+      "main": [
+        [
+          {
+            "node": "List Variants",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
       "main": [
         [
           {
@@ -1122,47 +2806,107 @@
         ]
       ]
     },
-    "IF no variant": {
+    "If2": {
       "main": [
         [
           {
-            "node": "Create Default Variant",
+            "node": "Update a variant1",
             "type": "main",
             "index": 0
           }
         ],
         [
           {
-            "node": "IF larger than 1",
+            "node": "If",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Check  Status": {
+    "Set6": {
       "main": [
         [
           {
-            "node": "Activate Product",
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "If2",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Check Body id is present": {
+    "Loop Over Items": {
       "main": [
+        null,
         [
           {
-            "node": "Check Product Prestashop",
+            "node": "Set6",
             "type": "main",
             "index": 0
           }
-        ],
+        ]
+      ]
+    },
+    "Split Out": {
+      "main": [
         [
           {
-            "node": "Check  Status",
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields3": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Archive  variant",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items1": {
+      "main": [
+        null,
+        [
+          {
+            "node": "Edit Fields3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out1": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code5": {
+      "main": [
+        [
+          {
+            "node": "Split Out1",
             "type": "main",
             "index": 0
           }
@@ -1173,14 +2917,19 @@
       "main": [
         [
           {
-            "node": "Draft Product",
+            "node": "Code5",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Split Out",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Get Status": {
+    "Edit Fields1": {
       "main": [
         [
           {
@@ -1191,18 +2940,317 @@
         ]
       ]
     },
-    "Check Stock1": {
+    "If3": {
       "main": [
         [
           {
-            "node": "Get Status",
+            "node": "Edit Fields1",
             "type": "main",
             "index": 0
           }
         ],
         [
           {
-            "node": "Check Body id is present",
+            "node": "If8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If10": {
+      "main": [
+        [
+          {
+            "node": "Split Out",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "If3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code2": {
+      "main": [
+        [
+          {
+            "node": "If10",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If11": {
+      "main": [
+        [
+          {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Code2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "If11",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF larger than ": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Add Image3": {
+      "main": [
+        [
+          {
+            "node": "Update variant2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upload3": {
+      "main": [
+        [
+          {
+            "node": "Add Image3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If no image1": {
+      "main": [
+        [
+          {
+            "node": "Upload3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Product2": {
+      "main": [
+        [
+          {
+            "node": "If no image1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update a variant8": {
+      "main": [
+        [
+          {
+            "node": "Update Product2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Draft Product1": {
+      "main": [
+        [
+          {
+            "node": "If no image1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Draft default variant1": {
+      "main": [
+        [
+          {
+            "node": "Draft Product1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If6": {
+      "main": [
+        [
+          {
+            "node": "Draft default variant1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Update a variant8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If7": {
+      "main": [
+        [
+          {
+            "node": "If6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Add Image2": {
+      "main": [
+        [
+          {
+            "node": "Update variant1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upload2": {
+      "main": [
+        [
+          {
+            "node": "Add Image2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If no image": {
+      "main": [
+        [
+          {
+            "node": "Upload2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Product": {
+      "main": [
+        [
+          {
+            "node": "If no image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update a variant7": {
+      "main": [
+        [
+          {
+            "node": "Update Product",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If4": {
+      "main": [
+        [
+          {
+            "node": "Update a variant7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Draft Product": {
+      "main": [
+        [
+          {
+            "node": "If no image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Draft default variant": {
+      "main": [
+        [
+          {
+            "node": "Draft Product",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If1": {
+      "main": [
+        [
+          {
+            "node": "Draft default variant",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "If4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If5": {
+      "main": [
+        [
+          {
+            "node": "If1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "If7",
             "type": "main",
             "index": 0
           }
@@ -1213,39 +3261,253 @@
       "main": [
         [
           {
-            "node": "Check Stock1",
-            "type": "main",
-            "index": 0
-          },
-          {
-            "node": "IF no variant",
-            "type": "main",
-            "index": 0
-          },
-          {
-            "node": "If no image",
+            "node": "If5",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Get Status1": {
+    "Google Sheets1": {
       "main": [
         [
           {
             "node": "Code",
             "type": "main",
             "index": 0
+          },
+          {
+            "node": "Google Sheets5",
+            "type": "main",
+            "index": 0
           }
         ]
       ]
     },
-    "Update name": {
+    "Wait1": {
       "main": [
         [
           {
-            "node": "Get Status1",
+            "node": "Google Sheets1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF equal 1": {
+      "main": [
+        [
+          {
+            "node": "Wait1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "IF larger than ",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "IF equal 2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields8": {
+      "main": [
+        [
+          {
+            "node": "Execute Workflow1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update variant": {
+      "main": [
+        [
+          {
+            "node": "validate",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Edit Fields8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Add Image1": {
+      "main": [
+        [
+          {
+            "node": "Update variant",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upload1": {
+      "main": [
+        [
+          {
+            "node": "Add Image1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Deafault Variant": {
+      "main": [
+        [
+          {
+            "node": "Upload1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF equal ": {
+      "main": [
+        [
+          {
+            "node": "Create Deafault Variant",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "IF equal 1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Product Prestashop1": {
+      "main": [
+        [
+          {
+            "node": "Update Product1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Body id is present1": {
+      "main": [
+        [
+          {
+            "node": "Check Product Prestashop1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code3": {
+      "main": [
+        [
+          {
+            "node": "Check Body id is present1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "IF equal ",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Status3": {
+      "main": [
+        [
+          {
+            "node": "Code3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ordered variants": {
+      "main": [
+        [
+          {
+            "node": "Get Status3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields4": {
+      "main": [
+        [
+          {
+            "node": "Ordered variants",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Product3": {
+      "main": [
+        [
+          {
+            "node": "Draft default variant3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Update Product3",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Get Status3",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Edit Fields4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update name1": {
+      "main": [
+        [
+          {
+            "node": "Switch",
             "type": "main",
             "index": 0
           }
@@ -1256,7 +3518,7 @@
       "main": [
         [
           {
-            "node": "Update name",
+            "node": "Update name1",
             "type": "main",
             "index": 0
           }
@@ -1270,40 +3532,45 @@
         "status": 200,
         "message": "success",
         "data": {
-          "pid": "b7662bcb-58ab-42ff-b689-525f08deb24d",
-          "title": "APPLE MACBOOK AIR 13.6 2024 M3 8GB RAM 512GB gris espacial",
-          "body": "¡Trabaja al máximo nivel con los nuevos procesadores M3 de Apple! El APPLE MACBOOK AIR 13.6 2024 M3 8GB RAM 512GB gris espacial ha sido diseñado para trabajar silenciosamente desde cualquier lugar. Con su pantalla Retina de 13.6 pulgadas, podrás disfrutar del mejor contenido online o imágenes y vídeos propios. Además, cuenta con 8GB de RAM que garantizan un rendimiento rápido y eficiente en todo momento. Con una capacidad de almacenamiento de 512GB, tendrás espacio más que suficiente para guardar todos tus archivos importantes, fotos, videos e incluso juegos. Olvídate del temido mensaje espacio insuficiente gracias a esta amplia capacidad. La batería ofrece una autonomía para muchas horas, sin necesidad preocuparte por quedarte sin energía en medio del trabajo o la diversión.",
+          "pid": "5bbac31a-705c-4897-a6ea-4d989bf32b60",
+          "title": "Macbook air (pruebas)",
+          "body": "Macbook air 13",
           "vendor": null,
-          "updated_at": "2024-06-19T16:02:09.000000Z",
-          "created_at": "2024-05-09T07:33:02.000000Z",
-          "remote_id": "911685",
-          "variants_count": 2,
-          "image_url": "https://assets.gosharpei.com/products/1161/1720710117_apple-macbook-air-136-2024-m3-8gb-ram-512gb-gris-espacial.jpg",
+          "updated_at": "2024-10-17T16:42:50.000000Z",
+          "created_at": "2024-10-15T17:05:24.000000Z",
+          "remote_id": "259",
+          "variants_count": 1,
+          "image_url": "https://assets.dev.gosharpei.com/products/2694/1729011926_259.jpg",
           "category": null,
           "subcategory": null,
-          "tags": [],
+          "tags": [
+            {
+              "pid": "60ed2e3e-6b19-4fdd-8591-27c70511b9e7",
+              "value": "Default"
+            }
+          ],
           "status": {
-            "pid": "f1554bbc-3159-4044-8974-1da26a573ea3",
+            "pid": "20ba684b-2d5b-46de-bfc3-07aa6d40caaa",
             "name": "Active"
           },
           "variants": [
             {
-              "pid": "86128298-afab-42b8-a44d-2f0f1e34db40",
-              "title": "APPLE MACBOOK AIR 13.6 2024 M3 8GB RAM 512GB gris espacial",
-              "SKU": null,
-              "barcode": null,
+              "pid": "29f4f3dc-cc51-49fc-ac5f-d735ce647476",
+              "title": "Macbook air (pruebas)",
+              "SKU": "n/a",
+              "barcode": "n/a",
               "cost": "0.00",
-              "selling_price": "1063.56",
-              "remote_id": "911685",
-              "image_url": "https://assets.gosharpei.com/products/1161/1720710117_apple-macbook-air-136-2024-m3-8gb-ram-512gb-gris-espacial.jpg",
+              "selling_price": "900.00",
+              "remote_id": "259",
+              "image_url": "https://assets.dev.gosharpei.com/products/2694/1729011926_259.jpg",
               "images": [
                 {
-                  "pid": "4d84fdcc-5287-4200-8ee3-20a2ba4fdf45",
-                  "url": "https://assets.gosharpei.com/products/1161/1720710117_apple-macbook-air-136-2024-m3-8gb-ram-512gb-gris-espacial.jpg"
+                  "pid": "54d59fac-55e6-400e-a9a7-09e1faadde7f",
+                  "url": "https://assets.dev.gosharpei.com/products/2694/1729011926_259.jpg"
                 }
               ],
               "status": {
-                "pid": "f1554bbc-3159-4044-8974-1da26a573ea3",
+                "pid": "20ba684b-2d5b-46de-bfc3-07aa6d40caaa",
                 "name": "Active"
               }
             }
@@ -1313,116 +3580,118 @@
         "PrestaShop_Body": {
           "PrestaShop_Body": {
             "headers": {
-              "x-forwarded-for": "185.14.56.22",
+              "x-forwarded-for": "44.206.89.54",
               "x-forwarded-proto": "https",
               "x-forwarded-port": "443",
               "host": "automation.prod.gosharpei.com",
-              "x-amzn-trace-id": "Root=1-66900fa7-666dd8a71e20b33e7752b6a8",
-              "content-length": "17752",
+              "x-amzn-trace-id": "Root=1-671164c2-47267cec13855cd832fcadc3",
+              "content-length": "11443",
               "accept": "*/*",
               "content-type": "application/json",
-              "authorization": "$2y$10$MDediIz4x747j.485q087.WhMB/lzTN1JyB9gIGxFn989sNVt8.xa"
+              "authorization": "$2y$10$UzfjIeYjEdv9S2zvCt15KeVvc729GtDEIhmiieOKsTomLaKD2Ig7S"
             },
             "params": {},
             "query": {},
             "body": {
-              "tax_name": "deprecated",
-              "tax_rate": 21,
-              "id_manufacturer": "3",
-              "id_supplier": "18",
-              "id_category_default": "665",
-              "id_shop_default": "1",
-              "manufacturer_name": "Apple",
-              "supplier_name": "Depau",
-              "name": "APPLE MACBOOK AIR 13.6 2024 M3 8GB RAM 512GB gris espacial",
-              "description": "<table>\n<tbody>\n<tr>\n<td>CPU</td>\n<td>de 8 núcleos (4 de rendimiento y 4 de eficiencia)</td>\n</tr>\n<tr>\n<td>GPU</td>\n<td>de 10 núcleos</td>\n</tr>\n<tr>\n<td>Trazado de rayos por aceleración de hardware</td>\n<td>Neural Engine de 16 núcleos; 100 GB/s de ancho de banda de memoria</td>\n</tr>\n<tr>\n<td>Motor multimedia</td>\n<td>Aceleración de hardware para H.264, HEVC, ProRes y ProRes RAW; Motor de decodificación de vídeo; Motor de codificación de vídeo, Motor de codificación y decodificación ProRes; Motor de decodificación AV1</td>\n</tr>\n<tr>\n<td>Pantalla</td>\n<td>Liquid Retina de 13,6 pulgadas (en diagonal) con tecnología IPS</td>\n</tr>\n<tr>\n<td>Retroiluminación</td>\n<td>LED </td>\n</tr>\n<tr>\n<td>Resolución</td>\n<td>nativa de 2.560 x 1.664 a 224 píxeles por pulgada</td>\n</tr>\n<tr>\n<td>Brillo</td>\n<td>500 nits</td>\n</tr>\n<tr>\n<td>Color</td>\n<td>Compatible con 1.000 millones de colores</td>\n</tr>\n<tr>\n<td>Gama cromática</td>\n<td>Amplia (P3)</td>\n</tr>\n<tr>\n<td>Tecnología True Tone</td>\n<td>Sí</td>\n</tr>\n<tr>\n<td>Memoria</td>\n<td>8GB de memoria unificada</td>\n</tr>\n<tr>\n<td>Batería</td>\n<td>Hasta 18 horas de reproducción de vídeo en la app Apple TV; Hasta 15 horas de navegación web inalámbrica; Batería de polímeros de litio de 52,6 vatios hora</td>\n</tr>\n<tr>\n<td>Alimentación</td>\n<td>Adaptador de corriente USB?C de 30 W (incluido con el M2 y M3 con GPU de 8 núcleos); Adaptador de corriente con dos puertos USB-C de 35 W (incluido con el M2 y M3 con GPU de 10 núcleos y 512 GB de capacidad, opcional con el M2 y M3 con GPU de 8 núcleos); Cable de USB-C a MagSafe 3; Carga rápida con el adaptador de corriente USB-C de 70 W</td>\n</tr>\n<tr>\n<td>Capacidad de Almacenamiento</td>\n<td>SSD de 512GB</td>\n</tr>\n<tr>\n<td>Carga y ampliación</td>\n<td>Puerto de carga MagSafe 3</td>\n</tr>\n<tr>\n<td>Toma para auriculares de 3,5 mm</td>\n<td>Sí</td>\n</tr>\n<tr>\n<td>Dos puertos Thunderbolt/USB 4 compatibles con</td>\n<td>Carga; DisplayPort; Thunderbolt 3 (hasta 40 Gb/s); USB 4 (hasta 40 Gb/s)</td>\n</tr>\n<tr>\n<td>Compatibilidad con monitores</td>\n<td>Admite simultáneamente la resolución nativa completa en la pantalla integrada compatible con mil millones de colores. Un monitor externo con una resolución de hasta 6K a 60 Hz. Un segundo monitor externo con una resolución de hasta 5K a 60 Hz con la tapa del MacBook Air cerrada</td>\n</tr>\n<tr>\n<td>Reproducción de vídeo</td>\n<td>HEVC, H.264, AV1 y ProRes (entre otros); HDR con Dolby Vision, HDR10 y HLG</td>\n</tr>\n<tr>\n<td>Reproducción de audio</td>\n<td>AAC, MP3, Apple Lossless, FLAC, Dolby Digital, Dolby Digital Plus y Dolby Atmos (entre otros)</td>\n</tr>\n<tr>\n<td>Teclado Magic Keyboard retroiluminado con</td>\n<td>79 teclas, entre ellas 12 de función de altura estándar y 4 de flecha dispuestas en forma de T invertida; Touch ID; Sensor de luz ambiental; Trackpad Force Touch con control preciso del cursor y sensibilidad a la presión que permite activar el clic fuerte, los aceleradores, el trazo sensible a la presión y los gestos MultiTouch.</td>\n</tr>\n<tr>\n<td>Conexión inalámbrica</td>\n<td>WiFi 6E (802.11ax)4</td>\n</tr>\n<tr>\n<td>Bluetooth</td>\n<td>5.3</td>\n</tr>\n<tr>\n<td>Cámara FaceTime</td>\n<td>HD a 1080p con procesador de señal de imagen avanzado con vídeo computaciona</td>\n</tr>\n<tr>\n<td>Sistema de cuatro altavoces</td>\n<td>Compatibilidad con audio espacial al reproducir música o vídeo con Dolby Atmos en los altavoces integrados; Audio espacial con seguimiento dinámico de la cabeza al usar los AirPods (3.ª generación), AirPods Pro y AirPods Max</td>\n</tr>\n<tr>\n<td>Micrófonos</td>\n<td>Conjunto de tres micrófonos con tecnología beamforming direccional; Modos de micrófono Aislamiento de Voz y Sonido de Fondo (M3); Voces aún más nítidas en las llamadas de audio y vídeo (M3); Toma para auriculares de 3,5 mm y compatibilidad avanzada con auriculares de alta impedancia</td>\n</tr>\n<tr>\n<td>Requisitos de funcionamiento</td>\n<td>Tensión de 100 a 240 V de CA; Frecuencia de 50 a 60 Hz; Temperatura de funcionamiento de 10 a 35 °C; Temperatura de almacenamiento de -25 a 45 °C; Humedad relativa del 0 al 90 % sin condensación; Altitud máxima de funcionamiento probado hasta 3.000 m; Altitud máxima de almacenamiento; 4.500 m; Altitud máxima de transporte de 10.500 m</td>\n</tr>\n<tr>\n<td>Dimensiones</td>\n<td>1,13cm x 30,41cm x 21,5cm (alto x ancho x fondo)</td>\n</tr>\n<tr>\n<td>Peso</td>\n<td>1,24 kg</td>\n</tr>\n<tr>\n<td>Sistema operativo</td>\n<td>macOS es el sistema operativo de ordenador más avanzado del mundo. Y con macOS Sonoma, puedes trabajar y divertirte como nunca, crea presentaciones de vídeo memorables, echa partidas épicas y personaliza aún más tu dispositivo.</td>\n</tr>\n<tr>\n<td>Prestaciones incluidas</td>\n<td>Control por Voz VoiceOver Siri y Dictado Aumentar Contraste Reducir Movimiento Control por Botón Zoom</td>\n</tr>\n<tr>\n<td>Contenido de la caja</td>\n<td>MacBook Air de 13 pulgadas; Adaptador de corriente USB-C de 30 W; Cable de USB-C a MagSafe 3 (2 m)</td>\n</tr>\n</tbody>\n</table>",
-              "description_short": "",
-              "quantity": 3,
-              "minimal_quantity": "1",
-              "low_stock_threshold": "0",
-              "low_stock_alert": "0",
-              "available_now": "",
-              "available_later": "",
-              "price": 1063.56367,
-              "specificPrice": {
-                "id_specific_price": "16583736",
-                "id_specific_price_rule": "0",
-                "id_cart": "0",
-                "id_product": "911685",
-                "id_shop": "1",
-                "id_shop_group": "0",
-                "id_currency": "0",
-                "id_country": "0",
-                "id_group": "0",
-                "id_customer": "0",
-                "id_product_attribute": "0",
-                "price": "-1.000000",
-                "from_quantity": "1",
-                "reduction": "0.290000",
-                "reduction_tax": "1",
-                "reduction_type": "percentage",
-                "from": "0000-00-00 00:00:00",
-                "to": "0000-00-00 00:00:00",
-                "score": "48"
+              "id": 259,
+              "*id_lang": null,
+              "*lang_associated": null,
+              "*id_shop": 1,
+              "id_shop_list": [],
+              "*get_shop_from_context": true,
+              "*table": "product",
+              "*identifier": "id_product",
+              "*fieldsRequired": [
+                "price"
+              ],
+              "*fieldsSize": {
+                "reference": 64,
+                "supplier_reference": 64,
+                "location": 255,
+                "ean13": 13,
+                "isbn": 32,
+                "upc": 12,
+                "mpn": 40
               },
-              "additional_shipping_cost": "0.00",
-              "wholesale_price": "1152.290000",
-              "on_sale": "0",
-              "online_only": "0",
-              "unity": "",
-              "unit_price": 0,
-              "unit_price_ratio": "0.000000",
-              "ecotax": "0.000000",
-              "reference": "MRXP3Y/A",
-              "supplier_reference": "APL-BOOK AIR MRXP3Y/A",
-              "location": "",
-              "width": "0.000000",
-              "height": "0.000000",
-              "depth": "0.000000",
-              "weight": "0.000000",
-              "ean13": "0195949124822",
-              "isbn": "",
-              "upc": "",
-              "link_rewrite": "apple-macbook-air-136-2024-m3-8gb-ram-512gb-gris-espacial",
-              "meta_description": "",
-              "meta_keywords": "",
-              "meta_title": "",
-              "quantity_discount": "0",
-              "customizable": "0",
-              "new": false,
-              "uploadable_files": "0",
-              "text_fields": "0",
-              "active": "1",
-              "redirect_type": "301-category",
-              "id_type_redirected": "0",
-              "available_for_order": "1",
-              "available_date": "0000-00-00",
-              "show_condition": "1",
-              "condition": "new",
-              "show_price": "1",
-              "indexed": "1",
-              "visibility": "both",
-              "date_add": "2024-03-06 22:15:14",
-              "date_upd": "2024-07-11 14:15:23",
-              "tags": false,
-              "state": "1",
-              "base_price": "1497.977000",
-              "id_tax_rules_group": "18",
-              "id_color_default": 0,
-              "advanced_stock_management": "0",
-              "out_of_stock": 2,
-              "depends_on_stock": false,
-              "isFullyLoaded": true,
-              "cache_is_pack": "0",
-              "cache_has_attachments": "0",
-              "is_virtual": "0",
-              "id_pack_product_attribute": null,
-              "cache_default_attribute": "0",
-              "category": "portatiles-macbook",
-              "pack_stock_type": "3",
-              "additional_delivery_times": "1",
-              "delivery_in_stock": "",
-              "delivery_out_stock": "",
+              "*fieldsValidate": {
+                "id_shop_default": "isUnsignedId",
+                "id_manufacturer": "isUnsignedId",
+                "id_supplier": "isUnsignedId",
+                "reference": "isReference",
+                "supplier_reference": "isReference",
+                "location": "isString",
+                "width": "isUnsignedFloat",
+                "height": "isUnsignedFloat",
+                "depth": "isUnsignedFloat",
+                "weight": "isUnsignedFloat",
+                "quantity_discount": "isBool",
+                "ean13": "isEan13",
+                "isbn": "isIsbn",
+                "upc": "isUpc",
+                "mpn": "isMpn",
+                "cache_is_pack": "isBool",
+                "cache_has_attachments": "isBool",
+                "is_virtual": "isBool",
+                "state": "isUnsignedId",
+                "additional_delivery_times": "isUnsignedId",
+                "product_type": "isGenericName",
+                "id_category_default": "isUnsignedId",
+                "id_tax_rules_group": "isUnsignedId",
+                "on_sale": "isBool",
+                "online_only": "isBool",
+                "ecotax": "isPrice",
+                "minimal_quantity": "isPositiveInt",
+                "low_stock_threshold": "isInt",
+                "low_stock_alert": "isBool",
+                "price": "isPrice",
+                "wholesale_price": "isPrice",
+                "unity": "isString",
+                "unit_price": "isPrice",
+                "additional_shipping_cost": "isPrice",
+                "customizable": "isUnsignedInt",
+                "text_fields": "isUnsignedInt",
+                "uploadable_files": "isUnsignedInt",
+                "active": "isBool",
+                "redirect_type": "isString",
+                "id_type_redirected": "isUnsignedId",
+                "available_for_order": "isBool",
+                "available_date": "isDateFormat",
+                "show_condition": "isBool",
+                "condition": "isGenericName",
+                "show_price": "isBool",
+                "indexed": "isBool",
+                "visibility": "isProductVisibility",
+                "advanced_stock_management": "isBool",
+                "date_add": "isDate",
+                "date_upd": "isDate",
+                "pack_stock_type": "isUnsignedInt"
+              },
+              "*fieldsRequiredLang": [],
+              "*fieldsSizeLang": {
+                "delivery_in_stock": 255,
+                "delivery_out_stock": 255,
+                "meta_description": 512,
+                "meta_keywords": 255,
+                "meta_title": 255,
+                "link_rewrite": 128,
+                "name": 128,
+                "available_now": 255,
+                "available_later": 255
+              },
+              "*fieldsValidateLang": {
+                "delivery_in_stock": "isGenericName",
+                "delivery_out_stock": "isGenericName",
+                "meta_description": "isGenericName",
+                "meta_keywords": "isGenericName",
+                "meta_title": "isGenericName",
+                "link_rewrite": "isLinkRewrite",
+                "name": "isCatalogName",
+                "description": "isCleanHtml",
+                "description_short": "isCleanHtml",
+                "available_now": "isGenericName",
+                "available_later": "IsGenericName"
+              },
+              "*tables": [],
               "*webserviceParameters": {
                 "objectMethods": {
                   "add": "addWs",
@@ -1541,13 +3810,22 @@
                     },
                     "setter": false
                   },
+                  "attachments": {
+                    "resource": "attachment",
+                    "api": "attachments",
+                    "fields": {
+                      "id": {
+                        "required": true
+                      }
+                    }
+                  },
                   "accessories": {
                     "resource": "product",
                     "api": "products",
                     "fields": {
                       "id": {
                         "required": true,
-                        "xlink_resource": "product"
+                        "xlink_resource": "products"
                       }
                     }
                   },
@@ -1558,105 +3836,12 @@
                       "id": {
                         "required": true
                       },
+                      "id_product_attribute": [],
                       "quantity": []
                     }
                   }
                 }
               },
-              "id": 911685,
-              "*id_lang": 1,
-              "*id_shop": 1,
-              "id_shop_list": [],
-              "*get_shop_from_context": true,
-              "*table": "product",
-              "*identifier": "id_product",
-              "*fieldsRequired": [
-                "price"
-              ],
-              "*fieldsSize": {
-                "reference": 64,
-                "supplier_reference": 64,
-                "location": 64,
-                "ean13": 13,
-                "isbn": 32,
-                "upc": 12
-              },
-              "*fieldsValidate": {
-                "id_shop_default": "isUnsignedId",
-                "id_manufacturer": "isUnsignedId",
-                "id_supplier": "isUnsignedId",
-                "reference": "isReference",
-                "supplier_reference": "isReference",
-                "location": "isReference",
-                "width": "isUnsignedFloat",
-                "height": "isUnsignedFloat",
-                "depth": "isUnsignedFloat",
-                "weight": "isUnsignedFloat",
-                "quantity_discount": "isBool",
-                "ean13": "isEan13",
-                "isbn": "isIsbn",
-                "upc": "isUpc",
-                "cache_is_pack": "isBool",
-                "cache_has_attachments": "isBool",
-                "is_virtual": "isBool",
-                "state": "isUnsignedId",
-                "additional_delivery_times": "isUnsignedId",
-                "id_category_default": "isUnsignedId",
-                "id_tax_rules_group": "isUnsignedId",
-                "on_sale": "isBool",
-                "online_only": "isBool",
-                "ecotax": "isPrice",
-                "minimal_quantity": "isUnsignedInt",
-                "low_stock_threshold": "isInt",
-                "low_stock_alert": "isBool",
-                "price": "isPrice",
-                "wholesale_price": "isPrice",
-                "unity": "isString",
-                "additional_shipping_cost": "isPrice",
-                "customizable": "isUnsignedInt",
-                "text_fields": "isUnsignedInt",
-                "uploadable_files": "isUnsignedInt",
-                "active": "isBool",
-                "redirect_type": "isString",
-                "id_type_redirected": "isUnsignedId",
-                "available_for_order": "isBool",
-                "available_date": "isDateFormat",
-                "show_condition": "isBool",
-                "condition": "isGenericName",
-                "show_price": "isBool",
-                "indexed": "isBool",
-                "visibility": "isProductVisibility",
-                "advanced_stock_management": "isBool",
-                "date_add": "isDate",
-                "date_upd": "isDate",
-                "pack_stock_type": "isUnsignedInt"
-              },
-              "*fieldsRequiredLang": [],
-              "*fieldsSizeLang": {
-                "delivery_in_stock": 255,
-                "delivery_out_stock": 255,
-                "meta_description": 512,
-                "meta_keywords": 255,
-                "meta_title": 255,
-                "link_rewrite": 128,
-                "name": 128,
-                "available_now": 255,
-                "available_later": 255
-              },
-              "*fieldsValidateLang": {
-                "delivery_in_stock": "isGenericName",
-                "delivery_out_stock": "isGenericName",
-                "meta_description": "isGenericName",
-                "meta_keywords": "isGenericName",
-                "meta_title": "isGenericName",
-                "link_rewrite": "isLinkRewrite",
-                "name": "isCatalogName",
-                "description": "isCleanHtml",
-                "description_short": "isCleanHtml",
-                "available_now": "isGenericName",
-                "available_later": "IsGenericName"
-              },
-              "*tables": [],
               "*image_dir": null,
               "*image_format": "jpg",
               "*translator": null,
@@ -1690,8 +3875,8 @@
                   },
                   "location": {
                     "type": 3,
-                    "validate": "isReference",
-                    "size": 64
+                    "validate": "isString",
+                    "size": 255
                   },
                   "width": {
                     "type": 4,
@@ -1728,6 +3913,11 @@
                     "validate": "isUpc",
                     "size": 12
                   },
+                  "mpn": {
+                    "type": 3,
+                    "validate": "isMpn",
+                    "size": 40
+                  },
                   "cache_is_pack": {
                     "type": 2,
                     "validate": "isBool"
@@ -1760,6 +3950,18 @@
                     "validate": "isGenericName",
                     "size": 255
                   },
+                  "product_type": {
+                    "type": 3,
+                    "validate": "isGenericName",
+                    "values": [
+                      "standard",
+                      "pack",
+                      "virtual",
+                      "combinations",
+                      ""
+                    ],
+                    "default": ""
+                  },
                   "id_category_default": {
                     "type": 1,
                     "shop": true,
@@ -1788,7 +3990,7 @@
                   "minimal_quantity": {
                     "type": 1,
                     "shop": true,
-                    "validate": "isUnsignedInt"
+                    "validate": "isPositiveInt"
                   },
                   "low_stock_threshold": {
                     "type": 1,
@@ -1799,7 +4001,6 @@
                   "low_stock_alert": {
                     "type": 2,
                     "shop": true,
-                    "allow_null": true,
                     "validate": "isBool"
                   },
                   "price": {
@@ -1817,6 +4018,11 @@
                     "type": 3,
                     "shop": true,
                     "validate": "isString"
+                  },
+                  "unit_price": {
+                    "type": 4,
+                    "shop": true,
+                    "validate": "isPrice"
                   },
                   "unit_price_ratio": {
                     "type": 4,
@@ -1879,8 +4085,7 @@
                     "values": [
                       "new",
                       "used",
-                      "refurbished",
-                      "exposition"
+                      "refurbished"
                     ],
                     "default": "new"
                   },
@@ -2016,6 +4221,12 @@
                     "object": "StockAvailable",
                     "association": "stock_availables"
                   },
+                  "attachments": {
+                    "type": 2,
+                    "field": "id_attachment",
+                    "object": "Attachment",
+                    "association": "product_attachment"
+                  },
                   "l": {
                     "type": 2,
                     "field": "id_product",
@@ -2026,14 +4237,139 @@
               },
               "*update_fields": null,
               "force_id": false,
-              "image_url": "https://media3.allzone.es/3070457-small_default/apple-macbook-air-136-2024-m3-8gb-ram-512gb-gris-espacial.jpg",
-              "stock_available": 3
+              "tax_name": null,
+              "tax_rate": null,
+              "id_manufacturer": 0,
+              "id_supplier": 0,
+              "id_category_default": 2,
+              "id_shop_default": 1,
+              "manufacturer_name": null,
+              "supplier_name": null,
+              "name": {
+                "1": "Macbook air (pruebas)",
+                "2": "Macbook air"
+              },
+              "description": {
+                "1": "",
+                "2": ""
+              },
+              "description_short": {
+                "1": "<p>Macbook air 13''</p>",
+                "2": "<p>Macbook air 13''</p>"
+              },
+              "quantity": 0,
+              "minimal_quantity": 1,
+              "low_stock_threshold": 0,
+              "low_stock_alert": "0",
+              "available_now": {
+                "1": "",
+                "2": ""
+              },
+              "available_later": {
+                "1": "",
+                "2": ""
+              },
+              "price": "900.000000",
+              "specificPrice": 0,
+              "additional_shipping_cost": "0.000000",
+              "wholesale_price": "0.000000",
+              "on_sale": "0",
+              "online_only": "0",
+              "unity": "",
+              "unit_price": "0.000000",
+              "unit_price_ratio": "0.000000",
+              "ecotax": "0.000000",
+              "reference": "2222",
+              "supplier_reference": "",
+              "location": "",
+              "width": "0.000000",
+              "height": "0.000000",
+              "depth": "0.000000",
+              "weight": "0.000000",
+              "ean13": "",
+              "isbn": "",
+              "upc": "",
+              "mpn": "",
+              "link_rewrite": {
+                "1": "macbook-air",
+                "2": "macbook-air"
+              },
+              "meta_description": {
+                "1": "",
+                "2": ""
+              },
+              "meta_keywords": {
+                "1": "",
+                "2": ""
+              },
+              "meta_title": {
+                "1": "",
+                "2": ""
+              },
+              "quantity_discount": "0",
+              "customizable": 0,
+              "new": null,
+              "uploadable_files": 0,
+              "text_fields": 0,
+              "active": "1",
+              "redirect_type": "default",
+              "id_type_redirected": 0,
+              "available_for_order": "1",
+              "available_date": "0000-00-00",
+              "show_condition": "0",
+              "condition": "new",
+              "show_price": "1",
+              "indexed": "1",
+              "visibility": "both",
+              "date_add": "2024-10-15 10:04:20",
+              "date_upd": "2024-10-17 14:25:54",
+              "tags": null,
+              "state": 1,
+              "base_price": null,
+              "id_tax_rules_group": 0,
+              "id_color_default": 0,
+              "advanced_stock_management": "0",
+              "out_of_stock": 2,
+              "depends_on_stock": null,
+              "isFullyLoaded": false,
+              "cache_is_pack": "0",
+              "cache_has_attachments": "0",
+              "is_virtual": "0",
+              "id_pack_product_attribute": null,
+              "cache_default_attribute": 0,
+              "category": false,
+              "pack_stock_type": 3,
+              "additional_delivery_times": 1,
+              "delivery_in_stock": {
+                "1": "",
+                "2": ""
+              },
+              "delivery_out_stock": {
+                "1": "",
+                "2": ""
+              },
+              "product_type": "standard",
+              "stock_available": 44,
+              "combinations": [],
+              "images": [
+                {
+                  "id_image": 438,
+                  "position": 1,
+                  "cover": 1,
+                  "url": "https://presta.dev.gosharpei.com/438-home_default/259.jpg"
+                }
+              ]
             },
-            "webhookUrl": "http://https://automation.prod.gosharpei.com:5678/webhook/prod-prestashop",
+            "webhookUrl": "http://https://automation.prod.gosharpei.com:5678/webhook/dev-prestashop",
             "executionMode": "production"
           },
-          "env": "prod"
-        }
+          "env": "dev",
+          "id": 259,
+          "webhook": "Prestashop-Dev"
+        },
+        "sku": "2222",
+        "barcode": "",
+        "cost": "0.000000"
       }
     ]
   }
