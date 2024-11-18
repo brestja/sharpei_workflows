@@ -1,7 +1,5 @@
 {
-  "meta": {
-    "instanceId": "0c0beacef8877bbf2416eb00f2b5dc96354e26dd1df5517320459b1236860f8c"
-  },
+  "name": "🔗 PrestaShop Webhook PROD",
   "nodes": [
     {
       "parameters": {
@@ -22,7 +20,7 @@
         },
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={\n    \"selling_price\": \"{{ $('Create combination').item.json.data[0].selling_price == 0 ? $('Update name1').item.json.price : $('Create combination').item.json.data[0].selling_price }}\",\n    \"title\": \"{{ $('Create combination').item.json.data[0].title }}\",\n    \"remote_id\": \"{{ $('Create combination').item.json.data[0].remote_id }}\",\n    \"status_pid\" : \"{{ $('Set6').item.json.quantity > 0 ? $('Get Status').item.json.data.status[0].pid : $('Get Status').item.json.data.status[1].pid }}\",\n    \"barcode\":\"{{ $('Update name1').item.json.barcode ? $('Update name1').item.json.barcode : 'n/a' }}\",\n    \"cost\": {{ $('Update name1').item.json.cost }},\n    \"SKU\": \"{{ $('Update name1').item.json.sku ? $('Update name1').item.json.sku : 'n/a' }}\"\n\n  }        ",
+        "jsonBody": "={\n    \"selling_price\": \"{{ $('Create combination').item.json.data[0].selling_price == 0 ? $('Update name1').item.json.price : $('Create combination').item.json.data[0].selling_price }}\",\n    \"title\": \"{{ $('Create combination').item.json.data[0].title.replace(/['\"]+/g,'').trim() }}\",\n    \"remote_id\": \"{{ $('Create combination').item.json.data[0].remote_id }}\",\n    \"status_pid\" : \"{{ $('Set6').item.json.quantity > 0 ? $('Get Status').item.json.data.status[0].pid : $('Get Status').item.json.data.status[1].pid }}\",\n    \"barcode\":\"{{ $('Update name1').item.json.barcode ? $('Update name1').item.json.barcode : 'n/a' }}\",\n    \"cost\": {{ $('Update name1').item.json.cost }},\n    \"SKU\": \"{{ $('Update name1').item.json.sku ? $('Update name1').item.json.sku : 'n/a' }}\"\n\n  }        ",
         "options": {}
       },
       "id": "2367d386-df36-422d-b10e-f820739913aa",
@@ -108,7 +106,7 @@
         },
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "=[\n  {\n    \"selling_price\": \"{{ $json.price }}\",\n    \"title\": \"/ {{ $json.attributes.map(attr => attr.attribute).join(' - ') }}\",\n    \"remote_id\": \"{{ $json.id_product_attribute }}\",\n    \"status_pid\" : \"{{ $('Code1').item.json.pid }}\",\n    \"cost\": {{ $('Update name1').item.json.cost }},\n    \"barcode\": \"{{ $('Update name1').item.json.barcode ? $('Update name1').item.json.barcode : 'n/a' }}\",\n    \"SKU\": \"{{ $('Update name1').item.json.sku ? $('Update name1').item.json.sku : 'n/a' }}\" \n\n  }\n]       \n              ",
+        "jsonBody": "=[\n  {\n    \"selling_price\": \"{{ $json.price }}\",\n    \"title\": \"/ {{ $json.attributes.map(attr => attr.attribute).join(' - ').replace(/['\"]+/g,'').trim() }}\",\n    \"remote_id\": \"{{ $json.id_product_attribute }}\",\n    \"status_pid\" : \"{{ $('Code1').item.json.pid }}\",\n    \"cost\": {{ $('Update name1').item.json.cost }},\n    \"barcode\": \"{{ $('Update name1').item.json.barcode ? $('Update name1').item.json.barcode : 'n/a' }}\",\n    \"SKU\": \"{{ $('Update name1').item.json.sku ? $('Update name1').item.json.sku : 'n/a' }}\" \n\n  }\n]       \n              ",
         "options": {}
       },
       "id": "d46413dd-5aa1-47c2-aa3b-7728ee568fe7",
@@ -255,7 +253,7 @@
         },
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={\n  \"title\": \"{{ $('Update name1').item.json.name.replace(/['\"]+/g,'') }}\",\n  \"description_short\": \"{{ $('Update name1').item.json.description_short.replace(/<[^>]+>/g, '').replace(/\\n/g, ' ').trim() }}\",\n  \"quantity\": {{ $('Update name1').item.json.quantity }},\n  \"price\": \"{{ $('Update name1').item.json.price }}\",\n  \"status_pid\" : \"{{ $('Code1').item.json.pid }}\",\n  \"tags\": [\n    {\n      \"value\": \"Combinations\"\n    }\n  ],\n  \"remote_id\": {{ $('Update name1').item.json.id }},\n  \"default_variant\": false\n}         ",
+        "jsonBody": "={\n  \"title\": \"{{ $('Update name1').item.json.name.replace(/['\"]+/g,'').trim() }}\",\n  \"description_short\": \"{{ $('Update name1').item.json.description_short.replace(/['\"]+/g,'').replace(/\\n/g, ' ').trim() }}\",\n  \"quantity\": {{ $('Update name1').item.json.quantity }},\n  \"price\": \"{{ $('Update name1').item.json.price }}\",\n  \"status_pid\" : \"{{ $('Code1').item.json.pid }}\",\n  \"tags\": [\n    {\n      \"value\": \"Combinations\"\n    }\n  ],\n  \"remote_id\": {{ $('Update name1').item.json.id }},\n  \"default_variant\": false\n}         ",
         "options": {
           "redirect": {
             "redirect": {}
@@ -957,6 +955,116 @@
     },
     {
       "parameters": {
+        "sendTo": "josebrest25@gmail.com",
+        "subject": "All Zone - Prestashop webhook prod",
+        "message": "={{ $execution.id}}  2y$10$uIYEY6Q.Hk10YmSc68sKN..0nho1gc9tpzAgePdz/GbsIHA5oQn1.",
+        "options": {}
+      },
+      "id": "1f6025d6-8f91-4f8a-b82a-74a23e174866",
+      "name": "Gmail",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2,
+      "position": [
+        480,
+        1400
+      ],
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "MMR6YWjk7bfVViQ4",
+          "name": "Gmail account 9"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "2edb7676-6add-4485-b75d-b4e375ca5bc6",
+              "leftValue": "={{ $json.headers.authorization }}",
+              "rightValue": "=2y$10$uIYEY6Q.Hk10YmSc68sKN..0nho1gc9tpzAgePdz/GbsIHA5oQn1.",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "dc0006bf-16d8-440e-a0c9-90a05f29cb15",
+      "name": "If2",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        260,
+        1400
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "2edb7676-6add-4485-b75d-b4e375ca5bc6",
+              "leftValue": "={{ $json.headers.authorization }}",
+              "rightValue": "=$2y$10$5jA8vkRILVD1itKS5rDu1OEKt9yfiHOoDMK47xEbTg0AvZZMam.Ue",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "1b1f3430-6756-4896-91ad-14a96dfec358",
+      "name": "If3",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        260,
+        1620
+      ]
+    },
+    {
+      "parameters": {
+        "sendTo": "josebrest25@gmail.com",
+        "subject": "All Zone - Prestashop webhook prod",
+        "message": "={{ $execution.id}}  $2y$10$5jA8vkRILVD1itKS5rDu1OEKt9yfiHOoDMK47xEbTg0AvZZMam.Ue",
+        "options": {}
+      },
+      "id": "268ae9eb-fc51-465d-981e-01c859cfc97e",
+      "name": "Gmail1",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2,
+      "position": [
+        480,
+        1620
+      ],
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "MMR6YWjk7bfVViQ4",
+          "name": "Gmail account 9"
+        }
+      }
+    },
+    {
+      "parameters": {
         "httpMethod": "POST",
         "path": "dev-prestashop",
         "options": {}
@@ -988,6 +1096,840 @@
       "webhookId": "5e39a3fb-9a6a-4544-9457-27a8800a9d45"
     }
   ],
+  "pinData": {
+    "Prestashop-Dev": [
+      {
+        "json": {
+          "headers": {
+            "x-forwarded-for": "44.206.89.54",
+            "x-forwarded-proto": "https",
+            "x-forwarded-port": "443",
+            "host": "automation.prod.gosharpei.com",
+            "x-amzn-trace-id": "Root=1-6707f212-136fc67c05dda9c328b9c3f6",
+            "content-length": "11281",
+            "accept": "*/*",
+            "content-type": "application/json",
+            "authorization": "$2y$10$HJyJLei5Pe5EkOtdTbDf1eGQc.JWCLFhAvoAaGfkYntEUiFFckkDe"
+          },
+          "params": {},
+          "query": {
+            "create": "true"
+          },
+          "body": {
+            "id": 80001,
+            "*id_lang": null,
+            "*lang_associated": null,
+            "*id_shop": 1,
+            "id_shop_list": [],
+            "*get_shop_from_context": true,
+            "*table": "product",
+            "*identifier": "id_product",
+            "*fieldsRequired": [
+              "price"
+            ],
+            "*fieldsSize": {
+              "reference": 64,
+              "supplier_reference": 64,
+              "location": 255,
+              "ean13": 13,
+              "isbn": 32,
+              "upc": 12,
+              "mpn": 40
+            },
+            "*fieldsValidate": {
+              "id_shop_default": "isUnsignedId",
+              "id_manufacturer": "isUnsignedId",
+              "id_supplier": "isUnsignedId",
+              "reference": "isReference",
+              "supplier_reference": "isReference",
+              "location": "isString",
+              "width": "isUnsignedFloat",
+              "height": "isUnsignedFloat",
+              "depth": "isUnsignedFloat",
+              "weight": "isUnsignedFloat",
+              "quantity_discount": "isBool",
+              "ean13": "isEan13",
+              "isbn": "isIsbn",
+              "upc": "isUpc",
+              "mpn": "isMpn",
+              "cache_is_pack": "isBool",
+              "cache_has_attachments": "isBool",
+              "is_virtual": "isBool",
+              "state": "isUnsignedId",
+              "additional_delivery_times": "isUnsignedId",
+              "product_type": "isGenericName",
+              "id_category_default": "isUnsignedId",
+              "id_tax_rules_group": "isUnsignedId",
+              "on_sale": "isBool",
+              "online_only": "isBool",
+              "ecotax": "isPrice",
+              "minimal_quantity": "isPositiveInt",
+              "low_stock_threshold": "isInt",
+              "low_stock_alert": "isBool",
+              "price": "isPrice",
+              "wholesale_price": "isPrice",
+              "unity": "isString",
+              "unit_price": "isPrice",
+              "additional_shipping_cost": "isPrice",
+              "customizable": "isUnsignedInt",
+              "text_fields": "isUnsignedInt",
+              "uploadable_files": "isUnsignedInt",
+              "active": "isBool",
+              "redirect_type": "isString",
+              "id_type_redirected": "isUnsignedId",
+              "available_for_order": "isBool",
+              "available_date": "isDateFormat",
+              "show_condition": "isBool",
+              "condition": "isGenericName",
+              "show_price": "isBool",
+              "indexed": "isBool",
+              "visibility": "isProductVisibility",
+              "advanced_stock_management": "isBool",
+              "date_add": "isDate",
+              "date_upd": "isDate",
+              "pack_stock_type": "isUnsignedInt"
+            },
+            "*fieldsRequiredLang": [],
+            "*fieldsSizeLang": {
+              "delivery_in_stock": 255,
+              "delivery_out_stock": 255,
+              "meta_description": 512,
+              "meta_keywords": 255,
+              "meta_title": 255,
+              "link_rewrite": 128,
+              "name": 128,
+              "available_now": 255,
+              "available_later": 255
+            },
+            "*fieldsValidateLang": {
+              "delivery_in_stock": "isGenericName",
+              "delivery_out_stock": "isGenericName",
+              "meta_description": "isGenericName",
+              "meta_keywords": "isGenericName",
+              "meta_title": "isGenericName",
+              "link_rewrite": "isLinkRewrite",
+              "name": "isCatalogName",
+              "description": "isCleanHtml",
+              "description_short": "isCleanHtml",
+              "available_now": "isGenericName",
+              "available_later": "IsGenericName"
+            },
+            "*tables": [],
+            "*webserviceParameters": {
+              "objectMethods": {
+                "add": "addWs",
+                "update": "updateWs"
+              },
+              "objectNodeNames": "products",
+              "fields": {
+                "id_manufacturer": {
+                  "xlink_resource": "manufacturers"
+                },
+                "id_supplier": {
+                  "xlink_resource": "suppliers"
+                },
+                "id_category_default": {
+                  "xlink_resource": "categories"
+                },
+                "new": [],
+                "cache_default_attribute": [],
+                "id_default_image": {
+                  "getter": "getCoverWs",
+                  "setter": "setCoverWs",
+                  "xlink_resource": {
+                    "resourceName": "images",
+                    "subResourceName": "products"
+                  }
+                },
+                "id_default_combination": {
+                  "getter": "getWsDefaultCombination",
+                  "setter": "setWsDefaultCombination",
+                  "xlink_resource": {
+                    "resourceName": "combinations"
+                  }
+                },
+                "id_tax_rules_group": {
+                  "xlink_resource": {
+                    "resourceName": "tax_rule_groups"
+                  }
+                },
+                "position_in_category": {
+                  "getter": "getWsPositionInCategory",
+                  "setter": "setWsPositionInCategory"
+                },
+                "manufacturer_name": {
+                  "getter": "getWsManufacturerName",
+                  "setter": false
+                },
+                "quantity": {
+                  "getter": false,
+                  "setter": false
+                },
+                "type": {
+                  "getter": "getWsType",
+                  "setter": "setWsType"
+                }
+              },
+              "associations": {
+                "categories": {
+                  "resource": "category",
+                  "fields": {
+                    "id": {
+                      "required": true
+                    }
+                  }
+                },
+                "images": {
+                  "resource": "image",
+                  "fields": {
+                    "id": []
+                  }
+                },
+                "combinations": {
+                  "resource": "combination",
+                  "fields": {
+                    "id": {
+                      "required": true
+                    }
+                  }
+                },
+                "product_option_values": {
+                  "resource": "product_option_value",
+                  "fields": {
+                    "id": {
+                      "required": true
+                    }
+                  }
+                },
+                "product_features": {
+                  "resource": "product_feature",
+                  "fields": {
+                    "id": {
+                      "required": true
+                    },
+                    "id_feature_value": {
+                      "required": true,
+                      "xlink_resource": "product_feature_values"
+                    }
+                  }
+                },
+                "tags": {
+                  "resource": "tag",
+                  "fields": {
+                    "id": {
+                      "required": true
+                    }
+                  }
+                },
+                "stock_availables": {
+                  "resource": "stock_available",
+                  "fields": {
+                    "id": {
+                      "required": true
+                    },
+                    "id_product_attribute": {
+                      "required": true
+                    }
+                  },
+                  "setter": false
+                },
+                "attachments": {
+                  "resource": "attachment",
+                  "api": "attachments",
+                  "fields": {
+                    "id": {
+                      "required": true
+                    }
+                  }
+                },
+                "accessories": {
+                  "resource": "product",
+                  "api": "products",
+                  "fields": {
+                    "id": {
+                      "required": true,
+                      "xlink_resource": "products"
+                    }
+                  }
+                },
+                "product_bundle": {
+                  "resource": "product",
+                  "api": "products",
+                  "fields": {
+                    "id": {
+                      "required": true
+                    },
+                    "id_product_attribute": [],
+                    "quantity": []
+                  }
+                }
+              }
+            },
+            "*image_dir": null,
+            "*image_format": "jpg",
+            "*translator": null,
+            "*def": {
+              "table": "product",
+              "primary": "id_product",
+              "multilang": true,
+              "multilang_shop": true,
+              "fields": {
+                "id_shop_default": {
+                  "type": 1,
+                  "validate": "isUnsignedId"
+                },
+                "id_manufacturer": {
+                  "type": 1,
+                  "validate": "isUnsignedId"
+                },
+                "id_supplier": {
+                  "type": 1,
+                  "validate": "isUnsignedId"
+                },
+                "reference": {
+                  "type": 3,
+                  "validate": "isReference",
+                  "size": 64
+                },
+                "supplier_reference": {
+                  "type": 3,
+                  "validate": "isReference",
+                  "size": 64
+                },
+                "location": {
+                  "type": 3,
+                  "validate": "isString",
+                  "size": 255
+                },
+                "width": {
+                  "type": 4,
+                  "validate": "isUnsignedFloat"
+                },
+                "height": {
+                  "type": 4,
+                  "validate": "isUnsignedFloat"
+                },
+                "depth": {
+                  "type": 4,
+                  "validate": "isUnsignedFloat"
+                },
+                "weight": {
+                  "type": 4,
+                  "validate": "isUnsignedFloat"
+                },
+                "quantity_discount": {
+                  "type": 2,
+                  "validate": "isBool"
+                },
+                "ean13": {
+                  "type": 3,
+                  "validate": "isEan13",
+                  "size": 13
+                },
+                "isbn": {
+                  "type": 3,
+                  "validate": "isIsbn",
+                  "size": 32
+                },
+                "upc": {
+                  "type": 3,
+                  "validate": "isUpc",
+                  "size": 12
+                },
+                "mpn": {
+                  "type": 3,
+                  "validate": "isMpn",
+                  "size": 40
+                },
+                "cache_is_pack": {
+                  "type": 2,
+                  "validate": "isBool"
+                },
+                "cache_has_attachments": {
+                  "type": 2,
+                  "validate": "isBool"
+                },
+                "is_virtual": {
+                  "type": 2,
+                  "validate": "isBool"
+                },
+                "state": {
+                  "type": 1,
+                  "validate": "isUnsignedId"
+                },
+                "additional_delivery_times": {
+                  "type": 1,
+                  "validate": "isUnsignedId"
+                },
+                "delivery_in_stock": {
+                  "type": 3,
+                  "lang": true,
+                  "validate": "isGenericName",
+                  "size": 255
+                },
+                "delivery_out_stock": {
+                  "type": 3,
+                  "lang": true,
+                  "validate": "isGenericName",
+                  "size": 255
+                },
+                "product_type": {
+                  "type": 3,
+                  "validate": "isGenericName",
+                  "values": [
+                    "standard",
+                    "pack",
+                    "virtual",
+                    "combinations",
+                    ""
+                  ],
+                  "default": ""
+                },
+                "id_category_default": {
+                  "type": 1,
+                  "shop": true,
+                  "validate": "isUnsignedId"
+                },
+                "id_tax_rules_group": {
+                  "type": 1,
+                  "shop": true,
+                  "validate": "isUnsignedId"
+                },
+                "on_sale": {
+                  "type": 2,
+                  "shop": true,
+                  "validate": "isBool"
+                },
+                "online_only": {
+                  "type": 2,
+                  "shop": true,
+                  "validate": "isBool"
+                },
+                "ecotax": {
+                  "type": 4,
+                  "shop": true,
+                  "validate": "isPrice"
+                },
+                "minimal_quantity": {
+                  "type": 1,
+                  "shop": true,
+                  "validate": "isPositiveInt"
+                },
+                "low_stock_threshold": {
+                  "type": 1,
+                  "shop": true,
+                  "allow_null": true,
+                  "validate": "isInt"
+                },
+                "low_stock_alert": {
+                  "type": 2,
+                  "shop": true,
+                  "validate": "isBool"
+                },
+                "price": {
+                  "type": 4,
+                  "shop": true,
+                  "validate": "isPrice",
+                  "required": true
+                },
+                "wholesale_price": {
+                  "type": 4,
+                  "shop": true,
+                  "validate": "isPrice"
+                },
+                "unity": {
+                  "type": 3,
+                  "shop": true,
+                  "validate": "isString"
+                },
+                "unit_price": {
+                  "type": 4,
+                  "shop": true,
+                  "validate": "isPrice"
+                },
+                "unit_price_ratio": {
+                  "type": 4,
+                  "shop": true
+                },
+                "additional_shipping_cost": {
+                  "type": 4,
+                  "shop": true,
+                  "validate": "isPrice"
+                },
+                "customizable": {
+                  "type": 1,
+                  "shop": true,
+                  "validate": "isUnsignedInt"
+                },
+                "text_fields": {
+                  "type": 1,
+                  "shop": true,
+                  "validate": "isUnsignedInt"
+                },
+                "uploadable_files": {
+                  "type": 1,
+                  "shop": true,
+                  "validate": "isUnsignedInt"
+                },
+                "active": {
+                  "type": 2,
+                  "shop": true,
+                  "validate": "isBool"
+                },
+                "redirect_type": {
+                  "type": 3,
+                  "shop": true,
+                  "validate": "isString"
+                },
+                "id_type_redirected": {
+                  "type": 1,
+                  "shop": true,
+                  "validate": "isUnsignedId"
+                },
+                "available_for_order": {
+                  "type": 2,
+                  "shop": true,
+                  "validate": "isBool"
+                },
+                "available_date": {
+                  "type": 5,
+                  "shop": true,
+                  "validate": "isDateFormat"
+                },
+                "show_condition": {
+                  "type": 2,
+                  "shop": true,
+                  "validate": "isBool"
+                },
+                "condition": {
+                  "type": 3,
+                  "shop": true,
+                  "validate": "isGenericName",
+                  "values": [
+                    "new",
+                    "used",
+                    "refurbished"
+                  ],
+                  "default": "new"
+                },
+                "show_price": {
+                  "type": 2,
+                  "shop": true,
+                  "validate": "isBool"
+                },
+                "indexed": {
+                  "type": 2,
+                  "shop": true,
+                  "validate": "isBool"
+                },
+                "visibility": {
+                  "type": 3,
+                  "shop": true,
+                  "validate": "isProductVisibility",
+                  "values": [
+                    "both",
+                    "catalog",
+                    "search",
+                    "none"
+                  ],
+                  "default": "both"
+                },
+                "cache_default_attribute": {
+                  "type": 1,
+                  "shop": true
+                },
+                "advanced_stock_management": {
+                  "type": 2,
+                  "shop": true,
+                  "validate": "isBool"
+                },
+                "date_add": {
+                  "type": 5,
+                  "shop": true,
+                  "validate": "isDate"
+                },
+                "date_upd": {
+                  "type": 5,
+                  "shop": true,
+                  "validate": "isDate"
+                },
+                "pack_stock_type": {
+                  "type": 1,
+                  "shop": true,
+                  "validate": "isUnsignedInt"
+                },
+                "meta_description": {
+                  "type": 3,
+                  "lang": true,
+                  "validate": "isGenericName",
+                  "size": 512
+                },
+                "meta_keywords": {
+                  "type": 3,
+                  "lang": true,
+                  "validate": "isGenericName",
+                  "size": 255
+                },
+                "meta_title": {
+                  "type": 3,
+                  "lang": true,
+                  "validate": "isGenericName",
+                  "size": 255
+                },
+                "link_rewrite": {
+                  "type": 3,
+                  "lang": true,
+                  "validate": "isLinkRewrite",
+                  "required": false,
+                  "size": 128,
+                  "ws_modifier": {
+                    "http_method": 2,
+                    "modifier": "modifierWsLinkRewrite"
+                  }
+                },
+                "name": {
+                  "type": 3,
+                  "lang": true,
+                  "validate": "isCatalogName",
+                  "required": false,
+                  "size": 128
+                },
+                "description": {
+                  "type": 6,
+                  "lang": true,
+                  "validate": "isCleanHtml"
+                },
+                "description_short": {
+                  "type": 6,
+                  "lang": true,
+                  "validate": "isCleanHtml"
+                },
+                "available_now": {
+                  "type": 3,
+                  "lang": true,
+                  "validate": "isGenericName",
+                  "size": 255
+                },
+                "available_later": {
+                  "type": 3,
+                  "lang": true,
+                  "validate": "IsGenericName",
+                  "size": 255
+                }
+              },
+              "associations": {
+                "manufacturer": {
+                  "type": 1
+                },
+                "supplier": {
+                  "type": 1
+                },
+                "default_category": {
+                  "type": 1,
+                  "field": "id_category_default",
+                  "object": "Category"
+                },
+                "tax_rules_group": {
+                  "type": 1
+                },
+                "categories": {
+                  "type": 2,
+                  "field": "id_category",
+                  "object": "Category",
+                  "association": "category_product"
+                },
+                "stock_availables": {
+                  "type": 2,
+                  "field": "id_stock_available",
+                  "object": "StockAvailable",
+                  "association": "stock_availables"
+                },
+                "attachments": {
+                  "type": 2,
+                  "field": "id_attachment",
+                  "object": "Attachment",
+                  "association": "product_attachment"
+                },
+                "l": {
+                  "type": 2,
+                  "field": "id_product",
+                  "foreign_field": "id_product"
+                }
+              },
+              "classname": "Product"
+            },
+            "*update_fields": null,
+            "force_id": false,
+            "tax_name": null,
+            "tax_rate": null,
+            "id_manufacturer": 0,
+            "id_supplier": 0,
+            "id_category_default": 2,
+            "id_shop_default": 1,
+            "manufacturer_name": null,
+            "supplier_name": null,
+            "name": {
+              "1": "dev flow"
+            },
+            "description": {
+              "1": ""
+            },
+            "description_short": {
+              "1": ""
+            },
+            "quantity": 0,
+            "minimal_quantity": 1,
+            "low_stock_threshold": 0,
+            "low_stock_alert": "0",
+            "available_now": {
+              "1": ""
+            },
+            "available_later": {
+              "1": ""
+            },
+            "price": "456.000000",
+            "specificPrice": 0,
+            "additional_shipping_cost": "0.000000",
+            "wholesale_price": "0.000000",
+            "on_sale": "0",
+            "online_only": "0",
+            "unity": "",
+            "unit_price": "0.000000",
+            "unit_price_ratio": "0.000000",
+            "ecotax": "0.000000",
+            "reference": "456",
+            "supplier_reference": "",
+            "location": "",
+            "width": "0.000000",
+            "height": "0.000000",
+            "depth": "0.000000",
+            "weight": "0.000000",
+            "ean13": "",
+            "isbn": "",
+            "upc": "789",
+            "mpn": "",
+            "link_rewrite": {
+              "1": "dev-flow"
+            },
+            "meta_description": {
+              "1": ""
+            },
+            "meta_keywords": {
+              "1": ""
+            },
+            "meta_title": {
+              "1": ""
+            },
+            "quantity_discount": "0",
+            "customizable": 0,
+            "new": null,
+            "uploadable_files": 0,
+            "text_fields": 0,
+            "active": "1",
+            "redirect_type": "default",
+            "id_type_redirected": 0,
+            "available_for_order": "1",
+            "available_date": "0000-00-00",
+            "show_condition": "0",
+            "condition": "new",
+            "show_price": "1",
+            "indexed": "1",
+            "visibility": "both",
+            "date_add": "2024-10-10 08:23:52",
+            "date_upd": "2024-10-10 08:24:58",
+            "tags": null,
+            "state": 1,
+            "base_price": null,
+            "id_tax_rules_group": 0,
+            "id_color_default": 0,
+            "advanced_stock_management": "0",
+            "out_of_stock": 2,
+            "depends_on_stock": null,
+            "isFullyLoaded": false,
+            "cache_is_pack": "0",
+            "cache_has_attachments": "0",
+            "is_virtual": "0",
+            "id_pack_product_attribute": null,
+            "cache_default_attribute": 0,
+            "category": false,
+            "pack_stock_type": 3,
+            "additional_delivery_times": 1,
+            "delivery_in_stock": {
+              "1": ""
+            },
+            "delivery_out_stock": {
+              "1": ""
+            },
+            "product_type": "standard",
+            "stock_available": 2,
+            "combinations": [],
+            "images": [
+              {
+                "id_image": 424,
+                "position": 1,
+                "cover": 1,
+                "url": "https://presta.dev.gosharpei.com/424-home_default/247.jpg"
+              }
+            ]
+          },
+          "webhookUrl": "http://https://automation.prod.gosharpei.com:5678/webhook/dev-prestashop",
+          "executionMode": "production"
+        }
+      }
+    ],
+    "PrestaShop": [
+      {
+        "json": {
+          "headers": {
+            "x-forwarded-for": "82.98.157.113",
+            "x-forwarded-proto": "https",
+            "x-forwarded-port": "443",
+            "host": "automation.prod.gosharpei.com",
+            "x-amzn-trace-id": "Root=1-6723c927-7b7187140daff9ad5f214688",
+            "content-length": "14919",
+            "accept": "*/*",
+            "content-type": "application/json",
+            "authorization": "$2y$10$Z.PtkWIp./jqB.JlH5mq2uMvr2ifcAc2RutXhSFljCZvbb8wU9R9i"
+          },
+          "params": {},
+          "query": {
+            "create": "true"
+          },
+          "body": {
+            "name": {
+              "1": "name"
+            },
+            "description": {
+              "1": ""
+            },
+            "description_short": {
+              "1": ""
+            },
+            "quantity": "0",
+            "price": "1342.149000",
+            "wholesale_price": "0.000000",
+            "reference": "",
+            "upc": "",
+            "active": "1",
+            "tags": null,
+            "state": "1",
+            "id_tax_rules_group": "4",
+            "id": 164755,
+            "stock_available": 2,
+            "combinations": [],
+            "images": [
+              {
+                "id_image": "203045",
+                "position": "1",
+                "cover": "1",
+                "url": "https://media1.allzone.es/3637691-small_default/aspiradora-dyson-v15s-detect-submarine-448798-01-nickel-premium-ocasion.jpg"
+              }
+            ]
+          }
+        }
+      }
+    ]
+  },
   "connections": {
     "Update combination": {
       "main": [
@@ -1051,7 +1993,7 @@
     },
     "Loop Over Items": {
       "main": [
-        null,
+        [],
         [
           {
             "node": "Set6",
@@ -1134,39 +2076,6 @@
         ]
       ]
     },
-    "Set": {
-      "main": [
-        [
-          {
-            "node": "Execute Update Workflow",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Get Full Json": {
-      "main": [
-        [
-          {
-            "node": "Update name1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Update a variant1": {
-      "main": [
-        [
-          {
-            "node": "Validate product",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Add Image2": {
       "main": [
         [
@@ -1229,28 +2138,6 @@
         ]
       ]
     },
-    "Get Product by Remote Id / Json Update Stock3": {
-      "main": [
-        [
-          {
-            "node": "IF",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Code1": {
-      "main": [
-        [
-          {
-            "node": "Edit Fields2",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Get Status": {
       "main": [
         [
@@ -1273,29 +2160,11 @@
         ]
       ]
     },
-    "IF1": {
+    "Update a variant1": {
       "main": [
         [
           {
-            "node": "Set",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "IF2",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Get Full Json1": {
-      "main": [
-        [
-          {
-            "node": "Update name1",
+            "node": "Validate product",
             "type": "main",
             "index": 0
           }
@@ -1331,6 +2200,46 @@
         ]
       ]
     },
+    "IF1": {
+      "main": [
+        [
+          {
+            "node": "Set",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "IF2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Product by Remote Id / Json Update Stock3": {
+      "main": [
+        [
+          {
+            "node": "IF",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code1": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
     "IF2": {
       "main": [
         [
@@ -1347,6 +2256,17 @@
         [
           {
             "node": "Get Product by Remote Id / Json Update Stock3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set": {
+      "main": [
+        [
+          {
+            "node": "Execute Update Workflow",
             "type": "main",
             "index": 0
           }
@@ -1371,6 +2291,50 @@
         ]
       ]
     },
+    "If2": {
+      "main": [
+        [
+          {
+            "node": "Gmail",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Full Json1": {
+      "main": [
+        [
+          {
+            "node": "Update name1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Full Json": {
+      "main": [
+        [
+          {
+            "node": "Update name1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If3": {
+      "main": [
+        [
+          {
+            "node": "Gmail1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
     "Prestashop-Dev": {
       "main": [
         [
@@ -1389,1637 +2353,48 @@
             "node": "Get Full Json",
             "type": "main",
             "index": 0
+          },
+          {
+            "node": "If2",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "If3",
+            "type": "main",
+            "index": 0
           }
         ]
       ]
     }
   },
-  "pinData": {
-    "Prestashop-Dev": [
-      {
-        "headers": {
-          "x-forwarded-for": "44.206.89.54",
-          "x-forwarded-proto": "https",
-          "x-forwarded-port": "443",
-          "host": "automation.prod.gosharpei.com",
-          "x-amzn-trace-id": "Root=1-6707f212-136fc67c05dda9c328b9c3f6",
-          "content-length": "11281",
-          "accept": "*/*",
-          "content-type": "application/json",
-          "authorization": "$2y$10$HJyJLei5Pe5EkOtdTbDf1eGQc.JWCLFhAvoAaGfkYntEUiFFckkDe"
-        },
-        "params": {},
-        "query": {
-          "create": "true"
-        },
-        "body": {
-          "id": 80001,
-          "*id_lang": null,
-          "*lang_associated": null,
-          "*id_shop": 1,
-          "id_shop_list": [],
-          "*get_shop_from_context": true,
-          "*table": "product",
-          "*identifier": "id_product",
-          "*fieldsRequired": [
-            "price"
-          ],
-          "*fieldsSize": {
-            "reference": 64,
-            "supplier_reference": 64,
-            "location": 255,
-            "ean13": 13,
-            "isbn": 32,
-            "upc": 12,
-            "mpn": 40
-          },
-          "*fieldsValidate": {
-            "id_shop_default": "isUnsignedId",
-            "id_manufacturer": "isUnsignedId",
-            "id_supplier": "isUnsignedId",
-            "reference": "isReference",
-            "supplier_reference": "isReference",
-            "location": "isString",
-            "width": "isUnsignedFloat",
-            "height": "isUnsignedFloat",
-            "depth": "isUnsignedFloat",
-            "weight": "isUnsignedFloat",
-            "quantity_discount": "isBool",
-            "ean13": "isEan13",
-            "isbn": "isIsbn",
-            "upc": "isUpc",
-            "mpn": "isMpn",
-            "cache_is_pack": "isBool",
-            "cache_has_attachments": "isBool",
-            "is_virtual": "isBool",
-            "state": "isUnsignedId",
-            "additional_delivery_times": "isUnsignedId",
-            "product_type": "isGenericName",
-            "id_category_default": "isUnsignedId",
-            "id_tax_rules_group": "isUnsignedId",
-            "on_sale": "isBool",
-            "online_only": "isBool",
-            "ecotax": "isPrice",
-            "minimal_quantity": "isPositiveInt",
-            "low_stock_threshold": "isInt",
-            "low_stock_alert": "isBool",
-            "price": "isPrice",
-            "wholesale_price": "isPrice",
-            "unity": "isString",
-            "unit_price": "isPrice",
-            "additional_shipping_cost": "isPrice",
-            "customizable": "isUnsignedInt",
-            "text_fields": "isUnsignedInt",
-            "uploadable_files": "isUnsignedInt",
-            "active": "isBool",
-            "redirect_type": "isString",
-            "id_type_redirected": "isUnsignedId",
-            "available_for_order": "isBool",
-            "available_date": "isDateFormat",
-            "show_condition": "isBool",
-            "condition": "isGenericName",
-            "show_price": "isBool",
-            "indexed": "isBool",
-            "visibility": "isProductVisibility",
-            "advanced_stock_management": "isBool",
-            "date_add": "isDate",
-            "date_upd": "isDate",
-            "pack_stock_type": "isUnsignedInt"
-          },
-          "*fieldsRequiredLang": [],
-          "*fieldsSizeLang": {
-            "delivery_in_stock": 255,
-            "delivery_out_stock": 255,
-            "meta_description": 512,
-            "meta_keywords": 255,
-            "meta_title": 255,
-            "link_rewrite": 128,
-            "name": 128,
-            "available_now": 255,
-            "available_later": 255
-          },
-          "*fieldsValidateLang": {
-            "delivery_in_stock": "isGenericName",
-            "delivery_out_stock": "isGenericName",
-            "meta_description": "isGenericName",
-            "meta_keywords": "isGenericName",
-            "meta_title": "isGenericName",
-            "link_rewrite": "isLinkRewrite",
-            "name": "isCatalogName",
-            "description": "isCleanHtml",
-            "description_short": "isCleanHtml",
-            "available_now": "isGenericName",
-            "available_later": "IsGenericName"
-          },
-          "*tables": [],
-          "*webserviceParameters": {
-            "objectMethods": {
-              "add": "addWs",
-              "update": "updateWs"
-            },
-            "objectNodeNames": "products",
-            "fields": {
-              "id_manufacturer": {
-                "xlink_resource": "manufacturers"
-              },
-              "id_supplier": {
-                "xlink_resource": "suppliers"
-              },
-              "id_category_default": {
-                "xlink_resource": "categories"
-              },
-              "new": [],
-              "cache_default_attribute": [],
-              "id_default_image": {
-                "getter": "getCoverWs",
-                "setter": "setCoverWs",
-                "xlink_resource": {
-                  "resourceName": "images",
-                  "subResourceName": "products"
-                }
-              },
-              "id_default_combination": {
-                "getter": "getWsDefaultCombination",
-                "setter": "setWsDefaultCombination",
-                "xlink_resource": {
-                  "resourceName": "combinations"
-                }
-              },
-              "id_tax_rules_group": {
-                "xlink_resource": {
-                  "resourceName": "tax_rule_groups"
-                }
-              },
-              "position_in_category": {
-                "getter": "getWsPositionInCategory",
-                "setter": "setWsPositionInCategory"
-              },
-              "manufacturer_name": {
-                "getter": "getWsManufacturerName",
-                "setter": false
-              },
-              "quantity": {
-                "getter": false,
-                "setter": false
-              },
-              "type": {
-                "getter": "getWsType",
-                "setter": "setWsType"
-              }
-            },
-            "associations": {
-              "categories": {
-                "resource": "category",
-                "fields": {
-                  "id": {
-                    "required": true
-                  }
-                }
-              },
-              "images": {
-                "resource": "image",
-                "fields": {
-                  "id": []
-                }
-              },
-              "combinations": {
-                "resource": "combination",
-                "fields": {
-                  "id": {
-                    "required": true
-                  }
-                }
-              },
-              "product_option_values": {
-                "resource": "product_option_value",
-                "fields": {
-                  "id": {
-                    "required": true
-                  }
-                }
-              },
-              "product_features": {
-                "resource": "product_feature",
-                "fields": {
-                  "id": {
-                    "required": true
-                  },
-                  "id_feature_value": {
-                    "required": true,
-                    "xlink_resource": "product_feature_values"
-                  }
-                }
-              },
-              "tags": {
-                "resource": "tag",
-                "fields": {
-                  "id": {
-                    "required": true
-                  }
-                }
-              },
-              "stock_availables": {
-                "resource": "stock_available",
-                "fields": {
-                  "id": {
-                    "required": true
-                  },
-                  "id_product_attribute": {
-                    "required": true
-                  }
-                },
-                "setter": false
-              },
-              "attachments": {
-                "resource": "attachment",
-                "api": "attachments",
-                "fields": {
-                  "id": {
-                    "required": true
-                  }
-                }
-              },
-              "accessories": {
-                "resource": "product",
-                "api": "products",
-                "fields": {
-                  "id": {
-                    "required": true,
-                    "xlink_resource": "products"
-                  }
-                }
-              },
-              "product_bundle": {
-                "resource": "product",
-                "api": "products",
-                "fields": {
-                  "id": {
-                    "required": true
-                  },
-                  "id_product_attribute": [],
-                  "quantity": []
-                }
-              }
-            }
-          },
-          "*image_dir": null,
-          "*image_format": "jpg",
-          "*translator": null,
-          "*def": {
-            "table": "product",
-            "primary": "id_product",
-            "multilang": true,
-            "multilang_shop": true,
-            "fields": {
-              "id_shop_default": {
-                "type": 1,
-                "validate": "isUnsignedId"
-              },
-              "id_manufacturer": {
-                "type": 1,
-                "validate": "isUnsignedId"
-              },
-              "id_supplier": {
-                "type": 1,
-                "validate": "isUnsignedId"
-              },
-              "reference": {
-                "type": 3,
-                "validate": "isReference",
-                "size": 64
-              },
-              "supplier_reference": {
-                "type": 3,
-                "validate": "isReference",
-                "size": 64
-              },
-              "location": {
-                "type": 3,
-                "validate": "isString",
-                "size": 255
-              },
-              "width": {
-                "type": 4,
-                "validate": "isUnsignedFloat"
-              },
-              "height": {
-                "type": 4,
-                "validate": "isUnsignedFloat"
-              },
-              "depth": {
-                "type": 4,
-                "validate": "isUnsignedFloat"
-              },
-              "weight": {
-                "type": 4,
-                "validate": "isUnsignedFloat"
-              },
-              "quantity_discount": {
-                "type": 2,
-                "validate": "isBool"
-              },
-              "ean13": {
-                "type": 3,
-                "validate": "isEan13",
-                "size": 13
-              },
-              "isbn": {
-                "type": 3,
-                "validate": "isIsbn",
-                "size": 32
-              },
-              "upc": {
-                "type": 3,
-                "validate": "isUpc",
-                "size": 12
-              },
-              "mpn": {
-                "type": 3,
-                "validate": "isMpn",
-                "size": 40
-              },
-              "cache_is_pack": {
-                "type": 2,
-                "validate": "isBool"
-              },
-              "cache_has_attachments": {
-                "type": 2,
-                "validate": "isBool"
-              },
-              "is_virtual": {
-                "type": 2,
-                "validate": "isBool"
-              },
-              "state": {
-                "type": 1,
-                "validate": "isUnsignedId"
-              },
-              "additional_delivery_times": {
-                "type": 1,
-                "validate": "isUnsignedId"
-              },
-              "delivery_in_stock": {
-                "type": 3,
-                "lang": true,
-                "validate": "isGenericName",
-                "size": 255
-              },
-              "delivery_out_stock": {
-                "type": 3,
-                "lang": true,
-                "validate": "isGenericName",
-                "size": 255
-              },
-              "product_type": {
-                "type": 3,
-                "validate": "isGenericName",
-                "values": [
-                  "standard",
-                  "pack",
-                  "virtual",
-                  "combinations",
-                  ""
-                ],
-                "default": ""
-              },
-              "id_category_default": {
-                "type": 1,
-                "shop": true,
-                "validate": "isUnsignedId"
-              },
-              "id_tax_rules_group": {
-                "type": 1,
-                "shop": true,
-                "validate": "isUnsignedId"
-              },
-              "on_sale": {
-                "type": 2,
-                "shop": true,
-                "validate": "isBool"
-              },
-              "online_only": {
-                "type": 2,
-                "shop": true,
-                "validate": "isBool"
-              },
-              "ecotax": {
-                "type": 4,
-                "shop": true,
-                "validate": "isPrice"
-              },
-              "minimal_quantity": {
-                "type": 1,
-                "shop": true,
-                "validate": "isPositiveInt"
-              },
-              "low_stock_threshold": {
-                "type": 1,
-                "shop": true,
-                "allow_null": true,
-                "validate": "isInt"
-              },
-              "low_stock_alert": {
-                "type": 2,
-                "shop": true,
-                "validate": "isBool"
-              },
-              "price": {
-                "type": 4,
-                "shop": true,
-                "validate": "isPrice",
-                "required": true
-              },
-              "wholesale_price": {
-                "type": 4,
-                "shop": true,
-                "validate": "isPrice"
-              },
-              "unity": {
-                "type": 3,
-                "shop": true,
-                "validate": "isString"
-              },
-              "unit_price": {
-                "type": 4,
-                "shop": true,
-                "validate": "isPrice"
-              },
-              "unit_price_ratio": {
-                "type": 4,
-                "shop": true
-              },
-              "additional_shipping_cost": {
-                "type": 4,
-                "shop": true,
-                "validate": "isPrice"
-              },
-              "customizable": {
-                "type": 1,
-                "shop": true,
-                "validate": "isUnsignedInt"
-              },
-              "text_fields": {
-                "type": 1,
-                "shop": true,
-                "validate": "isUnsignedInt"
-              },
-              "uploadable_files": {
-                "type": 1,
-                "shop": true,
-                "validate": "isUnsignedInt"
-              },
-              "active": {
-                "type": 2,
-                "shop": true,
-                "validate": "isBool"
-              },
-              "redirect_type": {
-                "type": 3,
-                "shop": true,
-                "validate": "isString"
-              },
-              "id_type_redirected": {
-                "type": 1,
-                "shop": true,
-                "validate": "isUnsignedId"
-              },
-              "available_for_order": {
-                "type": 2,
-                "shop": true,
-                "validate": "isBool"
-              },
-              "available_date": {
-                "type": 5,
-                "shop": true,
-                "validate": "isDateFormat"
-              },
-              "show_condition": {
-                "type": 2,
-                "shop": true,
-                "validate": "isBool"
-              },
-              "condition": {
-                "type": 3,
-                "shop": true,
-                "validate": "isGenericName",
-                "values": [
-                  "new",
-                  "used",
-                  "refurbished"
-                ],
-                "default": "new"
-              },
-              "show_price": {
-                "type": 2,
-                "shop": true,
-                "validate": "isBool"
-              },
-              "indexed": {
-                "type": 2,
-                "shop": true,
-                "validate": "isBool"
-              },
-              "visibility": {
-                "type": 3,
-                "shop": true,
-                "validate": "isProductVisibility",
-                "values": [
-                  "both",
-                  "catalog",
-                  "search",
-                  "none"
-                ],
-                "default": "both"
-              },
-              "cache_default_attribute": {
-                "type": 1,
-                "shop": true
-              },
-              "advanced_stock_management": {
-                "type": 2,
-                "shop": true,
-                "validate": "isBool"
-              },
-              "date_add": {
-                "type": 5,
-                "shop": true,
-                "validate": "isDate"
-              },
-              "date_upd": {
-                "type": 5,
-                "shop": true,
-                "validate": "isDate"
-              },
-              "pack_stock_type": {
-                "type": 1,
-                "shop": true,
-                "validate": "isUnsignedInt"
-              },
-              "meta_description": {
-                "type": 3,
-                "lang": true,
-                "validate": "isGenericName",
-                "size": 512
-              },
-              "meta_keywords": {
-                "type": 3,
-                "lang": true,
-                "validate": "isGenericName",
-                "size": 255
-              },
-              "meta_title": {
-                "type": 3,
-                "lang": true,
-                "validate": "isGenericName",
-                "size": 255
-              },
-              "link_rewrite": {
-                "type": 3,
-                "lang": true,
-                "validate": "isLinkRewrite",
-                "required": false,
-                "size": 128,
-                "ws_modifier": {
-                  "http_method": 2,
-                  "modifier": "modifierWsLinkRewrite"
-                }
-              },
-              "name": {
-                "type": 3,
-                "lang": true,
-                "validate": "isCatalogName",
-                "required": false,
-                "size": 128
-              },
-              "description": {
-                "type": 6,
-                "lang": true,
-                "validate": "isCleanHtml"
-              },
-              "description_short": {
-                "type": 6,
-                "lang": true,
-                "validate": "isCleanHtml"
-              },
-              "available_now": {
-                "type": 3,
-                "lang": true,
-                "validate": "isGenericName",
-                "size": 255
-              },
-              "available_later": {
-                "type": 3,
-                "lang": true,
-                "validate": "IsGenericName",
-                "size": 255
-              }
-            },
-            "associations": {
-              "manufacturer": {
-                "type": 1
-              },
-              "supplier": {
-                "type": 1
-              },
-              "default_category": {
-                "type": 1,
-                "field": "id_category_default",
-                "object": "Category"
-              },
-              "tax_rules_group": {
-                "type": 1
-              },
-              "categories": {
-                "type": 2,
-                "field": "id_category",
-                "object": "Category",
-                "association": "category_product"
-              },
-              "stock_availables": {
-                "type": 2,
-                "field": "id_stock_available",
-                "object": "StockAvailable",
-                "association": "stock_availables"
-              },
-              "attachments": {
-                "type": 2,
-                "field": "id_attachment",
-                "object": "Attachment",
-                "association": "product_attachment"
-              },
-              "l": {
-                "type": 2,
-                "field": "id_product",
-                "foreign_field": "id_product"
-              }
-            },
-            "classname": "Product"
-          },
-          "*update_fields": null,
-          "force_id": false,
-          "tax_name": null,
-          "tax_rate": null,
-          "id_manufacturer": 0,
-          "id_supplier": 0,
-          "id_category_default": 2,
-          "id_shop_default": 1,
-          "manufacturer_name": null,
-          "supplier_name": null,
-          "name": {
-            "1": "dev flow"
-          },
-          "description": {
-            "1": ""
-          },
-          "description_short": {
-            "1": ""
-          },
-          "quantity": 0,
-          "minimal_quantity": 1,
-          "low_stock_threshold": 0,
-          "low_stock_alert": "0",
-          "available_now": {
-            "1": ""
-          },
-          "available_later": {
-            "1": ""
-          },
-          "price": "456.000000",
-          "specificPrice": 0,
-          "additional_shipping_cost": "0.000000",
-          "wholesale_price": "0.000000",
-          "on_sale": "0",
-          "online_only": "0",
-          "unity": "",
-          "unit_price": "0.000000",
-          "unit_price_ratio": "0.000000",
-          "ecotax": "0.000000",
-          "reference": "456",
-          "supplier_reference": "",
-          "location": "",
-          "width": "0.000000",
-          "height": "0.000000",
-          "depth": "0.000000",
-          "weight": "0.000000",
-          "ean13": "",
-          "isbn": "",
-          "upc": "789",
-          "mpn": "",
-          "link_rewrite": {
-            "1": "dev-flow"
-          },
-          "meta_description": {
-            "1": ""
-          },
-          "meta_keywords": {
-            "1": ""
-          },
-          "meta_title": {
-            "1": ""
-          },
-          "quantity_discount": "0",
-          "customizable": 0,
-          "new": null,
-          "uploadable_files": 0,
-          "text_fields": 0,
-          "active": "1",
-          "redirect_type": "default",
-          "id_type_redirected": 0,
-          "available_for_order": "1",
-          "available_date": "0000-00-00",
-          "show_condition": "0",
-          "condition": "new",
-          "show_price": "1",
-          "indexed": "1",
-          "visibility": "both",
-          "date_add": "2024-10-10 08:23:52",
-          "date_upd": "2024-10-10 08:24:58",
-          "tags": null,
-          "state": 1,
-          "base_price": null,
-          "id_tax_rules_group": 0,
-          "id_color_default": 0,
-          "advanced_stock_management": "0",
-          "out_of_stock": 2,
-          "depends_on_stock": null,
-          "isFullyLoaded": false,
-          "cache_is_pack": "0",
-          "cache_has_attachments": "0",
-          "is_virtual": "0",
-          "id_pack_product_attribute": null,
-          "cache_default_attribute": 0,
-          "category": false,
-          "pack_stock_type": 3,
-          "additional_delivery_times": 1,
-          "delivery_in_stock": {
-            "1": ""
-          },
-          "delivery_out_stock": {
-            "1": ""
-          },
-          "product_type": "standard",
-          "stock_available": 2,
-          "combinations": [],
-          "images": [
-            {
-              "id_image": 424,
-              "position": 1,
-              "cover": 1,
-              "url": "https://presta.dev.gosharpei.com/424-home_default/247.jpg"
-            }
-          ]
-        },
-        "webhookUrl": "http://https://automation.prod.gosharpei.com:5678/webhook/dev-prestashop",
-        "executionMode": "production"
-      }
-    ],
-    "PrestaShop": [
-      {
-        "headers": {
-          "x-forwarded-for": "44.206.89.54",
-          "x-forwarded-proto": "https",
-          "x-forwarded-port": "443",
-          "host": "automation.prod.gosharpei.com",
-          "x-amzn-trace-id": "Root=1-66d7de8b-653a916313af764d7c0a5212",
-          "content-length": "12283",
-          "accept": "*/*",
-          "content-type": "application/json",
-          "authorization": "$2y$10$Z.PtkWIp./jqB.JlH5mq2uMvr2ifcAc2RutXhSFljCZvbb8wU9R9i"
-        },
-        "params": {},
-        "query": {
-          "create": "true"
-        },
-        "body": {
-          "id": 60005,
-          "*id_lang": null,
-          "*lang_associated": null,
-          "*id_shop": 1,
-          "id_shop_list": [],
-          "*get_shop_from_context": true,
-          "*table": "product",
-          "*identifier": "id_product",
-          "*fieldsRequired": [
-            "price"
-          ],
-          "*fieldsSize": {
-            "reference": 64,
-            "supplier_reference": 64,
-            "location": 255,
-            "ean13": 13,
-            "isbn": 32,
-            "upc": 12,
-            "mpn": 40
-          },
-          "*fieldsValidate": {
-            "id_shop_default": "isUnsignedId",
-            "id_manufacturer": "isUnsignedId",
-            "id_supplier": "isUnsignedId",
-            "reference": "isReference",
-            "supplier_reference": "isReference",
-            "location": "isString",
-            "width": "isUnsignedFloat",
-            "height": "isUnsignedFloat",
-            "depth": "isUnsignedFloat",
-            "weight": "isUnsignedFloat",
-            "quantity_discount": "isBool",
-            "ean13": "isEan13",
-            "isbn": "isIsbn",
-            "upc": "isUpc",
-            "mpn": "isMpn",
-            "cache_is_pack": "isBool",
-            "cache_has_attachments": "isBool",
-            "is_virtual": "isBool",
-            "state": "isUnsignedId",
-            "additional_delivery_times": "isUnsignedId",
-            "product_type": "isGenericName",
-            "id_category_default": "isUnsignedId",
-            "id_tax_rules_group": "isUnsignedId",
-            "on_sale": "isBool",
-            "online_only": "isBool",
-            "ecotax": "isPrice",
-            "minimal_quantity": "isPositiveInt",
-            "low_stock_threshold": "isInt",
-            "low_stock_alert": "isBool",
-            "price": "isPrice",
-            "wholesale_price": "isPrice",
-            "unity": "isString",
-            "unit_price": "isPrice",
-            "additional_shipping_cost": "isPrice",
-            "customizable": "isUnsignedInt",
-            "text_fields": "isUnsignedInt",
-            "uploadable_files": "isUnsignedInt",
-            "active": "isBool",
-            "redirect_type": "isString",
-            "id_type_redirected": "isUnsignedId",
-            "available_for_order": "isBool",
-            "available_date": "isDateFormat",
-            "show_condition": "isBool",
-            "condition": "isGenericName",
-            "show_price": "isBool",
-            "indexed": "isBool",
-            "visibility": "isProductVisibility",
-            "advanced_stock_management": "isBool",
-            "date_add": "isDate",
-            "date_upd": "isDate",
-            "pack_stock_type": "isUnsignedInt"
-          },
-          "*fieldsRequiredLang": [],
-          "*fieldsSizeLang": {
-            "delivery_in_stock": 255,
-            "delivery_out_stock": 255,
-            "meta_description": 512,
-            "meta_keywords": 255,
-            "meta_title": 255,
-            "link_rewrite": 128,
-            "name": 128,
-            "available_now": 255,
-            "available_later": 255
-          },
-          "*fieldsValidateLang": {
-            "delivery_in_stock": "isGenericName",
-            "delivery_out_stock": "isGenericName",
-            "meta_description": "isGenericName",
-            "meta_keywords": "isGenericName",
-            "meta_title": "isGenericName",
-            "link_rewrite": "isLinkRewrite",
-            "name": "isCatalogName",
-            "description": "isCleanHtml",
-            "description_short": "isCleanHtml",
-            "available_now": "isGenericName",
-            "available_later": "IsGenericName"
-          },
-          "*tables": [],
-          "*webserviceParameters": {
-            "objectMethods": {
-              "add": "addWs",
-              "update": "updateWs"
-            },
-            "objectNodeNames": "products",
-            "fields": {
-              "id_manufacturer": {
-                "xlink_resource": "manufacturers"
-              },
-              "id_supplier": {
-                "xlink_resource": "suppliers"
-              },
-              "id_category_default": {
-                "xlink_resource": "categories"
-              },
-              "new": [],
-              "cache_default_attribute": [],
-              "id_default_image": {
-                "getter": "getCoverWs",
-                "setter": "setCoverWs",
-                "xlink_resource": {
-                  "resourceName": "images",
-                  "subResourceName": "products"
-                }
-              },
-              "id_default_combination": {
-                "getter": "getWsDefaultCombination",
-                "setter": "setWsDefaultCombination",
-                "xlink_resource": {
-                  "resourceName": "combinations"
-                }
-              },
-              "id_tax_rules_group": {
-                "xlink_resource": {
-                  "resourceName": "tax_rule_groups"
-                }
-              },
-              "position_in_category": {
-                "getter": "getWsPositionInCategory",
-                "setter": "setWsPositionInCategory"
-              },
-              "manufacturer_name": {
-                "getter": "getWsManufacturerName",
-                "setter": false
-              },
-              "quantity": {
-                "getter": false,
-                "setter": false
-              },
-              "type": {
-                "getter": "getWsType",
-                "setter": "setWsType"
-              }
-            },
-            "associations": {
-              "categories": {
-                "resource": "category",
-                "fields": {
-                  "id": {
-                    "required": true
-                  }
-                }
-              },
-              "images": {
-                "resource": "image",
-                "fields": {
-                  "id": []
-                }
-              },
-              "combinations": {
-                "resource": "combination",
-                "fields": {
-                  "id": {
-                    "required": true
-                  }
-                }
-              },
-              "product_option_values": {
-                "resource": "product_option_value",
-                "fields": {
-                  "id": {
-                    "required": true
-                  }
-                }
-              },
-              "product_features": {
-                "resource": "product_feature",
-                "fields": {
-                  "id": {
-                    "required": true
-                  },
-                  "id_feature_value": {
-                    "required": true,
-                    "xlink_resource": "product_feature_values"
-                  }
-                }
-              },
-              "tags": {
-                "resource": "tag",
-                "fields": {
-                  "id": {
-                    "required": true
-                  }
-                }
-              },
-              "stock_availables": {
-                "resource": "stock_available",
-                "fields": {
-                  "id": {
-                    "required": true
-                  },
-                  "id_product_attribute": {
-                    "required": true
-                  }
-                },
-                "setter": false
-              },
-              "attachments": {
-                "resource": "attachment",
-                "api": "attachments",
-                "fields": {
-                  "id": {
-                    "required": true
-                  }
-                }
-              },
-              "accessories": {
-                "resource": "product",
-                "api": "products",
-                "fields": {
-                  "id": {
-                    "required": true,
-                    "xlink_resource": "products"
-                  }
-                }
-              },
-              "product_bundle": {
-                "resource": "product",
-                "api": "products",
-                "fields": {
-                  "id": {
-                    "required": true
-                  },
-                  "id_product_attribute": [],
-                  "quantity": []
-                }
-              }
-            }
-          },
-          "*image_dir": null,
-          "*image_format": "jpg",
-          "*translator": null,
-          "*def": {
-            "table": "product",
-            "primary": "id_product",
-            "multilang": true,
-            "multilang_shop": true,
-            "fields": {
-              "id_shop_default": {
-                "type": 1,
-                "validate": "isUnsignedId"
-              },
-              "id_manufacturer": {
-                "type": 1,
-                "validate": "isUnsignedId"
-              },
-              "id_supplier": {
-                "type": 1,
-                "validate": "isUnsignedId"
-              },
-              "reference": {
-                "type": 3,
-                "validate": "isReference",
-                "size": 64
-              },
-              "supplier_reference": {
-                "type": 3,
-                "validate": "isReference",
-                "size": 64
-              },
-              "location": {
-                "type": 3,
-                "validate": "isString",
-                "size": 255
-              },
-              "width": {
-                "type": 4,
-                "validate": "isUnsignedFloat"
-              },
-              "height": {
-                "type": 4,
-                "validate": "isUnsignedFloat"
-              },
-              "depth": {
-                "type": 4,
-                "validate": "isUnsignedFloat"
-              },
-              "weight": {
-                "type": 4,
-                "validate": "isUnsignedFloat"
-              },
-              "quantity_discount": {
-                "type": 2,
-                "validate": "isBool"
-              },
-              "ean13": {
-                "type": 3,
-                "validate": "isEan13",
-                "size": 13
-              },
-              "isbn": {
-                "type": 3,
-                "validate": "isIsbn",
-                "size": 32
-              },
-              "upc": {
-                "type": 3,
-                "validate": "isUpc",
-                "size": 12
-              },
-              "mpn": {
-                "type": 3,
-                "validate": "isMpn",
-                "size": 40
-              },
-              "cache_is_pack": {
-                "type": 2,
-                "validate": "isBool"
-              },
-              "cache_has_attachments": {
-                "type": 2,
-                "validate": "isBool"
-              },
-              "is_virtual": {
-                "type": 2,
-                "validate": "isBool"
-              },
-              "state": {
-                "type": 1,
-                "validate": "isUnsignedId"
-              },
-              "additional_delivery_times": {
-                "type": 1,
-                "validate": "isUnsignedId"
-              },
-              "delivery_in_stock": {
-                "type": 3,
-                "lang": true,
-                "validate": "isGenericName",
-                "size": 255
-              },
-              "delivery_out_stock": {
-                "type": 3,
-                "lang": true,
-                "validate": "isGenericName",
-                "size": 255
-              },
-              "product_type": {
-                "type": 3,
-                "validate": "isGenericName",
-                "values": [
-                  "standard",
-                  "pack",
-                  "virtual",
-                  "combinations",
-                  ""
-                ],
-                "default": ""
-              },
-              "id_category_default": {
-                "type": 1,
-                "shop": true,
-                "validate": "isUnsignedId"
-              },
-              "id_tax_rules_group": {
-                "type": 1,
-                "shop": true,
-                "validate": "isUnsignedId"
-              },
-              "on_sale": {
-                "type": 2,
-                "shop": true,
-                "validate": "isBool"
-              },
-              "online_only": {
-                "type": 2,
-                "shop": true,
-                "validate": "isBool"
-              },
-              "ecotax": {
-                "type": 4,
-                "shop": true,
-                "validate": "isPrice"
-              },
-              "minimal_quantity": {
-                "type": 1,
-                "shop": true,
-                "validate": "isPositiveInt"
-              },
-              "low_stock_threshold": {
-                "type": 1,
-                "shop": true,
-                "allow_null": true,
-                "validate": "isInt"
-              },
-              "low_stock_alert": {
-                "type": 2,
-                "shop": true,
-                "validate": "isBool"
-              },
-              "price": {
-                "type": 4,
-                "shop": true,
-                "validate": "isPrice",
-                "required": true
-              },
-              "wholesale_price": {
-                "type": 4,
-                "shop": true,
-                "validate": "isPrice"
-              },
-              "unity": {
-                "type": 3,
-                "shop": true,
-                "validate": "isString"
-              },
-              "unit_price": {
-                "type": 4,
-                "shop": true,
-                "validate": "isPrice"
-              },
-              "unit_price_ratio": {
-                "type": 4,
-                "shop": true
-              },
-              "additional_shipping_cost": {
-                "type": 4,
-                "shop": true,
-                "validate": "isPrice"
-              },
-              "customizable": {
-                "type": 1,
-                "shop": true,
-                "validate": "isUnsignedInt"
-              },
-              "text_fields": {
-                "type": 1,
-                "shop": true,
-                "validate": "isUnsignedInt"
-              },
-              "uploadable_files": {
-                "type": 1,
-                "shop": true,
-                "validate": "isUnsignedInt"
-              },
-              "active": {
-                "type": 2,
-                "shop": true,
-                "validate": "isBool"
-              },
-              "redirect_type": {
-                "type": 3,
-                "shop": true,
-                "validate": "isString"
-              },
-              "id_type_redirected": {
-                "type": 1,
-                "shop": true,
-                "validate": "isUnsignedId"
-              },
-              "available_for_order": {
-                "type": 2,
-                "shop": true,
-                "validate": "isBool"
-              },
-              "available_date": {
-                "type": 5,
-                "shop": true,
-                "validate": "isDateFormat"
-              },
-              "show_condition": {
-                "type": 2,
-                "shop": true,
-                "validate": "isBool"
-              },
-              "condition": {
-                "type": 3,
-                "shop": true,
-                "validate": "isGenericName",
-                "values": [
-                  "new",
-                  "used",
-                  "refurbished"
-                ],
-                "default": "new"
-              },
-              "show_price": {
-                "type": 2,
-                "shop": true,
-                "validate": "isBool"
-              },
-              "indexed": {
-                "type": 2,
-                "shop": true,
-                "validate": "isBool"
-              },
-              "visibility": {
-                "type": 3,
-                "shop": true,
-                "validate": "isProductVisibility",
-                "values": [
-                  "both",
-                  "catalog",
-                  "search",
-                  "none"
-                ],
-                "default": "both"
-              },
-              "cache_default_attribute": {
-                "type": 1,
-                "shop": true
-              },
-              "advanced_stock_management": {
-                "type": 2,
-                "shop": true,
-                "validate": "isBool"
-              },
-              "date_add": {
-                "type": 5,
-                "shop": true,
-                "validate": "isDate"
-              },
-              "date_upd": {
-                "type": 5,
-                "shop": true,
-                "validate": "isDate"
-              },
-              "pack_stock_type": {
-                "type": 1,
-                "shop": true,
-                "validate": "isUnsignedInt"
-              },
-              "meta_description": {
-                "type": 3,
-                "lang": true,
-                "validate": "isGenericName",
-                "size": 512
-              },
-              "meta_keywords": {
-                "type": 3,
-                "lang": true,
-                "validate": "isGenericName",
-                "size": 255
-              },
-              "meta_title": {
-                "type": 3,
-                "lang": true,
-                "validate": "isGenericName",
-                "size": 255
-              },
-              "link_rewrite": {
-                "type": 3,
-                "lang": true,
-                "validate": "isLinkRewrite",
-                "required": false,
-                "size": 128,
-                "ws_modifier": {
-                  "http_method": 2,
-                  "modifier": "modifierWsLinkRewrite"
-                }
-              },
-              "name": {
-                "type": 3,
-                "lang": true,
-                "validate": "isCatalogName",
-                "required": false,
-                "size": 128
-              },
-              "description": {
-                "type": 6,
-                "lang": true,
-                "validate": "isCleanHtml"
-              },
-              "description_short": {
-                "type": 6,
-                "lang": true,
-                "validate": "isCleanHtml"
-              },
-              "available_now": {
-                "type": 3,
-                "lang": true,
-                "validate": "isGenericName",
-                "size": 255
-              },
-              "available_later": {
-                "type": 3,
-                "lang": true,
-                "validate": "IsGenericName",
-                "size": 255
-              }
-            },
-            "associations": {
-              "manufacturer": {
-                "type": 1
-              },
-              "supplier": {
-                "type": 1
-              },
-              "default_category": {
-                "type": 1,
-                "field": "id_category_default",
-                "object": "Category"
-              },
-              "tax_rules_group": {
-                "type": 1
-              },
-              "categories": {
-                "type": 2,
-                "field": "id_category",
-                "object": "Category",
-                "association": "category_product"
-              },
-              "stock_availables": {
-                "type": 2,
-                "field": "id_stock_available",
-                "object": "StockAvailable",
-                "association": "stock_availables"
-              },
-              "attachments": {
-                "type": 2,
-                "field": "id_attachment",
-                "object": "Attachment",
-                "association": "product_attachment"
-              },
-              "l": {
-                "type": 2,
-                "field": "id_product",
-                "foreign_field": "id_product"
-              }
-            },
-            "classname": "Product"
-          },
-          "*update_fields": null,
-          "force_id": false,
-          "tax_name": null,
-          "tax_rate": null,
-          "id_manufacturer": 0,
-          "id_supplier": 0,
-          "id_category_default": 2,
-          "id_shop_default": 1,
-          "manufacturer_name": null,
-          "supplier_name": null,
-          "name": {
-            "1": "Mouse 03/09"
-          },
-          "description": {
-            "1": "<p>mouse</p>"
-          },
-          "description_short": {
-            "1": "<p>mouse</p>"
-          },
-          "quantity": 0,
-          "minimal_quantity": 1,
-          "low_stock_threshold": 0,
-          "low_stock_alert": "0",
-          "available_now": {
-            "1": ""
-          },
-          "available_later": {
-            "1": ""
-          },
-          "price": "100.000000",
-          "specificPrice": 0,
-          "additional_shipping_cost": "0.000000",
-          "wholesale_price": "25.000000",
-          "on_sale": "0",
-          "online_only": "0",
-          "unity": "",
-          "unit_price": "0.000000",
-          "unit_price_ratio": "0.000000",
-          "ecotax": "0.000000",
-          "reference": "78910",
-          "supplier_reference": "",
-          "location": "",
-          "width": "0.000000",
-          "height": "0.000000",
-          "depth": "0.000000",
-          "weight": "0.000000",
-          "ean13": "",
-          "isbn": "",
-          "upc": "111213",
-          "mpn": "",
-          "link_rewrite": {
-            "1": "mouse-03-09"
-          },
-          "meta_description": {
-            "1": ""
-          },
-          "meta_keywords": {
-            "1": ""
-          },
-          "meta_title": {
-            "1": ""
-          },
-          "quantity_discount": "0",
-          "customizable": 0,
-          "new": null,
-          "uploadable_files": 0,
-          "text_fields": 0,
-          "active": "1",
-          "redirect_type": "default",
-          "id_type_redirected": 0,
-          "available_for_order": "1",
-          "available_date": "0000-00-00",
-          "show_condition": "0",
-          "condition": "new",
-          "show_price": "1",
-          "indexed": "1",
-          "visibility": "both",
-          "date_add": "2024-09-03 21:11:19",
-          "date_upd": "2024-09-03 21:13:47",
-          "tags": null,
-          "state": 1,
-          "base_price": null,
-          "id_tax_rules_group": 1,
-          "id_color_default": 0,
-          "advanced_stock_management": "0",
-          "out_of_stock": 2,
-          "depends_on_stock": null,
-          "isFullyLoaded": false,
-          "cache_is_pack": "0",
-          "cache_has_attachments": "0",
-          "is_virtual": "0",
-          "id_pack_product_attribute": null,
-          "cache_default_attribute": 485,
-          "category": false,
-          "pack_stock_type": 3,
-          "additional_delivery_times": 1,
-          "delivery_in_stock": {
-            "1": ""
-          },
-          "delivery_out_stock": {
-            "1": ""
-          },
-          "product_type": "combinations",
-          "stock_available": 3,
-          "combinations": {
-            "485": {
-              "id_product_attribute": 485,
-              "attributes": [
-                {
-                  "id_attribute": 10,
-                  "attribute": "Red"
-                }
-              ],
-              "price": "0.000000",
-              "quantity": 1,
-              "images": [
-                {
-                  "id_image": 366,
-                  "position": 3,
-                  "cover": null,
-                  "url": "https://presta.dev.gosharpei.com/366-home_default/197.jpg"
-                }
-              ]
-            },
-            "486": {
-              "id_product_attribute": 486,
-              "attributes": [
-                {
-                  "id_attribute": 11,
-                  "attribute": "Black"
-                }
-              ],
-              "price": "0.000000",
-              "quantity": 1,
-              "images": [
-                {
-                  "id_image": 365,
-                  "position": 2,
-                  "cover": null,
-                  "url": "https://presta.dev.gosharpei.com/365-home_default/197.jpg"
-                }
-              ]
-            },
-            "487": {
-              "id_product_attribute": 487,
-              "attributes": [
-                {
-                  "id_attribute": 14,
-                  "attribute": "Blue"
-                }
-              ],
-              "price": "0.000000",
-              "quantity": 1,
-              "images": [
-                {
-                  "id_image": 364,
-                  "position": 1,
-                  "cover": 1,
-                  "url": "https://presta.dev.gosharpei.com/364-home_default/197.jpg"
-                }
-              ]
-            }
-          },
-          "images": [
-            {
-              "id_image": 364,
-              "position": 1,
-              "cover": 1,
-              "url": "https://presta.dev.gosharpei.com/364-home_default/197.jpg"
-            },
-            {
-              "id_image": 365,
-              "position": 2,
-              "cover": null,
-              "url": "https://presta.dev.gosharpei.com/365-home_default/197.jpg"
-            },
-            {
-              "id_image": 366,
-              "position": 3,
-              "cover": null,
-              "url": "https://presta.dev.gosharpei.com/366-home_default/197.jpg"
-            }
-          ]
-        },
-        "webhookUrl": "http://https://automation.prod.gosharpei.com:5678/webhook/prod-prestashop",
-        "executionMode": "production"
-      }
-    ]
-  }
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "saveManualExecutions": true,
+    "callerPolicy": "workflowsFromSameOwner",
+    "errorWorkflow": "AdQIUhqaKxjyDzka",
+    "saveExecutionProgress": true,
+    "executionTimeout": 600
+  },
+  "versionId": "910d87f2-5b61-43c8-a2c6-4cc5da263d38",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "0c0beacef8877bbf2416eb00f2b5dc96354e26dd1df5517320459b1236860f8c"
+  },
+  "id": "DlpJT9zCwXy94K8M",
+  "tags": [
+    {
+      "createdAt": "2024-04-12T13:19:17.499Z",
+      "updatedAt": "2024-04-12T13:19:17.499Z",
+      "id": "G0VX79E5xj76PvtH",
+      "name": "Webhook"
+    },
+    {
+      "createdAt": "2024-05-09T15:12:09.941Z",
+      "updatedAt": "2024-05-09T15:12:09.941Z",
+      "id": "SjhSJInUwTCnJDeF",
+      "name": "Prod"
+    }
+  ]
 }

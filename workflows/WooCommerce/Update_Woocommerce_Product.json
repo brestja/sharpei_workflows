@@ -299,7 +299,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        2120,
+        2100,
         1580
       ],
       "retryOnFail": true,
@@ -566,7 +566,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        2120,
+        2100,
         1400
       ]
     },
@@ -755,7 +755,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        3300,
+        3120,
         2040
       ],
       "retryOnFail": true,
@@ -808,7 +808,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2,
       "position": [
-        3080,
+        2900,
         2040
       ]
     },
@@ -839,7 +839,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        3080,
+        2900,
         1860
       ],
       "retryOnFail": true,
@@ -873,7 +873,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2,
       "position": [
-        2900,
+        2720,
         2040
       ]
     },
@@ -926,7 +926,7 @@
     {
       "parameters": {
         "method": "PUT",
-        "url": "=https://api.{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.env }}.gosharpei.com/api/products/{{ $('Execute Workflow Trigger').item.json.data.pid }}/variants/{{ $('Loop Over Items1').item.json.pid }}\n ",
+        "url": "=https://api.{{ $('Execute Workflow Trigger').item.json.env }}.gosharpei.com/api/products/{{ $('Execute Workflow Trigger').item.json.data.pid }}/variants/{{ $('Loop Over Items1').item.json.pid }}\n    ",
         "sendHeaders": true,
         "headerParameters": {
           "parameters": [
@@ -936,13 +936,13 @@
             },
             {
               "name": "Authorization",
-              "value": "={{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.headers.authorization }}"
+              "value": "={{ $('Execute Workflow Trigger').item.json.WooCommerce_Body.query.api_key }}"
             }
           ]
         },
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={\n    \"selling_price\": \"{{ $('Loop Over Items1').item.json.selling_price }}\",\n    \"title\": \"{{ $('Loop Over Items1').item.json.title.replace(/['\"]+/g, '') }}\",\n    \"remote_id\": \"{{ $('Loop Over Items1').item.json.remote_id }}\",\n    \"status_pid\" : \"d486da45-af0e-45e5-92ab-319a7fe7e782\",\n    \"cost\": 0\n\n  }                   ",
+        "jsonBody": "={\n    \"selling_price\": \"{{ $('Loop Over Items1').item.json.selling_price }}\",\n    \"title\": \"{{ $('Loop Over Items1').item.json.title.replace(/['\"]+/g, '') }}\",\n    \"remote_id\": \"{{ $('Loop Over Items1').item.json.remote_id }}\",\n    \"status_pid\" : \"{{ $('Execute Workflow Trigger').item.json.env === 'dev' ? '34da3432-1816-4f52-ac2e-efc712f3aa9e' : 'd486da45-af0e-45e5-92ab-319a7fe7e782' }}\",\n    \"cost\": 0\n\n  }                    ",
         "options": {}
       },
       "id": "ed6c942b-e1cf-4667-92c6-f43ad96a8679",
@@ -950,7 +950,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        2560,
+        2300,
         2300
       ],
       "retryOnFail": true,
@@ -965,7 +965,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        2340,
+        2100,
         2300
       ]
     },
@@ -978,7 +978,7 @@
       "type": "n8n-nodes-base.splitInBatches",
       "typeVersion": 3,
       "position": [
-        2120,
+        1880,
         2300
       ]
     },
@@ -992,26 +992,13 @@
       "type": "n8n-nodes-base.splitOut",
       "typeVersion": 1,
       "position": [
-        1840,
+        1680,
         2300
       ]
     },
     {
       "parameters": {
-        "jsCode": "const items = $input.all();\n\n// Imprimir los datos recibidos para verificar la estructura\nconsole.log('Datos recibidos:', items);\n\nconst result = items.map(item => {\n    // Imprimir el contenido de cada item para verificar su estructura\n    console.log('Item:', item);\n\n    // Verificar que el objeto tiene la propiedad 'nonMatchingVariants'\n    const nonMatchingVariants = item.json.nonMatchingVariants ? item.json.nonMatchingVariants : [];\n\n    // Imprimir nonMatchingVariants para verificar que se están obteniendo correctamente\n    console.log('NonMatchingVariants:', nonMatchingVariants);\n\n    if (!nonMatchingVariants.length) {\n        return []; // Si no hay variantes no coincidentes, devolver un array vacío\n    }\n\n    // Filtrar variantes con estado 'Active' o 'Draft'\n    const filteredVariants = nonMatchingVariants.filter(variant => \n        variant.status.name === 'Active' || variant.status.name === 'Draft'\n    );\n\n    // Devolver las variantes filtradas bajo un campo específico\n    return [{ json: { nonMatchingVariants: filteredVariants } }];\n}).flat(); // Aplanar el array resultante\n\nconsole.log('Resultado:', result);\n\nreturn result;\n"
-      },
-      "id": "3f8c8073-8ff4-41f4-9b4c-a53035a556a7",
-      "name": "Code5",
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        1640,
-        2300
-      ]
-    },
-    {
-      "parameters": {
-        "jsCode": "// Obtén los datos de la entrada del nodo\nconst items = $input.all();\n\nconst result = items.map(item => {\n    const data = item.json;\n    const fields = data.fields;\n    const variants = data.data.variants;\n\n    const resultFields = [];\n    const resultVariants = [];\n    const nonMatchingVariants = [];\n\n    fields.forEach(field => {\n        const matchingVariant = variants.find(variant => variant.remote_id === field.id_product_attribute.toString());\n        if (matchingVariant) {\n            resultFields.push(field);\n            resultVariants.push(matchingVariant);\n        }\n    });\n\n    variants.forEach(variant => {\n        const matchingField = fields.find(field => field.id_product_attribute.toString() === variant.remote_id);\n        if (!matchingField) {\n            nonMatchingVariants.push(variant);\n        }\n    });\n\n    return {\n        json: {\n            fields: resultFields,\n            matchingVariants: resultVariants,\n            nonMatchingVariants: nonMatchingVariants\n        }\n    };\n});\n\nreturn result;\n\n"
+        "jsCode": "// Extraemos las variantes y las variaciones del JSON de entrada\nconst variants = items[0].json.data.variants;\nconst variations = items[0].json.WooCommerce_Body.body.variations;\n\n// Inicializamos los arrays que contendrán los IDs de las variaciones coincidentes y las variantes no coincidentes\nlet matchingVariants = [];\nlet nonMatchingVariants = [];\n\n// Iteramos sobre las variantes para verificar si el remote_id coincide con alguna variación\nvariants.forEach(variant => {\n  const remoteIdAsNumber = Number(variant.remote_id);\n\n  // Verificamos si el remote_id de la variante está en el array de variations\n  if (variations.includes(remoteIdAsNumber)) {\n    matchingVariants.push(remoteIdAsNumber); // Agregamos a matchingVariants\n  } else {\n    nonMatchingVariants.push(variant); // Agregamos la variante completa a nonMatchingVariants\n  }\n});\n\n// Retornamos el resultado como salida del nodo\nreturn [\n  {\n    json: {\n      matchingVariants,\n      nonMatchingVariants\n    }\n  }\n];\n"
       },
       "id": "ef447cc6-6ba4-4d29-ad06-4bb454036334",
       "name": "Code1",
@@ -1054,7 +1041,7 @@
     {
       "parameters": {
         "operation": "get",
-        "productId": "={{ $json.variations }}"
+        "productId": "={{ $json.variations !== undefined ? $json.variations : $json.matchingVariants }}\n"
       },
       "id": "8735bc99-a246-4857-aee7-5a6b191e061e",
       "name": "WooCommerce",
@@ -1088,7 +1075,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 2,
       "position": [
-        2540,
+        2500,
         2040
       ]
     },
@@ -1107,7 +1094,7 @@
     },
     {
       "parameters": {
-        "fieldToSplitOut": "variations",
+        "fieldToSplitOut": "variations, matchingVariants",
         "options": {}
       },
       "id": "be33455b-dbaa-47ee-83b4-247e3a1990f3",
@@ -1115,7 +1102,7 @@
       "type": "n8n-nodes-base.splitOut",
       "typeVersion": 1,
       "position": [
-        1840,
+        1880,
         2040
       ]
     },
@@ -1129,7 +1116,7 @@
       "type": "n8n-nodes-base.wooCommerce",
       "typeVersion": 1,
       "position": [
-        1640,
+        1680,
         2040
       ],
       "credentials": {
@@ -1201,7 +1188,7 @@
     },
     {
       "parameters": {
-        "jsCode": "// Obtener el primer elemento de los datos de entrada\nconst input = items[0];\n\n// Verificar si 'input' y la estructura de variantes existen\nif (input && input.json && input.json.data && input.json.data.variants) {\n\n    // Obtener la lista de variantes\n    const variants = input.json.data.variants;\n\n    // Filtrar las variantes activas\n    const activeVariantsCount = variants.filter(v => v.status.name !== 'Inactive').length;\n\n    // Retornar el conteo de variantes activas\n    return [{\n        json: {\n            activeVariantsCount: activeVariantsCount // Conteo de variantes activas\n        }\n    }];\n}\n\n// Si no se encuentran variantes, retornar los items originales\nreturn items;\n\n"
+        "jsCode": "// Obtener el primer elemento de los datos de entrada\nconst input = items[0];\n\n// Verificar si 'input' y la estructura de variantes existen\nif (input && input.json && input.json.data && input.json.data.variants) {\n\n    // Obtener la lista de variantes\n    const variants = input.json.data.variants;\n\n    // Filtrar las variantes activas\n    const activeVariantsCount = variants.filter(v => v.status.name !== 'Inactive' && v.status.name !== 'Archived' ).length;\n\n    // Retornar el conteo de variantes activas\n    return [{\n        json: {\n            activeVariantsCount: activeVariantsCount // Conteo de variantes activas\n        }\n    }];\n}\n\n// Si no se encuentran variantes, retornar los items originales\nreturn items;\n\n"
       },
       "id": "a7f91f76-4cb8-430b-b38b-7e9152bdf91e",
       "name": "Code2",
@@ -1236,14 +1223,341 @@
       ]
     },
     {
-      "parameters": {},
-      "id": "7e752085-4938-4e5f-a766-29c2063cbe46",
-      "name": "Sticky Note2",
-      "type": "n8n-nodes-base.stickyNote",
+      "parameters": {
+        "workflowId": "R6tILcIQGKOZ0HO4",
+        "options": {}
+      },
+      "id": "8adba7d9-a8a9-4c5f-8940-508f689949fb",
+      "name": "Execute Workflow",
+      "type": "n8n-nodes-base.executeWorkflow",
       "typeVersion": 1,
       "position": [
-        720,
-        2200
+        2080,
+        2940
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "4c3eaedf-a56c-4492-b804-4510bb5c259c",
+              "name": "=pid",
+              "value": "={{ $('Execute Workflow Trigger').item.json.data.pid }}",
+              "type": "string"
+            },
+            {
+              "id": "80cb8a27-eff8-40e6-846c-f76a01831570",
+              "name": "Authorization",
+              "value": "={{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.headers.authorization }}",
+              "type": "string"
+            },
+            {
+              "id": "b721d509-46f9-4644-9179-cb6cde139ae6",
+              "name": "env",
+              "value": "={{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.env }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "c118d3b1-868d-4853-9875-3c1feb9dcdbe",
+      "name": "Edit Fields2",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1880,
+        2940
+      ]
+    },
+    {
+      "parameters": {
+        "method": "PUT",
+        "url": "=https://api.{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.env }}.gosharpei.com/api/products/{{ $('Execute Workflow Trigger').item.json.data.pid }}/variants/{{ $('Create combination').item.json.data[0].pid }}   ",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Accept",
+              "value": "application/json"
+            },
+            {
+              "name": "Authorization",
+              "value": "={{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.headers.authorization }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n    \"selling_price\": \"{{ $('Loop Over Items').item.json.price == 0 ? $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.price : $('Loop Over Items').item.json.price }}\",\n    \"title\": \"{{ $('Create combination').item.json.data[0].title }}\",\n    \"remote_id\": \"{{ $('Create combination').item.json.data[0].remote_id }}\",\n    \"status_pid\" : \"{{$('Loop Over Items').item.json.quantity > 0 ? 'f1554bbc-3159-4044-8974-1da26a573ea3' : '8ccef96e-5eb3-4b66-bd16-86fec78ab575'}}\",\n    \"cost\": \"{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.wholesale_price }}\",\n    \"barcode\": \"{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body?.PrestaShop_Body?.body?.upc ? $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.upc : 'n/a' }}\",\n    \"SKU\": \"{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body?.PrestaShop_Body?.body?.reference ? $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.reference : 'n/a' }}\"\n\n  }       ",
+        "options": {}
+      },
+      "id": "b459236a-a3de-4642-8fb1-b7775e315453",
+      "name": "Update combination1",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        3120,
+        2680
+      ],
+      "retryOnFail": true,
+      "maxTries": 2
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://api.{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.env }}.gosharpei.com/api/products/{{ $('Execute Workflow Trigger').item.json.data.pid }}/variants/{{ $('Create combination').item.json.data[0].pid }}/images            ",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "={{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.headers.authorization }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "multipart-form-data",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "parameterType": "formBinaryData",
+              "name": "attachment",
+              "inputDataFieldName": "data"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "05ca72b2-6ff7-408f-87e0-d253522e227a",
+      "name": "Add Image",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        2920,
+        2680
+      ],
+      "retryOnFail": true,
+      "maxTries": 2,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "url": "={{\n  $('Loop Over Items').item.json.image && \n  $('Loop Over Items').item.json.image[0] && \n  $('Loop Over Items').item.json.image[0].url &&\n  $('Loop Over Items').item.json.image[0].url.length > 0\n  ? $('Loop Over Items').item.json.image[0].url\n  : $('Edit Fields5').item.json.PrestaShop_Body.PrestaShop_Body.body.images[0].url\n}}\n\n  ",
+        "options": {}
+      },
+      "id": "ee7b5523-c50e-4c0f-9021-1b7166c067e5",
+      "name": "Upload",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        2740,
+        2680
+      ],
+      "retryOnFail": true,
+      "maxTries": 2
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://api.{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.env }}.gosharpei.com/api/products/{{ $('Execute Workflow Trigger').item.json.data.pid }}/variants/multiple        ",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Accept",
+              "value": "application/json"
+            },
+            {
+              "name": "Authorization",
+              "value": "={{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.headers.authorization }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "=[\n  {\n    \"selling_price\": \"{{ $('Loop Over Items').item.json.price }}\",\n    \"title\": \"/ {{ $('Loop Over Items').item.json.attributes.map(attr => attr.attribute).join(' - ') }}\",\n    \"status_pid\" : \"{{ $('Execute Workflow Trigger').item.json.data.status.pid }}\",\n    \"remote_id\": \"{{ $('Loop Over Items').item.json.id_product_attribute }}\",\n    \"cost\": \"{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.wholesale_price }}\",\n    \"barcode\": {{ $('Execute Workflow Trigger').item.json.PrestaShop_Body?.PrestaShop_Body?.body?.upc ? $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.upc : '\"n/a\"' }},\n    \"SKU\": {{ $('Execute Workflow Trigger').item.json.PrestaShop_Body?.PrestaShop_Body?.body?.upc ? $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.upc : '\"n/a\"' }}\n\n  }\n]       \n                  ",
+        "options": {}
+      },
+      "id": "98d45c95-f301-4b78-a928-68a9a5c0e680",
+      "name": "Create combination",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        2540,
+        2680
+      ],
+      "retryOnFail": true,
+      "maxTries": 2
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "231188d8-393e-4151-a132-424d2184c572",
+              "name": "index",
+              "value": "={{$runIndex}}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "9eaa9913-afe5-4ef2-b998-9334448c79c8",
+      "name": "Edit Fields6",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2320,
+        2680
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const input = items[0];\n\n// Verificar si 'input' y 'input.json' están definidos\nif (input && input.json) {\n    // Obtener los datos de 'fields' y 'products_variants'\n    const fields = input.json.fields || [];\n    const productsVariants = input.json.data.products_variants || [];\n\n    // Crear un conjunto de todos los remote_id en products_variants\n    const remoteIds = new Set(productsVariants.map(variant => variant.remote_id));\n\n    // Crear un array para almacenar todas las combinaciones no coincidentes\n    const nonMatchingCombinations = [];\n\n    // Recorrer todos los fields\n    fields.forEach(field => {\n        // Verificar si 'id_product_attribute' no coincide con ningún 'remote_id'\n        const idMatch = !remoteIds.has(field.id_product_attribute.toString());\n        \n        // Si no coincide, agregar al array de no coincidentes\n        if (idMatch) {\n            nonMatchingCombinations.push({\n                id_product_attribute: field.id_product_attribute,\n                attributes: field.attributes,\n                price: field.price,\n                quantity: field.quantity,\n                image: field.image || [],\n            });\n        }\n    });\n\n    // Devolver todas las combinaciones no coincidentes\n    if (nonMatchingCombinations.length > 0) {\n        return [{\n            json: {\n                new_combinations: nonMatchingCombinations\n            }\n        }];\n    }\n}\n\n// Si no se encuentran coincidencias, retornar los items originales\nreturn items;\n\n\n"
+      },
+      "id": "b4fe58c9-dd8b-4571-aec0-060b0b32c8f1",
+      "name": "Convert Object",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1680,
+        2680
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "31622845-45d2-44ca-aa33-f2c271cfcb8e",
+              "name": "fields",
+              "value": "={{ $('If8').item.json.fields }}",
+              "type": "array"
+            },
+            {
+              "id": "53890f9b-8be3-4f3a-8557-d767b4734fb3",
+              "name": "data.products_variants",
+              "value": "={{ $('Execute Workflow Trigger').item.json.data.variants }}",
+              "type": "array"
+            },
+            {
+              "id": "99c91392-cbe0-44e7-8a05-4dcbbfbe63a5",
+              "name": "PrestaShop_Body.PrestaShop_Body.body.images",
+              "value": "={{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.images }}",
+              "type": "array"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "e37f0a35-301a-4e9e-9fa5-19de10cb6d79",
+      "name": "Edit Fields5",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1440,
+        2680
+      ]
+    },
+    {
+      "parameters": {
+        "url": "=https://api.{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.env }}.gosharpei.com/api/products/{{ $('Execute Workflow Trigger').item.json.data.pid }}/variants ",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Accept",
+              "value": "application/json"
+            },
+            {
+              "name": "Authorization",
+              "value": "={{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.headers.authorization }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {}
+          ]
+        },
+        "options": {
+          "redirect": {
+            "redirect": {
+              "followRedirects": false
+            }
+          }
+        }
+      },
+      "id": "2a137c6b-41c0-4c3c-bf7d-1ee120105ffb",
+      "name": "List Variants",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1220,
+        2680
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "775a315f-6128-4c04-a71b-8a298a997ab7",
+              "leftValue": "={{ $('Code2').item.json.activeVariantsCount }}",
+              "rightValue": "={{ $json.fields.length }}",
+              "operator": {
+                "type": "number",
+                "operation": "lt"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "18c1658b-9c5b-418b-a0f2-ad985a1658dd",
+      "name": "If8",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        1000,
+        2680
+      ]
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "8f304a89-0677-4bd4-9a4f-550f2123a0e9",
+      "name": "Loop Over Items",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        2100,
+        2680
+      ]
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "new_combinations",
+        "options": {}
+      },
+      "id": "7c07216d-0456-4df0-b391-cba952ab294a",
+      "name": "Split Out",
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        1880,
+        2680
       ]
     },
     {
@@ -1270,12 +1584,69 @@
         "options": {}
       },
       "id": "c17283ff-ee0d-4568-a221-844893b32f68",
-      "name": "If1",
+      "name": "If Active Variants Greater than",
       "type": "n8n-nodes-base.if",
       "typeVersion": 2,
       "position": [
         1020,
         2300
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## Archive  a variant or multiple variants ",
+        "height": 117.0289119828806,
+        "width": 256.7227344438815
+      },
+      "id": "ac1f403c-d522-4893-be43-391c80e9e55d",
+      "name": "Sticky Note2",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        680,
+        2300
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## Create variant or multiple variants",
+        "height": 116.99868285859017
+      },
+      "id": "0313c5c8-e1cc-4d2c-ac84-f0a63b343289",
+      "name": "Sticky Note3",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        680,
+        2680
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## Update variants",
+        "height": 85.70888859942167
+      },
+      "id": "c8a61db6-fa5e-450a-8ade-dcdb9b5c62ac",
+      "name": "Sticky Note4",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        680,
+        2060
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## Update product and default variant",
+        "height": 117.69208465540811
+      },
+      "id": "8e77c733-9207-4641-80d1-4eaca8f5825c",
+      "name": "Sticky Note5",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        700,
+        1700
       ]
     }
   ],
@@ -1551,7 +1922,7 @@
         ],
         [
           {
-            "node": "If1",
+            "node": "If Active Variants Greater than",
             "type": "main",
             "index": 0
           }
@@ -1597,22 +1968,16 @@
         ]
       ]
     },
-    "Code5": {
-      "main": [
-        [
-          {
-            "node": "Split Out1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Code1": {
       "main": [
         [
           {
-            "node": "Code5",
+            "node": "Split Out2",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Split Out1",
             "type": "main",
             "index": 0
           }
@@ -1713,11 +2078,156 @@
         ]
       ]
     },
-    "If1": {
+    "Edit Fields2": {
+      "main": [
+        [
+          {
+            "node": "Execute Workflow",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update combination1": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Add Image": {
+      "main": [
+        [
+          {
+            "node": "Update combination1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upload": {
+      "main": [
+        [
+          {
+            "node": "Add Image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create combination": {
+      "main": [
+        [
+          {
+            "node": "Upload",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields6": {
+      "main": [
+        [
+          {
+            "node": "Create combination",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert Object": {
+      "main": [
+        [
+          {
+            "node": "Split Out",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields5": {
+      "main": [
+        [
+          {
+            "node": "Convert Object",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "List Variants": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If8": {
+      "main": [
+        [
+          {
+            "node": "List Variants",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        null,
+        [
+          {
+            "node": "Edit Fields6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If Active Variants Greater than": {
       "main": [
         [
           {
             "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "If8",
             "type": "main",
             "index": 0
           }
@@ -1732,10 +2242,10 @@
         "message": "success",
         "data": {
           "pid": "300567ec-1fdf-41d8-898b-60f853a60c88",
-          "title": "variantes add",
+          "title": "variantes add one",
           "body": "variante update desc",
           "vendor": null,
-          "updated_at": "2024-10-22T17:49:14.000000Z",
+          "updated_at": "2024-10-22T19:11:35.000000Z",
           "created_at": "2024-10-21T20:08:54.000000Z",
           "remote_id": "378",
           "variants_count": 2,
@@ -1755,12 +2265,12 @@
           "variants": [
             {
               "pid": "3215081a-571e-4fd8-983b-10f62c816428",
-              "title": "variantes update / Divi Engine",
-              "SKU": "78",
+              "title": "variantes add one / WordPress",
+              "SKU": "3",
               "barcode": "n/a",
               "cost": "0.00",
-              "selling_price": "444.00",
-              "remote_id": "379",
+              "selling_price": "79.00",
+              "remote_id": "386",
               "image_url": "https://assets.dev.gosharpei.com/products/2706/1729541339_DE-Pins-4.jpg",
               "images": [
                 {
@@ -1775,12 +2285,12 @@
             },
             {
               "pid": "2f6a4095-5a5b-4cde-8875-1099e03811dd",
-              "title": "variantes update / WooCommerce",
-              "SKU": "79",
+              "title": "variantes add one / Divi Engine",
+              "SKU": "78",
               "barcode": "n/a",
               "cost": "0.00",
-              "selling_price": "774.00",
-              "remote_id": "380",
+              "selling_price": "444.00",
+              "remote_id": "379",
               "image_url": "https://assets.dev.gosharpei.com/products/2706/1729541344_DE-Pins-2.jpg",
               "images": [
                 {
@@ -1789,8 +2299,8 @@
                 }
               ],
               "status": {
-                "pid": "bbd48b9d-672a-4f0a-8c54-f51af0b2cdd6",
-                "name": "Draft"
+                "pid": "20ba684b-2d5b-46de-bfc3-07aa6d40caaa",
+                "name": "Active"
               }
             }
           ],
@@ -1802,8 +2312,8 @@
             "x-forwarded-proto": "https",
             "x-forwarded-port": "443",
             "host": "automation.prod.gosharpei.com",
-            "x-amzn-trace-id": "Root=1-6717f8e2-3c0ff3744de6ac845acd51a0",
-            "content-length": "7724",
+            "x-amzn-trace-id": "Root=1-671a9dba-2c1efe061fdf376c287888b1",
+            "content-length": "7935",
             "user-agent": "WooCommerce/9.3.3 Hookshot (WordPress/6.6.2)",
             "accept": "*/*",
             "accept-encoding": "deflate, gzip, br",
@@ -1812,9 +2322,9 @@
             "x-wc-webhook-topic": "product.updated",
             "x-wc-webhook-resource": "product",
             "x-wc-webhook-event": "updated",
-            "x-wc-webhook-signature": "PLVV8HsMMmnekX+6z72tetKYrPwxs8dFsskHQ8Kv5bA=",
+            "x-wc-webhook-signature": "WkwZMEMSRrZXIAqp7HJFbpTXe65SAkwPOOA4aDOtAPo=",
             "x-wc-webhook-id": "41",
-            "x-wc-webhook-delivery-id": "6ceb7c914d28468751d1c71553cca599"
+            "x-wc-webhook-delivery-id": "bcf16850618943ff5fd52010827bb616"
           },
           "params": {},
           "query": {
@@ -1822,13 +2332,13 @@
           },
           "body": {
             "id": 378,
-            "name": "variantes add one",
+            "name": "variantes add one 1",
             "slug": "producto-con-variantes-21-10",
             "permalink": "https://sharpei.wisdmlabs.net/product/producto-con-variantes-21-10/",
             "date_created": "2024-10-21T20:08:43",
             "date_created_gmt": "2024-10-21T20:08:43",
-            "date_modified": "2024-10-22T19:09:05",
-            "date_modified_gmt": "2024-10-22T19:09:05",
+            "date_modified": "2024-10-24T19:16:59",
+            "date_modified_gmt": "2024-10-24T19:16:59",
             "type": "variable",
             "status": "publish",
             "featured": false,
@@ -1905,9 +2415,7 @@
             ],
             "default_attributes": [],
             "variations": [
-              386,
-              379,
-              380
+              386
             ],
             "grouped_products": [],
             "menu_order": 0,
@@ -1942,11 +2450,11 @@
               "canonical": "https://sharpei.wisdmlabs.net/product/producto-con-variantes-21-10/",
               "og_locale": "en_US",
               "og_type": "article",
-              "og_title": "variantes add one - sharpei.wisdmlabs.net",
+              "og_title": "variantes add one 1 - sharpei.wisdmlabs.net",
               "og_description": "variante update desc",
               "og_url": "https://sharpei.wisdmlabs.net/product/producto-con-variantes-21-10/",
               "og_site_name": "sharpei.wisdmlabs.net",
-              "article_modified_time": "2024-10-22T19:09:05+00:00",
+              "article_modified_time": "2024-10-24T19:16:59+00:00",
               "twitter_card": "summary_large_image",
               "twitter_misc": {
                 "Est. reading time": "1 minute"
@@ -1958,12 +2466,12 @@
                     "@type": "WebPage",
                     "@id": "https://sharpei.wisdmlabs.net/product/producto-con-variantes-21-10/",
                     "url": "https://sharpei.wisdmlabs.net/product/producto-con-variantes-21-10/",
-                    "name": "variantes add one - sharpei.wisdmlabs.net",
+                    "name": "variantes add one 1 - sharpei.wisdmlabs.net",
                     "isPartOf": {
                       "@id": "https://sharpei.wisdmlabs.net/#website"
                     },
                     "datePublished": "2024-10-21T20:08:43+00:00",
-                    "dateModified": "2024-10-22T19:09:05+00:00",
+                    "dateModified": "2024-10-24T19:16:59+00:00",
                     "breadcrumb": {
                       "@id": "https://sharpei.wisdmlabs.net/product/producto-con-variantes-21-10/#breadcrumb"
                     },
@@ -1989,7 +2497,7 @@
                       {
                         "@type": "ListItem",
                         "position": 3,
-                        "name": "variantes add one"
+                        "name": "variantes add one 1"
                       }
                     ]
                   },
