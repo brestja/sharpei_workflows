@@ -4,216 +4,33 @@
   },
   "nodes": [
     {
-      "parameters": {
-        "method": "PUT",
-        "url": "=https://api.{{ $('Get Full Json').item.json.WooCommerce_Body.env }}.gosharpei.com/api/products/{{ $('Create  Product').item.json.data.pid }}/variants/{{ $('Create combination').item.json.data[0].pid }}     ",
-        "sendHeaders": true,
-        "headerParameters": {
-          "parameters": [
-            {
-              "name": "Accept",
-              "value": "application/json"
-            },
-            {
-              "name": "Authorization",
-              "value": "={{ $('Execute Workflow Trigger').item.json.WooCommerce_Body.query.api_key }}"
-            }
-          ]
-        },
-        "sendBody": true,
-        "specifyBody": "json",
-        "jsonBody": "={\n    \"selling_price\": \"{{ $('Create combination').item.json.data[0].selling_price == 0 ? $('Update name1').item.json.price : $('Create combination').item.json.data[0].selling_price }}\",\n    \"title\": \"{{ $('Create combination').item.json.data[0].title }}\",\n    \"remote_id\": \"{{ $('Create combination').item.json.data[0].remote_id }}\",\n    \"status_pid\" : \"{{ $('WooCommerce').item.json.stock_quantity > 0 ? $('Get Status3').item.json.data.status[0].pid : $('Get Status3').item.json.data.status[1].pid }}\",\n    \"cost\": 0,\n    \"SKU\": \"{{ $('WooCommerce').item.json.sku ? $('WooCommerce').item.json.sku : 'n/a' }}\",\n    \"barcode\": \"n/a\"\n\n  }          ",
-        "options": {}
-      },
-      "id": "a6f952db-4561-45d4-b745-27aff96b3ad4",
-      "name": "Update combination",
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.1,
-      "position": [
-        2480,
-        840
-      ],
-      "retryOnFail": true,
-      "maxTries": 2
-    },
-    {
-      "parameters": {
-        "method": "POST",
-        "url": "=https://api.{{ $('Get Full Json').item.json.WooCommerce_Body.env }}.gosharpei.com/api/products/{{ $('Create  Product').item.json.data.pid }}/variants/{{ $('Create combination').item.json.data[0].pid }}/images             ",
-        "sendHeaders": true,
-        "headerParameters": {
-          "parameters": [
-            {
-              "name": "Authorization",
-              "value": "={{ $('Execute Workflow Trigger').item.json.WooCommerce_Body.query.api_key }}"
-            }
-          ]
-        },
-        "sendBody": true,
-        "contentType": "multipart-form-data",
-        "bodyParameters": {
-          "parameters": [
-            {
-              "parameterType": "formBinaryData",
-              "name": "attachment",
-              "inputDataFieldName": "data"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "id": "7865506f-9785-44cc-b100-32e1aaf786a9",
-      "name": "Add Image1",
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.1,
-      "position": [
-        2300,
-        840
-      ],
-      "retryOnFail": true,
-      "maxTries": 2
-    },
-    {
-      "parameters": {
-        "url": "={{ $('WooCommerce').item.json.images[0].src && $('WooCommerce').item.json.images[0].src.length > 0 ? $('WooCommerce').item.json.images[0].src : $('Edit Fields').item.json.body.images[0].url }} ",
-        "options": {}
-      },
-      "id": "e7c3dc5c-32a2-4da1-9b9e-79e55b56f783",
-      "name": "Upload1",
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.1,
-      "position": [
-        2120,
-        840
-      ],
-      "retryOnFail": true,
-      "maxTries": 2
-    },
-    {
-      "parameters": {
-        "method": "POST",
-        "url": "=https://api.{{ $('Get Full Json').item.json.WooCommerce_Body.env }}.gosharpei.com/api/products/{{ $('Create  Product').item.json.data.pid }}/variants/multiple         ",
-        "sendHeaders": true,
-        "headerParameters": {
-          "parameters": [
-            {
-              "name": "Accept",
-              "value": "application/json"
-            },
-            {
-              "name": "Authorization",
-              "value": "={{ $('Execute Workflow Trigger').item.json.WooCommerce_Body.query.api_key }}"
-            }
-          ]
-        },
-        "sendBody": true,
-        "specifyBody": "json",
-        "jsonBody": "=[\n  {\n    \"selling_price\": \"{{ $json.price }}\",\n    \"title\": \"/ {{ $json.attributes[0].option }}\",\n    \"remote_id\": \"{{ $json.id }}\",\n    \"status_pid\" : \"{{ $('Get Status3').item.json.data.status[0].pid }}\",\n    \"cost\": 0,\n    \n    \"SKU\": {{ $json.sku ? $json.sku : '\"n/a\"' }} \n\n  }\n]       \n                  ",
-        "options": {}
-      },
-      "id": "7aff230f-319c-4c29-a4c0-bc8d49e8bb67",
-      "name": "Create combination",
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.1,
-      "position": [
-        1940,
-        840
-      ],
-      "retryOnFail": true,
-      "maxTries": 2
-    },
-    {
-      "parameters": {
-        "operation": "get",
-        "productId": "={{ $json.variations }}"
-      },
-      "id": "95f78b78-fbbe-4b52-b402-812101590026",
-      "name": "WooCommerce",
-      "type": "n8n-nodes-base.wooCommerce",
+      "parameters": {},
+      "id": "ae5122bf-88ce-4957-bc1e-1caba7818f59",
+      "name": "Execute Workflow Trigger",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
       "typeVersion": 1,
       "position": [
-        1760,
-        840
-      ],
-      "credentials": {
-        "wooCommerceApi": {
-          "id": "yF8Z8x2jleeBRXTc",
-          "name": "WooCommerce account 7"
-        }
-      }
+        -120,
+        680
+      ]
     },
     {
       "parameters": {
-        "values": {
-          "number": [
-            {
-              "name": "counter",
-              "value": "={{ $runIndex }}"
-            }
-          ]
-        },
-        "options": {}
+        "jsCode": "return {\n  WooCommerce_Body: items[0].json\n};\n"
       },
-      "id": "7eb09193-8690-417e-a118-8a6ef13dbdd4",
-      "name": "Set6",
-      "type": "n8n-nodes-base.set",
+      "id": "f1737fe3-21ba-406f-990f-ea9524fbafb5",
+      "name": "Get Full Json",
+      "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        1580,
-        840
+        100,
+        680
       ]
-    },
-    {
-      "parameters": {
-        "options": {}
-      },
-      "id": "26a27580-c2ad-4f5d-a841-2b1afae2b438",
-      "name": "Loop Over Items",
-      "type": "n8n-nodes-base.splitInBatches",
-      "typeVersion": 3,
-      "position": [
-        1380,
-        840
-      ]
-    },
-    {
-      "parameters": {
-        "fieldToSplitOut": "variations",
-        "options": {}
-      },
-      "id": "c706ad41-270b-4a76-acc4-f8d3c1355b18",
-      "name": "Split Out",
-      "type": "n8n-nodes-base.splitOut",
-      "typeVersion": 1,
-      "position": [
-        1180,
-        840
-      ]
-    },
-    {
-      "parameters": {
-        "operation": "get",
-        "productId": "={{ $('Execute Workflow Trigger').item.json.WooCommerce_Body.body.id }}"
-      },
-      "id": "f5cb74da-852e-429b-866e-25b0e8f08ebc",
-      "name": "WooCommerce1",
-      "type": "n8n-nodes-base.wooCommerce",
-      "typeVersion": 1,
-      "position": [
-        1000,
-        840
-      ],
-      "credentials": {
-        "wooCommerceApi": {
-          "id": "yF8Z8x2jleeBRXTc",
-          "name": "WooCommerce account 7"
-        }
-      }
     },
     {
       "parameters": {
         "method": "POST",
-        "url": "=https://api.{{ $('Get Full Json').item.json.WooCommerce_Body.env }}.gosharpei.com/api/products  ",
+        "url": "=https://api.{{ $('Execute Workflow Trigger').item.json.env }}.gosharpei.com/api/products  ",
         "sendHeaders": true,
         "headerParameters": {
           "parameters": [
@@ -225,20 +42,20 @@
         },
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={\n  \"title\": \"{{ $('Get Full Json').item.json.WooCommerce_Body.WooCommerce_Body.body.name.replace(/['\"]+/g,'') }}\",\n  \"description_short\": \"{{ $('Get Full Json').item.json.WooCommerce_Body.WooCommerce_Body.body.description.replace(/<[^>]+>/g, '').replace(/\\n/g, ' ') }}\",\n  \"quantity\": \"{{ $('Get Full Json').item.json.WooCommerce_Body.WooCommerce_Body.body.stock_quantity }}\",\n  \"price\": \"{{ $('Get Full Json').item.json.WooCommerce_Body.WooCommerce_Body.body.price }}\",\n  \"status_pid\" : \"{{ $('Get Status3').item.json.data.status[0].pid }}\",\n  \"tags\": [\n    {\n      \"value\": \"WooCommerce\"\n    }\n  ],\n  \"remote_id\": {{ $('Get Full Json').item.json.WooCommerce_Body.WooCommerce_Body.body.id }},\n  \"vendor\": \"\",\n  \"default_variant\": false\n}                    ",
+        "jsonBody": "={\n  \"title\": \"{{ $('Execute Workflow Trigger').item.json.WooCommerce_Body.body.name.replace(/['\"]+/g,'') }}\",\n  \"description_short\": \"{{ $('Execute Workflow Trigger').item.json.WooCommerce_Body.body.description.replace(/<[^>]+>/g, '').replace(/\\n/g, ' ') }}\",\n  \"quantity\": \"{{ $('Execute Workflow Trigger').item.json.WooCommerce_Body.body.stock_quantity }}\",\n  \"price\": \"{{ $('Execute Workflow Trigger').item.json.WooCommerce_Body.body.price }}\",\n  \"status_pid\" : \"{{ $('Execute Workflow Trigger').item.json.WooCommerce_Body.body.stock_quantity > 0 ? $('Get Status3').item.json.data.status[0].pid : $('Get Status3').item.json.data.status[1].pid }}\",\n  \"tags\": [\n    {\n      \"value\": \"Default\"\n    }\n  ],\n  \"remote_id\": {{ $('Execute Workflow Trigger').item.json.WooCommerce_Body.body.id }},\n  \"vendor\": \"\",\n  \"image_url\": \"https://example.com/image.jpg\",\n  \"variants\": [],\n  \"default_variant\": true\n}            ",
         "options": {
           "redirect": {
             "redirect": {}
           }
         }
       },
-      "id": "fb41e556-2a0d-44a1-8305-f955fec14a51",
-      "name": "Create  Product",
+      "id": "1242e10d-22c4-4768-929a-b91eee9ced07",
+      "name": "Create  Product and default variant1",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
         820,
-        840
+        560
       ]
     },
     {
@@ -361,8 +178,161 @@
     },
     {
       "parameters": {
+        "method": "PUT",
+        "url": "=https://api.{{ $('Get Full Json').item.json.WooCommerce_Body.env }}.gosharpei.com/api/products/{{ $('Create  Product').item.json.data.pid }}/variants/{{ $('Create combination').item.json.data[0].pid }}     ",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Accept",
+              "value": "application/json"
+            },
+            {
+              "name": "Authorization",
+              "value": "={{ $('Execute Workflow Trigger').item.json.WooCommerce_Body.query.api_key }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n    \"selling_price\": \"{{ $('Create combination').item.json.data[0].selling_price == 0 ? $('Update name1').item.json.price : $('Create combination').item.json.data[0].selling_price }}\",\n    \"title\": \"{{ $('Create combination').item.json.data[0].title }}\",\n    \"remote_id\": \"{{ $('Create combination').item.json.data[0].remote_id }}\",\n    \"status_pid\" : \"{{ $('WooCommerce').item.json.stock_quantity > 0 ? $('Get Status3').item.json.data.status[0].pid : $('Get Status3').item.json.data.status[1].pid }}\",\n    \"cost\": 0,\n    \"SKU\": \"{{ $('WooCommerce').item.json.sku ? $('WooCommerce').item.json.sku : 'n/a' }}\",\n    \"barcode\": \"n/a\"\n\n  }          ",
+        "options": {}
+      },
+      "id": "a6f952db-4561-45d4-b745-27aff96b3ad4",
+      "name": "Update combination",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        2480,
+        840
+      ],
+      "retryOnFail": true,
+      "maxTries": 2
+    },
+    {
+      "parameters": {
         "method": "POST",
-        "url": "=https://api.{{ $('Execute Workflow Trigger').item.json.env }}.gosharpei.com/api/products  ",
+        "url": "=https://api.{{ $('Get Full Json').item.json.WooCommerce_Body.env }}.gosharpei.com/api/products/{{ $('Create  Product').item.json.data.pid }}/variants/{{ $('Create combination').item.json.data[0].pid }}/images             ",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "={{ $('Execute Workflow Trigger').item.json.WooCommerce_Body.query.api_key }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "multipart-form-data",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "parameterType": "formBinaryData",
+              "name": "attachment",
+              "inputDataFieldName": "data"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "7865506f-9785-44cc-b100-32e1aaf786a9",
+      "name": "Add Image1",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        2300,
+        840
+      ],
+      "retryOnFail": true,
+      "maxTries": 2
+    },
+    {
+      "parameters": {
+        "url": "={{ $('WooCommerce').item.json.images[0].src && $('WooCommerce').item.json.images[0].src.length > 0 ? $('WooCommerce').item.json.images[0].src : $('Edit Fields').item.json.body.images[0].url }} ",
+        "options": {}
+      },
+      "id": "e7c3dc5c-32a2-4da1-9b9e-79e55b56f783",
+      "name": "Upload1",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        2120,
+        840
+      ],
+      "retryOnFail": true,
+      "maxTries": 2
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://api.{{ $('Get Full Json').item.json.WooCommerce_Body.env }}.gosharpei.com/api/products/{{ $('Create  Product').item.json.data.pid }}/variants/multiple         ",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Accept",
+              "value": "application/json"
+            },
+            {
+              "name": "Authorization",
+              "value": "={{ $('Execute Workflow Trigger').item.json.WooCommerce_Body.query.api_key }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "=[\n  {\n    \"selling_price\": \"{{ $json.price }}\",\n    \"title\": \"/ {{ $json.attributes[0].option }}\",\n    \"remote_id\": \"{{ $json.id }}\",\n    \"status_pid\" : \"{{ $('Get Status3').item.json.data.status[0].pid }}\",\n    \"cost\": 0,\n    \n    \"SKU\": {{ $json.sku ? $json.sku : '\"n/a\"' }} \n\n  }\n]       \n                  ",
+        "options": {}
+      },
+      "id": "7aff230f-319c-4c29-a4c0-bc8d49e8bb67",
+      "name": "Create combination",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        1940,
+        840
+      ],
+      "retryOnFail": true,
+      "maxTries": 2
+    },
+    {
+      "parameters": {
+        "values": {
+          "number": [
+            {
+              "name": "counter",
+              "value": "={{ $runIndex }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "7eb09193-8690-417e-a118-8a6ef13dbdd4",
+      "name": "Set6",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [
+        1580,
+        840
+      ]
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "26a27580-c2ad-4f5d-a841-2b1afae2b438",
+      "name": "Loop Over Items",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        1380,
+        840
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://api.{{ $('Get Full Json').item.json.WooCommerce_Body.env }}.gosharpei.com/api/products  ",
         "sendHeaders": true,
         "headerParameters": {
           "parameters": [
@@ -374,21 +344,116 @@
         },
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={\n  \"title\": \"{{ $('Execute Workflow Trigger').item.json.WooCommerce_Body.body.name.replace(/['\"]+/g,'') }}\",\n  \"description_short\": \"{{ $('Execute Workflow Trigger').item.json.WooCommerce_Body.body.description.replace(/<[^>]+>/g, '').replace(/\\n/g, ' ') }}\",\n  \"quantity\": \"{{ $('Execute Workflow Trigger').item.json.WooCommerce_Body.body.stock_quantity }}\",\n  \"price\": \"{{ $('Execute Workflow Trigger').item.json.WooCommerce_Body.body.price }}\",\n  \"status_pid\" : \"{{ $('Execute Workflow Trigger').item.json.WooCommerce_Body.body.stock_quantity > 0 ? $('Get Status3').item.json.data.status[0].pid : $('Get Status3').item.json.data.status[1].pid }}\",\n  \"tags\": [\n    {\n      \"value\": \"Default\"\n    }\n  ],\n  \"remote_id\": {{ $('Execute Workflow Trigger').item.json.WooCommerce_Body.body.id }},\n  \"vendor\": \"\",\n  \"image_url\": \"https://example.com/image.jpg\",\n  \"variants\": [],\n  \"default_variant\": true\n}            ",
+        "jsonBody": "={\n  \"title\": \"{{ $('Get Full Json').item.json.WooCommerce_Body.WooCommerce_Body.body.name.replace(/['\"]+/g,'') }}\",\n  \"description_short\": \"{{ $('Get Full Json').item.json.WooCommerce_Body.WooCommerce_Body.body.description.replace(/<[^>]+>/g, '').replace(/\\n/g, ' ') }}\",\n  \"quantity\": \"{{ $('Get Full Json').item.json.WooCommerce_Body.WooCommerce_Body.body.stock_quantity }}\",\n  \"price\": \"{{ $('Get Full Json').item.json.WooCommerce_Body.WooCommerce_Body.body.price }}\",\n  \"status_pid\" : \"{{ $('Get Status3').item.json.data.status[0].pid }}\",\n  \"tags\": [\n    {\n      \"value\": \"WooCommerce\"\n    }\n  ],\n  \"remote_id\": {{ $('Get Full Json').item.json.WooCommerce_Body.WooCommerce_Body.body.id }},\n  \"vendor\": \"\",\n  \"default_variant\": false\n}                    ",
         "options": {
           "redirect": {
             "redirect": {}
           }
         }
       },
-      "id": "1242e10d-22c4-4768-929a-b91eee9ced07",
-      "name": "Create  Product and default variant1",
+      "id": "fb41e556-2a0d-44a1-8305-f955fec14a51",
+      "name": "Create  Product",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
         820,
-        560
+        840
       ]
+    },
+    {
+      "parameters": {
+        "url": "=https://api.{{ $json.WooCommerce_Body.env }}.gosharpei.com/api/status  ",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "type",
+              "value": "product"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "user-agent",
+              "value": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36"
+            }
+          ]
+        },
+        "options": {
+          "batching": {
+            "batch": {
+              "batchSize": 0,
+              "batchInterval": 3000
+            }
+          }
+        }
+      },
+      "id": "c45ee53e-e08e-4bf6-9437-f2a983996e84",
+      "name": "Get Status3",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        300,
+        680
+      ],
+      "retryOnFail": false,
+      "maxTries": 2
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "productId": "={{ $json.variations }}"
+      },
+      "id": "95f78b78-fbbe-4b52-b402-812101590026",
+      "name": "WooCommerce",
+      "type": "n8n-nodes-base.wooCommerce",
+      "typeVersion": 1,
+      "position": [
+        1760,
+        840
+      ],
+      "credentials": {
+        "wooCommerceApi": {
+          "id": "yF8Z8x2jleeBRXTc",
+          "name": "WooCommerce account 7"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "variations",
+        "options": {}
+      },
+      "id": "c706ad41-270b-4a76-acc4-f8d3c1355b18",
+      "name": "Split Out",
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        1180,
+        840
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "productId": "={{ $('Execute Workflow Trigger').item.json.WooCommerce_Body.body.id }}"
+      },
+      "id": "f5cb74da-852e-429b-866e-25b0e8f08ebc",
+      "name": "WooCommerce1",
+      "type": "n8n-nodes-base.wooCommerce",
+      "typeVersion": 1,
+      "position": [
+        1000,
+        840
+      ],
+      "credentials": {
+        "wooCommerceApi": {
+          "id": "yF8Z8x2jleeBRXTc",
+          "name": "WooCommerce account 7"
+        }
+      }
     },
     {
       "parameters": {
@@ -449,74 +514,75 @@
         500,
         680
       ]
-    },
-    {
-      "parameters": {
-        "url": "=https://api.{{ $json.WooCommerce_Body.env }}.gosharpei.com/api/status  ",
-        "sendQuery": true,
-        "queryParameters": {
-          "parameters": [
-            {
-              "name": "type",
-              "value": "product"
-            }
-          ]
-        },
-        "sendHeaders": true,
-        "headerParameters": {
-          "parameters": [
-            {
-              "name": "user-agent",
-              "value": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36"
-            }
-          ]
-        },
-        "options": {
-          "batching": {
-            "batch": {
-              "batchSize": 0,
-              "batchInterval": 3000
-            }
-          }
-        }
-      },
-      "id": "c45ee53e-e08e-4bf6-9437-f2a983996e84",
-      "name": "Get Status3",
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.1,
-      "position": [
-        300,
-        680
-      ],
-      "retryOnFail": false,
-      "maxTries": 2
-    },
-    {
-      "parameters": {
-        "jsCode": "return {\n  WooCommerce_Body: items[0].json\n};\n"
-      },
-      "id": "f1737fe3-21ba-406f-990f-ea9524fbafb5",
-      "name": "Get Full Json",
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        100,
-        680
-      ]
-    },
-    {
-      "parameters": {},
-      "id": "ae5122bf-88ce-4957-bc1e-1caba7818f59",
-      "name": "Execute Workflow Trigger",
-      "type": "n8n-nodes-base.executeWorkflowTrigger",
-      "typeVersion": 1,
-      "position": [
-        -120,
-        680
-      ]
     }
   ],
   "connections": {
+    "Execute Workflow Trigger": {
+      "main": [
+        [
+          {
+            "node": "Get Full Json",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Full Json": {
+      "main": [
+        [
+          {
+            "node": "Get Status3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create  Product and default variant1": {
+      "main": [
+        [
+          {
+            "node": "Get Product by Remote Id",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Add Image2": {
+      "main": [
+        [
+          {
+            "node": "Update a variant1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upload2": {
+      "main": [
+        [
+          {
+            "node": "Add Image2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Product by Remote Id": {
+      "main": [
+        [
+          {
+            "node": "Upload2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
     "Update combination": {
       "main": [
         [
@@ -561,17 +627,6 @@
         ]
       ]
     },
-    "WooCommerce": {
-      "main": [
-        [
-          {
-            "node": "Create combination",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Set6": {
       "main": [
         [
@@ -589,6 +644,39 @@
         [
           {
             "node": "Set6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create  Product": {
+      "main": [
+        [
+          {
+            "node": "WooCommerce1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Status3": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "WooCommerce": {
+      "main": [
+        [
+          {
+            "node": "Create combination",
             "type": "main",
             "index": 0
           }
@@ -617,61 +705,6 @@
         ]
       ]
     },
-    "Create  Product": {
-      "main": [
-        [
-          {
-            "node": "WooCommerce1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Add Image2": {
-      "main": [
-        [
-          {
-            "node": "Update a variant1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Upload2": {
-      "main": [
-        [
-          {
-            "node": "Add Image2",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Get Product by Remote Id": {
-      "main": [
-        [
-          {
-            "node": "Upload2",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Create  Product and default variant1": {
-      "main": [
-        [
-          {
-            "node": "Get Product by Remote Id",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Switch": {
       "main": [
         [
@@ -684,39 +717,6 @@
         [
           {
             "node": "Create  Product",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Get Status3": {
-      "main": [
-        [
-          {
-            "node": "Switch",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Get Full Json": {
-      "main": [
-        [
-          {
-            "node": "Get Status3",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Execute Workflow Trigger": {
-      "main": [
-        [
-          {
-            "node": "Get Full Json",
             "type": "main",
             "index": 0
           }
