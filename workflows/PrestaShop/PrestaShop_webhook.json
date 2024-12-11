@@ -20,7 +20,7 @@
         },
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={\n    \"selling_price\": \"{{ $('Create combination').item.json.data[0].selling_price == 0 ? $('Update name1').item.json.price : $('Create combination').item.json.data[0].selling_price }}\",\n    \"title\": \"{{ $('Create combination').item.json.data[0].title.replace(/['\"]+/g,'').trim() }}\",\n    \"remote_id\": \"{{ $('Create combination').item.json.data[0].remote_id }}\",\n    \"status_pid\" : \"{{ $('Set6').item.json.quantity > 0 ? $('Get Status').item.json.data.status[0].pid : $('Get Status').item.json.data.status[1].pid }}\",\n    \"barcode\":\"{{ $('Update name1').item.json.barcode ? $('Update name1').item.json.barcode : 'n/a' }}\",\n    \"cost\": {{ $('Update name1').item.json.cost }},\n    \"SKU\": \"{{ $('Update name1').item.json.sku ? $('Update name1').item.json.sku : 'n/a' }}\"\n\n  }        ",
+        "jsonBody": "={\n    \"selling_price\": \"{{ $('Create combination').item.json.data[0].selling_price == 0 ? $('Update name1').item.json.price : $('Create combination').item.json.data[0].selling_price }}\",\n    \"title\": \"{{ $('Create combination').item.json.data[0].title.replace(/['\"]+/g,'').trim() }}\",\n    \"remote_id\": \"{{ $('Create combination').item.json.data[0].remote_id }}\",\n    \"status_pid\" : \"{{ $('Update name1').item.json.env === \"prod\" ? ($('Set6').item.json.quantity > 0 ? \"f1554bbc-3159-4044-8974-1da26a573ea3\" : \"8ccef96e-5eb3-4b66-bd16-86fec78ab575\" ) : ($('Update name1').item.json.env === \"dev\" ? ($('Set6').item.json.quantity > 0 ? \"20ba684b-2d5b-46de-bfc3-07aa6d40caaa\" : \"bbd48b9d-672a-4f0a-8c54-f51af0b2cdd6\" ) : \"\" ) }}\",\n    \"barcode\":\"{{ $('Update name1').item.json.barcode ? $('Update name1').item.json.barcode : 'n/a' }}\",\n    \"cost\": {{ $('Update name1').item.json.cost }},\n    \"SKU\": \"{{ $('Update name1').item.json.sku ? $('Update name1').item.json.sku : 'n/a' }}\"\n\n  }        ",
         "options": {}
       },
       "id": "2367d386-df36-422d-b10e-f820739913aa",
@@ -106,7 +106,7 @@
         },
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "=[\n  {\n    \"selling_price\": \"{{ $json.price }}\",\n    \"title\": \"/ {{ $json.attributes.map(attr => attr.attribute).join(' - ').replace(/['\"]+/g,'').trim() }}\",\n    \"remote_id\": \"{{ $json.id_product_attribute }}\",\n    \"status_pid\" : \"{{ $('Code1').item.json.pid }}\",\n    \"cost\": {{ $('Update name1').item.json.cost }},\n    \"barcode\": \"{{ $('Update name1').item.json.barcode ? $('Update name1').item.json.barcode : 'n/a' }}\",\n    \"SKU\": \"{{ $('Update name1').item.json.sku ? $('Update name1').item.json.sku : 'n/a' }}\" \n\n  }\n]       \n              ",
+        "jsonBody": "=[\n  {\n    \"selling_price\": \"{{ $json.price }}\",\n    \"title\": \"/ {{ $json.attributes.map(attr => attr.attribute).join(' - ').replace(/['\"]+/g,'').trim() }}\",\n    \"remote_id\": \"{{ $json.id_product_attribute }}\",\n    \"status_pid\" : \"{{ $('Update name1').item.json.env === \"prod\" ? \"f1554bbc-3159-4044-8974-1da26a573ea3\" : ($('Update name1').item.json.env === \"dev\" ? \"20ba684b-2d5b-46de-bfc3-07aa6d40caaa\" : \"\" ) }}\",\n    \"cost\": {{ $('Update name1').item.json.cost }},\n    \"barcode\": \"{{ $('Update name1').item.json.barcode ? $('Update name1').item.json.barcode : 'n/a' }}\",\n    \"SKU\": \"{{ $('Update name1').item.json.sku ? $('Update name1').item.json.sku : 'n/a' }}\" \n\n  }\n]       \n              ",
         "options": {}
       },
       "id": "d46413dd-5aa1-47c2-aa3b-7728ee568fe7",
@@ -202,12 +202,6 @@
               "type": "string"
             },
             {
-              "id": "25985538-7ac6-4559-9256-d2618f3b6e43",
-              "name": "pid",
-              "value": "={{ $('Code1').item.json.pid }}",
-              "type": "string"
-            },
-            {
               "id": "6d65e2bf-60a4-4f39-8dc7-7cab62b9a213",
               "name": "data.pid",
               "value": "={{ $json.data.pid }}",
@@ -253,7 +247,7 @@
         },
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={\n  \"title\": \"{{ $('Update name1').item.json.name.replace(/['\"]+/g,'').trim() }}\",\n  \"description_short\": \"{{ $('Update name1').item.json.description_short.replace(/['\"]+/g,'').replace(/\\n/g, ' ').trim() }}\",\n  \"quantity\": {{ $('Update name1').item.json.quantity }},\n  \"price\": \"{{ $('Update name1').item.json.price }}\",\n  \"status_pid\" : \"{{ $('Code1').item.json.pid }}\",\n  \"tags\": [\n    {\n      \"value\": \"Combinations\"\n    }\n  ],\n  \"remote_id\": {{ $('Update name1').item.json.id }},\n  \"default_variant\": false\n}         ",
+        "jsonBody": "={\n  \"title\": \"{{ $('Update name1').item.json.name.replace(/['\"]+/g,'').trim() }}\",\n  \"description_short\": \"{{ $('Update name1').item.json.description_short.replace(/['\"]+/g,'').replace(/\\n/g, ' ').replace(/<br\\s*\\/>\\s*<br\\s*\\/>\\*/g, '').replace(/<\\/?p>/g, '').replace(/\\s+/g, ' ').trim() }}\",\n  \"quantity\": {{ $('Update name1').item.json.quantity }},\n  \"price\": \"{{ $('Update name1').item.json.price }}\",\n  \"status_pid\" : \"{{ $('Update name1').item.json.env === \"prod\" ? ($('Update name1').item.json.quantity > 0 ? \"f1554bbc-3159-4044-8974-1da26a573ea3\" : \"8ccef96e-5eb3-4b66-bd16-86fec78ab575\" ) : ($('Update name1').item.json.env === \"dev\" ? ($('Update name1').item.json.quantity > 0 ? \"20ba684b-2d5b-46de-bfc3-07aa6d40caaa\" : \"bbd48b9d-672a-4f0a-8c54-f51af0b2cdd6\" ) : \"\" ) }}\",\n  \"tags\": [\n    {\n      \"value\": \"Combinations\"\n    }\n  ],\n  \"remote_id\": {{ $('Update name1').item.json.id }},\n  \"default_variant\": false\n}          ",
         "options": {
           "redirect": {
             "redirect": {}
@@ -399,8 +393,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        260,
-        1160
+        -120,
+        1200
       ]
     },
     {
@@ -422,7 +416,7 @@
         },
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={\n    \"selling_price\": \"{{ $('Update name1').item.json.price }}\",\n    \"title\": \"{{ $('Update name1').item.json.name.replace(/['\"]+/g,'') }}\",\n    \"remote_id\": \"{{ $('Update name1').item.json.id }}\",\n    \"status_pid\" : \"{{ $($('Update name1').item.json.webhook).item.json.body.stock_available > 0 ? $('Get Status').item.json.data.status[0].pid : $('Get Status').item.json.data.status[1].pid }}\",\n    \"barcode\":\"{{ $('Update name1').item.json.barcode ? $('Update name1').item.json.barcode : 'n/a' }}\",\n    \"cost\": {{ $('Update name1').item.json.cost }},\n    \"SKU\": \"{{ $('Update name1').item.json.sku ? $('Update name1').item.json.sku : 'n/a' }}\"\n\n  }           ",
+        "jsonBody": "={   \n    \"selling_price\": \"{{ $('Update name1').item.json.price }}\",\n    \"title\": \"{{ $('Update name1').item.json.name.replace(/['\"]+/g,'') }}\",\n    \"remote_id\": \"{{ $('Update name1').item.json.id }}\",\n    \"status_pid\" : \"{{ $('Update name1').item.json.env === \"prod\" ? ($('Update name1').item.json.quantity > 0 ? \"f1554bbc-3159-4044-8974-1da26a573ea3\" : \"8ccef96e-5eb3-4b66-bd16-86fec78ab575\" ) : ($('Update name1').item.json.env === \"dev\" ? ($('Update name1').item.json.quantity > 0 ? \"20ba684b-2d5b-46de-bfc3-07aa6d40caaa\" : \"bbd48b9d-672a-4f0a-8c54-f51af0b2cdd6\" ) : \"\" ) }}\",\n    \"barcode\":\"{{ $('Update name1').item.json.barcode ? $('Update name1').item.json.barcode : 'n/a' }}\",\n    \"cost\": {{ $('Update name1').item.json.cost }},\n    \"SKU\": \"{{ $('Update name1').item.json.sku ? $('Update name1').item.json.sku : 'n/a' }}\"\n\n  }           ",
         "options": {}
       },
       "id": "f6b93949-5a9d-43fa-bb34-dad0885a7bc3",
@@ -536,7 +530,7 @@
         },
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={\n  \"title\": \"{{ $('Update name1').item.json.name.replace(/['\"]+/g,'').trim() }}\",\n  \"description_short\": \"{{ $('Update name1').item.json.description_short.replace(/['\"]+/g,'').replace(/\\n/g, ' ').trim() }}\",\n  \"quantity\": \"{{ $('Update name1').item.json.quantity }}\",\n  \"price\": \"{{ $('Update name1').item.json.price }}\",\n  \"status_pid\" : \"{{ $($('Update name1').item.json.webhook).item.json.body.stock_available > 0 ? $('Get Status').item.json.data.status[0].pid : $('Get Status').item.json.data.status[1].pid }}\",\n  \"tags\": [\n    {\n      \"value\": \"Default\"\n    }\n  ],\n  \"remote_id\": {{ $('Update name1').item.json.id }},\n  \"vendor\": \"\",\n  \"image_url\": \"https://example.com/image.jpg\",\n  \"variants\": [],\n  \"default_variant\": true\n}        ",
+        "jsonBody": "={\n  \"title\": \"{{ $('Update name1').item.json.name.replace(/['\"]+/g,'').trim() }}\",\n  \"description_short\": \"{{ $('Update name1').item.json.description_short.replace(/['\"]+/g,'').replace(/\\n/g, ' ').replace(/['\"]+/g,'').replace(/\\n/g, ' ').replace(/<br\\s*\\/>\\s*<br\\s*\\/>\\*/g, '').replace(/<\\/?p>/g, '').replace(/\\s+/g, ' ').trim() }}\",\n  \"quantity\": \"{{ $('Update name1').item.json.quantity }}\",\n  \"price\": \"{{ $('Update name1').item.json.price }}\",\n  \"status_pid\" : \"{{ $('Update name1').item.json.env === \"prod\" ? ($('Update name1').item.json.quantity > 0 ? \"f1554bbc-3159-4044-8974-1da26a573ea3\" : \"8ccef96e-5eb3-4b66-bd16-86fec78ab575\" ) : ($('Update name1').item.json.env === \"dev\" ? ($('Update name1').item.json.quantity > 0 ? \"20ba684b-2d5b-46de-bfc3-07aa6d40caaa\" : \"bbd48b9d-672a-4f0a-8c54-f51af0b2cdd6\" ) : \"\" ) }}\",\n  \"tags\": [\n    {\n      \"value\": \"Default\"\n    }\n  ],\n  \"remote_id\": {{ $('Update name1').item.json.id }},\n  \"vendor\": \"\",\n  \"image_url\": \"https://example.com/image.jpg\",\n  \"variants\": [],\n  \"default_variant\": true\n}        ",
         "options": {
           "redirect": {
             "redirect": {}
@@ -610,7 +604,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        1100,
+        740,
         1020
       ],
       "alwaysOutputData": false,
@@ -628,8 +622,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        780,
-        1020
+        2060,
+        1660
       ]
     },
     {
@@ -666,8 +660,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        620,
-        1020
+        1880,
+        1660
       ],
       "retryOnFail": true,
       "maxTries": 2,
@@ -683,7 +677,7 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        460,
+        140,
         1020
       ],
       "alwaysOutputData": false
@@ -718,8 +712,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        260,
-        880
+        -100,
+        780
       ]
     },
     {
@@ -777,7 +771,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        4280,
+        4320,
         1280
       ],
       "alwaysOutputData": false,
@@ -916,8 +910,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        940,
-        1020
+        2220,
+        1660
       ]
     },
     {
@@ -965,7 +959,7 @@
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2,
       "position": [
-        480,
+        120,
         1400
       ],
       "credentials": {
@@ -1004,8 +998,19 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2,
       "position": [
-        260,
-        1400
+        -360,
+        1640
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "da42a451-be7c-426a-9cc0-223c3dfca3c2",
+      "name": "No Operation, do nothing2",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        1120,
+        840
       ]
     },
     {
@@ -1018,9 +1023,9 @@
           },
           "conditions": [
             {
-              "id": "2edb7676-6add-4485-b75d-b4e375ca5bc6",
-              "leftValue": "={{ $json.headers.authorization }}",
-              "rightValue": "=$2y$10$5jA8vkRILVD1itKS5rDu1OEKt9yfiHOoDMK47xEbTg0AvZZMam.Ue",
+              "id": "276e2c9a-73f3-45ef-999d-6de0bdc55595",
+              "leftValue": "={{ $json.data.status.name }}",
+              "rightValue": "=Archived",
               "operator": {
                 "type": "string",
                 "operation": "equals",
@@ -1032,52 +1037,338 @@
         },
         "options": {}
       },
-      "id": "1b1f3430-6756-4896-91ad-14a96dfec358",
-      "name": "If3",
+      "id": "adebe706-59d4-4c22-b44f-0dbafa366565",
+      "name": "If archived",
       "type": "n8n-nodes-base.if",
       "typeVersion": 2,
       "position": [
-        260,
-        1620
+        940,
+        1020
       ]
     },
     {
       "parameters": {
-        "sendTo": "josebrest25@gmail.com",
-        "subject": "All Zone - Prestashop webhook prod",
-        "message": "={{ $execution.id}}  $2y$10$5jA8vkRILVD1itKS5rDu1OEKt9yfiHOoDMK47xEbTg0AvZZMam.Ue",
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "fa88a073-525d-4e6e-a4e7-60dc8aad0925",
+              "leftValue": "={{ $json.data.variants[0].status.name }}",
+              "rightValue": "Active",
+              "operator": {
+                "type": "string",
+                "operation": "notEquals"
+              }
+            },
+            {
+              "id": "dd478505-87cb-42ff-a3d8-cb3adc5ddd8a",
+              "leftValue": "={{ $json.data.variants[0].status.name }}",
+              "rightValue": "Draft",
+              "operator": {
+                "type": "string",
+                "operation": "notEquals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
         "options": {}
       },
-      "id": "268ae9eb-fc51-465d-981e-01c859cfc97e",
-      "name": "Gmail1",
-      "type": "n8n-nodes-base.gmail",
+      "id": "beb3799f-d707-494e-be76-5fd7618d1694",
+      "name": "If3",
+      "type": "n8n-nodes-base.if",
       "typeVersion": 2,
       "position": [
-        480,
-        1620
+        3040,
+        1020
+      ]
+    },
+    {
+      "parameters": {
+        "errorMessage": "Status in null"
+      },
+      "id": "31dead4f-b806-4bd8-97a4-d53ebee8a616",
+      "name": "Stop and Error1",
+      "type": "n8n-nodes-base.stopAndError",
+      "typeVersion": 1,
+      "position": [
+        3240,
+        920
+      ]
+    },
+    {
+      "parameters": {
+        "errorMessage": "Status in null"
+      },
+      "id": "5cf7145d-4af6-47a4-80e8-9af5d0ade9ec",
+      "name": "Stop and Error2",
+      "type": "n8n-nodes-base.stopAndError",
+      "typeVersion": 1,
+      "position": [
+        4720,
+        1180
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "fa88a073-525d-4e6e-a4e7-60dc8aad0925",
+              "leftValue": "={{ $json.data.variants[$runIndex].status.name }}",
+              "rightValue": "Active",
+              "operator": {
+                "type": "string",
+                "operation": "notEquals"
+              }
+            },
+            {
+              "id": "dd478505-87cb-42ff-a3d8-cb3adc5ddd8a",
+              "leftValue": "={{ $json.data.variants[$runIndex].status.name }}",
+              "rightValue": "Draft",
+              "operator": {
+                "type": "string",
+                "operation": "notEquals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "4cee1cba-56c3-46c4-afe6-3ce1ef8472b6",
+      "name": "If4",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        4520,
+        1280
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "590bd2c1-8644-420d-8c59-3874953992ce",
+              "leftValue": "={{ $json.PrestaShop_Body.PrestaShop_Body.body.id_order }}",
+              "rightValue": "",
+              "operator": {
+                "type": "number",
+                "operation": "notExists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "3aad8735-0743-49f4-9167-39be7e909539",
+      "name": "Order Webhook",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        420,
+        1020
+      ]
+    },
+    {
+      "parameters": {
+        "workflowId": "eYFVVPlOrlSZ5YUy",
+        "options": {}
+      },
+      "id": "bd78b5fc-9db4-4ad3-8bbf-7ac07021a5f6",
+      "name": "Execute Workflow",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1,
+      "position": [
+        740,
+        1280
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "217207d6-d3ec-4b94-a20e-0e1e3f8032e2",
+              "name": "env",
+              "value": "={{ $('Update name1').item.json.env }}",
+              "type": "string"
+            },
+            {
+              "id": "e42977f4-48c6-4913-93e4-0dc4a2dea299",
+              "name": "auth",
+              "value": "={{ $('Update name1').item.json.auth }}",
+              "type": "string"
+            },
+            {
+              "id": "b2ba4dc9-f6b3-456a-b3d0-d864c2d028fc",
+              "name": "PrestaShop_Body.PrestaShop_Body.body.id_order",
+              "value": "={{ $('Update name1').item.json.PrestaShop_Body.PrestaShop_Body.body.id_order }}",
+              "type": "number"
+            },
+            {
+              "id": "9019d583-eeed-4809-8ca2-5ddf23606570",
+              "name": "PrestaShop_Body.PrestaShop_Body.body.status",
+              "value": "={{ $('Update name1').item.json.PrestaShop_Body.PrestaShop_Body.body.status }}",
+              "type": "number"
+            },
+            {
+              "id": "50dbae44-da2e-4587-bca5-811aa7f00c40",
+              "name": "PrestaShop_Body.PrestaShop_Body.body.total",
+              "value": "={{ $json.PrestaShop_Body.PrestaShop_Body.body.total }}",
+              "type": "string"
+            },
+            {
+              "id": "97b7772c-70f0-49fe-9361-925fff7404b3",
+              "name": "PrestaShop_Body.PrestaShop_Body.body.products[0].id_product",
+              "value": "={{ $json.PrestaShop_Body.PrestaShop_Body.body.products[0].id_product }}",
+              "type": "number"
+            },
+            {
+              "id": "9adf29ba-d813-460c-9e75-ad0f6417c228",
+              "name": "PrestaShop_Body.PrestaShop_Body.body.products[0].name",
+              "value": "={{ $json.PrestaShop_Body.PrestaShop_Body.body.products[0].name }}",
+              "type": "string"
+            },
+            {
+              "id": "6196ace6-01ae-481c-9183-4143c5091adc",
+              "name": "PrestaShop_Body.PrestaShop_Body.body.products[0].quantity",
+              "value": "={{ $json.PrestaShop_Body.PrestaShop_Body.body.products[0].quantity }}",
+              "type": "number"
+            },
+            {
+              "id": "d1d97bc2-58a9-4ed2-bc0a-e9737b1fae38",
+              "name": "PrestaShop_Body.PrestaShop_Body.body.products[0].price",
+              "value": "={{ $json.PrestaShop_Body.PrestaShop_Body.body.products[0].price }}",
+              "type": "number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "e3e147fe-58cd-4acb-b895-b322d4c0e144",
+      "name": "Edit Fields3",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        420,
+        1280
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "tableName": "automationCache",
+        "keyConditionExpression": "primKey = :id",
+        "eavUi": {
+          "eavValues": [
+            {
+              "attribute": ":id",
+              "value": "={{$json.secKey}}"
+            }
+          ]
+        },
+        "select": "SPECIFIC_ATTRIBUTES",
+        "options": {
+          "projectionExpression": "secKey"
+        }
+      },
+      "id": "001da01c-6d29-43f1-99a7-33dbdf20dcdb",
+      "name": "Get Remote_id from shop_pid",
+      "type": "n8n-nodes-base.awsDynamoDb",
+      "typeVersion": 1,
+      "position": [
+        -500,
+        1020
       ],
       "credentials": {
-        "gmailOAuth2": {
-          "id": "MMR6YWjk7bfVViQ4",
-          "name": "Gmail account 9"
+        "aws": {
+          "id": "MD1gD1OR4nQFqULd",
+          "name": "AWS account"
         }
       }
     },
     {
       "parameters": {
-        "httpMethod": "POST",
-        "path": "dev-prestashop",
+        "operation": "getAll",
+        "tableName": "automationCache",
+        "keyConditionExpression": "primKey = :id",
+        "eavUi": {
+          "eavValues": [
+            {
+              "attribute": "id",
+              "value": "={{ $json.headers.authorization }}"
+            }
+          ]
+        },
         "options": {}
       },
-      "id": "d5689678-dc9d-4b37-badc-46e27971038e",
-      "name": "Prestashop-Dev",
-      "type": "n8n-nodes-base.webhook",
+      "id": "19b89f4c-73bf-472b-839f-923bc5dcc579",
+      "name": "Get Shop pid from api key",
+      "type": "n8n-nodes-base.awsDynamoDb",
       "typeVersion": 1,
       "position": [
-        60,
-        880
+        -960,
+        920
       ],
-      "webhookId": "ef2312d3-0e66-4613-a1a6-ec797f6c043d"
+      "credentials": {
+        "aws": {
+          "id": "MD1gD1OR4nQFqULd",
+          "name": "AWS account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose"
+          },
+          "conditions": [
+            {
+              "id": "c4884a1a-be36-484c-b93d-9f3327104532",
+              "leftValue": "={{ $json.secKey }}",
+              "rightValue": "={{ $json.secKey }}",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {
+          "looseTypeValidation": true
+        }
+      },
+      "id": "cc68c77e-2ab4-49fb-b6f2-94f2176aabc9",
+      "name": "If5",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        -500,
+        460
+      ]
     },
     {
       "parameters": {
@@ -1090,10 +1381,149 @@
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 1,
       "position": [
-        60,
-        1160
+        -1080,
+        1200
       ],
       "webhookId": "5e39a3fb-9a6a-4544-9457-27a8800a9d45"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "tableName": "automationCache",
+        "keysUi": {
+          "keyValues": [
+            {
+              "key": "=primKey",
+              "value": "={{ $json.secKey }}"
+            },
+            {
+              "key": "secKey",
+              "value": "={{ $('Prestashop-Dev').item.json.body.id }}"
+            }
+          ]
+        },
+        "additionalFields": {
+          "projectionExpression": "secKey"
+        }
+      },
+      "id": "148eec52-148d-4e03-a09b-0f66bc7b428e",
+      "name": "Get Remote_id from shop_pid1",
+      "type": "n8n-nodes-base.awsDynamoDb",
+      "typeVersion": 1,
+      "position": [
+        -720,
+        920
+      ],
+      "credentials": {
+        "aws": {
+          "id": "MD1gD1OR4nQFqULd",
+          "name": "AWS account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "d0b8d0f2-3128-4c7f-a54a-2bd654d8241e",
+              "name": "PrestaShop_Body",
+              "value": "={{ $('Get Full Json1').item.json.PrestaShop_Body }}",
+              "type": "object"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "cd704517-0b28-4ad2-b7c5-0da42695981f",
+      "name": "Edit Fields4",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -260,
+        460
+      ]
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "dev-prestashop",
+        "options": {}
+      },
+      "id": "d5689678-dc9d-4b37-badc-46e27971038e",
+      "name": "Prestashop-Dev",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        -1120,
+        680
+      ],
+      "webhookId": "ef2312d3-0e66-4613-a1a6-ec797f6c043d"
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "tableName": "automationCache",
+        "keyConditionExpression": "primKey = :id",
+        "eavUi": {
+          "eavValues": [
+            {
+              "attribute": "id",
+              "value": "={{ $json.PrestaShop_Body.headers.authorization }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "4c192f60-7da1-471c-b103-10275bf11988",
+      "name": "Get Shop pid from api key1",
+      "type": "n8n-nodes-base.awsDynamoDb",
+      "typeVersion": 1,
+      "position": [
+        -900,
+        460
+      ],
+      "credentials": {
+        "aws": {
+          "id": "MD1gD1OR4nQFqULd",
+          "name": "AWS account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "tableName": "automationCache",
+        "keysUi": {
+          "keyValues": [
+            {
+              "key": "=primKey",
+              "value": "={{ $json.secKey }}"
+            },
+            {
+              "key": "secKey",
+              "value": "={{ $('Prestashop-Dev').item.json.body.id }}"
+            }
+          ]
+        },
+        "additionalFields": {
+          "projectionExpression": "secKey"
+        }
+      },
+      "id": "7dd1ac61-33f5-43d5-be60-eb0c57831565",
+      "name": "Get Remote_id from shop_pid2",
+      "type": "n8n-nodes-base.awsDynamoDb",
+      "typeVersion": 1,
+      "position": [
+        -700,
+        460
+      ],
+      "credentials": {
+        "aws": {
+          "id": "MD1gD1OR4nQFqULd",
+          "name": "AWS account"
+        }
+      }
     }
   ],
   "pinData": {
@@ -1105,18 +1535,18 @@
             "x-forwarded-proto": "https",
             "x-forwarded-port": "443",
             "host": "automation.prod.gosharpei.com",
-            "x-amzn-trace-id": "Root=1-6707f212-136fc67c05dda9c328b9c3f6",
-            "content-length": "11281",
+            "x-amzn-trace-id": "Root=1-67532f94-63f14d000aa62d0f301646e6",
+            "content-length": "12453",
             "accept": "*/*",
             "content-type": "application/json",
-            "authorization": "$2y$10$HJyJLei5Pe5EkOtdTbDf1eGQc.JWCLFhAvoAaGfkYntEUiFFckkDe"
+            "authorization": "$2y$10$UzfjIeYjEdv9S2zvCt15KeVvc729GtDEIhmiieOKsTomLaKD2Ig7S"
           },
           "params": {},
           "query": {
             "create": "true"
           },
           "body": {
-            "id": 80001,
+            "id": 276,
             "*id_lang": null,
             "*lang_associated": null,
             "*id_shop": 1,
@@ -1764,30 +2194,40 @@
             "tax_rate": null,
             "id_manufacturer": 0,
             "id_supplier": 0,
-            "id_category_default": 2,
+            "id_category_default": 11,
             "id_shop_default": 1,
             "manufacturer_name": null,
             "supplier_name": null,
             "name": {
-              "1": "dev flow"
+              "1": "Apple AirPods (2nd Generation) with Lightning Charging Case",
+              "2": "Apple AirPods (2nd Generation)",
+              "3": "Apple AirPods (2nd Generation) with Lightning Charging Case"
             },
             "description": {
-              "1": ""
+              "1": "",
+              "2": "",
+              "3": ""
             },
             "description_short": {
-              "1": ""
+              "1": "",
+              "2": "",
+              "3": ""
             },
             "quantity": 0,
             "minimal_quantity": 1,
             "low_stock_threshold": 0,
             "low_stock_alert": "0",
             "available_now": {
-              "1": ""
+              "1": "",
+              "2": "",
+              "3": ""
             },
             "available_later": {
-              "1": ""
+              "1": "",
+              "2": "",
+              "3": ""
             },
-            "price": "456.000000",
+            "price": "120.000000",
             "specificPrice": 0,
             "additional_shipping_cost": "0.000000",
             "wholesale_price": "0.000000",
@@ -1797,7 +2237,7 @@
             "unit_price": "0.000000",
             "unit_price_ratio": "0.000000",
             "ecotax": "0.000000",
-            "reference": "456",
+            "reference": "",
             "supplier_reference": "",
             "location": "",
             "width": "0.000000",
@@ -1806,19 +2246,27 @@
             "weight": "0.000000",
             "ean13": "",
             "isbn": "",
-            "upc": "789",
+            "upc": "",
             "mpn": "",
             "link_rewrite": {
-              "1": "dev-flow"
+              "1": "apple-airpods-2nd-generation",
+              "2": "apple-airpods-2nd-generation",
+              "3": "apple-airpods-2nd-generation"
             },
             "meta_description": {
-              "1": ""
+              "1": "",
+              "2": "",
+              "3": ""
             },
             "meta_keywords": {
-              "1": ""
+              "1": "",
+              "2": "",
+              "3": ""
             },
             "meta_title": {
-              "1": ""
+              "1": "",
+              "2": "",
+              "3": ""
             },
             "quantity_discount": "0",
             "customizable": 0,
@@ -1835,8 +2283,8 @@
             "show_price": "1",
             "indexed": "1",
             "visibility": "both",
-            "date_add": "2024-10-10 08:23:52",
-            "date_upd": "2024-10-10 08:24:58",
+            "date_add": "2024-10-23 07:55:45",
+            "date_upd": "2024-10-29 04:36:42",
             "tags": null,
             "state": 1,
             "base_price": null,
@@ -1855,77 +2303,29 @@
             "pack_stock_type": 3,
             "additional_delivery_times": 1,
             "delivery_in_stock": {
-              "1": ""
+              "1": "",
+              "2": "",
+              "3": ""
             },
             "delivery_out_stock": {
-              "1": ""
+              "1": "",
+              "2": "",
+              "3": ""
             },
             "product_type": "standard",
-            "stock_available": 2,
+            "stock_available": 74,
             "combinations": [],
             "images": [
               {
-                "id_image": 424,
+                "id_image": 464,
                 "position": 1,
                 "cover": 1,
-                "url": "https://presta.dev.gosharpei.com/424-home_default/247.jpg"
+                "url": "https://presta.dev.gosharpei.com/464-home_default/276.jpg"
               }
             ]
           },
           "webhookUrl": "http://https://automation.prod.gosharpei.com:5678/webhook/dev-prestashop",
           "executionMode": "production"
-        }
-      }
-    ],
-    "PrestaShop": [
-      {
-        "json": {
-          "headers": {
-            "x-forwarded-for": "82.98.157.113",
-            "x-forwarded-proto": "https",
-            "x-forwarded-port": "443",
-            "host": "automation.prod.gosharpei.com",
-            "x-amzn-trace-id": "Root=1-6723c927-7b7187140daff9ad5f214688",
-            "content-length": "14919",
-            "accept": "*/*",
-            "content-type": "application/json",
-            "authorization": "$2y$10$Z.PtkWIp./jqB.JlH5mq2uMvr2ifcAc2RutXhSFljCZvbb8wU9R9i"
-          },
-          "params": {},
-          "query": {
-            "create": "true"
-          },
-          "body": {
-            "name": {
-              "1": "name"
-            },
-            "description": {
-              "1": ""
-            },
-            "description_short": {
-              "1": ""
-            },
-            "quantity": "0",
-            "price": "1342.149000",
-            "wholesale_price": "0.000000",
-            "reference": "",
-            "upc": "",
-            "active": "1",
-            "tags": null,
-            "state": "1",
-            "id_tax_rules_group": "4",
-            "id": 164755,
-            "stock_available": 2,
-            "combinations": [],
-            "images": [
-              {
-                "id_image": "203045",
-                "position": "1",
-                "cover": "1",
-                "url": "https://media1.allzone.es/3637691-small_default/aspiradora-dyson-v15s-detect-submarine-448798-01-nickel-premium-ocasion.jpg"
-              }
-            ]
-          }
         }
       }
     ]
@@ -2149,17 +2549,6 @@
         ]
       ]
     },
-    "Update name1": {
-      "main": [
-        [
-          {
-            "node": "Get Status",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Update a variant1": {
       "main": [
         [
@@ -2222,7 +2611,7 @@
       "main": [
         [
           {
-            "node": "IF",
+            "node": "If archived",
             "type": "main",
             "index": 0
           }
@@ -2245,17 +2634,6 @@
         [
           {
             "node": "Stop and Error",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Edit Fields2": {
-      "main": [
-        [
-          {
-            "node": "Get Product by Remote Id / Json Update Stock3",
             "type": "main",
             "index": 0
           }
@@ -2291,11 +2669,113 @@
         ]
       ]
     },
-    "If2": {
+    "Get Full Json": {
       "main": [
         [
           {
-            "node": "Gmail",
+            "node": "Update name1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If archived": {
+      "main": [
+        [
+          {
+            "node": "No Operation, do nothing2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "IF",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Validate product": {
+      "main": [
+        [
+          {
+            "node": "If3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If3": {
+      "main": [
+        [
+          {
+            "node": "Stop and Error1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If4": {
+      "main": [
+        [
+          {
+            "node": "Stop and Error2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "validate": {
+      "main": [
+        [
+          {
+            "node": "If4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Order Webhook": {
+      "main": [
+        [
+          {
+            "node": "Get Product by Remote Id / Json Update Stock3",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Edit Fields3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields3": {
+      "main": [
+        [
+          {
+            "node": "Execute Workflow",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Shop pid from api key": {
+      "main": [
+        [
+          {
+            "node": "Get Remote_id from shop_pid1",
             "type": "main",
             "index": 0
           }
@@ -2313,33 +2793,22 @@
         ]
       ]
     },
-    "Get Full Json": {
-      "main": [
-        [
-          {
-            "node": "Update name1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "If3": {
-      "main": [
-        [
-          {
-            "node": "Gmail1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Prestashop-Dev": {
       "main": [
         [
           {
             "node": "Get Full Json1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Shop pid from api key1": {
+      "main": [
+        [
+          {
+            "node": "Get Remote_id from shop_pid2",
             "type": "main",
             "index": 0
           }
@@ -2353,14 +2822,15 @@
             "node": "Get Full Json",
             "type": "main",
             "index": 0
-          },
+          }
+        ]
+      ]
+    },
+    "Update name1": {
+      "main": [
+        [
           {
-            "node": "If2",
-            "type": "main",
-            "index": 0
-          },
-          {
-            "node": "If3",
+            "node": "Order Webhook",
             "type": "main",
             "index": 0
           }
@@ -2377,7 +2847,7 @@
     "saveExecutionProgress": true,
     "executionTimeout": 600
   },
-  "versionId": "910d87f2-5b61-43c8-a2c6-4cc5da263d38",
+  "versionId": "fe591483-49af-485b-97af-da5e30a1d79f",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "0c0beacef8877bbf2416eb00f2b5dc96354e26dd1df5517320459b1236860f8c"
