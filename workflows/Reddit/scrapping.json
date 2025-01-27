@@ -1,0 +1,506 @@
+{
+    "meta": {
+      "instanceId": "0c0beacef8877bbf2416eb00f2b5dc96354e26dd1df5517320459b1236860f8c"
+    },
+    "nodes": [
+      {
+        "parameters": {},
+        "id": "083e2e06-6877-4576-af98-fc9f9b76982e",
+        "name": "No Operation, do nothing",
+        "type": "n8n-nodes-base.noOp",
+        "typeVersion": 1,
+        "position": [
+          2200,
+          500
+        ]
+      },
+      {
+        "parameters": {
+          "operation": "append",
+          "documentId": {
+            "__rl": true,
+            "value": "1DRN73-sIcLcSr-45AEc3xR6C-4lwOvffDCiBy3uQ3N8",
+            "mode": "id"
+          },
+          "sheetName": {
+            "__rl": true,
+            "value": "gid=0",
+            "mode": "list",
+            "cachedResultName": "Hoja 1",
+            "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1DRN73-sIcLcSr-45AEc3xR6C-4lwOvffDCiBy3uQ3N8/edit#gid=0"
+          },
+          "columns": {
+            "mappingMode": "defineBelow",
+            "value": {
+              "url": "={{ $('Replace Me').item.json.selftext.match(/\\b(?:https?:\\/\\/|www\\.)[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}\\b/g)[0] }}",
+              "author_fullname": "={{ $('Replace Me').item.json.author_fullname }}",
+              "name": "={{ $('Replace Me').item.json.name }}",
+              "subreddit_type": "={{ $('Replace Me').item.json.subreddit_type }}",
+              "subreddit_id": "={{ $('Replace Me').item.json.subreddit_id }}",
+              "title": "={{ $('Replace Me').item.json.title }}",
+              "Time": "={{$json.fechaHoraActual}}"
+            },
+            "matchingColumns": [
+              "url"
+            ],
+            "schema": [
+              {
+                "id": "url",
+                "displayName": "url",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true,
+                "removed": false
+              },
+              {
+                "id": "author_fullname",
+                "displayName": "author_fullname",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true,
+                "removed": false
+              },
+              {
+                "id": "title",
+                "displayName": "title",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true,
+                "removed": false
+              },
+              {
+                "id": "name",
+                "displayName": "name",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true,
+                "removed": false
+              },
+              {
+                "id": "subreddit_type",
+                "displayName": "subreddit_type",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true,
+                "removed": false
+              },
+              {
+                "id": "subreddit_id",
+                "displayName": "subreddit_id",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true,
+                "removed": false
+              },
+              {
+                "id": "Time",
+                "displayName": "Time",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true,
+                "removed": false
+              }
+            ]
+          },
+          "options": {}
+        },
+        "id": "5d084a02-d77e-46ed-826e-4eb2ce3da59e",
+        "name": "Google Sheets",
+        "type": "n8n-nodes-base.googleSheets",
+        "typeVersion": 4.4,
+        "position": [
+          3040,
+          280
+        ],
+        "credentials": {
+          "googleSheetsOAuth2Api": {
+            "id": "OT8wMWyUPUaPSE6u",
+            "name": "Google Sheets account 5"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "jsCode": "// Crear una función para obtener la hora actual en Bogotá formateada\nfunction obtenerFechaHoraActualBogota() {\n    // Obtener la fecha y hora actual en Bogotá en formato 24 horas\n    let ahora = new Date().toLocaleString(\"en-US\", { \n        timeZone: \"America/Bogota\", \n        hour12: false // Formato 24 horas\n    });\n    \n    ahora = new Date(ahora); // Convertir el string de nuevo a objeto Date\n    \n    // Obtener la fecha\n    let dia = ahora.getDate();\n    let mes = ahora.getMonth() + 1; // Los meses en JavaScript van de 0 a 11\n    let anio = ahora.getFullYear();\n    \n    // Obtener la hora\n    let horas = ahora.getHours();\n    let minutos = ahora.getMinutes();\n    let segundos = ahora.getSeconds();\n    \n    // Asegurarse de que el día, mes, minutos y segundos tengan dos dígitos\n    dia = dia < 10 ? '0' + dia : dia;\n    mes = mes < 10 ? '0' + mes : mes;\n    minutos = minutos < 10 ? '0' + minutos : minutos;\n    segundos = segundos < 10 ? '0' + segundos : segundos;\n    \n    // Formatear la fecha y la hora\n    let fechaActual = `${anio}-${mes}-${dia}`; // Formato YYYY-MM-DD\n    let horaActual = `${horas}:${minutos}:${segundos}`; // Formato HH:MM:SS\n    \n    return {\n        fechaHoraActual: horaActual + ' | ' + fechaActual\n    };\n}\n\n// Iterar sobre los items y añadir la fecha y hora actual de Bogotá a cada uno\nitems.forEach(item => {\n    const fechaHoraActualBogota = obtenerFechaHoraActualBogota();\n    item.json.fechaHoraActual = fechaHoraActualBogota.fechaHoraActual;\n});\n\n// Devolver los items modificados\nreturn items;\n\n\n"
+        },
+        "id": "24d79dac-68a0-4afc-9f55-05f714c3b82f",
+        "name": "Timestamp",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          2820,
+          280
+        ]
+      },
+      {
+        "parameters": {
+          "amount": 3
+        },
+        "id": "60345997-c86a-4fcb-b4c7-9a5b2c068f1a",
+        "name": "Wait",
+        "type": "n8n-nodes-base.wait",
+        "typeVersion": 1.1,
+        "position": [
+          2640,
+          280
+        ],
+        "webhookId": "cdc1dad0-5eec-4a5b-957e-15786a5c33e0"
+      },
+      {
+        "parameters": {
+          "operation": "insert",
+          "collection": "reddit",
+          "fields": "reddit_name",
+          "options": {}
+        },
+        "id": "13befd99-f6a7-467f-9609-80c687b2f81f",
+        "name": "MongoDB",
+        "type": "n8n-nodes-base.mongoDb",
+        "typeVersion": 1.1,
+        "position": [
+          2420,
+          280
+        ],
+        "credentials": {
+          "mongoDb": {
+            "id": "RDx3KTCIp6yJtnXi",
+            "name": "MongoDB account 2"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "8b1ab5cf-bb86-44c1-9fa6-07da6d762106",
+                "name": "reddit_name",
+                "value": "={{ $('Replace Me').item.json.name }}",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "id": "32981e0d-353e-49a6-bdd3-f03991e7235c",
+        "name": "Edit Fields",
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          2200,
+          280
+        ]
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict"
+            },
+            "conditions": [
+              {
+                "id": "ac7cb1d9-fea5-4445-bcdc-e8eac0c41455",
+                "leftValue": "={{ $json }}",
+                "rightValue": "",
+                "operator": {
+                  "type": "object",
+                  "operation": "empty",
+                  "singleValue": true
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "id": "4ecd32ff-97c9-4916-9e02-bd8220eb6e0d",
+        "name": "If",
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2,
+        "position": [
+          1960,
+          280
+        ]
+      },
+      {
+        "parameters": {
+          "collection": "reddit",
+          "options": {},
+          "query": "={\n  \"reddit_name\": \"{{$json.name}}\"\n}"
+        },
+        "id": "9dcad4eb-bd29-4e50-bc9e-fb5d3c68dc07",
+        "name": "MongoDB2",
+        "type": "n8n-nodes-base.mongoDb",
+        "typeVersion": 1.1,
+        "position": [
+          1760,
+          280
+        ],
+        "alwaysOutputData": true,
+        "credentials": {
+          "mongoDb": {
+            "id": "RDx3KTCIp6yJtnXi",
+            "name": "MongoDB account 2"
+          }
+        }
+      },
+      {
+        "parameters": {},
+        "id": "6a6388a1-dc5c-48c6-8d10-284fcf984c5b",
+        "name": "Replace Me",
+        "type": "n8n-nodes-base.noOp",
+        "typeVersion": 1,
+        "position": [
+          1520,
+          280
+        ]
+      },
+      {
+        "parameters": {
+          "options": {}
+        },
+        "id": "49640b72-3e27-4c4e-9186-371f0f320f84",
+        "name": "Loop Over Items",
+        "type": "n8n-nodes-base.splitInBatches",
+        "typeVersion": 3,
+        "position": [
+          1300,
+          280
+        ]
+      },
+      {
+        "parameters": {
+          "fieldToSplitOut": "data",
+          "options": {}
+        },
+        "id": "cf8945d2-7639-4bb2-9fc4-bd6d4d9b4fac",
+        "name": "Split Out",
+        "type": "n8n-nodes-base.splitOut",
+        "typeVersion": 1,
+        "position": [
+          1100,
+          280
+        ]
+      },
+      {
+        "parameters": {
+          "jsCode": "return [\n  {\n    json: {\n      data: items.map(item => item.json)\n    }\n  }\n];\n"
+        },
+        "id": "80a407da-2ac7-48fe-bf39-efdc54f3d5e9",
+        "name": "Code",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          900,
+          280
+        ]
+      },
+      {
+        "parameters": {
+          "operation": "getAll",
+          "subreddit": "reviewmyshopify",
+          "limit": 1,
+          "filters": {
+            "category": "new"
+          }
+        },
+        "id": "949c25e5-1976-49db-aad7-264dfa7caedd",
+        "name": "Reddit",
+        "type": "n8n-nodes-base.reddit",
+        "typeVersion": 1,
+        "position": [
+          700,
+          280
+        ],
+        "credentials": {
+          "redditOAuth2Api": {
+            "id": "qkNblZ8wydxnfihW",
+            "name": "Reddit account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "rule": {
+            "interval": [
+              {
+                "field": "minutes"
+              }
+            ]
+          }
+        },
+        "id": "3b5ef28c-8ac9-4387-96ee-89239a9e6a3c",
+        "name": "Schedule Trigger",
+        "type": "n8n-nodes-base.scheduleTrigger",
+        "typeVersion": 1.2,
+        "position": [
+          480,
+          280
+        ]
+      }
+    ],
+    "connections": {
+      "Timestamp": {
+        "main": [
+          [
+            {
+              "node": "Google Sheets",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Wait": {
+        "main": [
+          [
+            {
+              "node": "Timestamp",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "MongoDB": {
+        "main": [
+          [
+            {
+              "node": "Wait",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Edit Fields": {
+        "main": [
+          [
+            {
+              "node": "MongoDB",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "If": {
+        "main": [
+          [
+            {
+              "node": "Edit Fields",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "No Operation, do nothing",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "MongoDB2": {
+        "main": [
+          [
+            {
+              "node": "If",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Replace Me": {
+        "main": [
+          [
+            {
+              "node": "Loop Over Items",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "MongoDB2",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Loop Over Items": {
+        "main": [
+          null,
+          [
+            {
+              "node": "Replace Me",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Split Out": {
+        "main": [
+          [
+            {
+              "node": "Loop Over Items",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Code": {
+        "main": [
+          [
+            {
+              "node": "Split Out",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Reddit": {
+        "main": [
+          [
+            {
+              "node": "Code",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Schedule Trigger": {
+        "main": [
+          [
+            {
+              "node": "Reddit",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "pinData": {}
+  }

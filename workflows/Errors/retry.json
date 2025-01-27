@@ -1,0 +1,294 @@
+{
+    "meta": {
+      "instanceId": "0c0beacef8877bbf2416eb00f2b5dc96354e26dd1df5517320459b1236860f8c"
+    },
+    "nodes": [
+      {
+        "parameters": {
+          "pollTimes": {
+            "item": [
+              {
+                "mode": "everyMinute"
+              }
+            ]
+          },
+          "documentId": {
+            "__rl": true,
+            "value": "1qL8HIYNjMU3U8JIllIytfpO3zRCuS_TFPMSnRK0Rz14",
+            "mode": "id"
+          },
+          "sheetName": {
+            "__rl": true,
+            "value": 92969872,
+            "mode": "list",
+            "cachedResultName": "status",
+            "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1qL8HIYNjMU3U8JIllIytfpO3zRCuS_TFPMSnRK0Rz14/edit#gid=92969872"
+          },
+          "event": "rowAdded",
+          "options": {}
+        },
+        "id": "0262420a-b31b-43c5-b6c5-36df1f489af6",
+        "name": "Google Sheets Trigger",
+        "type": "n8n-nodes-base.googleSheetsTrigger",
+        "typeVersion": 1,
+        "position": [
+          260,
+          220
+        ],
+        "credentials": {
+          "googleSheetsTriggerOAuth2Api": {
+            "id": "U2BExs9nOq3Ehfac",
+            "name": "Google Sheets Trigger account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "946f1d6f-4126-4796-97c4-f7cc7839b227",
+                "name": "",
+                "value": "",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "id": "3276a30d-76df-4b8f-988f-b7ab4203f45a",
+        "name": "Edit Fields3",
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          1060,
+          220
+        ]
+      },
+      {
+        "parameters": {
+          "options": {}
+        },
+        "id": "3b8e3207-62d8-4ebe-8692-c7e440e50a21",
+        "name": "Loop Over Items1",
+        "type": "n8n-nodes-base.splitInBatches",
+        "typeVersion": 3,
+        "position": [
+          860,
+          220
+        ]
+      },
+      {
+        "parameters": {
+          "fieldToSplitOut": "executions",
+          "options": {}
+        },
+        "id": "63fd4105-25a1-4ad1-b2c7-364e12c1221c",
+        "name": "Split Out1",
+        "type": "n8n-nodes-base.splitOut",
+        "typeVersion": 1,
+        "position": [
+          660,
+          220
+        ]
+      },
+      {
+        "parameters": {
+          "jsCode": "// Asignar el contenido del primer ítem al campo \"executions\"\nconst executions = $input.all();\n\nreturn {\n  json: {\n    executions: executions\n  }\n};\n"
+        },
+        "id": "280fb7e1-cdf3-40f7-a314-e5c2b7e88ea5",
+        "name": "Code",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          460,
+          220
+        ]
+      },
+      {
+        "parameters": {},
+        "id": "af39a7f1-503c-4fe3-9eb8-ca8a9129dfc3",
+        "name": "Wait",
+        "type": "n8n-nodes-base.wait",
+        "typeVersion": 1.1,
+        "position": [
+          1240,
+          220
+        ],
+        "webhookId": "e2eb3cc2-a17a-474e-986b-23f7c74fd0bf"
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "=https://automation.prod.gosharpei.com/api/v1/executions/{{ $('Loop Over Items1').item.json.json.execution_id }}/retry",
+          "sendQuery": true,
+          "queryParameters": {
+            "parameters": [
+              {
+                "name": "includeData",
+                "value": "false"
+              }
+            ]
+          },
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "accept",
+                "value": "application/json"
+              },
+              {
+                "name": "X-N8N-API-KEY",
+                "value": "n8n_api_af5f5f83a6fc38791c2f76626099e6ad08f55a316db2c371fc1830256eb0f132efb5efd1138b2415"
+              },
+              {
+                "name": "browser-id",
+                "value": "0d931e7d-90e7-4ed5-bfef-8493a665e085"
+              },
+              {
+                "name": "cookie",
+                "value": "rl_page_init_referrer=RudderEncrypt%3AU2FsdGVkX1%2BpXya4ui%2Fj6ZwlSw4YKsTOgcB026KT8sc%3D; rl_page_init_referring_domain=RudderEncrypt%3AU2FsdGVkX1%2B8NpXaZBawhnkKeXUNduAzwv1CsLgshoU%3D; _fbp=fb.1.1729043729194.81873881786907228; _hjSessionUser_3582866=eyJpZCI6IjZiYzc5NWUxLTkwMTItNTE5MC05ZDBkLWNjNGYzM2Q1OWZjZSIsImNyZWF0ZWQiOjE3MjkwNDM4NzM0ODksImV4aXN0aW5nIjp0cnVlfQ==; _ga=GA1.1.394611547.1729044373; intercom-device-id-wwq4lzmr=655559ea-38e0-446c-b501-cb88b4ae4b76; n8n-auth=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjE3OTE0NDk0LWQ1NzYtNDYxOC1iMjUyLTQzNTc4NWRkZTExZSIsImhhc2giOiJaOExTcXlSZmZCIiwiYnJvd3NlcklkIjoiWkNIaWFmM1RiUDhoOW9ERWJpek1pSEFmUUUxU2x4dWI4Zm5RaERDM0hjRT0iLCJpYXQiOjE3Mjk4ODU1MTMsImV4cCI6MTczMDQ5MDMxM30.koVKnJ1KJ_jhZWh9SglnfHgakMqMH1tfSqC5c5FiS5g; intercom-session-wwq4lzmr=RVpydzh2NmZJd2huYStieC9MUnNMVGtVUmNEVG1xWGZVY0tjY0svWEhZdXlmUGxiZitrZDdOM3p1WjFwcFBQNC0tOGU0aTJ5SG1LZnNXSTBGUHdaVk1JQT09--d6142417bac046b4d323c273e6b592537256f55d; _ga_0000=GS1.1.1730115980.33.0.1730115983.0.0.514939195; _ga_29L79G9076=GS1.1.1730115980.36.0.1730115983.57.0.0; rl_anonymous_id=RudderEncrypt%3AU2FsdGVkX1%2BPPR09v%2BhX2GsKdWrwKRn%2BYDytrjkqW%2BCUVgdkHbAWwjerRom9SNj7vN5XEI%2FlG0IZmfZWMqtfdg%3D%3D; rl_user_id=RudderEncrypt%3AU2FsdGVkX19jIP9Rq3m77TXUutP8tbRHqhyQmELJaA7h%2B0dubnwIp36BaxFkJiHzyGZNkXKSQUHIBxGxabP3ZaQeFsMbi9nL1OkR88KRxCxEaHGLv88ApktUxZXa8Hzr5mbdPPdi7O9jLdB3G%2BVM4mdGikCLCtV0JGJJJghWOmI%3D; rl_trait=RudderEncrypt%3AU2FsdGVkX19EdgrgwjeNJqibGupfDTZXQ4ukej2uZav%2Bc0KtgpXr%2BAJMP%2BbJ%2B304hSnF8CLzpDTJdjTqR%2FoA7ga1wgK1DBf3FA%2Fu4LUL5wGoBIRH3La0ROJhvF%2BbSWVibcVoQOMVnlI203jr5vBk0w%3D%3D; ph_phc_4URIAm1uYfJO7j8kWSe0J8lc8IqnstRLS7Jx8NcakHo_posthog=%7B%22distinct_id%22%3A%220c0beacef8877bbf2416eb00f2b5dc96354e26dd1df5517320459b1236860f8c%2317914494-d576-4618-b252-435785dde11e%22%2C%22%24sesid%22%3A%5B1730122773504%2C%220192d357-7058-7d11-a6a3-96c881be7bc4%22%2C1730122575960%5D%2C%22%24epp%22%3Atrue%7D; rl_session=RudderEncrypt%3AU2FsdGVkX19D%2FoFwqNWfjH7MLqGGb%2B3i7Mk%2FynXGL%2BfIgEtfdWmPjtsohYea%2ByCkUE1zXkd7oW07A3%2FeOCYWozAA647bqMhFr2q6lCvByDl0W%2F55l4JIiEIJ%2FMbU16c4QyaRlqticaAE0qKY7RIV1w%3D%3D"
+              },
+              {
+                "name": "origin",
+                "value": "https://automation.prod.gosharpei.com"
+              },
+              {
+                "name": "priority",
+                "value": "u=1, i"
+              },
+              {
+                "name": "push-ref",
+                "value": "oqwktlxjrg"
+              },
+              {
+                "name": "sec-ch-ua",
+                "value": "\"Chromium\";v=\"130\", \"Google Chrome\";v=\"130\", \"Not?A_Brand\";v=\"99\""
+              },
+              {
+                "name": "sec-ch-ua-mobile",
+                "value": "?0"
+              },
+              {
+                "name": "sec-ch-ua-platform",
+                "value": "\"Windows\""
+              },
+              {
+                "name": "sec-fetch-dest",
+                "value": "empty"
+              },
+              {
+                "name": "sec-fetch-mode",
+                "value": "cors"
+              },
+              {
+                "name": "sec-fetch-site",
+                "value": "same-origin"
+              },
+              {
+                "name": "user-agent",
+                "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "id": "59f27dde-1976-4d88-87d5-00834644c968",
+        "name": "HTTP Request",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          1460,
+          220
+        ]
+      }
+    ],
+    "connections": {
+      "Google Sheets Trigger": {
+        "main": [
+          [
+            {
+              "node": "Code",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Edit Fields3": {
+        "main": [
+          [
+            {
+              "node": "Loop Over Items1",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "Wait",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Loop Over Items1": {
+        "main": [
+          null,
+          [
+            {
+              "node": "Edit Fields3",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Split Out1": {
+        "main": [
+          [
+            {
+              "node": "Loop Over Items1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Code": {
+        "main": [
+          [
+            {
+              "node": "Split Out1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Wait": {
+        "main": [
+          [
+            {
+              "node": "HTTP Request",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "pinData": {
+      "Google Sheets Trigger": [
+        {
+          "url": "http://https://automation.prod.gosharpei.com:5678/workflow/DlpJT9zCwXy94K8M/executions/450073",
+          "execution_id": 450073,
+          "mode": "webhook",
+          "workflow_id": "DlpJT9zCwXy94K8M",
+          "error message": "The service is receiving too many requests from you ",
+          "Last Node Executed": "Get Status",
+          "workflow_name": "🔗 PrestaShop Webhook PROD",
+          "time": "2:01:17 | 2024-09-15"
+        }
+      ]
+    }
+  }

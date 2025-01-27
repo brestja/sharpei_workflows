@@ -1,0 +1,427 @@
+{
+    "meta": {
+      "instanceId": "0c0beacef8877bbf2416eb00f2b5dc96354e26dd1df5517320459b1236860f8c"
+    },
+    "nodes": [
+      {
+        "parameters": {
+          "method": "DELETE",
+          "url": "=https://api.{{ $('Execute Workflow Trigger').item.json.env }}.gosharpei.com/api/products/{{ $('Execute Workflow Trigger').item.json.pid }}/variants/{{ $json[\"duplicates[0].pids\"] }}    ",
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "Accept",
+                "value": "application/json"
+              },
+              {
+                "name": "Authorization",
+                "value": "={{ $('Execute Workflow Trigger').item.json.Authorization }}"
+              }
+            ]
+          },
+          "options": {
+            "redirect": {
+              "redirect": {}
+            }
+          }
+        },
+        "id": "f08222ef-6e55-495f-b170-7afd68a4ce6d",
+        "name": "delete",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          1340,
+          180
+        ],
+        "onError": "continueRegularOutput"
+      },
+      {
+        "parameters": {
+          "options": {}
+        },
+        "id": "dddae00a-b3a1-4307-8881-14b0d4012fd4",
+        "name": "Loop Over Items1",
+        "type": "n8n-nodes-base.splitInBatches",
+        "typeVersion": 3,
+        "position": [
+          1080,
+          180
+        ]
+      },
+      {
+        "parameters": {
+          "fieldToSplitOut": "duplicates[0].pids",
+          "options": {}
+        },
+        "id": "bb6b2044-71c6-44de-b9ba-7a961279fa37",
+        "name": "Split Out1",
+        "type": "n8n-nodes-base.splitOut",
+        "typeVersion": 1,
+        "position": [
+          880,
+          180
+        ]
+      },
+      {
+        "parameters": {
+          "jsCode": "// Obtener el primer item del array y extraer el JSON\nconst input = items[0].json;\n\n// Verificar que 'data' es un objeto y contiene 'products_variants'\nif (input.data && Array.isArray(input.data.products_variants)) {\n    // Obtener el array de variantes\n    const variants = input.data.products_variants;\n\n    // Crear un mapa para contar las ocurrencias de cada remote_id\n    const remoteIdMap = new Map();\n\n    // Contar ocurrencias de cada remote_id\n    variants.forEach(variant => {\n        const remoteId = variant.remote_id;\n        if (remoteId) {\n            if (!remoteIdMap.has(remoteId)) {\n                remoteIdMap.set(remoteId, []);\n            }\n            remoteIdMap.get(remoteId).push(variant.pid);\n        }\n    });\n\n    // Filtrar los remote_id que aparecen más de una vez\n    const duplicates = Array.from(remoteIdMap.entries())\n        .filter(([remoteId, pids]) => pids.length > 1)\n        .map(([remoteId, pids]) => {\n            // Mantener una variante y eliminar las demás\n            const toDelete = pids.slice(1); // Deja la primera variante\n            return { remote_id: remoteId, pids: toDelete };\n        });\n\n    // Retornar los resultados\n    return [{ json: { duplicates } }];\n} else {\n    // Retornar un error si los datos no están en el formato esperado\n    return [{ json: { error: 'Datos no válidos' } }];\n}\n\n"
+        },
+        "id": "8c03e615-ee98-4c47-905a-d1cec526d488",
+        "name": "Code",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          660,
+          180
+        ]
+      },
+      {
+        "parameters": {
+          "url": "=https://api.{{ $json.env }}.gosharpei.com/api/products/{{ $json.pid }}/variants   ",
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "Accept",
+                "value": "application/json"
+              },
+              {
+                "name": "Authorization",
+                "value": "={{ $json.Authorization }}"
+              }
+            ]
+          },
+          "sendBody": true,
+          "bodyParameters": {
+            "parameters": [
+              {}
+            ]
+          },
+          "options": {
+            "redirect": {
+              "redirect": {
+                "followRedirects": false
+              }
+            }
+          }
+        },
+        "id": "c6456659-5c67-4aa9-a673-4346c1c70c1e",
+        "name": "List Variants",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          440,
+          180
+        ]
+      },
+      {
+        "parameters": {},
+        "id": "a3152c31-ff49-4738-aed5-ca1bade2b2d6",
+        "name": "Execute Workflow Trigger",
+        "type": "n8n-nodes-base.executeWorkflowTrigger",
+        "typeVersion": 1,
+        "position": [
+          200,
+          180
+        ]
+      }
+    ],
+    "connections": {
+      "delete": {
+        "main": [
+          [
+            {
+              "node": "Loop Over Items1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Loop Over Items1": {
+        "main": [
+          null,
+          [
+            {
+              "node": "delete",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Split Out1": {
+        "main": [
+          [
+            {
+              "node": "Loop Over Items1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Code": {
+        "main": [
+          [
+            {
+              "node": "Split Out1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "List Variants": {
+        "main": [
+          [
+            {
+              "node": "Code",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Execute Workflow Trigger": {
+        "main": [
+          [
+            {
+              "node": "List Variants",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "pinData": {
+      "List Variants": [
+        {
+          "status": 200,
+          "message": "success",
+          "data": {
+            "products_variants": [
+              {
+                "pid": "16a1f5c6-603a-4bd0-be83-51e80d3ebbff",
+                "title": "Mouse 08/08 / XL - Orange - 80x120cm - 270 gr - GRIP3",
+                "selling_price": "3220.00",
+                "cost": "0.00",
+                "SKU": null,
+                "barcode": null,
+                "updated_at": "2024-08-08T23:55:26.000000Z",
+                "remote_id": "322",
+                "image_url": "https://assetsdev.gosharpei.com/products/2511/1723153701_116.jpg",
+                "product_variant_options": [],
+                "status_pid": "20ba684b-2d5b-46de-bfc3-07aa6d40caaa",
+                "status_slug": "active",
+                "product_pid": "b9689f0f-cfb7-4b4a-b954-6187f5bce5b3",
+                "related_product": ""
+              },
+              {
+                "pid": "a40b3824-9766-4afd-9d75-786403b999c5",
+                "title": "Mouse 08/08 / S - Red - 40x60cm - 300 gr - GRIP2",
+                "selling_price": "3180.00",
+                "cost": "0.00",
+                "SKU": null,
+                "barcode": null,
+                "updated_at": "2024-08-08T23:37:34.000000Z",
+                "remote_id": "318",
+                "image_url": "https://assetsdev.gosharpei.com/products/2511/1723152142_116.jpg",
+                "product_variant_options": [],
+                "status_pid": "c413b8eb-755a-4bc3-85bd-2e5a53e426cf",
+                "status_slug": "inactive",
+                "product_pid": "b9689f0f-cfb7-4b4a-b954-6187f5bce5b3",
+                "related_product": ""
+              },
+              {
+                "pid": "828bcb92-0992-45a0-be06-3553e25dbad8",
+                "title": "Mouse 08/08 / M - Blue - 60x90cm - 270 gr - GRIP3",
+                "selling_price": "3190.00",
+                "cost": "0.00",
+                "SKU": null,
+                "barcode": null,
+                "updated_at": "2024-08-08T23:40:53.000000Z",
+                "remote_id": "319",
+                "image_url": "https://assetsdev.gosharpei.com/products/2511/1723152145_116.jpg",
+                "product_variant_options": [],
+                "status_pid": "c413b8eb-755a-4bc3-85bd-2e5a53e426cf",
+                "status_slug": "inactive",
+                "product_pid": "b9689f0f-cfb7-4b4a-b954-6187f5bce5b3",
+                "related_product": ""
+              },
+              {
+                "pid": "8d3f741f-821b-4fa1-901d-18bb1ab7d189",
+                "title": "Mouse 08/08 / L - Black - 80x120cm - 270 gr - GRIP2",
+                "selling_price": "3200.00",
+                "cost": "0.00",
+                "SKU": null,
+                "barcode": null,
+                "updated_at": "2024-08-08T23:40:53.000000Z",
+                "remote_id": "320",
+                "image_url": "https://assetsdev.gosharpei.com/products/2511/1723152147_116.jpg",
+                "product_variant_options": [],
+                "status_pid": "c413b8eb-755a-4bc3-85bd-2e5a53e426cf",
+                "status_slug": "inactive",
+                "product_pid": "b9689f0f-cfb7-4b4a-b954-6187f5bce5b3",
+                "related_product": ""
+              },
+              {
+                "pid": "bac5ebc5-c543-4166-8732-c38fabb7a2ae",
+                "title": "Mouse 08/08 / Taupe",
+                "selling_price": "0.00",
+                "cost": "0.00",
+                "SKU": null,
+                "barcode": null,
+                "updated_at": "2024-08-08T23:37:34.000000Z",
+                "remote_id": "321",
+                "image_url": "https://assetsdev.gosharpei.com/products/2511/1723152978_116.jpg",
+                "product_variant_options": [],
+                "status_pid": "c413b8eb-755a-4bc3-85bd-2e5a53e426cf",
+                "status_slug": "inactive",
+                "product_pid": "b9689f0f-cfb7-4b4a-b954-6187f5bce5b3",
+                "related_product": ""
+              },
+              {
+                "pid": "a90b28bc-ebc2-490e-b09e-4cd203a573c1",
+                "title": "Mouse 08/08 / Camel",
+                "selling_price": "100.00",
+                "cost": "0.00",
+                "SKU": null,
+                "barcode": null,
+                "updated_at": "2024-08-08T23:55:27.000000Z",
+                "remote_id": "326",
+                "image_url": "https://assetsdev.gosharpei.com/products/2511/1723161131_116.jpg",
+                "product_variant_options": [],
+                "status_pid": "c413b8eb-755a-4bc3-85bd-2e5a53e426cf",
+                "status_slug": "inactive",
+                "product_pid": "b9689f0f-cfb7-4b4a-b954-6187f5bce5b3",
+                "related_product": ""
+              },
+              {
+                "pid": "2542d733-5755-4091-a592-65df704667c9",
+                "title": "Mouse 08/08 / Purple",
+                "selling_price": "0.00",
+                "cost": "0.00",
+                "SKU": null,
+                "barcode": null,
+                "updated_at": "2024-08-08T23:55:29.000000Z",
+                "remote_id": "325",
+                "image_url": "https://assetsdev.gosharpei.com/products/2511/1723161035_116.jpg",
+                "product_variant_options": [],
+                "status_pid": "c413b8eb-755a-4bc3-85bd-2e5a53e426cf",
+                "status_slug": "inactive",
+                "product_pid": "b9689f0f-cfb7-4b4a-b954-6187f5bce5b3",
+                "related_product": ""
+              },
+              {
+                "pid": "a650c48d-d140-42f5-aedf-9afb9bf20f89",
+                "title": "Mouse 08/08 / Beige",
+                "selling_price": "3240.00",
+                "cost": "0.00",
+                "SKU": null,
+                "barcode": null,
+                "updated_at": "2024-08-08T23:55:29.000000Z",
+                "remote_id": "324",
+                "image_url": "https://assetsdev.gosharpei.com/products/2511/1723160622_116.jpg",
+                "product_variant_options": [],
+                "status_pid": "c413b8eb-755a-4bc3-85bd-2e5a53e426cf",
+                "status_slug": "inactive",
+                "product_pid": "b9689f0f-cfb7-4b4a-b954-6187f5bce5b3",
+                "related_product": ""
+              },
+              {
+                "pid": "7f4a1080-66fa-40de-b79f-b96a85b4f5dd",
+                "title": "Mouse 08/08 / Pink",
+                "selling_price": "323.00",
+                "cost": "0.00",
+                "SKU": null,
+                "barcode": null,
+                "updated_at": "2024-08-08T23:55:30.000000Z",
+                "remote_id": "323",
+                "image_url": "https://assetsdev.gosharpei.com/products/2511/1723154624_116.jpg",
+                "product_variant_options": [],
+                "status_pid": "c413b8eb-755a-4bc3-85bd-2e5a53e426cf",
+                "status_slug": "inactive",
+                "product_pid": "b9689f0f-cfb7-4b4a-b954-6187f5bce5b3",
+                "related_product": ""
+              },
+              {
+                "pid": "501443a1-8a0c-463e-8259-9361e430fc96",
+                "title": "Mouse 08/08 / Taupe",
+                "selling_price": "3270.00",
+                "cost": "0.00",
+                "SKU": null,
+                "barcode": null,
+                "updated_at": "2024-08-09T00:00:39.000000Z",
+                "remote_id": "327",
+                "image_url": "https://assetsdev.gosharpei.com/products/2511/1723161638_116.jpg",
+                "product_variant_options": [],
+                "status_pid": "bbd48b9d-672a-4f0a-8c54-f51af0b2cdd6",
+                "status_slug": "Draft",
+                "product_pid": "b9689f0f-cfb7-4b4a-b954-6187f5bce5b3",
+                "related_product": ""
+              },
+              {
+                "pid": "d96c584b-7199-48d5-98a9-5f713979ea11",
+                "title": "Mouse 08/08 / Taupe",
+                "selling_price": "3270.00",
+                "cost": "0.00",
+                "SKU": null,
+                "barcode": null,
+                "updated_at": "2024-08-09T00:00:40.000000Z",
+                "remote_id": "327",
+                "image_url": "https://assetsdev.gosharpei.com/products/2511/1723161639_116.jpg",
+                "product_variant_options": [],
+                "status_pid": "bbd48b9d-672a-4f0a-8c54-f51af0b2cdd6",
+                "status_slug": "Draft",
+                "product_pid": "b9689f0f-cfb7-4b4a-b954-6187f5bce5b3",
+                "related_product": ""
+              },
+              {
+                "pid": "be925400-5d73-4403-89b3-5639ab35bc65",
+                "title": "Mouse 08/08 / Taupe",
+                "selling_price": "3270.00",
+                "cost": "0.00",
+                "SKU": null,
+                "barcode": null,
+                "updated_at": "2024-08-09T00:00:40.000000Z",
+                "remote_id": "327",
+                "image_url": "https://assetsdev.gosharpei.com/products/2511/1723161639_116.jpg",
+                "product_variant_options": [],
+                "status_pid": "bbd48b9d-672a-4f0a-8c54-f51af0b2cdd6",
+                "status_slug": "Draft",
+                "product_pid": "b9689f0f-cfb7-4b4a-b954-6187f5bce5b3",
+                "related_product": ""
+              },
+              {
+                "pid": "726d493f-16c9-4fb1-ac3c-9e1a39cebf78",
+                "title": "Mouse 08/08 / Taupe",
+                "selling_price": "3270.00",
+                "cost": "0.00",
+                "SKU": null,
+                "barcode": null,
+                "updated_at": "2024-08-09T00:00:40.000000Z",
+                "remote_id": "327",
+                "image_url": "https://assetsdev.gosharpei.com/products/2511/1723161639_116.jpg",
+                "product_variant_options": [],
+                "status_pid": "bbd48b9d-672a-4f0a-8c54-f51af0b2cdd6",
+                "status_slug": "Draft",
+                "product_pid": "b9689f0f-cfb7-4b4a-b954-6187f5bce5b3",
+                "related_product": ""
+              }
+            ],
+            "count": 13
+          }
+        }
+      ],
+      "Execute Workflow Trigger": [
+        {
+          "pid": "c7e982de-5dc0-455f-86c3-d1d605fcac42",
+          "Authorization": "$2y$10$Z.PtkWIp./jqB.JlH5mq2uMvr2ifcAc2RutXhSFljCZvbb8wU9R9i",
+          "env": "prod"
+        }
+      ]
+    }
+  }

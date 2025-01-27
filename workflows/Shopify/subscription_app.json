@@ -1,0 +1,188 @@
+{
+    "meta": {
+      "instanceId": "0c0beacef8877bbf2416eb00f2b5dc96354e26dd1df5517320459b1236860f8c"
+    },
+    "nodes": [
+      {
+        "parameters": {
+          "tableId": "subscription_contracts",
+          "fieldsUi": {
+            "fieldValues": [
+              {
+                "fieldId": "id",
+                "fieldValue": "={{ $json.body.id }}"
+              },
+              {
+                "fieldId": "created_at",
+                "fieldValue": "={{$json.fechaHoraActual}}"
+              },
+              {
+                "fieldId": "email",
+                "fieldValue": "={{ $json.body.email }}"
+              },
+              {
+                "fieldId": "first_name",
+                "fieldValue": "={{ $json.body.firstName }}"
+              },
+              {
+                "fieldId": "last_name",
+                "fieldValue": "={{ $json.body.lastName }}"
+              },
+              {
+                "fieldId": "currency_code",
+                "fieldValue": "={{ $json.body.currency_code }}"
+              },
+              {
+                "fieldId": "customer_id",
+                "fieldValue": "={{ $json.body.customer_id }}"
+              },
+              {
+                "fieldId": "status",
+                "fieldValue": "={{ $json.body.status }}"
+              },
+              {
+                "fieldId": "order_id",
+                "fieldValue": "={{ $json.body.origin_order_id }}"
+              },
+              {
+                "fieldId": "metadata",
+                "fieldValue": "={{ $json.body }}"
+              },
+              {
+                "fieldId": "billing_policy",
+                "fieldValue": "={{ $json.body.billing_policy.interval_count }} {{ $json.body.billing_policy.interval }} "
+              },
+              {
+                "fieldId": "delivery_policy",
+                "fieldValue": "={{ $json.body.delivery_policy.interval_count }} {{ $json.body.delivery_policy.interval }}"
+              },
+              {
+                "fieldId": "Url",
+                "fieldValue": "={{ $json.body.primaryDomain.url}} "
+              }
+            ]
+          }
+        },
+        "id": "e98b199d-84f8-433c-9370-d91dcc9d2dfb",
+        "name": "Supabase2",
+        "type": "n8n-nodes-base.supabase",
+        "typeVersion": 1,
+        "position": [
+          960,
+          380
+        ],
+        "credentials": {
+          "supabaseApi": {
+            "id": "MoKGO7mrRJWXYoiT",
+            "name": "Supabase account"
+          }
+        },
+        "onError": "continueRegularOutput"
+      },
+      {
+        "parameters": {
+          "jsCode": "// Crear una función para obtener la hora actual en Bogotá formateada\nfunction obtenerFechaHoraActualBogota() {\n    // Obtener la fecha y hora actual en Bogotá en formato 24 horas\n    let ahora = new Date().toLocaleString(\"en-US\", { \n        timeZone: \"America/Bogota\", \n        hour12: false // Formato 24 horas\n    });\n    \n    ahora = new Date(ahora); // Convertir el string de nuevo a objeto Date\n    \n    // Obtener la fecha\n    let dia = ahora.getDate();\n    let mes = ahora.getMonth() + 1; // Los meses en JavaScript van de 0 a 11\n    let anio = ahora.getFullYear();\n    \n    // Obtener la hora\n    let horas = ahora.getHours();\n    let minutos = ahora.getMinutes();\n    let segundos = ahora.getSeconds();\n    \n    // Asegurarse de que el día, mes, minutos y segundos tengan dos dígitos\n    dia = dia < 10 ? '0' + dia : dia;\n    mes = mes < 10 ? '0' + mes : mes;\n    minutos = minutos < 10 ? '0' + minutos : minutos;\n    segundos = segundos < 10 ? '0' + segundos : segundos;\n    \n    // Formatear la fecha y la hora\n    let fechaActual = `${anio}-${mes}-${dia}`; // Formato YYYY-MM-DD\n    let horaActual = `${horas}:${minutos}:${segundos}`; // Formato HH:MM:SS\n    \n    return {\n        fechaHoraActual: horaActual + ' | ' + fechaActual\n    };\n}\n\n// Iterar sobre los items y añadir la fecha y hora actual de Bogotá a cada uno\nitems.forEach(item => {\n    const fechaHoraActualBogota = obtenerFechaHoraActualBogota();\n    item.json.fechaHoraActual = fechaHoraActualBogota.fechaHoraActual;\n});\n\n// Devolver los items modificados\nreturn items;\n\n\n"
+        },
+        "id": "1b8625f6-c656-4c0c-a588-2e6e42a7ab16",
+        "name": "Timestamp",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          720,
+          380
+        ]
+      },
+      {
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "shopify/subscriptions",
+          "options": {}
+        },
+        "id": "93b9f9b5-0935-41d9-a1f1-b7d2f422b4ca",
+        "name": "Webhook",
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2,
+        "position": [
+          440,
+          380
+        ],
+        "webhookId": "3cae8388-5a01-4b35-b7c2-b2bbe36d6a64"
+      }
+    ],
+    "connections": {
+      "Timestamp": {
+        "main": [
+          [
+            {
+              "node": "Supabase2",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Webhook": {
+        "main": [
+          [
+            {
+              "node": "Timestamp",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "pinData": {
+      "Webhook": [
+        {
+          "headers": {
+            "x-forwarded-for": "52.47.145.100",
+            "x-forwarded-proto": "https",
+            "x-forwarded-port": "443",
+            "host": "automation.prod.gosharpei.com",
+            "x-amzn-trace-id": "Root=1-6793ffd0-220e801e1c093c595e513142",
+            "content-length": "735",
+            "content-type": "application/json",
+            "accept": "*/*",
+            "accept-language": "*",
+            "sec-fetch-mode": "cors",
+            "user-agent": "node",
+            "accept-encoding": "br, gzip, deflate"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "admin_graphql_api_id": "gid://shopify/SubscriptionContract/22562144593",
+            "id": 22562144593,
+            "billing_policy": {
+              "interval": "month",
+              "interval_count": 1,
+              "min_cycles": 1,
+              "max_cycles": null
+            },
+            "currency_code": "EUR",
+            "customer_id": 8541218406737,
+            "admin_graphql_api_customer_id": "gid://shopify/Customer/8541218406737",
+            "delivery_policy": {
+              "interval": "month",
+              "interval_count": 1
+            },
+            "status": "active",
+            "admin_graphql_api_origin_order_id": "gid://shopify/Order/6473593880913",
+            "origin_order_id": 6473593880913,
+            "revision_id": "449346208081",
+            "firstName": "Cansu Naz",
+            "lastName": "Eris",
+            "email": "cansunazeris@gmail.com",
+            "primaryDomain": {
+              "url": "https://oneight.co",
+              "host": "oneight.co"
+            }
+          },
+          "webhookUrl": "http://https://automation.prod.gosharpei.com:5678/webhook/shopify/subscriptions",
+          "executionMode": "production"
+        }
+      ]
+    }
+  }

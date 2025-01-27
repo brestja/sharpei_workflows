@@ -1,0 +1,283 @@
+{
+    "meta": {
+      "instanceId": "0c0beacef8877bbf2416eb00f2b5dc96354e26dd1df5517320459b1236860f8c"
+    },
+    "nodes": [
+      {
+        "parameters": {},
+        "id": "85ced836-96d8-4270-9a6f-8e9c10278b9f",
+        "name": "Execute Workflow Trigger",
+        "type": "n8n-nodes-base.executeWorkflowTrigger",
+        "typeVersion": 1,
+        "position": [
+          660,
+          440
+        ]
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "=https://api.{{ $('Execute Workflow Trigger').item.json.env }}.gosharpei.com/api/orders/status-change ",
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "Accept",
+                "value": "application/json"
+              },
+              {
+                "name": "Authorization",
+                "value": "={{ $('Execute Workflow Trigger').item.json.auth }}"
+              }
+            ]
+          },
+          "sendBody": true,
+          "bodyParameters": {
+            "parameters": [
+              {
+                "name": "order_pid",
+                "value": "={{ $json.data.pid }}"
+              },
+              {
+                "name": "status_pid",
+                "value": "={{ \n  $('Execute Workflow Trigger').item.json.env === \"dev\" \n    ? (\n      $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.status === 2 \n        ? \"209c5281-ea74-4b21-8ae5-a1dae13d75ba\"\n     : $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.status === 3 \n        ? \"b6aea91d-9edc-4477-836d-c737f9a122f8\"\n        : $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.status === 4 \n          ? \"e1af5f74-2f0f-4d02-a73c-a848c15ab5da\"\n          : $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.status === 5 \n            ? \"d74b8952-89f0-471f-b3b3-0301526d981c\"\n            : $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.status === 6 \n              ? \"c3696917-c26e-4baa-98e4-007684892913\"\n              : \"\"\n    ) \n    : \"\" \n}}\n"
+              }
+            ]
+          },
+          "options": {
+            "redirect": {
+              "redirect": {}
+            }
+          }
+        },
+        "id": "b8ba1bb9-fa33-4a93-a06b-738332282737",
+        "name": "Order Status Change",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          1140,
+          440
+        ]
+      },
+      {
+        "parameters": {
+          "url": "=https://api.{{ $json.env }}.gosharpei.com/api/orders/search-by-metafield/{{ $json.PrestaShop_Body.PrestaShop_Body.body.id_order }}",
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "Authorization",
+                "value": "={{ $json.auth }}"
+              }
+            ]
+          },
+          "options": {
+            "redirect": {
+              "redirect": {}
+            }
+          }
+        },
+        "id": "84e54eee-9671-4405-9cf1-a9e17078a9c9",
+        "name": "Get by metafield",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          900,
+          440
+        ],
+        "onError": "continueRegularOutput"
+      },
+      {
+        "parameters": {
+          "operation": "append",
+          "documentId": {
+            "__rl": true,
+            "value": "1ALBrcUt902zdSvwaoec7_v_U3tSt64yGI6WxMrjxCHM",
+            "mode": "id"
+          },
+          "sheetName": {
+            "__rl": true,
+            "value": "gid=0",
+            "mode": "list",
+            "cachedResultName": "Hoja 1",
+            "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ALBrcUt902zdSvwaoec7_v_U3tSt64yGI6WxMrjxCHM/edit#gid=0"
+          },
+          "columns": {
+            "mappingMode": "defineBelow",
+            "value": {
+              "Timestamp": "={{ $json.fechaHoraActual }}",
+              "Order Id ": "={{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.id_order }}",
+              "Status": "={{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.status }}",
+              "Product Name": "={{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.products[0].name }}",
+              "Quantity": "={{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.products[0].quantity }}",
+              "Price": "={{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.products[0].price }}",
+              "Total": "={{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.total }}"
+            },
+            "matchingColumns": [
+              "Timestamp"
+            ],
+            "schema": [
+              {
+                "id": "Timestamp",
+                "displayName": "Timestamp",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true,
+                "removed": false
+              },
+              {
+                "id": "Order Id ",
+                "displayName": "Order Id ",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true,
+                "removed": false
+              },
+              {
+                "id": "Status",
+                "displayName": "Status",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true,
+                "removed": false
+              },
+              {
+                "id": "Product Name",
+                "displayName": "Product Name",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true,
+                "removed": false
+              },
+              {
+                "id": "Quantity",
+                "displayName": "Quantity",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true,
+                "removed": false
+              },
+              {
+                "id": "Price",
+                "displayName": "Price",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true,
+                "removed": false
+              },
+              {
+                "id": "Total",
+                "displayName": "Total",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true,
+                "removed": false
+              }
+            ]
+          },
+          "options": {}
+        },
+        "id": "576c1f05-2202-420a-8d6f-95b7843c4695",
+        "name": "Google Sheets1",
+        "type": "n8n-nodes-base.googleSheets",
+        "typeVersion": 4,
+        "position": [
+          1660,
+          440
+        ],
+        "credentials": {
+          "googleSheetsOAuth2Api": {
+            "id": "OT8wMWyUPUaPSE6u",
+            "name": "Google Sheets account 5"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "jsCode": "// Crear una función para obtener la hora actual en Bogotá formateada\nfunction obtenerFechaHoraActualBogota() {\n    // Obtener la fecha y hora actual en Bogotá en formato 24 horas\n    let ahora = new Date().toLocaleString(\"en-US\", { \n        timeZone: \"America/Bogota\", \n        hour12: false // Formato 24 horas\n    });\n    \n    ahora = new Date(ahora); // Convertir el string de nuevo a objeto Date\n    \n    // Obtener la fecha\n    let dia = ahora.getDate();\n    let mes = ahora.getMonth() + 1; // Los meses en JavaScript van de 0 a 11\n    let anio = ahora.getFullYear();\n    \n    // Obtener la hora\n    let horas = ahora.getHours();\n    let minutos = ahora.getMinutes();\n    let segundos = ahora.getSeconds();\n    \n    // Asegurarse de que el día, mes, minutos y segundos tengan dos dígitos\n    dia = dia < 10 ? '0' + dia : dia;\n    mes = mes < 10 ? '0' + mes : mes;\n    minutos = minutos < 10 ? '0' + minutos : minutos;\n    segundos = segundos < 10 ? '0' + segundos : segundos;\n    \n    // Formatear la fecha y la hora\n    let fechaActual = `${anio}-${mes}-${dia}`; // Formato YYYY-MM-DD\n    let horaActual = `${horas}:${minutos}:${segundos}`; // Formato HH:MM:SS\n    \n    return {\n        fechaHoraActual: horaActual + ' | ' + fechaActual\n    };\n}\n\n// Iterar sobre los items y añadir la fecha y hora actual de Bogotá a cada uno\nitems.forEach(item => {\n    const fechaHoraActualBogota = obtenerFechaHoraActualBogota();\n    item.json.fechaHoraActual = fechaHoraActualBogota.fechaHoraActual;\n});\n\n// Devolver los items modificados\nreturn items;\n\n\n"
+        },
+        "id": "0501dec3-e834-4b0a-aa65-68da08584b2b",
+        "name": "Timestamp",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          1380,
+          440
+        ]
+      }
+    ],
+    "connections": {
+      "Execute Workflow Trigger": {
+        "main": [
+          [
+            {
+              "node": "Get by metafield",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Order Status Change": {
+        "main": [
+          [
+            {
+              "node": "Timestamp",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Get by metafield": {
+        "main": [
+          [
+            {
+              "node": "Order Status Change",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "pinData": {
+      "Execute Workflow Trigger": [
+        {
+          "env": "dev",
+          "auth": "$2y$10$UzfjIeYjEdv9S2zvCt15KeVvc729GtDEIhmiieOKsTomLaKD2Ig7S",
+          "PrestaShop_Body": {
+            "PrestaShop_Body": {
+              "body": {
+                "id_order": 186,
+                "status": 10,
+                "total": "399.000000",
+                "products": [
+                  {
+                    "id_product": 272,
+                    "name": "Apple iPad (10th Generation): with A14 Bionic chip, 10.9-inch Liquid Retina Display, 64GB (Color: Blue)",
+                    "quantity": 1,
+                    "price": 399
+                  }
+                ]
+              }
+            }
+          }
+        }
+      ]
+    }
+  }

@@ -1,5 +1,7 @@
 {
-  "name": "👜 Update PrestaShop Product",
+  "meta": {
+    "instanceId": "0c0beacef8877bbf2416eb00f2b5dc96354e26dd1df5517320459b1236860f8c"
+  },
   "nodes": [
     {
       "parameters": {
@@ -1126,7 +1128,7 @@
     },
     {
       "parameters": {
-        "jsCode": "// Initialize the name field with an empty default value\nlet name = \"\";\nlet description_short = \"\";\n\n// Check if the name field is in object format with an index \"1\"\nif (typeof items[0].json.PrestaShop_Body.PrestaShop_Body.body.name === 'object' && items[0].json.PrestaShop_Body.PrestaShop_Body.body.name.hasOwnProperty(\"1\")) {\n    // Extract the value from index \"1\"\n    name = items[0].json.PrestaShop_Body.PrestaShop_Body.body.name[\"1\"].replace(/[^\\w\\s]/gi, '').replace(/[\"]+/g, '').trim();\n} else if (typeof items[0].json.PrestaShop_Body.PrestaShop_Body.body.name === 'string') {\n    // If it's already in the desired format, assign the value directly\n    name = items[0].json.PrestaShop_Body.PrestaShop_Body.body.name.replace(/[^\\w\\s]/gi, '').replace(/[\"]+/g, '').trim();\n}\n\n// Check if the description_short field is in object format with an index \"1\"\nif (typeof items[0].json.PrestaShop_Body.PrestaShop_Body.body.description_short === 'object' && items[0].json.PrestaShop_Body.PrestaShop_Body.body.description_short.hasOwnProperty(\"1\")) {\n    // Extract the value from index \"1\"\n    description_short = items[0].json.PrestaShop_Body.PrestaShop_Body.body.description_short[\"1\"].replace(/[^\\w\\s]/gi, '').replace(/[\"]+/g, '').trim();\n} else if (typeof items[0].json.PrestaShop_Body.PrestaShop_Body.body.description_short === 'string') {\n    // If it's already in the desired format, assign the value directly\n    description_short = items[0].json.PrestaShop_Body.PrestaShop_Body.body.description_short.replace(/[^\\w\\s]/gi, '').replace(/[\"]+/g, '').trim();\n}\n\n// Return the object with the name field\nreturn {\n    json: {\n        name: name,\n        description_short: description_short\n    }\n};\n\n\n"
+        "jsCode": "// Initialize the name field with an empty default value\nlet name = \"\";\nlet description_short = \"\";\n\n// Check if the name field is in object format with an index \"1\"\nif (typeof items[0].json.PrestaShop_Body.PrestaShop_Body.body.name === 'object' && items[0].json.PrestaShop_Body.PrestaShop_Body.body.name.hasOwnProperty(\"1\")) {\n    // Extract the value from index \"1\"\n    name = items[0].json.PrestaShop_Body.PrestaShop_Body.body.name[\"3\"].replace(/[^\\w\\s]/gi, '').replace(/[\"]+/g, '').trim();\n} else if (typeof items[0].json.PrestaShop_Body.PrestaShop_Body.body.name === 'string') {\n    // If it's already in the desired format, assign the value directly\n    name = items[0].json.PrestaShop_Body.PrestaShop_Body.body.name.replace(/[^\\w\\s]/gi, '').replace(/[\"]+/g, '').trim();\n}\n\n// Check if the description_short field is in object format with an index \"1\"\nif (typeof items[0].json.PrestaShop_Body.PrestaShop_Body.body.description_short === 'object' && items[0].json.PrestaShop_Body.PrestaShop_Body.body.description_short.hasOwnProperty(\"1\")) {\n    // Extract the value from index \"1\"\n    description_short = items[0].json.PrestaShop_Body.PrestaShop_Body.body.description_short[\"1\"].replace(/[^\\w\\s]/gi, '').replace(/[\"]+/g, '').trim();\n} else if (typeof items[0].json.PrestaShop_Body.PrestaShop_Body.body.description_short === 'string') {\n    // If it's already in the desired format, assign the value directly\n    description_short = items[0].json.PrestaShop_Body.PrestaShop_Body.body.description_short.replace(/[^\\w\\s]/gi, '').replace(/[\"]+/g, '').trim();\n}\n\n// Return the object with the name field\nreturn {\n    json: {\n        name: name,\n        description_short: description_short\n    }\n};\n\n\n"
       },
       "id": "79f831fc-50e6-40a4-8788-f1e5d5732d0e",
       "name": "Update name1",
@@ -1210,7 +1212,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        2940,
+        3000,
         -500
       ],
       "retryOnFail": true,
@@ -1243,7 +1245,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        2740,
+        2800,
         -500
       ],
       "retryOnFail": true,
@@ -1754,6 +1756,18 @@
               "name": "PrestaShop_Body.PrestaShop_Body.body.quantity",
               "value": "={{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.quantity }}",
               "type": "number"
+            },
+            {
+              "id": "1f00be75-6f9a-4f5e-a002-e40f7132d388",
+              "name": "={{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.id_product }}",
+              "value": 0,
+              "type": "number"
+            },
+            {
+              "id": "4f564023-1aeb-4d4a-bc72-bc5e1a9e4035",
+              "name": "PrestaShop_Body.PrestaShop_Body.headers.authorization",
+              "value": "={{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.headers.authorization }}",
+              "type": "string"
             }
           ]
         },
@@ -1767,69 +1781,6 @@
         2760,
         460
       ]
-    },
-    {
-      "parameters": {
-        "operation": "append",
-        "documentId": {
-          "__rl": true,
-          "value": "1tpg18UA9Zy_g1VWqzSwu1Gob5g-2g0d1TDJqOWKVncE",
-          "mode": "id"
-        },
-        "sheetName": {
-          "__rl": true,
-          "value": "gid=0",
-          "mode": "list",
-          "cachedResultName": "Quantity Sheet",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1tpg18UA9Zy_g1VWqzSwu1Gob5g-2g0d1TDJqOWKVncE/edit#gid=0"
-        },
-        "columns": {
-          "mappingMode": "defineBelow",
-          "value": {
-            "Stock": "={{ $json.PrestaShop_Body.PrestaShop_Body.body.quantity }}"
-          },
-          "matchingColumns": [
-            "Stock"
-          ],
-          "schema": [
-            {
-              "id": "Stock",
-              "displayName": "Stock",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true,
-              "removed": false
-            },
-            {
-              "id": "Stock Available",
-              "displayName": "Stock Available",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true,
-              "removed": true
-            }
-          ]
-        },
-        "options": {}
-      },
-      "id": "e7da97ed-1343-4a02-afc9-7071c7acc35a",
-      "name": "Google Sheets",
-      "type": "n8n-nodes-base.googleSheets",
-      "typeVersion": 4.4,
-      "position": [
-        3160,
-        460
-      ],
-      "credentials": {
-        "googleSheetsOAuth2Api": {
-          "id": "OT8wMWyUPUaPSE6u",
-          "name": "Google Sheets account 5"
-        }
-      }
     },
     {
       "parameters": {
@@ -1976,11 +1927,10 @@
             {
               "id": "a576428b-ad16-4417-aa93-9a39b1976c21",
               "leftValue": "={{ $('Execute Workflow Trigger').item.json.data.variants[0].image_url }}",
-              "rightValue": "=https://assets.gosharpei.com/placeholders/empty_image.svg",
+              "rightValue": "https://assets.dev.gosharpei.com/placeholders/empty_image.svg",
               "operator": {
                 "type": "string",
-                "operation": "equals",
-                "name": "filter.operator.equals"
+                "operation": "equals"
               }
             }
           ],
@@ -2220,38 +2170,6 @@
     },
     {
       "parameters": {
-        "documentId": {
-          "__rl": true,
-          "value": "1tpg18UA9Zy_g1VWqzSwu1Gob5g-2g0d1TDJqOWKVncE",
-          "mode": "id"
-        },
-        "sheetName": {
-          "__rl": true,
-          "value": "gid=0",
-          "mode": "list",
-          "cachedResultName": "Quantity Sheet",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1tpg18UA9Zy_g1VWqzSwu1Gob5g-2g0d1TDJqOWKVncE/edit#gid=0"
-        },
-        "options": {}
-      },
-      "id": "86eb143a-0925-4560-8e1b-30655048a7cc",
-      "name": "Google Sheets1",
-      "type": "n8n-nodes-base.googleSheets",
-      "typeVersion": 4.4,
-      "position": [
-        2700,
-        120
-      ],
-      "alwaysOutputData": true,
-      "credentials": {
-        "googleSheetsOAuth2Api": {
-          "id": "OT8wMWyUPUaPSE6u",
-          "name": "Google Sheets account 5"
-        }
-      }
-    },
-    {
-      "parameters": {
         "conditions": {
           "options": {
             "caseSensitive": true,
@@ -2362,39 +2280,6 @@
     },
     {
       "parameters": {
-        "operation": "clear",
-        "documentId": {
-          "__rl": true,
-          "value": "1tpg18UA9Zy_g1VWqzSwu1Gob5g-2g0d1TDJqOWKVncE",
-          "mode": "id"
-        },
-        "sheetName": {
-          "__rl": true,
-          "value": "gid=0",
-          "mode": "list",
-          "cachedResultName": "Quantity Sheet",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1tpg18UA9Zy_g1VWqzSwu1Gob5g-2g0d1TDJqOWKVncE/edit#gid=0"
-        },
-        "clear": "specificRange",
-        "range": "A2"
-      },
-      "id": "66e26102-c98b-4de4-b174-85ad66c16edf",
-      "name": "Google Sheets5",
-      "type": "n8n-nodes-base.googleSheets",
-      "typeVersion": 4.4,
-      "position": [
-        2900,
-        200
-      ],
-      "credentials": {
-        "googleSheetsOAuth2Api": {
-          "id": "OT8wMWyUPUaPSE6u",
-          "name": "Google Sheets account 5"
-        }
-      }
-    },
-    {
-      "parameters": {
         "conditions": {
           "options": {
             "caseSensitive": true,
@@ -2425,18 +2310,6 @@
         3440,
         -220
       ]
-    },
-    {
-      "parameters": {},
-      "id": "86199c7d-db9c-498a-a682-49f8ae9b4e15",
-      "name": "Wait",
-      "type": "n8n-nodes-base.wait",
-      "typeVersion": 1.1,
-      "position": [
-        3400,
-        460
-      ],
-      "webhookId": "57969218-41d4-4f8c-8628-e480f12686ca"
     },
     {
       "parameters": {},
@@ -2496,7 +2369,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2,
       "position": [
-        3660,
+        3700,
         -20
       ]
     },
@@ -2547,6 +2420,129 @@
       "position": [
         3640,
         -660
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "insert",
+        "collection": "Stock",
+        "fields": "Stock, Id, auth",
+        "options": {}
+      },
+      "id": "c6d57098-a5b6-4e5c-9b56-28f0092424e7",
+      "name": "MongoDB",
+      "type": "n8n-nodes-base.mongoDb",
+      "typeVersion": 1.1,
+      "position": [
+        3200,
+        460
+      ],
+      "credentials": {
+        "mongoDb": {
+          "id": "RDx3KTCIp6yJtnXi",
+          "name": "MongoDB account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "9d8c6249-0678-4bfa-9c6e-72c1fa876afe",
+              "name": "Stock",
+              "value": "={{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.quantity }}",
+              "type": "number"
+            },
+            {
+              "id": "b42927e2-988e-42c1-be4a-46b65e1dd2f2",
+              "name": "Id",
+              "value": "={{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.id_product }} ",
+              "type": "number"
+            },
+            {
+              "id": "913c84e1-1142-471b-af1f-eff65a6f7372",
+              "name": "auth",
+              "value": "={{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.headers.authorization }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "b2f62d86-6077-49f7-86e5-aaff0404b66d",
+      "name": "Edit Fields9",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2980,
+        460
+      ]
+    },
+    {
+      "parameters": {
+        "collection": "Stock",
+        "options": {},
+        "query": "={\n  \"Id\": {{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.id }},\n \"auth\": \"{{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.headers.authorization }}\"\n}"
+      },
+      "id": "c5de1a61-9595-41f7-846b-f005ccaa4aed",
+      "name": "MongoDB1",
+      "type": "n8n-nodes-base.mongoDb",
+      "typeVersion": 1.1,
+      "position": [
+        3040,
+        -220
+      ],
+      "alwaysOutputData": true,
+      "credentials": {
+        "mongoDb": {
+          "id": "RDx3KTCIp6yJtnXi",
+          "name": "MongoDB account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "collection": "Stock"
+      },
+      "id": "ffc3b913-5c96-4b59-9e0a-7bdb2787bb75",
+      "name": "MongoDB2",
+      "type": "n8n-nodes-base.mongoDb",
+      "typeVersion": 1.1,
+      "position": [
+        3040,
+        100
+      ],
+      "credentials": {
+        "mongoDb": {
+          "id": "RDx3KTCIp6yJtnXi",
+          "name": "MongoDB account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "number": [
+            {
+              "value1": "={{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.id_product}}",
+              "operation": "isEmpty"
+            },
+            {
+              "value1": "={{ $('Execute Workflow Trigger').item.json.data.variants_count }}",
+              "operation": "equal"
+            }
+          ]
+        }
+      },
+      "id": "5dc5798c-1410-4c43-a96c-cc1c0d4c7aa7",
+      "name": "IF equal",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        2540,
+        -500
       ]
     },
     {
@@ -2630,201 +2626,8 @@
         1360,
         -780
       ]
-    },
-    {
-      "parameters": {
-        "operation": "insert",
-        "collection": "Stock",
-        "fields": "Stock",
-        "options": {}
-      },
-      "id": "c6d57098-a5b6-4e5c-9b56-28f0092424e7",
-      "name": "MongoDB",
-      "type": "n8n-nodes-base.mongoDb",
-      "typeVersion": 1.1,
-      "position": [
-        3240,
-        660
-      ],
-      "credentials": {
-        "mongoDb": {
-          "id": "RDx3KTCIp6yJtnXi",
-          "name": "MongoDB account 2"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "assignments": {
-          "assignments": [
-            {
-              "id": "9d8c6249-0678-4bfa-9c6e-72c1fa876afe",
-              "name": "Stock",
-              "value": "={{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.quantity }}",
-              "type": "number"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "id": "b2f62d86-6077-49f7-86e5-aaff0404b66d",
-      "name": "Edit Fields9",
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 3.4,
-      "position": [
-        2960,
-        660
-      ]
-    },
-    {
-      "parameters": {
-        "collection": "Stock",
-        "options": {}
-      },
-      "id": "c5de1a61-9595-41f7-846b-f005ccaa4aed",
-      "name": "MongoDB1",
-      "type": "n8n-nodes-base.mongoDb",
-      "typeVersion": 1.1,
-      "position": [
-        3040,
-        -220
-      ],
-      "alwaysOutputData": true,
-      "credentials": {
-        "mongoDb": {
-          "id": "RDx3KTCIp6yJtnXi",
-          "name": "MongoDB account 2"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "operation": "delete",
-        "collection": "Stock"
-      },
-      "id": "ffc3b913-5c96-4b59-9e0a-7bdb2787bb75",
-      "name": "MongoDB2",
-      "type": "n8n-nodes-base.mongoDb",
-      "typeVersion": 1.1,
-      "position": [
-        3120,
-        180
-      ],
-      "credentials": {
-        "mongoDb": {
-          "id": "RDx3KTCIp6yJtnXi",
-          "name": "MongoDB account 2"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "conditions": {
-          "number": [
-            {
-              "value1": "={{ $('Execute Workflow Trigger').item.json.PrestaShop_Body.PrestaShop_Body.body.id_product}}",
-              "operation": "isEmpty"
-            },
-            {
-              "value1": "={{ $('Execute Workflow Trigger').item.json.data.variants_count }}",
-              "operation": "equal"
-            }
-          ]
-        }
-      },
-      "id": "5dc5798c-1410-4c43-a96c-cc1c0d4c7aa7",
-      "name": "IF equal",
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 1,
-      "position": [
-        2540,
-        -500
-      ]
     }
   ],
-  "pinData": {
-    "Execute Workflow Trigger": [
-      {
-        "json": {
-          "status": 200,
-          "message": "success",
-          "data": {
-            "pid": "00a69700-7e2a-4fe3-9b7a-bb8b19bde8ce",
-            "title": "Test Status",
-            "body": null,
-            "vendor": null,
-            "updated_at": "2024-11-21T16:27:27.000000Z",
-            "created_at": "2024-11-20T17:39:17.000000Z",
-            "remote_id": "289",
-            "variants_count": 1,
-            "image_url": "https://assets.dev.gosharpei.com/products/2769/1732124358_289.jpg",
-            "category": null,
-            "subcategory": null,
-            "tags": [
-              {
-                "pid": "84484947-38f2-408f-952d-60698d7ce44d",
-                "value": "Default"
-              }
-            ],
-            "status": {
-              "pid": "20ba684b-2d5b-46de-bfc3-07aa6d40caaa",
-              "name": "Active"
-            },
-            "variants": [
-              {
-                "pid": "add60182-a3a8-4ecd-9b9c-170f29f5e500",
-                "title": "Test Status",
-                "SKU": "123",
-                "barcode": "456",
-                "cost": "100.00",
-                "selling_price": "1000.00",
-                "remote_id": "289",
-                "image_url": "https://assets.dev.gosharpei.com/products/2769/1732124358_289.jpg",
-                "images": [
-                  {
-                    "pid": "bcc4dd37-c15a-494b-b125-66ed1dec573c",
-                    "url": "https://assets.dev.gosharpei.com/products/2769/1732124358_289.jpg"
-                  }
-                ],
-                "status": {
-                  "pid": "20ba684b-2d5b-46de-bfc3-07aa6d40caaa",
-                  "name": "Active"
-                }
-              }
-            ],
-            "options": []
-          },
-          "PrestaShop_Body": {
-            "PrestaShop_Body": {
-              "headers": {
-                "x-forwarded-for": "44.206.89.54",
-                "x-forwarded-proto": "https",
-                "x-forwarded-port": "443",
-                "host": "automation.prod.gosharpei.com",
-                "x-amzn-trace-id": "Root=1-673f5f65-4ddc781f2b1be77a1df79466",
-                "content-length": "56",
-                "accept": "*/*",
-                "content-type": "application/json",
-                "authorization": "$2y$10$UzfjIeYjEdv9S2zvCt15KeVvc729GtDEIhmiieOKsTomLaKD2Ig7S"
-              },
-              "params": {},
-              "query": {},
-              "body": {
-                "id_product": 289,
-                "id_product_attribute": 0,
-                "quantity": 20
-              },
-              "webhookUrl": "http://https://automation.prod.gosharpei.com:5678/webhook/dev-prestashop",
-              "executionMode": "production"
-            },
-            "env": "dev",
-            "id": 289,
-            "webhook": "Prestashop-Dev"
-          }
-        }
-      }
-    ]
-  },
   "connections": {
     "Edit Fields2": {
       "main": [
@@ -2910,7 +2713,7 @@
     },
     "Loop Over Items1": {
       "main": [
-        [],
+        null,
         [
           {
             "node": "Edit Fields3",
@@ -2989,7 +2792,7 @@
     },
     "Loop Over Items": {
       "main": [
-        [],
+        null,
         [
           {
             "node": "Set6",
@@ -3084,11 +2887,22 @@
         ]
       ]
     },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "If11",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
     "Update a variant7": {
       "main": [
         [
           {
-            "node": "Update Product",
+            "node": "If no image",
             "type": "main",
             "index": 0
           }
@@ -3222,17 +3036,6 @@
         ]
       ]
     },
-    "Edit Fields": {
-      "main": [
-        [
-          {
-            "node": "If11",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Add Image1": {
       "main": [
         [
@@ -3288,11 +3091,16 @@
         ]
       ]
     },
-    "Update Product": {
+    "Update variant": {
       "main": [
         [
           {
-            "node": "If no image",
+            "node": "validate",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Edit Fields8",
             "type": "main",
             "index": 0
           }
@@ -3321,22 +3129,6 @@
         ]
       ]
     },
-    "Update variant": {
-      "main": [
-        [
-          {
-            "node": "validate",
-            "type": "main",
-            "index": 0
-          },
-          {
-            "node": "Edit Fields8",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "If11": {
       "main": [
         [
@@ -3349,6 +3141,17 @@
         [
           {
             "node": "Code2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out2": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items2",
             "type": "main",
             "index": 0
           }
@@ -3373,21 +3176,10 @@
     },
     "Loop Over Items2": {
       "main": [
-        [],
+        null,
         [
           {
             "node": "Edit Fields6",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Split Out2": {
-      "main": [
-        [
-          {
-            "node": "Loop Over Items2",
             "type": "main",
             "index": 0
           }
@@ -3482,22 +3274,11 @@
         ]
       ]
     },
-    "Update Product2": {
-      "main": [
-        [
-          {
-            "node": "If no image1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Update a variant8": {
       "main": [
         [
           {
-            "node": "Update Product2",
+            "node": "If no image1",
             "type": "main",
             "index": 0
           }
@@ -3531,17 +3312,6 @@
         [
           {
             "node": "Update name1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Google Sheets1": {
-      "main": [
-        [
-          {
-            "node": "Google Sheets5",
             "type": "main",
             "index": 0
           }
@@ -3614,6 +3384,13 @@
             "type": "main",
             "index": 0
           }
+        ],
+        [
+          {
+            "node": "If6",
+            "type": "main",
+            "index": 0
+          }
         ]
       ]
     },
@@ -3628,22 +3405,51 @@
         ]
       ]
     },
-    "Check Product Prestashop1": {
+    "Edit Fields8": {
       "main": [
         [
           {
-            "node": "Update Product1",
+            "node": "Execute Workflow1",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Edit Fields8": {
+    "Edit Fields9": {
       "main": [
         [
           {
-            "node": "Execute Workflow1",
+            "node": "MongoDB",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "MongoDB1": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF equal": {
+      "main": [
+        [
+          {
+            "node": "Create Deafault Variant",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "IF equal 1",
             "type": "main",
             "index": 0
           }
@@ -3674,81 +3480,864 @@
           }
         ]
       ]
-    },
-    "Edit Fields9": {
-      "main": [
-        [
-          {
-            "node": "MongoDB",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "MongoDB1": {
-      "main": [
-        [
-          {
-            "node": "MongoDB2",
-            "type": "main",
-            "index": 0
+    }
+  },
+  "pinData": {
+    "Execute Workflow Trigger": [
+      {
+        "status": 200,
+        "message": "success",
+        "data": {
+          "pid": "a54eaa68-4245-4a8c-bf28-a4b9bfb23094",
+          "title": "Apple MacBook Pro 2024 with M4 Pro Chip",
+          "body": "pstrongAbout this itemstrongp pSUPERPOWERED WITH M4 PRO OR M4 MAX  With the M4 Pro or M4 Max chip MacBook Pro gives you impressive performance and power and its designed for Apple Intelligence  If you add autonomy for a whole day and a spectacular Liquid Retina XDR display with up to 1600 nits of peak brightness this laptop is a fullfledged Pro p pCHAMPIONSHIP CHIPS  The M4 Pro chip treads deep into demanding tasks like compiling millions of lines of code And the M4 Max comes out in more advanced processes such as rendering complex 3D contentp",
+          "vendor": null,
+          "updated_at": "2025-01-09T14:42:55.000000Z",
+          "created_at": "2025-01-09T12:27:40.000000Z",
+          "remote_id": "333",
+          "variants_count": 1,
+          "image_url": "https://assets.dev.gosharpei.com/placeholders/empty_image.svg",
+          "category": {
+            "pid": "f9cbaa7d-f4b0-4b48-a450-d8bbff98fed4",
+            "slug": "technology"
           },
-          {
-            "node": "Code",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "IF equal": {
-      "main": [
-        [
-          {
-            "node": "Create Deafault Variant",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "IF equal 1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    }
-  },
-  "active": false,
-  "settings": {
-    "executionOrder": "v1",
-    "timezone": "Pacific/Tahiti",
-    "saveManualExecutions": true,
-    "callerPolicy": "workflowsFromSameOwner",
-    "errorWorkflow": "AdQIUhqaKxjyDzka",
-    "saveExecutionProgress": true,
-    "executionTimeout": 600
-  },
-  "versionId": "23cbd0ce-d042-46ec-ab63-d784a1eef0fa",
-  "meta": {
-    "templateCredsSetupCompleted": true,
-    "instanceId": "0c0beacef8877bbf2416eb00f2b5dc96354e26dd1df5517320459b1236860f8c"
-  },
-  "id": "SjB76PkH2zf2sYxX",
-  "tags": [
-    {
-      "createdAt": "2024-03-26T20:19:24.188Z",
-      "updatedAt": "2024-04-12T13:20:55.855Z",
-      "id": "KZsyDULXgEqSqmXA",
-      "name": "Prestashop"
-    },
-    {
-      "createdAt": "2024-05-09T15:12:09.941Z",
-      "updatedAt": "2024-05-09T15:12:09.941Z",
-      "id": "SjhSJInUwTCnJDeF",
-      "name": "Prod"
-    }
-  ]
+          "subcategory": null,
+          "tags": [
+            {
+              "pid": "f06d46a3-3c60-401d-ac07-74d48ddd6482",
+              "value": "Default"
+            }
+          ],
+          "status": {
+            "pid": "20ba684b-2d5b-46de-bfc3-07aa6d40caaa",
+            "name": "Active"
+          },
+          "variants": [
+            {
+              "pid": "bab0998f-5757-4d50-abaa-4f5eceee931a",
+              "title": "Apple MacBook Pro 2024 with M4 Pro Chip",
+              "SKU": "n/a",
+              "barcode": "n/a",
+              "cost": "0.00",
+              "selling_price": "2449.00",
+              "remote_id": "333",
+              "image_url": "https://assets.dev.gosharpei.com/placeholders/empty_image.svg",
+              "images": [],
+              "status": {
+                "pid": "20ba684b-2d5b-46de-bfc3-07aa6d40caaa",
+                "name": "Active"
+              }
+            }
+          ],
+          "options": []
+        },
+        "PrestaShop_Body": {
+          "PrestaShop_Body": {
+            "headers": {
+              "x-forwarded-for": "44.206.89.54",
+              "x-forwarded-proto": "https",
+              "x-forwarded-port": "443",
+              "host": "automation.prod.gosharpei.com",
+              "x-amzn-trace-id": "Root=1-677fe45b-0456a4f311de7f6c38efb326",
+              "content-length": "12256",
+              "accept": "*/*",
+              "content-type": "application/json",
+              "authorization": "$2y$10$ovUpHzzL9EK54rVQxo.ggurp7h2ygWXMwfLITyu2PtIhraHDPGRQS"
+            },
+            "params": {},
+            "query": {
+              "create": "true"
+            },
+            "body": {
+              "id": 333,
+              "\u0000*\u0000id_lang": null,
+              "\u0000*\u0000lang_associated": null,
+              "\u0000*\u0000id_shop": 1,
+              "id_shop_list": [],
+              "\u0000*\u0000get_shop_from_context": true,
+              "\u0000*\u0000table": "product",
+              "\u0000*\u0000identifier": "id_product",
+              "\u0000*\u0000fieldsRequired": [
+                "price"
+              ],
+              "\u0000*\u0000fieldsSize": {
+                "reference": 64,
+                "supplier_reference": 64,
+                "location": 255,
+                "ean13": 13,
+                "isbn": 32,
+                "upc": 12,
+                "mpn": 40
+              },
+              "\u0000*\u0000fieldsValidate": {
+                "id_shop_default": "isUnsignedId",
+                "id_manufacturer": "isUnsignedId",
+                "id_supplier": "isUnsignedId",
+                "reference": "isReference",
+                "supplier_reference": "isReference",
+                "location": "isString",
+                "width": "isUnsignedFloat",
+                "height": "isUnsignedFloat",
+                "depth": "isUnsignedFloat",
+                "weight": "isUnsignedFloat",
+                "quantity_discount": "isBool",
+                "ean13": "isEan13",
+                "isbn": "isIsbn",
+                "upc": "isUpc",
+                "mpn": "isMpn",
+                "cache_is_pack": "isBool",
+                "cache_has_attachments": "isBool",
+                "is_virtual": "isBool",
+                "state": "isUnsignedId",
+                "additional_delivery_times": "isUnsignedId",
+                "product_type": "isGenericName",
+                "id_category_default": "isUnsignedId",
+                "id_tax_rules_group": "isUnsignedId",
+                "on_sale": "isBool",
+                "online_only": "isBool",
+                "ecotax": "isPrice",
+                "minimal_quantity": "isPositiveInt",
+                "low_stock_threshold": "isInt",
+                "low_stock_alert": "isBool",
+                "price": "isPrice",
+                "wholesale_price": "isPrice",
+                "unity": "isString",
+                "unit_price": "isPrice",
+                "additional_shipping_cost": "isPrice",
+                "customizable": "isUnsignedInt",
+                "text_fields": "isUnsignedInt",
+                "uploadable_files": "isUnsignedInt",
+                "active": "isBool",
+                "redirect_type": "isString",
+                "id_type_redirected": "isUnsignedId",
+                "available_for_order": "isBool",
+                "available_date": "isDateFormat",
+                "show_condition": "isBool",
+                "condition": "isGenericName",
+                "show_price": "isBool",
+                "indexed": "isBool",
+                "visibility": "isProductVisibility",
+                "advanced_stock_management": "isBool",
+                "date_add": "isDate",
+                "date_upd": "isDate",
+                "pack_stock_type": "isUnsignedInt"
+              },
+              "\u0000*\u0000fieldsRequiredLang": [],
+              "\u0000*\u0000fieldsSizeLang": {
+                "delivery_in_stock": 255,
+                "delivery_out_stock": 255,
+                "meta_description": 512,
+                "meta_keywords": 255,
+                "meta_title": 255,
+                "link_rewrite": 128,
+                "name": 128,
+                "available_now": 255,
+                "available_later": 255
+              },
+              "\u0000*\u0000fieldsValidateLang": {
+                "delivery_in_stock": "isGenericName",
+                "delivery_out_stock": "isGenericName",
+                "meta_description": "isGenericName",
+                "meta_keywords": "isGenericName",
+                "meta_title": "isGenericName",
+                "link_rewrite": "isLinkRewrite",
+                "name": "isCatalogName",
+                "description": "isCleanHtml",
+                "description_short": "isCleanHtml",
+                "available_now": "isGenericName",
+                "available_later": "IsGenericName"
+              },
+              "\u0000*\u0000tables": [],
+              "\u0000*\u0000webserviceParameters": {
+                "objectMethods": {
+                  "add": "addWs",
+                  "update": "updateWs"
+                },
+                "objectNodeNames": "products",
+                "fields": {
+                  "id_manufacturer": {
+                    "xlink_resource": "manufacturers"
+                  },
+                  "id_supplier": {
+                    "xlink_resource": "suppliers"
+                  },
+                  "id_category_default": {
+                    "xlink_resource": "categories"
+                  },
+                  "new": [],
+                  "cache_default_attribute": [],
+                  "id_default_image": {
+                    "getter": "getCoverWs",
+                    "setter": "setCoverWs",
+                    "xlink_resource": {
+                      "resourceName": "images",
+                      "subResourceName": "products"
+                    }
+                  },
+                  "id_default_combination": {
+                    "getter": "getWsDefaultCombination",
+                    "setter": "setWsDefaultCombination",
+                    "xlink_resource": {
+                      "resourceName": "combinations"
+                    }
+                  },
+                  "id_tax_rules_group": {
+                    "xlink_resource": {
+                      "resourceName": "tax_rule_groups"
+                    }
+                  },
+                  "position_in_category": {
+                    "getter": "getWsPositionInCategory",
+                    "setter": "setWsPositionInCategory"
+                  },
+                  "manufacturer_name": {
+                    "getter": "getWsManufacturerName",
+                    "setter": false
+                  },
+                  "quantity": {
+                    "getter": false,
+                    "setter": false
+                  },
+                  "type": {
+                    "getter": "getWsType",
+                    "setter": "setWsType"
+                  }
+                },
+                "associations": {
+                  "categories": {
+                    "resource": "category",
+                    "fields": {
+                      "id": {
+                        "required": true
+                      }
+                    }
+                  },
+                  "images": {
+                    "resource": "image",
+                    "fields": {
+                      "id": []
+                    }
+                  },
+                  "combinations": {
+                    "resource": "combination",
+                    "fields": {
+                      "id": {
+                        "required": true
+                      }
+                    }
+                  },
+                  "product_option_values": {
+                    "resource": "product_option_value",
+                    "fields": {
+                      "id": {
+                        "required": true
+                      }
+                    }
+                  },
+                  "product_features": {
+                    "resource": "product_feature",
+                    "fields": {
+                      "id": {
+                        "required": true
+                      },
+                      "id_feature_value": {
+                        "required": true,
+                        "xlink_resource": "product_feature_values"
+                      }
+                    }
+                  },
+                  "tags": {
+                    "resource": "tag",
+                    "fields": {
+                      "id": {
+                        "required": true
+                      }
+                    }
+                  },
+                  "stock_availables": {
+                    "resource": "stock_available",
+                    "fields": {
+                      "id": {
+                        "required": true
+                      },
+                      "id_product_attribute": {
+                        "required": true
+                      }
+                    },
+                    "setter": false
+                  },
+                  "attachments": {
+                    "resource": "attachment",
+                    "api": "attachments",
+                    "fields": {
+                      "id": {
+                        "required": true
+                      }
+                    }
+                  },
+                  "accessories": {
+                    "resource": "product",
+                    "api": "products",
+                    "fields": {
+                      "id": {
+                        "required": true,
+                        "xlink_resource": "products"
+                      }
+                    }
+                  },
+                  "product_bundle": {
+                    "resource": "product",
+                    "api": "products",
+                    "fields": {
+                      "id": {
+                        "required": true
+                      },
+                      "id_product_attribute": [],
+                      "quantity": []
+                    }
+                  }
+                }
+              },
+              "\u0000*\u0000image_dir": null,
+              "\u0000*\u0000image_format": "jpg",
+              "\u0000*\u0000translator": null,
+              "\u0000*\u0000def": {
+                "table": "product",
+                "primary": "id_product",
+                "multilang": true,
+                "multilang_shop": true,
+                "fields": {
+                  "id_shop_default": {
+                    "type": 1,
+                    "validate": "isUnsignedId"
+                  },
+                  "id_manufacturer": {
+                    "type": 1,
+                    "validate": "isUnsignedId"
+                  },
+                  "id_supplier": {
+                    "type": 1,
+                    "validate": "isUnsignedId"
+                  },
+                  "reference": {
+                    "type": 3,
+                    "validate": "isReference",
+                    "size": 64
+                  },
+                  "supplier_reference": {
+                    "type": 3,
+                    "validate": "isReference",
+                    "size": 64
+                  },
+                  "location": {
+                    "type": 3,
+                    "validate": "isString",
+                    "size": 255
+                  },
+                  "width": {
+                    "type": 4,
+                    "validate": "isUnsignedFloat"
+                  },
+                  "height": {
+                    "type": 4,
+                    "validate": "isUnsignedFloat"
+                  },
+                  "depth": {
+                    "type": 4,
+                    "validate": "isUnsignedFloat"
+                  },
+                  "weight": {
+                    "type": 4,
+                    "validate": "isUnsignedFloat"
+                  },
+                  "quantity_discount": {
+                    "type": 2,
+                    "validate": "isBool"
+                  },
+                  "ean13": {
+                    "type": 3,
+                    "validate": "isEan13",
+                    "size": 13
+                  },
+                  "isbn": {
+                    "type": 3,
+                    "validate": "isIsbn",
+                    "size": 32
+                  },
+                  "upc": {
+                    "type": 3,
+                    "validate": "isUpc",
+                    "size": 12
+                  },
+                  "mpn": {
+                    "type": 3,
+                    "validate": "isMpn",
+                    "size": 40
+                  },
+                  "cache_is_pack": {
+                    "type": 2,
+                    "validate": "isBool"
+                  },
+                  "cache_has_attachments": {
+                    "type": 2,
+                    "validate": "isBool"
+                  },
+                  "is_virtual": {
+                    "type": 2,
+                    "validate": "isBool"
+                  },
+                  "state": {
+                    "type": 1,
+                    "validate": "isUnsignedId"
+                  },
+                  "additional_delivery_times": {
+                    "type": 1,
+                    "validate": "isUnsignedId"
+                  },
+                  "delivery_in_stock": {
+                    "type": 3,
+                    "lang": true,
+                    "validate": "isGenericName",
+                    "size": 255
+                  },
+                  "delivery_out_stock": {
+                    "type": 3,
+                    "lang": true,
+                    "validate": "isGenericName",
+                    "size": 255
+                  },
+                  "product_type": {
+                    "type": 3,
+                    "validate": "isGenericName",
+                    "values": [
+                      "standard",
+                      "pack",
+                      "virtual",
+                      "combinations",
+                      ""
+                    ],
+                    "default": ""
+                  },
+                  "id_category_default": {
+                    "type": 1,
+                    "shop": true,
+                    "validate": "isUnsignedId"
+                  },
+                  "id_tax_rules_group": {
+                    "type": 1,
+                    "shop": true,
+                    "validate": "isUnsignedId"
+                  },
+                  "on_sale": {
+                    "type": 2,
+                    "shop": true,
+                    "validate": "isBool"
+                  },
+                  "online_only": {
+                    "type": 2,
+                    "shop": true,
+                    "validate": "isBool"
+                  },
+                  "ecotax": {
+                    "type": 4,
+                    "shop": true,
+                    "validate": "isPrice"
+                  },
+                  "minimal_quantity": {
+                    "type": 1,
+                    "shop": true,
+                    "validate": "isPositiveInt"
+                  },
+                  "low_stock_threshold": {
+                    "type": 1,
+                    "shop": true,
+                    "allow_null": true,
+                    "validate": "isInt"
+                  },
+                  "low_stock_alert": {
+                    "type": 2,
+                    "shop": true,
+                    "validate": "isBool"
+                  },
+                  "price": {
+                    "type": 4,
+                    "shop": true,
+                    "validate": "isPrice",
+                    "required": true
+                  },
+                  "wholesale_price": {
+                    "type": 4,
+                    "shop": true,
+                    "validate": "isPrice"
+                  },
+                  "unity": {
+                    "type": 3,
+                    "shop": true,
+                    "validate": "isString"
+                  },
+                  "unit_price": {
+                    "type": 4,
+                    "shop": true,
+                    "validate": "isPrice"
+                  },
+                  "unit_price_ratio": {
+                    "type": 4,
+                    "shop": true
+                  },
+                  "additional_shipping_cost": {
+                    "type": 4,
+                    "shop": true,
+                    "validate": "isPrice"
+                  },
+                  "customizable": {
+                    "type": 1,
+                    "shop": true,
+                    "validate": "isUnsignedInt"
+                  },
+                  "text_fields": {
+                    "type": 1,
+                    "shop": true,
+                    "validate": "isUnsignedInt"
+                  },
+                  "uploadable_files": {
+                    "type": 1,
+                    "shop": true,
+                    "validate": "isUnsignedInt"
+                  },
+                  "active": {
+                    "type": 2,
+                    "shop": true,
+                    "validate": "isBool"
+                  },
+                  "redirect_type": {
+                    "type": 3,
+                    "shop": true,
+                    "validate": "isString"
+                  },
+                  "id_type_redirected": {
+                    "type": 1,
+                    "shop": true,
+                    "validate": "isUnsignedId"
+                  },
+                  "available_for_order": {
+                    "type": 2,
+                    "shop": true,
+                    "validate": "isBool"
+                  },
+                  "available_date": {
+                    "type": 5,
+                    "shop": true,
+                    "validate": "isDateFormat"
+                  },
+                  "show_condition": {
+                    "type": 2,
+                    "shop": true,
+                    "validate": "isBool"
+                  },
+                  "condition": {
+                    "type": 3,
+                    "shop": true,
+                    "validate": "isGenericName",
+                    "values": [
+                      "new",
+                      "used",
+                      "refurbished"
+                    ],
+                    "default": "new"
+                  },
+                  "show_price": {
+                    "type": 2,
+                    "shop": true,
+                    "validate": "isBool"
+                  },
+                  "indexed": {
+                    "type": 2,
+                    "shop": true,
+                    "validate": "isBool"
+                  },
+                  "visibility": {
+                    "type": 3,
+                    "shop": true,
+                    "validate": "isProductVisibility",
+                    "values": [
+                      "both",
+                      "catalog",
+                      "search",
+                      "none"
+                    ],
+                    "default": "both"
+                  },
+                  "cache_default_attribute": {
+                    "type": 1,
+                    "shop": true
+                  },
+                  "advanced_stock_management": {
+                    "type": 2,
+                    "shop": true,
+                    "validate": "isBool"
+                  },
+                  "date_add": {
+                    "type": 5,
+                    "shop": true,
+                    "validate": "isDate"
+                  },
+                  "date_upd": {
+                    "type": 5,
+                    "shop": true,
+                    "validate": "isDate"
+                  },
+                  "pack_stock_type": {
+                    "type": 1,
+                    "shop": true,
+                    "validate": "isUnsignedInt"
+                  },
+                  "meta_description": {
+                    "type": 3,
+                    "lang": true,
+                    "validate": "isGenericName",
+                    "size": 512
+                  },
+                  "meta_keywords": {
+                    "type": 3,
+                    "lang": true,
+                    "validate": "isGenericName",
+                    "size": 255
+                  },
+                  "meta_title": {
+                    "type": 3,
+                    "lang": true,
+                    "validate": "isGenericName",
+                    "size": 255
+                  },
+                  "link_rewrite": {
+                    "type": 3,
+                    "lang": true,
+                    "validate": "isLinkRewrite",
+                    "required": false,
+                    "size": 128,
+                    "ws_modifier": {
+                      "http_method": 2,
+                      "modifier": "modifierWsLinkRewrite"
+                    }
+                  },
+                  "name": {
+                    "type": 3,
+                    "lang": true,
+                    "validate": "isCatalogName",
+                    "required": false,
+                    "size": 128
+                  },
+                  "description": {
+                    "type": 6,
+                    "lang": true,
+                    "validate": "isCleanHtml"
+                  },
+                  "description_short": {
+                    "type": 6,
+                    "lang": true,
+                    "validate": "isCleanHtml"
+                  },
+                  "available_now": {
+                    "type": 3,
+                    "lang": true,
+                    "validate": "isGenericName",
+                    "size": 255
+                  },
+                  "available_later": {
+                    "type": 3,
+                    "lang": true,
+                    "validate": "IsGenericName",
+                    "size": 255
+                  }
+                },
+                "associations": {
+                  "manufacturer": {
+                    "type": 1
+                  },
+                  "supplier": {
+                    "type": 1
+                  },
+                  "default_category": {
+                    "type": 1,
+                    "field": "id_category_default",
+                    "object": "Category"
+                  },
+                  "tax_rules_group": {
+                    "type": 1
+                  },
+                  "categories": {
+                    "type": 2,
+                    "field": "id_category",
+                    "object": "Category",
+                    "association": "category_product"
+                  },
+                  "stock_availables": {
+                    "type": 2,
+                    "field": "id_stock_available",
+                    "object": "StockAvailable",
+                    "association": "stock_availables"
+                  },
+                  "attachments": {
+                    "type": 2,
+                    "field": "id_attachment",
+                    "object": "Attachment",
+                    "association": "product_attachment"
+                  },
+                  "l": {
+                    "type": 2,
+                    "field": "id_product",
+                    "foreign_field": "id_product"
+                  }
+                },
+                "classname": "Product"
+              },
+              "\u0000*\u0000update_fields": null,
+              "force_id": false,
+              "tax_name": null,
+              "tax_rate": null,
+              "id_manufacturer": 0,
+              "id_supplier": 0,
+              "id_category_default": 2,
+              "id_shop_default": 1,
+              "manufacturer_name": null,
+              "supplier_name": null,
+              "name": {
+                "1": "Apple MacBook Pro (2024) with M4 Pro Chip",
+                "2": "Apple MacBook Pro (2024) with M4 Pro Chip",
+                "3": "Apple MacBook Pro (2024) with M4 Pro Chip"
+              },
+              "description": {
+                "1": "",
+                "2": "",
+                "3": ""
+              },
+              "description_short": {
+                "1": "<p><strong>About this item</strong></p>\n<p>SUPERPOWERED WITH M4 PRO OR M4 MAX — With the M4 Pro or M4 Max chip, MacBook Pro gives you impressive performance and power, and it's designed for Apple Intelligence. * If you add autonomy for a whole day and a spectacular Liquid Retina XDR display with up to 1,600 nits of peak brightness, this laptop is a full-fledged Pro. *</p>\n<p>CHAMPIONSHIP CHIPS — The M4 Pro chip treads deep into demanding tasks like compiling millions of lines of code. And the M4 Max comes out in more advanced processes, such as rendering complex 3D content.</p>",
+                "2": "",
+                "3": ""
+              },
+              "quantity": 0,
+              "minimal_quantity": 1,
+              "low_stock_threshold": 0,
+              "low_stock_alert": "0",
+              "available_now": {
+                "1": "",
+                "2": "",
+                "3": ""
+              },
+              "available_later": {
+                "1": "",
+                "2": "",
+                "3": ""
+              },
+              "price": "2449.000000",
+              "specificPrice": 0,
+              "additional_shipping_cost": "0.000000",
+              "wholesale_price": "0.000000",
+              "on_sale": "0",
+              "online_only": "0",
+              "unity": "",
+              "unit_price": "0.000000",
+              "unit_price_ratio": "0.000000",
+              "ecotax": "0.000000",
+              "reference": "",
+              "supplier_reference": "",
+              "location": "",
+              "width": "0.000000",
+              "height": "0.000000",
+              "depth": "0.000000",
+              "weight": "0.000000",
+              "ean13": "",
+              "isbn": "",
+              "upc": "",
+              "mpn": "",
+              "link_rewrite": {
+                "1": "apple-macbook-pro-2024-with-m4-pro-chip",
+                "2": "apple-macbook-pro-2024-with-m4-pro-chip",
+                "3": "apple-macbook-pro-2024-with-m4-pro-chip"
+              },
+              "meta_description": {
+                "1": "",
+                "2": "",
+                "3": ""
+              },
+              "meta_keywords": {
+                "1": "",
+                "2": "",
+                "3": ""
+              },
+              "meta_title": {
+                "1": "",
+                "2": "",
+                "3": ""
+              },
+              "quantity_discount": "0",
+              "customizable": 0,
+              "new": null,
+              "uploadable_files": 0,
+              "text_fields": 0,
+              "active": "1",
+              "redirect_type": "default",
+              "id_type_redirected": 0,
+              "available_for_order": "1",
+              "available_date": "0000-00-00",
+              "show_condition": "0",
+              "condition": "new",
+              "show_price": "1",
+              "indexed": "1",
+              "visibility": "both",
+              "date_add": "2025-01-09 07:26:01",
+              "date_upd": "2025-01-09 07:27:09",
+              "tags": null,
+              "state": 1,
+              "base_price": null,
+              "id_tax_rules_group": 0,
+              "id_color_default": 0,
+              "advanced_stock_management": "0",
+              "out_of_stock": 2,
+              "depends_on_stock": null,
+              "isFullyLoaded": false,
+              "cache_is_pack": "0",
+              "cache_has_attachments": "0",
+              "is_virtual": "0",
+              "id_pack_product_attribute": null,
+              "cache_default_attribute": 0,
+              "category": false,
+              "pack_stock_type": 3,
+              "additional_delivery_times": 1,
+              "delivery_in_stock": {
+                "1": "",
+                "2": "",
+                "3": ""
+              },
+              "delivery_out_stock": {
+                "1": "",
+                "2": "",
+                "3": ""
+              },
+              "product_type": "standard",
+              "stock_available": 330,
+              "combinations": [],
+              "images": [
+                {
+                  "id_image": 546,
+                  "position": 1,
+                  "cover": 1,
+                  "url": "https://presta.dev.gosharpei.com/546-home_default/333.jpg"
+                }
+              ]
+            },
+            "webhookUrl": "http://https://automation.prod.gosharpei.com:5678/webhook/dev-prestashop",
+            "executionMode": "production"
+          },
+          "env": "dev",
+          "id": 333,
+          "webhook": "Prestashop-Dev"
+        },
+        "sku": "",
+        "barcode": "",
+        "cost": "0.000000"
+      }
+    ]
+  }
 }

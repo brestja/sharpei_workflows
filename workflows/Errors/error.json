@@ -1,0 +1,402 @@
+{
+    "meta": {
+      "instanceId": "0c0beacef8877bbf2416eb00f2b5dc96354e26dd1df5517320459b1236860f8c"
+    },
+    "nodes": [
+      {
+        "parameters": {},
+        "id": "bea2d50c-09b6-4b4d-bcc9-e824b37a8939",
+        "name": "Error Trigger",
+        "type": "n8n-nodes-base.errorTrigger",
+        "typeVersion": 1,
+        "position": [
+          120,
+          420
+        ]
+      },
+      {
+        "parameters": {
+          "workflowId": "=odsVnHQYQYMalWvL",
+          "options": {}
+        },
+        "id": "1cefa37b-b190-4cec-a11c-5d6d10676792",
+        "name": "Execute Workflow",
+        "type": "n8n-nodes-base.executeWorkflow",
+        "typeVersion": 1,
+        "position": [
+          560,
+          320
+        ]
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "9b0d5475-ea8e-4732-bcb4-9659a6bc1445",
+                "name": "execution.url",
+                "value": "={{ $('Error Trigger').item.json.execution.url }}",
+                "type": "string"
+              },
+              {
+                "id": "d6f641e6-c957-4008-ab04-21a503f78cf2",
+                "name": "Workflow ID",
+                "value": "={{ $('Error Trigger').item.json.workflow.id }}",
+                "type": "string"
+              },
+              {
+                "id": "7a96bbac-0df9-4055-8b9b-12a6fa801979",
+                "name": "Last Node Executed",
+                "value": "={{ $('Error Trigger').item.json.execution.lastNodeExecuted }}",
+                "type": "string"
+              },
+              {
+                "id": "6aa97632-d509-4e3a-b481-632776866313",
+                "name": "execution.mode",
+                "value": "={{ $('Error Trigger').item.json.execution.mode }}",
+                "type": "string"
+              },
+              {
+                "id": "4f212860-67a4-4c15-93c0-a6b77c311bfc",
+                "name": "workflow.name",
+                "value": "={{ $('Error Trigger').item.json.workflow.name }}",
+                "type": "string"
+              },
+              {
+                "id": "cd09f3e0-10bf-4f15-9782-3f805043f6c2",
+                "name": "error message",
+                "value": "={{ $('Error Trigger').item.json.execution.error.message }} ",
+                "type": "string"
+              },
+              {
+                "id": "315ce145-5941-4eea-9002-4400ef386361",
+                "name": "execution.id",
+                "value": "={{ $json.execution.id }}",
+                "type": "number"
+              },
+              {
+                "id": "d14e8b8e-da47-4169-a6c1-cbd10aa1f5de",
+                "name": "stack",
+                "value": "={{ $json.execution.error.stack }}",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "id": "36f1ca94-22e5-4958-bb07-cfffeb89db82",
+        "name": "Edit Fields",
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          340,
+          320
+        ]
+      },
+      {
+        "parameters": {
+          "url": "=https://automation.prod.gosharpei.com/api/v1/executions/{{ $json.execution.id }} ",
+          "sendQuery": true,
+          "queryParameters": {
+            "parameters": [
+              {
+                "name": "includeData",
+                "value": "true"
+              }
+            ]
+          },
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "accept",
+                "value": "application/json"
+              },
+              {
+                "name": "X-N8N-API-KEY",
+                "value": "n8n_api_af5f5f83a6fc38791c2f76626099e6ad08f55a316db2c371fc1830256eb0f132efb5efd1138b2415"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "id": "306ccc4b-2388-41e3-bf7c-b8cdd9f97382",
+        "name": "HTTP Request",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          340,
+          540
+        ]
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "9b0d5475-ea8e-4732-bcb4-9659a6bc1445",
+                "name": "execution.url",
+                "value": "={{ $('Error Trigger').item.json.execution.url }}",
+                "type": "string"
+              },
+              {
+                "id": "d6f641e6-c957-4008-ab04-21a503f78cf2",
+                "name": "Workflow ID",
+                "value": "={{ $('Error Trigger').item.json.workflow.id }}",
+                "type": "string"
+              },
+              {
+                "id": "7a96bbac-0df9-4055-8b9b-12a6fa801979",
+                "name": "Last Node Executed",
+                "value": "={{ $('Error Trigger').item.json.execution.lastNodeExecuted }}",
+                "type": "string"
+              },
+              {
+                "id": "6aa97632-d509-4e3a-b481-632776866313",
+                "name": "execution.mode",
+                "value": "={{ $('Error Trigger').item.json.execution.mode }}",
+                "type": "string"
+              },
+              {
+                "id": "4f212860-67a4-4c15-93c0-a6b77c311bfc",
+                "name": "workflow.name",
+                "value": "={{ $('Error Trigger').item.json.workflow.name }}",
+                "type": "string"
+              },
+              {
+                "id": "cd09f3e0-10bf-4f15-9782-3f805043f6c2",
+                "name": "error message",
+                "value": "={{ $('Error Trigger').item.json.execution.error.message }} ",
+                "type": "string"
+              },
+              {
+                "id": "315ce145-5941-4eea-9002-4400ef386361",
+                "name": "execution.id",
+                "value": "={{ $json.id }}",
+                "type": "number"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "id": "cd01596b-1a73-4606-b6e7-180ea28d3109",
+        "name": "Edit Fields1",
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          780,
+          540
+        ]
+      },
+      {
+        "parameters": {
+          "workflowId": "OEzi72ULG29H6UsZ",
+          "options": {}
+        },
+        "id": "32958993-b0db-4890-a030-028da5f5a814",
+        "name": "Execute Workflow1",
+        "type": "n8n-nodes-base.executeWorkflow",
+        "typeVersion": 1,
+        "position": [
+          1020,
+          540
+        ]
+      },
+      {
+        "parameters": {
+          "content": "## all zone ",
+          "height": 80,
+          "width": 150
+        },
+        "id": "706acb0e-b5b2-4469-8dd8-0ab20a0b2178",
+        "name": "Sticky Note",
+        "type": "n8n-nodes-base.stickyNote",
+        "typeVersion": 1,
+        "position": [
+          100,
+          600
+        ]
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict"
+            },
+            "conditions": [
+              {
+                "id": "76d66fe2-7c19-45d4-885c-e6e2e7714f93",
+                "leftValue": "={{ $json.data.resultData.runData.PrestaShop[0].data.main[0][0].json.headers.authorization }}",
+                "rightValue": "=2y$10$uIYEY6Q.Hk10YmSc68sKN..0nho1gc9tpzAgePdz/GbsIHA5oQn1.",
+                "operator": {
+                  "type": "string",
+                  "operation": "equals"
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "id": "815de0ed-9bcd-4648-aea3-2fc9fd7512cb",
+        "name": "If allzone key",
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2,
+        "position": [
+          560,
+          540
+        ]
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "https://sharpei.webhook.office.com/webhookb2/af4ea118-4f86-48cb-b3d1-62239526aead@de457da9-8950-40d6-82f2-cb5ad8d8ba2e/IncomingWebhook/d8b451e836f24d7e8bfcd8c098513c23/5549a3a2-a457-4119-a042-db32a82a98a9/V2ln_nos19vtL1O7mFwpGp3eESVeqMnT7t7h2rIyHmhV01",
+          "sendHeaders": true,
+          "specifyHeaders": "json",
+          "jsonHeaders": "{\"Content-Type\":\"application/json\"}",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={\n  \"text\":  \"Workflow name: {{ $('Edit Fields').item.json.workflow.name }} ______Execution_id: {{ $('Edit Fields').item.json.execution.id }}_____Stack error: {{$('Edit Fields').item.json.stack.replace(/\"/g, '\\\\\"').replace(/\\n/g, '\\\\n') }}\"\n}         ",
+          "options": {}
+        },
+        "id": "666d08b0-aff3-49b7-97fe-56d3c9997b08",
+        "name": "Teams",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          780,
+          320
+        ]
+      }
+    ],
+    "connections": {
+      "Error Trigger": {
+        "main": [
+          [
+            {
+              "node": "Edit Fields",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Execute Workflow": {
+        "main": [
+          [
+            {
+              "node": "Teams",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Edit Fields": {
+        "main": [
+          [
+            {
+              "node": "Execute Workflow",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "HTTP Request": {
+        "main": [
+          [
+            {
+              "node": "If allzone key",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Edit Fields1": {
+        "main": [
+          [
+            {
+              "node": "Execute Workflow1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "If allzone key": {
+        "main": [
+          [
+            {
+              "node": "Edit Fields1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "pinData": {
+      "Error Trigger": [
+        {
+          "execution": {
+            "id": "51242398",
+            "url": "http://https://automation.prod.gosharpei.com:5678/workflow/0KFO0T8zxOFMiSRA/executions/51242398",
+            "error": {
+              "level": "error",
+              "tags": {},
+              "description": "ReferenceError",
+              "itemIndex": 0,
+              "context": {
+                "itemIndex": 0
+              },
+              "lineNumber": 44,
+              "node": {
+                "parameters": {
+                  "mode": "runOnceForEachItem",
+                  "language": "javaScript",
+                  "jsCode": "//const axios = require('axios');\nconst startDate = new Date();\nstartDate.setDate(startDate.getDate() - 5);\nstartDate.setHours(0, 0, 0, 0);\nconst endDate = new Date();\nconst session = item.json.session;\nconst token = session.accessToken;\nconst shop = session.shop;\n\nconst SubscriptionBillingChargeBulkMutation = () => {\n  return {\n    query: `mutation subscriptionBillingCycleBulkChargeMutation($startDate: DateTime!, $endDate: DateTime!) {\n                    subscriptionBillingCycleBulkCharge(\n                      billingAttemptExpectedDateRange: {\n                        startDate: $startDate\n                        endDate: $endDate\n                      },\n                      filters: {\n                        contractStatus: [ACTIVE],\n                        billingCycleStatus: [UNBILLED],\n                        billingAttemptStatus: NO_ATTEMPT\n                      }\n                    ) {\n                      job {\n                        id\n                      }\n                      userErrors {\n                        message\n                      }\n                    }\n                  }`,\n    variables: {\n      startDate: startDate,\n      endDate: endDate,\n    },\n  };\n};\n\nasync function fetchSubscriptionData() {\n  if (!shop) {\n    throw new Error(\"shop is undefined\");\n  }\n  \n  const response = await axios.post(\n    `https://${shop}/admin/api/2024-07/graphql.json`,\n    SubscriptionBillingChargeBulkMutation(startDate, endDate), // Pass the data directly\n    { // Pass headers in a separate configuration object\n      headers: {\n        \"X-Shopify-Access-Token\": token,\n        \"Content-Type\": \"application/json\",\n      },\n    }\n  );\n\n  const data = response.data;\n\n  console.log(data);\n\n  return {\n    contracts: data.data,\n    accessToken: token,\n    shop,\n  };\n}\n\nconst subscriptions = await fetchSubscriptionData();\n\nreturn subscriptions;\n",
+                  "notice": ""
+                },
+                "id": "9f4a1c01-2f99-4d2d-967b-c552e258a7c3",
+                "name": "BulkEnqueueSubscriptions",
+                "type": "n8n-nodes-base.code",
+                "typeVersion": 2,
+                "position": [
+                  780,
+                  280
+                ]
+              },
+              "message": "axios is not defined [line 44, for item 0]",
+              "stack": "ReferenceError: axios is not defined\n    at fetchSubscriptionData (/usr/local/lib/node_modules/n8n/node_modules/n8n-nodes-base/dist/nodes/Code:44:20)\n    at /usr/local/lib/node_modules/n8n/node_modules/n8n-nodes-base/dist/nodes/Code:66:29\n    at /usr/local/lib/node_modules/n8n/node_modules/n8n-nodes-base/dist/nodes/Code:70:2\n    at VM2 Wrapper.apply (/usr/local/lib/node_modules/n8n/node_modules/@n8n/vm2/lib/bridge.js:485:11)\n    at NodeVM.run (/usr/local/lib/node_modules/n8n/node_modules/@n8n/vm2/lib/nodevm.js:497:23)\n    at JavaScriptSandbox.runCodeEachItem (/usr/local/lib/node_modules/n8n/node_modules/n8n-nodes-base/dist/nodes/Code/JavaScriptSandbox.js:97:45)\n    at Object.execute (/usr/local/lib/node_modules/n8n/node_modules/n8n-nodes-base/dist/nodes/Code/Code.node.js:139:40)\n    at Workflow.runNode (/usr/local/lib/node_modules/n8n/node_modules/n8n-workflow/dist/Workflow.js:725:42)\n    at /usr/local/lib/node_modules/n8n/node_modules/n8n-core/dist/WorkflowExecute.js:664:66\n    at processTicksAndRejections (node:internal/process/task_queues:95:5)"
+            },
+            "lastNodeExecuted": "BulkEnqueueSubscriptions",
+            "mode": "trigger"
+          },
+          "workflow": {
+            "id": "0KFO0T8zxOFMiSRA",
+            "name": "Shopify - Webhook / Main Entry"
+          }
+        }
+      ],
+      "Edit Fields": [
+        {
+          "execution": {
+            "url": "http://https://automation.prod.gosharpei.com:5678/workflow/0KFO0T8zxOFMiSRA/executions/51243296",
+            "mode": "trigger",
+            "id": 51243296
+          },
+          "Workflow ID": "0KFO0T8zxOFMiSRA",
+          "Last Node Executed": "BulkEnqueueSubscriptions",
+          "workflow": {
+            "name": "Shopify - Webhook / Main Entry"
+          },
+          "error message": "axios is not defined [line 44, for item 0] ",
+          "stack": "ReferenceError: axios is not defined\n    at fetchSubscriptionData (/usr/local/lib/node_modules/n8n/node_modules/n8n-nodes-base/dist/nodes/Code:44:20)\n    at /usr/local/lib/node_modules/n8n/node_modules/n8n-nodes-base/dist/nodes/Code:66:29\n    at /usr/local/lib/node_modules/n8n/node_modules/n8n-nodes-base/dist/nodes/Code:70:2\n    at VM2 Wrapper.apply (/usr/local/lib/node_modules/n8n/node_modules/@n8n/vm2/lib/bridge.js:485:11)\n    at NodeVM.run (/usr/local/lib/node_modules/n8n/node_modules/@n8n/vm2/lib/nodevm.js:497:23)\n    at JavaScriptSandbox.runCodeEachItem (/usr/local/lib/node_modules/n8n/node_modules/n8n-nodes-base/dist/nodes/Code/JavaScriptSandbox.js:97:45)\n    at Object.execute (/usr/local/lib/node_modules/n8n/node_modules/n8n-nodes-base/dist/nodes/Code/Code.node.js:139:40)\n    at Workflow.runNode (/usr/local/lib/node_modules/n8n/node_modules/n8n-workflow/dist/Workflow.js:725:42)\n    at /usr/local/lib/node_modules/n8n/node_modules/n8n-core/dist/WorkflowExecute.js:664:66\n    at processTicksAndRejections (node:internal/process/task_queues:95:5)"
+        }
+      ]
+    }
+  }

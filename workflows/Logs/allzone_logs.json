@@ -1,0 +1,249 @@
+{
+    "meta": {
+      "instanceId": "0c0beacef8877bbf2416eb00f2b5dc96354e26dd1df5517320459b1236860f8c"
+    },
+    "nodes": [
+      {
+        "parameters": {},
+        "id": "dbcdb359-e45c-4b76-8180-5c6b02228835",
+        "name": "Execute Workflow Trigger",
+        "type": "n8n-nodes-base.executeWorkflowTrigger",
+        "typeVersion": 1,
+        "position": [
+          940,
+          220
+        ]
+      },
+      {
+        "parameters": {
+          "keepOnlySet": true,
+          "values": {
+            "string": [
+              {
+                "name": "variant_status",
+                "value": "={{ $json.data.variants[0].status.name }}"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "id": "efd5b569-9d86-4758-907f-28a83856abfd",
+        "name": "Set",
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 2,
+        "position": [
+          1340,
+          220
+        ]
+      },
+      {
+        "parameters": {
+          "operation": "append",
+          "documentId": {
+            "__rl": true,
+            "value": "1aCc8XbtO9cyxOmshr35PEH9Iv59lAw7h6fz2ocApWCA",
+            "mode": "id"
+          },
+          "sheetName": {
+            "__rl": true,
+            "value": "gid=0",
+            "mode": "list",
+            "cachedResultName": "Hoja 1",
+            "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1aCc8XbtO9cyxOmshr35PEH9Iv59lAw7h6fz2ocApWCA/edit#gid=0"
+          },
+          "columns": {
+            "mappingMode": "defineBelow",
+            "value": {
+              "url": "={{ $('Execute Workflow Trigger').item.json.execution.url }}",
+              "execution_id": "={{ $('Execute Workflow Trigger').item.json.execution.id }}",
+              "mode": "={{ $('Execute Workflow Trigger').item.json.execution.mode }}",
+              "workflow_id": "={{ $('Execute Workflow Trigger').item.json[\"Workflow ID\"] }}",
+              "error message": "={{ $('Execute Workflow Trigger').item.json[\"error message\"] }}",
+              "Last Node Executed": "={{ $('Execute Workflow Trigger').item.json[\"Last Node Executed\"] }}",
+              "workflow_name": "={{ $('Execute Workflow Trigger').item.json.workflow.name }}",
+              "time": "={{ $('Timestamp').item.json.fechaHoraActual }}"
+            },
+            "matchingColumns": [],
+            "schema": [
+              {
+                "id": "url",
+                "displayName": "url",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true
+              },
+              {
+                "id": "execution_id",
+                "displayName": "execution_id",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true
+              },
+              {
+                "id": "mode",
+                "displayName": "mode",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true
+              },
+              {
+                "id": "workflow_id",
+                "displayName": "workflow_id",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true
+              },
+              {
+                "id": "error message",
+                "displayName": "error message",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true
+              },
+              {
+                "id": "Last Node Executed",
+                "displayName": "Last Node Executed",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true
+              },
+              {
+                "id": "workflow_name",
+                "displayName": "workflow_name",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true
+              },
+              {
+                "id": "time",
+                "displayName": "time",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true
+              },
+              {
+                "id": "shop",
+                "displayName": "shop",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true,
+                "removed": true
+              }
+            ]
+          },
+          "options": {}
+        },
+        "id": "e2bfabce-31a4-4f6f-b481-ab10b50c1bd2",
+        "name": "Google Sheets1",
+        "type": "n8n-nodes-base.googleSheets",
+        "typeVersion": 4,
+        "position": [
+          1740,
+          220
+        ],
+        "credentials": {
+          "googleSheetsOAuth2Api": {
+            "id": "OT8wMWyUPUaPSE6u",
+            "name": "Google Sheets account 5"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "unit": "seconds"
+        },
+        "id": "71ed91fe-074a-4987-b9c7-92576cd6151d",
+        "name": "Wait",
+        "type": "n8n-nodes-base.wait",
+        "typeVersion": 1,
+        "position": [
+          1540,
+          220
+        ],
+        "webhookId": "faa72a07-c959-439d-9b6e-001546340f16"
+      },
+      {
+        "parameters": {
+          "jsCode": "// Crear una función para obtener la hora actual en Bogotá formateada\nfunction obtenerFechaHoraActualBogota() {\n    // Obtener la fecha y hora actual en Bogotá en formato 24 horas\n    let ahora = new Date().toLocaleString(\"en-US\", { \n        timeZone: \"America/Bogota\", \n        hour12: false // Formato 24 horas\n    });\n    \n    ahora = new Date(ahora); // Convertir el string de nuevo a objeto Date\n    \n    // Obtener la fecha\n    let dia = ahora.getDate();\n    let mes = ahora.getMonth() + 1; // Los meses en JavaScript van de 0 a 11\n    let anio = ahora.getFullYear();\n    \n    // Obtener la hora\n    let horas = ahora.getHours();\n    let minutos = ahora.getMinutes();\n    let segundos = ahora.getSeconds();\n    \n    // Asegurarse de que el día, mes, minutos y segundos tengan dos dígitos\n    dia = dia < 10 ? '0' + dia : dia;\n    mes = mes < 10 ? '0' + mes : mes;\n    minutos = minutos < 10 ? '0' + minutos : minutos;\n    segundos = segundos < 10 ? '0' + segundos : segundos;\n    \n    // Formatear la fecha y la hora\n    let fechaActual = `${anio}-${mes}-${dia}`; // Formato YYYY-MM-DD\n    let horaActual = `${horas}:${minutos}:${segundos}`; // Formato HH:MM:SS\n    \n    return {\n        fechaHoraActual: horaActual + ' | ' + fechaActual\n    };\n}\n\n// Iterar sobre los items y añadir la fecha y hora actual de Bogotá a cada uno\nitems.forEach(item => {\n    const fechaHoraActualBogota = obtenerFechaHoraActualBogota();\n    item.json.fechaHoraActual = fechaHoraActualBogota.fechaHoraActual;\n});\n\n// Devolver los items modificados\nreturn items;\n\n\n"
+        },
+        "id": "bd2c69d7-d5b3-4fb7-a01b-a4ace2542105",
+        "name": "Timestamp",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          1140,
+          220
+        ]
+      }
+    ],
+    "connections": {
+      "Execute Workflow Trigger": {
+        "main": [
+          [
+            {
+              "node": "Timestamp",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Set": {
+        "main": [
+          [
+            {
+              "node": "Wait",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Timestamp": {
+        "main": [
+          [
+            {
+              "node": "Set",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "pinData": {
+      "Execute Workflow Trigger": [
+        {
+          "execution": {
+            "url": "http://https://automation.prod.gosharpei.com:5678/workflow/DlpJT9zCwXy94K8M/executions/347492",
+            "mode": "webhook"
+          },
+          "Workflow ID": "DlpJT9zCwXy94K8M",
+          "Last Node Executed": "Get Status",
+          "workflow": {
+            "name": "🔗 PrestaShop Webhook PROD"
+          },
+          "shop": "$2y$10$Z.PtkWIp./jqB.JlH5mq2uMvr2ifcAc2RutXhSFljCZvbb8wU9R9i",
+          "error message": "The service is receiving too many requests from you"
+        }
+      ]
+    }
+  }

@@ -1,0 +1,2719 @@
+{
+    "meta": {
+      "instanceId": "0c0beacef8877bbf2416eb00f2b5dc96354e26dd1df5517320459b1236860f8c"
+    },
+    "nodes": [
+      {
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "order_cancelled",
+          "options": {}
+        },
+        "id": "abb3d92e-d587-4256-a15e-c9d3c9c23f4a",
+        "name": "Order - Cancelled",
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2,
+        "position": [
+          700,
+          60
+        ],
+        "webhookId": "38ed4c02-e8fb-4c93-b53f-861ad57d9e7f"
+      },
+      {
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "order_payment_method_pending",
+          "responseMode": "=onReceived",
+          "options": {}
+        },
+        "id": "984c3e1e-bafb-408e-b01d-66e184872ae4",
+        "name": "Order - Payment Method  Pending",
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2,
+        "position": [
+          1200,
+          900
+        ],
+        "webhookId": "a70ffdc7-ea8c-4a6f-95eb-33d98dfcc96a"
+      },
+      {
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "order_payment_method_error",
+          "options": {}
+        },
+        "id": "a94a80a1-2e7e-4626-be54-4ba4e19c9169",
+        "name": "Order - Payment Method Error",
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2,
+        "position": [
+          700,
+          900
+        ],
+        "webhookId": "5f656dc0-b13b-4474-b5a9-689c6c38f170"
+      },
+      {
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "order_payment_method_added",
+          "options": {}
+        },
+        "id": "b884f975-26f1-49ce-92a7-802d5db4b43d",
+        "name": "Order - Payment Method Added",
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2,
+        "position": [
+          940,
+          900
+        ],
+        "webhookId": "ca79e6c2-5662-4c87-87ee-0e1ce2237c79"
+      },
+      {
+        "parameters": {
+          "options": {}
+        },
+        "id": "1f2fb1c1-08bb-4f9b-a263-35e876f74fb3",
+        "name": "If",
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2,
+        "position": [
+          900,
+          60
+        ]
+      },
+      {
+        "parameters": {
+          "resource": "mail",
+          "fromEmail": "jose@gosharpei.com",
+          "fromName": "Sharpei",
+          "toEmail": "josebrest25@gmail.com",
+          "dynamicTemplate": true,
+          "templateId": "d-45613d16c42f4ad3a38a95c9e4aff8bd",
+          "additionalFields": {}
+        },
+        "id": "e5e96eff-0332-4249-838f-40aabf8eb74f",
+        "name": "Order - Cancelled / Customer ENG",
+        "type": "n8n-nodes-base.sendGrid",
+        "typeVersion": 1,
+        "position": [
+          1100,
+          -40
+        ],
+        "credentials": {
+          "sendGridApi": {
+            "id": "Z0C9bFwvJ8sTkIJz",
+            "name": "SendGrid account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "resource": "mail",
+          "fromEmail": "jose@gosharpei.com",
+          "fromName": "Sharpei",
+          "toEmail": "josebrest25@gmail.com",
+          "dynamicTemplate": true,
+          "templateId": "d-3c5b428e9c794feea05965159beb1823",
+          "additionalFields": {}
+        },
+        "id": "00fe7601-e15d-46bd-8285-67d7dbb57da5",
+        "name": "Order - Cancelled / Customer SPA",
+        "type": "n8n-nodes-base.sendGrid",
+        "typeVersion": 1,
+        "position": [
+          1100,
+          140
+        ],
+        "credentials": {
+          "sendGridApi": {
+            "id": "Z0C9bFwvJ8sTkIJz",
+            "name": "SendGrid account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "resource": "mail",
+          "fromEmail": "jose@gosharpei.com",
+          "fromName": "Sharpei",
+          "toEmail": "josebrest25@gmail.com",
+          "dynamicTemplate": true,
+          "templateId": "d-265914a2d6204ad6bfcedefb52f5c113",
+          "additionalFields": {}
+        },
+        "id": "24d2a916-8360-47e3-98e8-4be7be8cf045",
+        "name": "Order - Cancelled / Merchant ENG",
+        "type": "n8n-nodes-base.sendGrid",
+        "typeVersion": 1,
+        "position": [
+          1340,
+          -40
+        ],
+        "credentials": {
+          "sendGridApi": {
+            "id": "Z0C9bFwvJ8sTkIJz",
+            "name": "SendGrid account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict"
+            },
+            "conditions": [
+              {
+                "id": "65680901-aa18-4abe-8f80-495bf925c99f",
+                "leftValue": "={{ $json.body.language }}",
+                "rightValue": "es",
+                "operator": {
+                  "type": "string",
+                  "operation": "equals",
+                  "name": "filter.operator.equals"
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "id": "339124cc-852c-47d0-8e90-c8ca7722291f",
+        "name": "If1",
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2,
+        "position": [
+          1900,
+          -400
+        ]
+      },
+      {
+        "parameters": {
+          "resource": "mail",
+          "fromEmail": "jose@gosharpei.com",
+          "fromName": "Sharpei",
+          "toEmail": "josebrest25@gmail.com",
+          "dynamicTemplate": true,
+          "templateId": "d-353f9256fc884856958c686b6832b660",
+          "additionalFields": {}
+        },
+        "id": "954b9b97-445d-4c7f-a23f-f70a6af2d97d",
+        "name": "Order - Fulfillment / Customer ENG",
+        "type": "n8n-nodes-base.sendGrid",
+        "typeVersion": 1,
+        "position": [
+          2500,
+          -580
+        ],
+        "credentials": {
+          "sendGridApi": {
+            "id": "Z0C9bFwvJ8sTkIJz",
+            "name": "SendGrid account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "resource": "mail",
+          "fromEmail": "jose@gosharpei.com",
+          "fromName": "Sharpei",
+          "toEmail": "josebrest25@gmail.com",
+          "dynamicTemplate": true,
+          "templateId": "d-6f0597cda148430f99197923303c8a0c",
+          "additionalFields": {}
+        },
+        "id": "3b1520b0-e41c-4aff-91a8-256a905a65c4",
+        "name": "Order - Fulfillment / Customer SPA",
+        "type": "n8n-nodes-base.sendGrid",
+        "typeVersion": 1,
+        "position": [
+          2100,
+          -300
+        ],
+        "credentials": {
+          "sendGridApi": {
+            "id": "Z0C9bFwvJ8sTkIJz",
+            "name": "SendGrid account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "options": {}
+        },
+        "id": "47f43a70-bd2b-430b-b9a7-99a57d8f04a2",
+        "name": "If2",
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2,
+        "position": [
+          2860,
+          -340
+        ]
+      },
+      {
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "order_creation",
+          "options": {}
+        },
+        "id": "bf829fc3-61e6-4de3-b083-0795723138e9",
+        "name": "Order - Creation",
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2,
+        "position": [
+          2660,
+          -340
+        ],
+        "webhookId": "34a80131-823a-4ab1-9a13-cea352c146df"
+      },
+      {
+        "parameters": {
+          "resource": "mail",
+          "fromEmail": "jose@gosharpei.com",
+          "fromName": "Sharpei",
+          "toEmail": "josebrest25@gmail.com",
+          "dynamicTemplate": true,
+          "templateId": "d-f60947808fa04f88b5a18fa8f769b374",
+          "additionalFields": {}
+        },
+        "id": "d24b4f6c-742e-4072-bba0-ed53fc01f07f",
+        "name": "Order - Creation / Merchant ENG",
+        "type": "n8n-nodes-base.sendGrid",
+        "typeVersion": 1,
+        "position": [
+          3060,
+          -440
+        ],
+        "credentials": {
+          "sendGridApi": {
+            "id": "Z0C9bFwvJ8sTkIJz",
+            "name": "SendGrid account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "options": {}
+        },
+        "id": "2ac0edc6-bbee-4d4b-8914-ba11f0d1bf05",
+        "name": "If4",
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2,
+        "position": [
+          920,
+          500
+        ]
+      },
+      {
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "order_accepted",
+          "options": {}
+        },
+        "id": "7659277a-ddb7-4753-9a7b-27cee556c826",
+        "name": "Order - Accepted",
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2,
+        "position": [
+          720,
+          500
+        ],
+        "webhookId": "d4fa06ee-b465-4845-b1b1-2af55f60b1eb"
+      },
+      {
+        "parameters": {
+          "resource": "mail",
+          "fromEmail": "jose@gosharpei.com",
+          "fromName": "Sharpei",
+          "toEmail": "josebrest25@gmail.com",
+          "dynamicTemplate": true,
+          "templateId": "d-733363d8c4b94ad5b89421fa7a3b8d87",
+          "additionalFields": {}
+        },
+        "id": "481f04ad-fe3e-4c1b-a507-f410f37c0deb",
+        "name": "Order - Accepted / Customer ENG",
+        "type": "n8n-nodes-base.sendGrid",
+        "typeVersion": 1,
+        "position": [
+          1120,
+          400
+        ],
+        "credentials": {
+          "sendGridApi": {
+            "id": "Z0C9bFwvJ8sTkIJz",
+            "name": "SendGrid account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "resource": "mail",
+          "fromEmail": "jose@gosharpei.com",
+          "fromName": "Sharpei",
+          "toEmail": "josebrest25@gmail.com",
+          "dynamicTemplate": true,
+          "templateId": "d-b3803bbc13d848dc8e925a0a22c88b99",
+          "additionalFields": {}
+        },
+        "id": "91c8374f-6b2e-42b3-a440-10193ca7aa80",
+        "name": "Order - Accepted / Customer SPA",
+        "type": "n8n-nodes-base.sendGrid",
+        "typeVersion": 1,
+        "position": [
+          1120,
+          600
+        ],
+        "credentials": {
+          "sendGridApi": {
+            "id": "Z0C9bFwvJ8sTkIJz",
+            "name": "SendGrid account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "options": {}
+        },
+        "id": "59d58486-c338-4892-a3dd-b1b346cbc04f",
+        "name": "If5",
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2,
+        "position": [
+          1900,
+          80
+        ]
+      },
+      {
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "order_delivery",
+          "options": {}
+        },
+        "id": "91558b33-7656-471b-9b81-f89664920eb6",
+        "name": "Order - Delivery",
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2,
+        "position": [
+          1700,
+          80
+        ],
+        "webhookId": "b12c59cd-cadf-4e4c-94d7-d620ad605393"
+      },
+      {
+        "parameters": {
+          "resource": "mail",
+          "fromEmail": "jose@gosharpei.com",
+          "fromName": "Sharpei",
+          "toEmail": "josebrest25@gmail.com",
+          "dynamicTemplate": true,
+          "templateId": "d-8d5f1387eeb64a68863ac539164205ea",
+          "additionalFields": {}
+        },
+        "id": "7ed5fc26-140d-4508-a713-cf32330a30db",
+        "name": "Order - Delivery / Customer ENG",
+        "type": "n8n-nodes-base.sendGrid",
+        "typeVersion": 1,
+        "position": [
+          2100,
+          -20
+        ],
+        "credentials": {
+          "sendGridApi": {
+            "id": "Z0C9bFwvJ8sTkIJz",
+            "name": "SendGrid account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "resource": "mail",
+          "fromEmail": "jose@gosharpei.com",
+          "fromName": "Sharpei",
+          "toEmail": "josebrest25@gmail.com",
+          "dynamicTemplate": true,
+          "templateId": "d-a820e7903b1644268a050fe56d43ac94",
+          "additionalFields": {}
+        },
+        "id": "23f8b701-c8d4-4c35-8fb6-be00be136b9b",
+        "name": "Order - Delivery / Customer SPA",
+        "type": "n8n-nodes-base.sendGrid",
+        "typeVersion": 1,
+        "position": [
+          2100,
+          180
+        ],
+        "credentials": {
+          "sendGridApi": {
+            "id": "Z0C9bFwvJ8sTkIJz",
+            "name": "SendGrid account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "options": {}
+        },
+        "id": "abc36e16-4cce-453b-83c5-51db13fa3441",
+        "name": "If6",
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2,
+        "position": [
+          1900,
+          520
+        ]
+      },
+      {
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "order_completed",
+          "options": {}
+        },
+        "id": "25de7b01-82e9-4261-8c45-04348bd0ddb3",
+        "name": "Order - Completed",
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2,
+        "position": [
+          1700,
+          520
+        ],
+        "webhookId": "d068024e-faba-4288-b073-ea0c5614d57f"
+      },
+      {
+        "parameters": {
+          "resource": "mail",
+          "fromEmail": "jose@gosharpei.com",
+          "fromName": "Sharpei",
+          "toEmail": "josebrest25@gmail.com",
+          "dynamicTemplate": true,
+          "templateId": "d-a2492d881c574741b5b8f96f2c270c0d",
+          "additionalFields": {}
+        },
+        "id": "9cd97ba1-8591-4ffa-bb39-9383bffd5af5",
+        "name": "Order - Completed / Customer ENG",
+        "type": "n8n-nodes-base.sendGrid",
+        "typeVersion": 1,
+        "position": [
+          2100,
+          420
+        ],
+        "credentials": {
+          "sendGridApi": {
+            "id": "Z0C9bFwvJ8sTkIJz",
+            "name": "SendGrid account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "resource": "mail",
+          "fromEmail": "jose@gosharpei.com",
+          "fromName": "Sharpei",
+          "toEmail": "josebrest25@gmail.com",
+          "dynamicTemplate": true,
+          "templateId": "d-bb7f82cdcd51458c9fec33c900a855df",
+          "additionalFields": {}
+        },
+        "id": "9463f55b-fca2-4294-8b3a-4be36ff9fb91",
+        "name": "Order - Completed / Customer SPA",
+        "type": "n8n-nodes-base.sendGrid",
+        "typeVersion": 1,
+        "position": [
+          2100,
+          620
+        ],
+        "credentials": {
+          "sendGridApi": {
+            "id": "Z0C9bFwvJ8sTkIJz",
+            "name": "SendGrid account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "options": {}
+        },
+        "id": "6f7ce2e5-fe59-4e51-b549-db9734a9da8d",
+        "name": "If7",
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2,
+        "position": [
+          2840,
+          60
+        ]
+      },
+      {
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "order_error_payment",
+          "options": {}
+        },
+        "id": "bc80fab4-eab7-4a89-b4a9-c04aea26275b",
+        "name": "Order - Error Payment",
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2,
+        "position": [
+          2640,
+          60
+        ],
+        "webhookId": "07f1abb2-bfee-4405-a53f-aee9f434f19a"
+      },
+      {
+        "parameters": {
+          "resource": "mail",
+          "fromEmail": "jose@gosharpei.com",
+          "fromName": "Sharpei",
+          "toEmail": "josebrest25@gmail.com",
+          "dynamicTemplate": true,
+          "templateId": "d-b3108c8f035e40b1998e81a5ce3735e8",
+          "additionalFields": {}
+        },
+        "id": "dfabd503-b1e6-45e7-bb62-1a4d655dd608",
+        "name": "Order - Error Payment / Customer ENG",
+        "type": "n8n-nodes-base.sendGrid",
+        "typeVersion": 1,
+        "position": [
+          3040,
+          -40
+        ],
+        "credentials": {
+          "sendGridApi": {
+            "id": "Z0C9bFwvJ8sTkIJz",
+            "name": "SendGrid account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "resource": "mail",
+          "fromEmail": "jose@gosharpei.com",
+          "fromName": "Sharpei",
+          "toEmail": "josebrest25@gmail.com",
+          "dynamicTemplate": true,
+          "templateId": "d-c43f4c43cc3b40ecbeccb2f656168816",
+          "additionalFields": {}
+        },
+        "id": "9cb95f2a-c375-4f46-b9fc-897b1a0e2965",
+        "name": "Order - Error Payment / Customer SPA",
+        "type": "n8n-nodes-base.sendGrid",
+        "typeVersion": 1,
+        "position": [
+          3040,
+          140
+        ],
+        "credentials": {
+          "sendGridApi": {
+            "id": "Z0C9bFwvJ8sTkIJz",
+            "name": "SendGrid account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict"
+            },
+            "conditions": [
+              {
+                "id": "7401755f-618b-48c3-8923-7c83c4f09f3f",
+                "leftValue": "={{ $json.body.language }}",
+                "rightValue": "es",
+                "operator": {
+                  "type": "string",
+                  "operation": "equals",
+                  "name": "filter.operator.equals"
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "id": "eba302f9-1b3d-400a-9f04-0e6960392cf0",
+        "name": "If3",
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2,
+        "position": [
+          1000,
+          -960
+        ]
+      },
+      {
+        "parameters": {
+          "method": "PUT",
+          "url": "={{ $('Shop Platforms').item.json.data[0].shop.domain }}api/carts/{{$node[\"Create Cart1\"].data.data.match(/<id><!\\[CDATA\\[(\\d+)\\]\\]><\\/id>/)[1]}}\n\n ",
+          "sendQuery": true,
+          "queryParameters": {
+            "parameters": [
+              {
+                "name": "ws_key",
+                "value": "={{ $('Shop Platforms').item.json.data[0].CMS_api_key }}"
+              }
+            ]
+          },
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "=cookie",
+                "value": "PHPSESSID=ese952gigde52ns6tee26u9upi;PrestaShop-0855ee89820719254893048b26ed51c9=def5020031c0e2f2f1ce59d4d72bcb6231237f831f16829ab405db31ca6ccaa4be67b38c282ba020cc9bae5cb279e67d43dc350edb538340cb46474d65056d124de4ff29fea53a3322b84bbd07044974b87cb1b9c20100bc7ff1b5e91077c7dfa2960eba9abaeebbd1bf649e43b26e75a9a15ec751ec165119bf504dc5642c27079ae9eddfcdb05bb9adf6423e67765d8cc6aeceb93248544374d29ee0a26cd42710dd96d30c12c169ed7bedc80d8a0f425074a34fd81c3064dce8121452d980297da6e9b1d7;"
+              }
+            ]
+          },
+          "sendBody": true,
+          "contentType": "raw",
+          "rawContentType": "xml",
+          "body": "=<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<prestashop xmlns:xlink=\"http://www.w3.org/1999/xlink\">\n  <cart>\n    <!-- ID del carrito a actualizar -->\n    <id><![CDATA[{{$node[\"Create Cart1\"].data.data.match(/<id><!\\[CDATA\\[(\\d+)\\]\\]><\\/id>/)[1]}}]]></id>\n   <!-- ID del shop -->\n    <id_shop><![CDATA[{{$node[\"Shops\"].json.data.match(/<shop id=\"(\\d+)\"/)[1]}}]]></id_shop>\n\n    <!-- ID de la moneda -->\n    <id_currency><![CDATA[{{ $('Update').item.json.currency === 'EUR' ? 2 : ($('Update').item.json.currency === 'USD' ? 1 : null) }}]]></id_currency>\n\n    <!-- ID del idioma -->\n    <id_lang><![CDATA[1]]></id_lang>\n    <id_address_delivery><![CDATA[{{$node[\"Create Delivery Address\"].data.data.match(/<id><!\\[CDATA\\[(\\d+)\\]\\]><\\/id>/)[1]}}]]></id_address_delivery>\n    <id_address_invoice><![CDATA[{{$node[\"Create Delivery Address\"].data.data.match(/<id><!\\[CDATA\\[(\\d+)\\]\\]><\\/id>/)[1]}}]]></id_address_invoice>\n\n    <!-- ID del cliente asociado al carrito -->\n    <id_customer><![CDATA[{{ $('Create Customer1').item.json.data\n    .match(/<id><!\\[CDATA\\[(.*?)\\]\\]><\\/id>/s)[1]}}]]></id_customer>\n\n    <associations>\n      <cart_rows>\n        <cart_row>\n          <!-- ID del producto en el carrito -->\n          <id_product><![CDATA[{{ $('Update').item.json.product_remote_id  }}]]></id_product>\n          <id_product_attribute><![CDATA[{{ $('Update').item.json.product_variant_remote_id === $('Update').item.json.body.product_remote_id ? 0 : $('Update').item.json.product_variant_remote_id }}]]></id_product_attribute>\n\n          <!-- Cantidad de producto en el carrito -->\n          <quantity><![CDATA[1]]></quantity>\n        </cart_row>\n      </cart_rows>\n    </associations>\n  </cart>\n</prestashop>\n\n  ",
+          "options": {
+            "redirect": {
+              "redirect": {}
+            }
+          }
+        },
+        "id": "cf421e94-956c-4318-9737-5a31bab983a0",
+        "name": "Update Cart1",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          3380,
+          -1740
+        ]
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "={{ $('Shop Platforms').item.json.data[0].shop.domain }}api/carts ",
+          "sendQuery": true,
+          "queryParameters": {
+            "parameters": [
+              {
+                "name": "ws_key",
+                "value": "={{ $('Shop Platforms').item.json.data[0].CMS_api_key }}"
+              }
+            ]
+          },
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {}
+            ]
+          },
+          "sendBody": true,
+          "contentType": "raw",
+          "rawContentType": "application/xml",
+          "body": "=<prestashop>\n  <cart>\n    <id_currency>{{ $('Update').item.json.currency === 'EUR' ? 2 : ($('Update').item.json.currency === 'USD' ? 1 : null) }}</id_currency> <!-- ID de la moneda -->\n    <id_lang>1</id_lang> <!-- ID del idioma -->\n    <id_address_invoice>{{$node[\"Create Delivery Address\"].data.data.match(/<id><!\\[CDATA\\[(\\d+)\\]\\]><\\/id>/)[1]}}</id_address_invoice>\n<id_address_delivery>{{$node[\"Create Delivery Address\"].data.data.match(/<id><!\\[CDATA\\[(\\d+)\\]\\]><\\/id>/)[1]}}</id_address_delivery>  \n        \n\n    \n    <id_customer>{{ $('Create Customer1').item.json.data\n    .match(/<id><!\\[CDATA\\[(.*?)\\]\\]><\\/id>/s)[1]}}</id_customer> <!-- ID del cliente (opcional para carritos anónimos) -->\n  </cart>\n</prestashop>\n ",
+          "options": {
+            "redirect": {
+              "redirect": {}
+            }
+          }
+        },
+        "id": "4d3f11e2-11fe-4f8b-9944-8b52572eb960",
+        "name": "Create Cart1",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          3160,
+          -1740
+        ]
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "={{ $('Shop Platforms').item.json.data[0].shop.domain }}api/customers  ",
+          "sendQuery": true,
+          "queryParameters": {
+            "parameters": [
+              {
+                "name": "ws_key",
+                "value": "={{ $('Shop Platforms').item.json.data[0].CMS_api_key }}"
+              }
+            ]
+          },
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "cookie",
+                "value": "PHPSESSID=ese952gigde52ns6tee26u9upi;PrestaShop-0855ee89820719254893048b26ed51c9=def5020031c0e2f2f1ce59d4d72bcb6231237f831f16829ab405db31ca6ccaa4be67b38c282ba020cc9bae5cb279e67d43dc350edb538340cb46474d65056d124de4ff29fea53a3322b84bbd07044974b87cb1b9c20100bc7ff1b5e91077c7dfa2960eba9abaeebbd1bf649e43b26e75a9a15ec751ec165119bf504dc5642c27079ae9eddfcdb05bb9adf6423e67765d8cc6aeceb93248544374d29ee0a26cd42710dd96d30c12c169ed7bedc80d8a0f425074a34fd81c3064dce8121452d980297da6e9b1d7;"
+              }
+            ]
+          },
+          "sendBody": true,
+          "contentType": "raw",
+          "rawContentType": "application/xml",
+          "body": "=<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<prestashop xmlns:xlink=\"http://www.w3.org/1999/xlink\">\n  <customer>\n    <id_default_group><![CDATA[3]]></id_default_group>\n    <id_lang><![CDATA[1]]></id_lang>\n    <newsletter><![CDATA[0]]></newsletter>\n    <optin><![CDATA[0]]></optin>\n    <passwd><![CDATA[password]]></passwd>\n    <lastname><![CDATA[{{ $('Update').item.json.second_name }}]]></lastname>\n    <firstname><![CDATA[{{ $('Update').item.json.first_name }}]]></firstname>\n    <email><![CDATA[{{ $('Update').item.json.email }}]]></email>\n    <active><![CDATA[1]]></active>\n    <id_gender><![CDATA[0]]></id_gender>\n    <birthday><![CDATA[1992-07-25]]></birthday>\n  </customer>\n</prestashop>       ",
+          "options": {
+            "redirect": {
+              "redirect": {}
+            }
+          }
+        },
+        "id": "f9cb1dcd-6772-4741-acbb-7b4c2e4337ad",
+        "name": "Create Customer1",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          2280,
+          -1740
+        ]
+      },
+      {
+        "parameters": {
+          "url": "={{ $json.data[0].shop.domain }}api/customers",
+          "sendQuery": true,
+          "queryParameters": {
+            "parameters": [
+              {
+                "name": "ws_key",
+                "value": "={{ $json.data[0].CMS_api_key }}"
+              },
+              {
+                "name": "filter[email]",
+                "value": "={{ $('Update').item.json.email }}"
+              }
+            ]
+          },
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "output_format",
+                "value": "JSON"
+              },
+              {
+                "name": "cookie",
+                "value": "PHPSESSID=ese952gigde52ns6tee26u9upi;PrestaShop-0855ee89820719254893048b26ed51c9=def5020031c0e2f2f1ce59d4d72bcb6231237f831f16829ab405db31ca6ccaa4be67b38c282ba020cc9bae5cb279e67d43dc350edb538340cb46474d65056d124de4ff29fea53a3322b84bbd07044974b87cb1b9c20100bc7ff1b5e91077c7dfa2960eba9abaeebbd1bf649e43b26e75a9a15ec751ec165119bf504dc5642c27079ae9eddfcdb05bb9adf6423e67765d8cc6aeceb93248544374d29ee0a26cd42710dd96d30c12c169ed7bedc80d8a0f425074a34fd81c3064dce8121452d980297da6e9b1d7;"
+              }
+            ]
+          },
+          "options": {
+            "redirect": {
+              "redirect": {}
+            }
+          }
+        },
+        "id": "965ac856-0488-4910-aee9-e064a3720887",
+        "name": "Get Customer1",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          1920,
+          -1580
+        ]
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "={{ $('Shop Platforms').item.json.data[0].shop.domain }}api/orders ",
+          "sendQuery": true,
+          "queryParameters": {
+            "parameters": [
+              {
+                "name": "ws_key",
+                "value": "={{ $('Shop Platforms').item.json.data[0].CMS_api_key }}"
+              }
+            ]
+          },
+          "sendBody": true,
+          "contentType": "raw",
+          "rawContentType": "application/xml",
+          "body": "=<prestashop>\n            <order>\n                <id_cart>{{$node[\"Create Cart1\"].data.data.match(/<id><!\\[CDATA\\[(\\d+)\\]\\]><\\/id>/)[1]}}</id_cart>\n                <id_address_delivery><![CDATA[{{$node[\"Create Delivery Address\"].data.data.match(/<id><!\\[CDATA\\[(\\d+)\\]\\]><\\/id>/)[1]}}]]></id_address_delivery>\n                <id_address_invoice><![CDATA[{{$node[\"Create Delivery Address\"].data.data.match(/<id><!\\[CDATA\\[(\\d+)\\]\\]><\\/id>/)[1]}}]]></id_address_invoice>\n                <id_currency>{{ $('Update').item.json.currency === 'EUR' ? 2 : $('Update').item.json.currency === 'USD' ? 1 : null }}</id_currency>\n                \n                <id_carrier>2</id_carrier> \n                <total_shipping>7.00</total_shipping>\n                <total_shipping_tax_incl>7.00</total_shipping_tax_incl>\n                <total_shipping_tax_excl>7.00</total_shipping_tax_excl>\n                <carrier_tax_rate>0.00</carrier_tax_rate>\n\n                <payment>Payments by check</payment>\n                <module>ps_checkpayment</module>\n                <total_paid>{{ parseFloat($('Update').item.json.total_product_price) .toFixed(2) }}</total_paid>\n                <total_paid_real>{{ parseFloat($('Update').item.json.total_product_price) .toFixed(2) }}</total_paid_real>\n                <total_products>{{ parseFloat($('Update').item.json.total_product_price) .toFixed(2) }}</total_products>\n                <total_products_wt>{{ parseFloat($('Update').item.json.total_product_price) .toFixed(2) }}</total_products_wt>\n                <conversion_rate>1.00</conversion_rate>\n                <id_lang>1</id_lang>\n                <current_state>2</current_state>\n                <valid>1</valid> <!--  -->\n                <id_customer>{{ $('Create Customer1').item.json.data\n    .match(/<id><!\\[CDATA\\[(.*?)\\]\\]><\\/id>/s)[1]}}</id_customer>\n               \n            \n                <!-- Otros campos necesarios -->\n            </order>\n         </prestashop>   ",
+          "options": {
+            "redirect": {
+              "redirect": {}
+            }
+          }
+        },
+        "id": "55ff78bc-c038-4e9b-aea2-ab9fa65ec99f",
+        "name": "Create order1",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          3600,
+          -1740
+        ]
+      },
+      {
+        "parameters": {
+          "method": "PUT",
+          "url": "https://presta.dev.gosharpei.com/api/orders/41",
+          "sendQuery": true,
+          "queryParameters": {
+            "parameters": [
+              {
+                "name": "ws_key",
+                "value": "={{ $('Shop Platforms').item.json.data[0].CMS_api_key }}"
+              }
+            ]
+          },
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "cookie",
+                "value": "PHPSESSID=varqlcdg9cfes0kbalj0k9td3a;PrestaShop-0855ee89820719254893048b26ed51c9=def50200a00681b6f7acecfc596bd1edcee3465242e3ec06729ee77f1607408f3965b40b54532c87d0594163f71f654375be36aaa1d73c83c4cd95c1f3bfc6e59cb1cfb99732c6e881882c1d4065f537b6e7386378ca26e55fbb468d57e0a69321dc5f88ed1664cdbd7375aee8a50cd61710a27e4da34f58e3c7b57def717953be46c2d41338f980dfe20064aba0b370a516f735564f282493c270f8c169365251edb07fdce6c3ff01f7561293225d2d3b39ae52150ad9c650adb84ce8817fe257ecb75c9941;PrestaShop-df5a150f0bed1eafa37192e80f10f929=def5020028dfdad4b6b91ceeed2a0f778e6b13b1fe72440a7390871afb558a8dc02f32d9e220c0b5f3ac7f70cb1a833ed63ccf2c82fb0f50762c6d93f4e563f83ecc99f58f21c8e445b22862c0412c2d5736ec9145bf1b516884704614048030ab47aef83a56f2f3a4cb07b694cd76fa5d172220bc1ed0f77a4f23320ce5b6523d21b0af2c7da4f0321233b683a00a256876b7cae99f2357483e4db268ae3be02cd4f58bca6b4b4fb9efe55e50df219b46c96564ab6227e240e388a58ef101df1f3aceee4a83c809eb2e3916342f67dfcef88adbd44616c7b162d28c83d607bf14c87897338eacbd10bf;"
+              }
+            ]
+          },
+          "sendBody": true,
+          "contentType": "raw",
+          "rawContentType": "application/xml",
+          "body": "=<prestashop>\n  <order>\n    <id><![CDATA[{{$node[\"Create order1\"].data.data.match(/<id><!\\[CDATA\\[(\\d+)\\]\\]><\\/id>/)[1]}}]]></id>\n    <current_state><![CDATA[2]]></current_state>\n    <id_address_delivery><![CDATA[{{$node[\"Create Delivery Address\"].data.data.match(/<id><!\\[CDATA\\[(\\d+)\\]\\]><\\/id>/)[1]}}]]></id_address_delivery>\n    <id_address_invoice><![CDATA[{{$node[\"Create Delivery Address\"].data.data.match(/<id><!\\[CDATA\\[(\\d+)\\]\\]><\\/id>/)[1]}}]]></id_address_invoice>\n    <id_cart>{{$node[\"Create Cart1\"].data.data.match(/<id><!\\[CDATA\\[(\\d+)\\]\\]><\\/id>/)[1]}}</id_cart>\n    <id_currency>1</id_currency>\n    <id_carrier>2</id_carrier>\n    <id_lang>1</id_lang>\n    <id_customer>{{ $('Create Customer1').item.json.data\n    .match(/<id><!\\[CDATA\\[(.*?)\\]\\]><\\/id>/s)[1]}}</id_customer>\n    <module>ps_checkpayment</module>\n    <payment>Payments by check</payment>\n    <total_paid>{{ $('Order Review PROD').item.json.body.price_period.slice(1) }}</total_paid>\n    <total_paid_real>{{ $('Order Review PROD').item.json.body.price_period.slice(1) }}</total_paid_real>\n    <total_products>1.00</total_products>\n    <total_products_wt>15.00</total_products_wt>\n    <conversion_rate>1.00</conversion_rate>\n    <id_shop><![CDATA[{{$node[\"Shops\"].json.data.match(/<shop id=\"(\\d+)\"/)[1]}}]]></id_shop>\n  </order>\n</prestashop>\n",
+          "options": {
+            "redirect": {
+              "redirect": {}
+            }
+          }
+        },
+        "id": "6ecd68d1-fd5d-4345-bbe6-b9bc58be276b",
+        "name": "Update state",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          4540,
+          -1180
+        ]
+      },
+      {
+        "parameters": {
+          "url": "=https://api.{{ $('Update').item.json.env }}.gosharpei.com/api/shop-platforms  ",
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "Authorization",
+                "value": "={{ $('Update').item.json.auth }}"
+              }
+            ]
+          },
+          "options": {
+            "redirect": {
+              "redirect": {}
+            }
+          }
+        },
+        "id": "29d5b6c9-9c6f-451e-b31d-09c9cefab5f3",
+        "name": "Shop Platforms",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          1500,
+          -1580
+        ]
+      },
+      {
+        "parameters": {},
+        "id": "6e8b0fd3-103a-4858-8e95-adcbf5dfe754",
+        "name": "No Operation, do nothing",
+        "type": "n8n-nodes-base.noOp",
+        "typeVersion": 1,
+        "position": [
+          1920,
+          -1340
+        ]
+      },
+      {
+        "parameters": {
+          "amount": 3
+        },
+        "id": "000cd9d0-eb06-4ed8-acb0-fd6f9c74565a",
+        "name": "Wait",
+        "type": "n8n-nodes-base.wait",
+        "typeVersion": 1.1,
+        "position": [
+          2940,
+          -1740
+        ],
+        "webhookId": "423b7374-3901-4d9e-b08d-781217b3bf19"
+      },
+      {
+        "parameters": {
+          "url": "={{ $('Shop Platforms').item.json.data[0].shop.domain }}api/addresses\n ",
+          "sendQuery": true,
+          "queryParameters": {
+            "parameters": [
+              {
+                "name": "ws_key",
+                "value": "={{ $('Shop Platforms').item.json.data[0].CMS_api_key }}"
+              },
+              {
+                "name": "=filter[id_customer]",
+                "value": "={{ $json[\"data\"].match(/<customer id=\"(\\d+)\"/)[1] }}"
+              }
+            ]
+          },
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "output_format",
+                "value": "JSON"
+              },
+              {
+                "name": "cookie",
+                "value": "PHPSESSID=ese952gigde52ns6tee26u9upi;PrestaShop-0855ee89820719254893048b26ed51c9=def5020031c0e2f2f1ce59d4d72bcb6231237f831f16829ab405db31ca6ccaa4be67b38c282ba020cc9bae5cb279e67d43dc350edb538340cb46474d65056d124de4ff29fea53a3322b84bbd07044974b87cb1b9c20100bc7ff1b5e91077c7dfa2960eba9abaeebbd1bf649e43b26e75a9a15ec751ec165119bf504dc5642c27079ae9eddfcdb05bb9adf6423e67765d8cc6aeceb93248544374d29ee0a26cd42710dd96d30c12c169ed7bedc80d8a0f425074a34fd81c3064dce8121452d980297da6e9b1d7;"
+              }
+            ]
+          },
+          "options": {
+            "redirect": {
+              "redirect": {}
+            }
+          }
+        },
+        "id": "c5189ad0-6a88-44b1-9dde-50a15f288808",
+        "name": "Get Addresses",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          2280,
+          -1420
+        ]
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "={{ $('Shop Platforms').item.json.data[0].shop.domain }}api/carts ",
+          "sendQuery": true,
+          "queryParameters": {
+            "parameters": [
+              {
+                "name": "ws_key",
+                "value": "={{ $('Shop Platforms').item.json.data[0].CMS_api_key }}"
+              }
+            ]
+          },
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {}
+            ]
+          },
+          "sendBody": true,
+          "contentType": "raw",
+          "rawContentType": "application/xml",
+          "body": "=<prestashop>\n  <cart>\n    <id_currency>{{ $('Update').item.json.currency === 'EUR' ? 2 : $('Update').item.json.currency === 'USD' ? 1 : null }}</id_currency> <!-- ID de la moneda -->\n    <id_lang>1</id_lang> <!-- ID del idioma -->\n    <id_address_invoice>{{$node[\"Get Addresses\"].json[\"data\"].match(/<address id=\"(\\d+)\"/)[1]}}</id_address_invoice>\n<id_address_delivery>{{$node[\"Get Addresses\"].json[\"data\"].match(/<address id=\"(\\d+)\"/)[1]}}</id_address_delivery>  \n         \n    <id_customer>{{$node[\"Get Customer1\"].json[\"data\"].match(/<customer id=\"(\\d+)\"/)[1]}}</id_customer> <!-- ID del cliente  -->\n  </cart>\n</prestashop>\n",
+          "options": {
+            "redirect": {
+              "redirect": {}
+            }
+          }
+        },
+        "id": "a326d4fa-9fdb-4b9c-a2eb-de0cf626956d",
+        "name": "Create Cart",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          2500,
+          -1420
+        ]
+      },
+      {
+        "parameters": {
+          "method": "PUT",
+          "url": "={{ $('Shop Platforms').item.json.data[0].shop.domain }}api/carts/{{$node[\"Create Cart\"].data.data.match(/<id><!\\[CDATA\\[(\\d+)\\]\\]><\\/id>/)[1]}}\n\n ",
+          "sendQuery": true,
+          "queryParameters": {
+            "parameters": [
+              {
+                "name": "ws_key",
+                "value": "={{ $('Shop Platforms').item.json.data[0].CMS_api_key }}"
+              }
+            ]
+          },
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "=cookie",
+                "value": "PHPSESSID=ese952gigde52ns6tee26u9upi;PrestaShop-0855ee89820719254893048b26ed51c9=def5020031c0e2f2f1ce59d4d72bcb6231237f831f16829ab405db31ca6ccaa4be67b38c282ba020cc9bae5cb279e67d43dc350edb538340cb46474d65056d124de4ff29fea53a3322b84bbd07044974b87cb1b9c20100bc7ff1b5e91077c7dfa2960eba9abaeebbd1bf649e43b26e75a9a15ec751ec165119bf504dc5642c27079ae9eddfcdb05bb9adf6423e67765d8cc6aeceb93248544374d29ee0a26cd42710dd96d30c12c169ed7bedc80d8a0f425074a34fd81c3064dce8121452d980297da6e9b1d7;"
+              }
+            ]
+          },
+          "sendBody": true,
+          "contentType": "raw",
+          "rawContentType": "xml",
+          "body": "=<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<prestashop xmlns:xlink=\"http://www.w3.org/1999/xlink\">\n  <cart>\n    <!-- ID del carrito a actualizar -->\n    <id><![CDATA[{{$node[\"Create Cart\"].data.data.match(/<id><!\\[CDATA\\[(\\d+)\\]\\]><\\/id>/)[1]}}]]></id>\n   <!-- ID del shop -->\n    <id_shop><![CDATA[{{$node[\"Shops\"].json.data.match(/<shop id=\"(\\d+)\"/)[1]}}]]></id_shop>\n\n    <!-- ID de la moneda -->\n    <id_currency><![CDATA[{{ $('Update').item.json.currency === 'EUR' ? 2 : ($('Update').item.json.currency === 'USD' ? 1 : null) }}]]></id_currency>\n\n    <!-- ID del idioma -->\n    <id_lang><![CDATA[1]]></id_lang>\n    <id_address_delivery><![CDATA[{{$node[\"Get Addresses\"].json[\"data\"].match(/<address id=\"(\\d+)\"/)[1]}}]]></id_address_delivery>\n    <id_address_invoice><![CDATA[{{$node[\"Get Addresses\"].json[\"data\"].match(/<address id=\"(\\d+)\"/)[1]}}]]></id_address_invoice>\n\n    <!-- ID del cliente asociado al carrito -->\n    <id_customer><![CDATA[{{$node[\"Get Customer1\"].json[\"data\"].match(/<customer id=\"(\\d+)\"/)[1]}}]]></id_customer>\n\n    <associations>\n      <cart_rows>\n        <cart_row>\n          <!-- ID del producto en el carrito -->\n          <id_product><![CDATA[{{ $('Update').item.json.product_remote_id }}]]></id_product>\n          <id_product_attribute><![CDATA[{{ $('Update').item.json.product_variant_remote_id === $('Update').item.json.product_remote_id ? 0 : $('Update').item.json.product_variant_remote_id }}]]></id_product_attribute>\n\n          <!-- Cantidad de producto en el carrito -->\n          <quantity><![CDATA[1]]></quantity>\n        </cart_row>\n      </cart_rows>\n    </associations>\n  </cart>\n</prestashop>\n\n",
+          "options": {
+            "redirect": {
+              "redirect": {}
+            }
+          }
+        },
+        "id": "6323e45a-26a2-4de9-8b71-b83cab716f27",
+        "name": "Update Cart",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          2720,
+          -1420
+        ]
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "={{ $('Shop Platforms').item.json.data[0].shop.domain }}api/orders ",
+          "sendQuery": true,
+          "queryParameters": {
+            "parameters": [
+              {
+                "name": "ws_key",
+                "value": "={{ $('Shop Platforms').item.json.data[0].CMS_api_key }}"
+              }
+            ]
+          },
+          "sendBody": true,
+          "contentType": "raw",
+          "rawContentType": "application/xml",
+          "body": "=<prestashop>\n            <order>\n                <id_cart>{{$node[\"Create Cart\"].data.data.match(/<id><!\\[CDATA\\[(\\d+)\\]\\]><\\/id>/)[1]}}</id_cart>\n                <id_address_delivery><![CDATA[{{$node[\"Get Addresses\"].json[\"data\"].match(/<address id=\"(\\d+)\"/)[1]}}]]></id_address_delivery>\n                <id_address_invoice><![CDATA[{{$node[\"Get Addresses\"].json[\"data\"].match(/<address id=\"(\\d+)\"/)[1]}}]]></id_address_invoice>\n                <id_currency>{{ $('Update').item.json.currency === 'EUR' ? 2 : ($('Update').item.json.currency === 'USD' ? 1 : null) }}</id_currency>\n                <id_carrier>2</id_carrier> \n                <note><![CDATA[Sharpei Order Id : 4895.]]></note>\n                \n                \n                <total_paid>{{ parseFloat($('Update').item.json.total_product_price).toFixed(2) }}</total_paid>\n                <total_paid_real>{{ parseFloat($('Update').item.json.total_product_price).toFixed(2)}}</total_paid_real>\n                <total_paid_tax_incl>{{ parseFloat($('Update').item.json.total_product_price).toFixed(2) }}</total_paid_tax_incl>\n                <total_paid_tax_excl>{{ parseFloat($('Update').item.json.total_product_price).toFixed(2) }}</total_paid_tax_excl>\n                <total_products>{{ parseFloat($('Update').item.json.total_product_price).toFixed(2) }}</total_products>\n                <total_products_wt>{{ parseFloat($('Update').item.json.total_product_price).toFixed(2) }}</total_products_wt>\n                <conversion_rate>1.00</conversion_rate>\n                <id_lang>1</id_lang>\n                <current_state>2</current_state>\n                \n\n                <id_customer>{{$node[\"Get Customer1\"].json[\"data\"].match(/<customer id=\"(\\d+)\"/)[1]}}</id_customer>\n                <payment>Payments by check</payment>\n                <module>ps_checkpayment</module>\n            \n                <!-- Otros campos necesarios -->\n            </order>\n         </prestashop>   ",
+          "options": {
+            "redirect": {
+              "redirect": {}
+            }
+          }
+        },
+        "id": "aefa8a6a-2254-4482-95b4-a711c927379c",
+        "name": "Create order",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          2940,
+          -1420
+        ]
+      },
+      {
+        "parameters": {
+          "method": "PUT",
+          "url": "=https://presta.dev.gosharpei.com/api/orders/{{$json[\"data\"].match(/<order>\\s*<id><!\\[CDATA\\[(\\d+)\\]\\]><\\/id>/)[1]}}\n\n",
+          "sendQuery": true,
+          "queryParameters": {
+            "parameters": [
+              {
+                "name": "ws_key",
+                "value": "={{ $('Shop Platforms').item.json.data[0].CMS_api_key }}"
+              }
+            ]
+          },
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "cookie",
+                "value": "PHPSESSID=varqlcdg9cfes0kbalj0k9td3a;PrestaShop-0855ee89820719254893048b26ed51c9=def50200a00681b6f7acecfc596bd1edcee3465242e3ec06729ee77f1607408f3965b40b54532c87d0594163f71f654375be36aaa1d73c83c4cd95c1f3bfc6e59cb1cfb99732c6e881882c1d4065f537b6e7386378ca26e55fbb468d57e0a69321dc5f88ed1664cdbd7375aee8a50cd61710a27e4da34f58e3c7b57def717953be46c2d41338f980dfe20064aba0b370a516f735564f282493c270f8c169365251edb07fdce6c3ff01f7561293225d2d3b39ae52150ad9c650adb84ce8817fe257ecb75c9941;PrestaShop-df5a150f0bed1eafa37192e80f10f929=def5020028dfdad4b6b91ceeed2a0f778e6b13b1fe72440a7390871afb558a8dc02f32d9e220c0b5f3ac7f70cb1a833ed63ccf2c82fb0f50762c6d93f4e563f83ecc99f58f21c8e445b22862c0412c2d5736ec9145bf1b516884704614048030ab47aef83a56f2f3a4cb07b694cd76fa5d172220bc1ed0f77a4f23320ce5b6523d21b0af2c7da4f0321233b683a00a256876b7cae99f2357483e4db268ae3be02cd4f58bca6b4b4fb9efe55e50df219b46c96564ab6227e240e388a58ef101df1f3aceee4a83c809eb2e3916342f67dfcef88adbd44616c7b162d28c83d607bf14c87897338eacbd10bf;"
+              }
+            ]
+          },
+          "sendBody": true,
+          "contentType": "raw",
+          "rawContentType": "application/xml",
+          "body": "=<prestashop>\n  <order>\n    <id><![CDATA[{{$json[\"data\"].match(/<order>\\s*<id><!\\[CDATA\\[(\\d+)\\]\\]><\\/id>/)[1]}}\n]]></id>\n    <current_state><![CDATA[9]]></current_state>\n    <id_address_delivery><![CDATA[{{$node[\"Get Addresses\"].json[\"data\"].match(/<address id=\"(\\d+)\"/)[1]}}]]></id_address_delivery>\n    <id_address_invoice><![CDATA[{{$node[\"Get Addresses\"].json[\"data\"].match(/<address id=\"(\\d+)\"/)[1]}}]]></id_address_invoice>\n    <id_cart>{{$node[\"Create Cart\"].data.data.match(/<id><!\\[CDATA\\[(\\d+)\\]\\]><\\/id>/)[1]}}</id_cart>\n    <id_currency>1</id_currency>\n    <note><![CDATA[Sharpei Order Id : {{ $('Order Review PROD').item.json.body.order_number }}]]></note>\n    <id_carrier>2</id_carrier>\n    <id_lang>1</id_lang>\n    <id_customer>{{$node[\"Get Customer1\"].json[\"data\"].match(/<customer id=\"(\\d+)\"/)[1]}}</id_customer>\n    <module>paypal</module>\n    <payment>PayPal</payment>\n    <total_paid>{{ parseFloat($('Order Review PROD').item.json.body.total_product_price).toFixed(2) }}</total_paid>\n    <total_paid_real>{{ parseFloat($('Order Review PROD').item.json.body.total_product_price).toFixed(2) }}</total_paid_real>\n    <total_products>{{ parseFloat($('Order Review PROD').item.json.body.total_product_price).toFixed(2) }}</total_products>\n    <total_products_wt>{{ parseFloat($('Order Review PROD').item.json.body.total_product_price).toFixed(2) }}</total_products_wt>\n    <conversion_rate>1.00</conversion_rate>\n    <id_shop><![CDATA[1]]></id_shop>\n  </order>\n</prestashop>\n ",
+          "options": {
+            "redirect": {
+              "redirect": {}
+            }
+          }
+        },
+        "id": "29dc868d-de1d-4e45-aa1b-7a9406a667d6",
+        "name": "Update state1",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          4360,
+          -1180
+        ]
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "={{ $('Shop Platforms').item.json.data[0].shop.domain }}api/addresses ",
+          "sendQuery": true,
+          "queryParameters": {
+            "parameters": [
+              {
+                "name": "ws_key",
+                "value": "={{ $('Shop Platforms').item.json.data[0].CMS_api_key }}"
+              }
+            ]
+          },
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "cookie",
+                "value": "PHPSESSID=ese952gigde52ns6tee26u9upi;PrestaShop-0855ee89820719254893048b26ed51c9=def5020031c0e2f2f1ce59d4d72bcb6231237f831f16829ab405db31ca6ccaa4be67b38c282ba020cc9bae5cb279e67d43dc350edb538340cb46474d65056d124de4ff29fea53a3322b84bbd07044974b87cb1b9c20100bc7ff1b5e91077c7dfa2960eba9abaeebbd1bf649e43b26e75a9a15ec751ec165119bf504dc5642c27079ae9eddfcdb05bb9adf6423e67765d8cc6aeceb93248544374d29ee0a26cd42710dd96d30c12c169ed7bedc80d8a0f425074a34fd81c3064dce8121452d980297da6e9b1d7;"
+              }
+            ]
+          },
+          "sendBody": true,
+          "contentType": "raw",
+          "rawContentType": "xml",
+          "body": "=<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<prestashop>\n  <address>\n    <id_customer><![CDATA[{{$json[\"data\"].match(/<id><!\\[CDATA\\[(\\d+)\\]\\]><\\/id>/)[1]}}]]></id_customer>           <!-- ID del cliente existente -->\n    <id_country><![CDATA[6]]></id_country>             <!-- ID del país -->\n    <alias><![CDATA[Delivery Address]]></alias>        <!-- Alias para identificar la dirección -->\n    <lastname><![CDATA[{{ $('Update').item.json.second_name }}]]></lastname>  <!-- Apellido del cliente -->\n    <firstname><![CDATA[{{ $('Update').item.json.first_name }}]]></firstname> <!-- Nombre del cliente -->\n    <address1><![CDATA[{{ $('Update').item.json.shipping_address }}]]></address1> <!-- Dirección principal -->\n   <city><![CDATA[{{ $('Update').item.json.billing_city }}]]></city>\n   <postcode><![CDATA[{{ $('Update').item.json.shipping_zip }}]]></postcode>\n   <active><![CDATA[1]]></active> \n   <dni><![CDATA[12345678X]]></dni>   \n    \n  </address>\n</prestashop>\n           ",
+          "options": {
+            "redirect": {
+              "redirect": {}
+            }
+          }
+        },
+        "id": "b9dd5854-25f5-40e4-ae1c-2bf7ba8ffc23",
+        "name": "Create Delivery Address",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          2500,
+          -1740
+        ]
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "={{ $('Shop Platforms').item.json.data[0].shop.domain }}api/addresses ",
+          "sendQuery": true,
+          "queryParameters": {
+            "parameters": [
+              {
+                "name": "ws_key",
+                "value": "={{ $('Shop Platforms').item.json.data[0].CMS_api_key }}"
+              }
+            ]
+          },
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "cookie",
+                "value": "PHPSESSID=ese952gigde52ns6tee26u9upi;PrestaShop-0855ee89820719254893048b26ed51c9=def5020031c0e2f2f1ce59d4d72bcb6231237f831f16829ab405db31ca6ccaa4be67b38c282ba020cc9bae5cb279e67d43dc350edb538340cb46474d65056d124de4ff29fea53a3322b84bbd07044974b87cb1b9c20100bc7ff1b5e91077c7dfa2960eba9abaeebbd1bf649e43b26e75a9a15ec751ec165119bf504dc5642c27079ae9eddfcdb05bb9adf6423e67765d8cc6aeceb93248544374d29ee0a26cd42710dd96d30c12c169ed7bedc80d8a0f425074a34fd81c3064dce8121452d980297da6e9b1d7;"
+              }
+            ]
+          },
+          "sendBody": true,
+          "contentType": "raw",
+          "rawContentType": "xml",
+          "body": "=<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<prestashop>\n  <address>\n    <id_customer><![CDATA[{{$json[\"data\"].match(/<id><!\\[CDATA\\[(\\d+)\\]\\]><\\/id>/)[1]}}]]></id_customer>           <!-- ID del cliente existente -->\n    <id_country><![CDATA[6]]></id_country>             <!-- ID del país -->\n    <alias><![CDATA[Invoice Address]]></alias>        <!-- Alias para identificar la dirección -->\n    <lastname><![CDATA[{{ $('Update').item.json.second_name }}]]></lastname>  <!-- Apellido del cliente -->\n    <firstname><![CDATA[{{ $('Update').item.json.first_name }}]]></firstname> <!-- Nombre del cliente -->\n    <address1><![CDATA[{{ $('Update').item.json.billing_address }}]]></address1> <!-- Dirección principal -->\n   <city><![CDATA[{{ $('Update').item.json.billing_city }}]]></city>\n   <postcode><![CDATA[{{ $('Update').item.json.shipping_zip }}]]></postcode>\n   <active><![CDATA[1]]></active> \n   <dni><![CDATA[12345678X]]></dni>   \n    \n  </address>\n</prestashop>\n             ",
+          "options": {
+            "redirect": {
+              "redirect": {}
+            }
+          }
+        },
+        "id": "cbb5f64f-ccf6-4c81-bdbd-ba2fdfd4de68",
+        "name": "Create Invoice Address",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          2720,
+          -1740
+        ]
+      },
+      {
+        "parameters": {
+          "url": "=https://presta.{{ $json.env }}.gosharpei.com/api/shops ",
+          "sendQuery": true,
+          "queryParameters": {
+            "parameters": [
+              {
+                "name": "ws_key",
+                "value": "UCSMYZNKL9VTHU4397U6DM7PW1UDL8IU"
+              }
+            ]
+          },
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "cookie",
+                "value": "PHPSESSID=varqlcdg9cfes0kbalj0k9td3a;PrestaShop-0855ee89820719254893048b26ed51c9=def50200a00681b6f7acecfc596bd1edcee3465242e3ec06729ee77f1607408f3965b40b54532c87d0594163f71f654375be36aaa1d73c83c4cd95c1f3bfc6e59cb1cfb99732c6e881882c1d4065f537b6e7386378ca26e55fbb468d57e0a69321dc5f88ed1664cdbd7375aee8a50cd61710a27e4da34f58e3c7b57def717953be46c2d41338f980dfe20064aba0b370a516f735564f282493c270f8c169365251edb07fdce6c3ff01f7561293225d2d3b39ae52150ad9c650adb84ce8817fe257ecb75c9941;"
+              }
+            ]
+          },
+          "options": {
+            "redirect": {
+              "redirect": {}
+            }
+          }
+        },
+        "id": "8d2ce748-a033-4ec1-8c5e-0f0de41641e3",
+        "name": "Shops",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          1300,
+          -1580
+        ]
+      },
+      {
+        "parameters": {
+          "method": "PUT",
+          "url": "=https://api.{{ $('Update').item.json.env }}.gosharpei.com/api/orders/{{ $('Update').item.json.order_pid }}",
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "Accept",
+                "value": "application/json"
+              },
+              {
+                "name": "Authorization",
+                "value": "={{ $('Order - Review').item.json.body.apikey }}"
+              }
+            ]
+          },
+          "sendBody": true,
+          "bodyParameters": {
+            "parameters": [
+              {
+                "name": "meta_key",
+                "value": "prestashop_order_id"
+              },
+              {
+                "name": "meta_value",
+                "value": "={{ \n  $json[\"data\"].match(/<id><!\\[CDATA\\[(\\d+)\\]\\]><\\/id>/)[1].toString()\n}}"
+              }
+            ]
+          },
+          "options": {
+            "redirect": {
+              "redirect": {}
+            }
+          }
+        },
+        "id": "ca0748e8-2552-40e2-88b9-541665495201",
+        "name": "Update Order1",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          4060,
+          -1740
+        ]
+      },
+      {
+        "parameters": {
+          "url": "={{ $('Shop Platforms').item.json.data[0].shop.domain }}api/orders/{{$json[\"data\"].match(/<order>\\s*<id><!\\[CDATA\\[(\\d+)\\]\\]><\\/id>/)[1]}}",
+          "sendQuery": true,
+          "queryParameters": {
+            "parameters": [
+              {
+                "name": "ws_key",
+                "value": "={{ $('Shop Platforms').item.json.data[0].CMS_api_key }}"
+              }
+            ]
+          },
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "cookie",
+                "value": "PHPSESSID=varqlcdg9cfes0kbalj0k9td3a;PrestaShop-0855ee89820719254893048b26ed51c9=def50200a00681b6f7acecfc596bd1edcee3465242e3ec06729ee77f1607408f3965b40b54532c87d0594163f71f654375be36aaa1d73c83c4cd95c1f3bfc6e59cb1cfb99732c6e881882c1d4065f537b6e7386378ca26e55fbb468d57e0a69321dc5f88ed1664cdbd7375aee8a50cd61710a27e4da34f58e3c7b57def717953be46c2d41338f980dfe20064aba0b370a516f735564f282493c270f8c169365251edb07fdce6c3ff01f7561293225d2d3b39ae52150ad9c650adb84ce8817fe257ecb75c9941;PrestaShop-df5a150f0bed1eafa37192e80f10f929=def5020028dfdad4b6b91ceeed2a0f778e6b13b1fe72440a7390871afb558a8dc02f32d9e220c0b5f3ac7f70cb1a833ed63ccf2c82fb0f50762c6d93f4e563f83ecc99f58f21c8e445b22862c0412c2d5736ec9145bf1b516884704614048030ab47aef83a56f2f3a4cb07b694cd76fa5d172220bc1ed0f77a4f23320ce5b6523d21b0af2c7da4f0321233b683a00a256876b7cae99f2357483e4db268ae3be02cd4f58bca6b4b4fb9efe55e50df219b46c96564ab6227e240e388a58ef101df1f3aceee4a83c809eb2e3916342f67dfcef88adbd44616c7b162d28c83d607bf14c87897338eacbd10bf;"
+              }
+            ]
+          },
+          "options": {
+            "redirect": {
+              "redirect": {}
+            }
+          }
+        },
+        "id": "a1d6364d-ad98-440a-a909-e076e9343f0b",
+        "name": "get order1",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          3840,
+          -1740
+        ]
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict"
+            },
+            "conditions": [
+              {
+                "id": "d4727b8a-927e-40a1-94ea-abd547b7e988",
+                "leftValue": "={{ $json.data[0].CMS_name.toLowerCase() }}",
+                "rightValue": "prestashop",
+                "operator": {
+                  "type": "string",
+                  "operation": "equals",
+                  "name": "filter.operator.equals"
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "id": "578e95ed-0417-4589-a1ef-beb8b39e7d77",
+        "name": "If8",
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2,
+        "position": [
+          1700,
+          -1580
+        ]
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict"
+            },
+            "conditions": [
+              {
+                "id": "ed0436d8-f248-4dbb-8916-cde6d3465ada",
+                "leftValue": "={{ $json[\"data\"].includes('<customers>\\n</customers>') }}",
+                "rightValue": "",
+                "operator": {
+                  "type": "boolean",
+                  "operation": "true",
+                  "singleValue": true
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "id": "e647fa4a-354f-4616-9ac9-ec4897303c36",
+        "name": "If9",
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2,
+        "position": [
+          2100,
+          -1580
+        ]
+      },
+      {
+        "parameters": {
+          "resource": "mail",
+          "fromEmail": "jose@gosharpei.com",
+          "fromName": "Sharpei",
+          "toEmail": "josebrest25@gmail.com",
+          "dynamicTemplate": true,
+          "templateId": "d-a69bfb2b6e4842689684d80cb5a3f9ef",
+          "dynamicTemplateFields": {
+            "fields": [
+              {
+                "key": "first_name",
+                "value": "={{ $json.body.first_name }}"
+              },
+              {
+                "key": "shipping_address",
+                "value": "={{ $json.body.shipping_address }}"
+              },
+              {
+                "key": "product_variant_name",
+                "value": "={{ $json.body.product_variant_name }}"
+              },
+              {
+                "key": "shipping_method",
+                "value": "delivery"
+              },
+              {
+                "key": "paid",
+                "value": "={{ $json.body.paid }}"
+              },
+              {
+                "key": "total_contract",
+                "value": "={{ $json.body.total_product_price }}"
+              },
+              {
+                "key": "billing_address",
+                "value": "={{ $('Order - Review').item.json.body.billing_address }}"
+              },
+              {
+                "key": "contract_duration",
+                "value": "={{ $json.body.contract_duration }}"
+              },
+              {
+                "key": "order_number",
+                "value": "={{ $json.body.order_number }}"
+              },
+              {
+                "key": "order_url",
+                "value": "={{ $json.body.order_url }}"
+              },
+              {
+                "key": "shop_name",
+                "value": "={{ $json.body.shop_name }}"
+              },
+              {
+                "key": "price_period",
+                "value": "={{ $json.body.price_period }}"
+              },
+              {
+                "key": "currency",
+                "value": "={{ $json.body.currency }}"
+              },
+              {
+                "key": "selling_plan_type",
+                "value": "={{ $json.body.selling_plan_type }}"
+              },
+              {
+                "key": "product_variant_remote_id",
+                "value": "={{ $json.body.product_variant_remote_id }}"
+              },
+              {
+                "key": "billing_policy",
+                "value": "={{ $json.body.billing_policy }}"
+              },
+              {
+                "key": "shipping_city",
+                "value": "={{ $json.body.shipping_city }}"
+              },
+              {
+                "key": "shipping_country",
+                "value": "={{ $json.body.shipping_country }}"
+              },
+              {
+                "key": "billing_city",
+                "value": "={{$json.body.billing_city}}"
+              },
+              {
+                "key": "billing_zip",
+                "value": "={{ $json.body.billing_zip }}"
+              },
+              {
+                "key": "payment_type ",
+                "value": "={{ $json.body.payment_type }}"
+              },
+              {
+                "key": "payment_last_4_digits",
+                "value": "={{ $json.body.payment_last_4_digits }}"
+              },
+              {
+                "key": "payment_type_image",
+                "value": "={{ $json.body.payment_type_image }}"
+              },
+              {
+                "key": "shipping_zip",
+                "value": "={{ $json.body.shipping_zip }}"
+              },
+              {
+                "key": "product_image",
+                "value": "={{ $json.body.product_image }}"
+              },
+              {
+                "key": "verification_url",
+                "value": "={{ $json.body.verification_url }}"
+              },
+              {
+                "key": "provider_logo_url",
+                "value": "={{ $json.body.provider_logo_url }}"
+              },
+              {
+                "key": "provider_name",
+                "value": "={{ $json.body.provider_name }}"
+              },
+              {
+                "key": "provider_email ",
+                "value": "={{ $json.body.provider_email }}"
+              },
+              {
+                "key": "provider_tc ",
+                "value": "={{ $json.body.provider_tc }}"
+              },
+              {
+                "key": "billing_country",
+                "value": "={{$json.body.billing_country}}"
+              },
+              {
+                "key": "second_name",
+                "value": "={{ $json.body.second_name }}"
+              },
+              {
+                "key": "billing_name",
+                "value": "={{ $json.body.billing_name }}"
+              }
+            ]
+          },
+          "additionalFields": {}
+        },
+        "id": "44ddd476-260a-43e0-91c3-ed236cb491a0",
+        "name": "Order - Review / Customer SPA",
+        "type": "n8n-nodes-base.sendGrid",
+        "typeVersion": 1,
+        "position": [
+          1280,
+          -980
+        ],
+        "credentials": {
+          "sendGridApi": {
+            "id": "Z0C9bFwvJ8sTkIJz",
+            "name": "SendGrid account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "resource": "mail",
+          "fromEmail": "jose@gosharpei.com",
+          "fromName": "Sharpei",
+          "toEmail": "josebrest25@gmail.com",
+          "dynamicTemplate": true,
+          "templateId": "d-2f93ff5dc8ec47ceb483c2dcd21b12d7",
+          "dynamicTemplateFields": {
+            "fields": [
+              {
+                "key": "first_name",
+                "value": "={{ $json.body.first_name }}"
+              },
+              {
+                "key": "shipping_address",
+                "value": "={{ $json.body.shipping_address }}"
+              },
+              {
+                "key": "product_variant_name",
+                "value": "={{ $json.body.product_variant_name }}"
+              },
+              {
+                "key": "shipping_method",
+                "value": "delivery"
+              },
+              {
+                "key": "paid",
+                "value": "={{ $json.body.paid }}"
+              },
+              {
+                "key": "total_contract",
+                "value": "={{ $json.body.total_product_price }}"
+              },
+              {
+                "key": "billing_address",
+                "value": "={{ $('Order - Review').item.json.body.billing_address }}"
+              },
+              {
+                "key": "contract_duration",
+                "value": "={{ $json.body.contract_duration }}"
+              },
+              {
+                "key": "order_number",
+                "value": "={{ $json.body.order_number }}"
+              },
+              {
+                "key": "order_url",
+                "value": "={{ $json.body.order_url }}"
+              },
+              {
+                "key": "shop_name",
+                "value": "={{ $json.body.shop_name }}"
+              },
+              {
+                "key": "price_period",
+                "value": "={{ $json.body.price_period }}"
+              },
+              {
+                "key": "currency",
+                "value": "={{ $json.body.currency }}"
+              },
+              {
+                "key": "selling_plan_type",
+                "value": "={{ $json.body.selling_plan_type }}"
+              },
+              {
+                "key": "product_variant_remote_id",
+                "value": "={{ $json.body.product_variant_remote_id }}"
+              },
+              {
+                "key": "billing_policy",
+                "value": "={{ $json.body.billing_policy }}"
+              },
+              {
+                "key": "shipping_city",
+                "value": "={{ $json.body.shipping_city }}"
+              },
+              {
+                "key": "shipping_country",
+                "value": "={{ $json.body.shipping_country }}"
+              },
+              {
+                "key": "billing_city",
+                "value": "={{$json.body.billing_city}}"
+              },
+              {
+                "key": "billing_zip",
+                "value": "={{ $json.body.billing_zip }}"
+              },
+              {
+                "key": "payment_type ",
+                "value": "={{ $json.body.payment_type }}"
+              },
+              {
+                "key": "payment_last_4_digits",
+                "value": "={{ $json.body.payment_last_4_digits }}"
+              },
+              {
+                "key": "payment_type_image",
+                "value": "={{ $json.body.payment_type_image }}"
+              },
+              {
+                "key": "shipping_zip",
+                "value": "={{ $json.body.shipping_zip }}"
+              },
+              {
+                "key": "product_image",
+                "value": "={{ $json.body.product_image }}"
+              },
+              {
+                "key": "verification_url",
+                "value": "={{ $json.body.verification_url }}"
+              },
+              {
+                "key": "provider_logo_url",
+                "value": "={{ $json.body.provider_logo_url }}"
+              },
+              {
+                "key": "provider_name",
+                "value": "={{ $json.body.provider_name }}"
+              },
+              {
+                "key": "provider_email ",
+                "value": "={{ $json.body.provider_email }}"
+              },
+              {
+                "key": "provider_tc ",
+                "value": "={{ $json.body.provider_tc }}"
+              },
+              {
+                "key": "billing_country",
+                "value": "={{$json.body.billing_country}}"
+              },
+              {
+                "key": "second_name",
+                "value": "={{ $json.body.second_name }}"
+              },
+              {
+                "key": "billing_name",
+                "value": "={{ $json.body.billing_name }}"
+              }
+            ]
+          },
+          "additionalFields": {}
+        },
+        "id": "06ecd0c8-2a7d-4dda-874e-d2d5d81c0be0",
+        "name": "Order - Review / Merchant SPA1",
+        "type": "n8n-nodes-base.sendGrid",
+        "typeVersion": 1,
+        "position": [
+          1280,
+          -800
+        ],
+        "credentials": {
+          "sendGridApi": {
+            "id": "Z0C9bFwvJ8sTkIJz",
+            "name": "SendGrid account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "order_fulfillment",
+          "options": {}
+        },
+        "id": "d5c2d389-7077-4732-ab15-7312eaaddcab",
+        "name": "Order - Fulfillment",
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2,
+        "position": [
+          1700,
+          -400
+        ],
+        "webhookId": "22f3be20-7f1d-4d6a-af83-d9145cf30c73"
+      },
+      {
+        "parameters": {
+          "resource": "mail",
+          "fromEmail": "jose@gosharpei.com",
+          "fromName": "Sharpei",
+          "toEmail": "josebrest25@gmail.com",
+          "dynamicTemplate": true,
+          "templateId": "d-6f0597cda148430f99197923303c8a0c",
+          "dynamicTemplateFields": {
+            "fields": [
+              {
+                "key": "first_name",
+                "value": "={{ $json.body.first_name }}"
+              },
+              {
+                "key": "shipping_address",
+                "value": "={{ $json.body.shipping_address }}"
+              },
+              {
+                "key": "product_variant_name",
+                "value": "={{ $json.body.product_variant_name }}"
+              },
+              {
+                "key": "shipping_method",
+                "value": "delivery"
+              },
+              {
+                "key": "paid",
+                "value": "={{ $json.body.paid }}"
+              },
+              {
+                "key": "total_contract",
+                "value": "={{ $json.body.total_product_price }}"
+              },
+              {
+                "key": "billing_address",
+                "value": "={{ $json.body.billing_address }}"
+              },
+              {
+                "key": "contract_duration",
+                "value": "={{ $json.body.contract_duration }}"
+              },
+              {
+                "key": "order_number",
+                "value": "={{ $json.body.order_number }}"
+              },
+              {
+                "key": "order_url",
+                "value": "={{ $json.body.order_url }}"
+              },
+              {
+                "key": "shop_name",
+                "value": "={{ $json.body.shop_name }}"
+              },
+              {
+                "key": "price_period",
+                "value": "={{ $json.body.price_period }}"
+              },
+              {
+                "key": "currency",
+                "value": "={{ $json.body.currency }}"
+              },
+              {
+                "key": "selling_plan_type",
+                "value": "={{ $json.body.selling_plan_type }}"
+              },
+              {
+                "key": "product_variant_remote_id",
+                "value": "={{ $json.body.product_variant_remote_id }}"
+              },
+              {
+                "key": "billing_policy",
+                "value": "={{ $json.body.billing_policy }}"
+              },
+              {
+                "key": "shipping_city",
+                "value": "={{ $json.body.shipping_city }}"
+              },
+              {
+                "key": "shipping_country",
+                "value": "={{ $json.body.shipping_country }}"
+              },
+              {
+                "key": "billing_city",
+                "value": "={{$json.body.billing_city}}"
+              },
+              {
+                "key": "billing_zip",
+                "value": "={{ $json.body.billing_zip }}"
+              },
+              {
+                "key": "payment_type ",
+                "value": "={{ $json.body.payment_type }}"
+              },
+              {
+                "key": "payment_last_4_digits",
+                "value": "={{ $json.body.payment_last_4_digits }}"
+              },
+              {
+                "key": "payment_type_image",
+                "value": "={{ $json.body.payment_type_image }}"
+              },
+              {
+                "key": "shipping_zip",
+                "value": "={{ $json.body.shipping_zip }}"
+              },
+              {
+                "key": "product_image",
+                "value": "={{ $json.body.product_image }}"
+              },
+              {
+                "key": "verification_url",
+                "value": "={{ $json.body.verification_url }}"
+              },
+              {
+                "key": "provider_logo_url",
+                "value": "={{ $json.body.provider_logo_url }}"
+              },
+              {
+                "key": "provider_name",
+                "value": "={{ $json.body.provider_name }}"
+              },
+              {
+                "key": "provider_email ",
+                "value": "={{ $json.body.provider_email }}"
+              },
+              {
+                "key": "provider_tc ",
+                "value": "={{ $json.body.provider_tc }}"
+              },
+              {
+                "key": "billing_country",
+                "value": "={{$json.body.billing_country}}"
+              },
+              {
+                "key": "second_name",
+                "value": "={{ $json.body.second_name }}"
+              },
+              {
+                "key": "billing_name",
+                "value": "={{ $json.body.billing_name }}"
+              }
+            ]
+          },
+          "additionalFields": {}
+        },
+        "id": "ff693ce6-a83f-4a95-b4c5-4d2b578d3543",
+        "name": "Order - Review / Customer SPA1",
+        "type": "n8n-nodes-base.sendGrid",
+        "typeVersion": 1,
+        "position": [
+          2140,
+          -560
+        ],
+        "credentials": {
+          "sendGridApi": {
+            "id": "Z0C9bFwvJ8sTkIJz",
+            "name": "SendGrid account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "jsCode": "// Obtener los datos de entrada\nconst inputData = $input.all();\n\n// Asumir que siempre habrá al menos un elemento en items\nconst firstItem = inputData[0].json;\n\n// Procesar los datos para obtener el ID correcto\nconst body = firstItem.body;\nconst id = body.id !== undefined ? body.id : body.id_product;\n\n// Construir el objeto final\nconst result = {\n  order_body: firstItem,\n  env: \"prod\",\n  id\n};\n\n\nreturn {\n  \n  order_body: items[0].json,\n  env: \"prod\",\n  id,\n  \n  \n};\n\n\n\n\n"
+        },
+        "id": "779ab6a5-c3bf-4f89-b133-9fb067b4c45a",
+        "name": "Get Full Json",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          800,
+          -1380
+        ]
+      },
+      {
+        "parameters": {
+          "jsCode": "// Obtener los datos de entrada\nconst inputData = $input.all();\n\n// Asumir que siempre habrá al menos un elemento en items\nconst firstItem = inputData[0].json;\n\n// Procesar los datos para obtener el ID correcto\nconst body = firstItem.body;\nconst id = body.id !== undefined ? body.id : body.id_product;\n\n// Construir el objeto final\nconst result = {\n  order_body: firstItem,\n  env: \"prod\",\n  id\n};\n\n\nreturn {\n  \n  order_body: items[0].json,\n  env: \"dev\",\n  id,\n  webhook:\"Prestashop-Dev\"\n  \n};\n\n\n\n\n"
+        },
+        "id": "801f7317-ec44-4e1b-8b96-b9246f4ddb47",
+        "name": "Get Full Json2",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          800,
+          -1780
+        ]
+      },
+      {
+        "parameters": {
+          "jsCode": "// Initialize the name field with an empty default value\n \n\n\nlet env = items[0].json.env;\nlet email = items[0].json.order_body.body.email;\nlet first_name = items[0].json.order_body.body.first_name;\nlet second_name = items[0].json.order_body.body.second_name;\nlet auth = items[0].json.order_body.body.apikey;\nlet shipping_address = items[0].json.order_body.body.shipping_address;\nlet billing_city = items[0].json.order_body.body.billing_city;\nlet billing_address = items[0].json.order_body.body.billing_address;\nlet shipping_zip = items[0].json.order_body.body.shipping_zip;\nlet currency = items[0].json.order_body.body.currency;\nlet product_remote_id = items[0].json.order_body.body.product_remote_id;\nlet product_variant_remote_id = items[0].json.order_body.body.product_variant_remote_id;\nlet total_product_price = items[0].json.order_body.body.total_product_price;\nlet order_pid = items[0].json.order_body.body.order_pid;\n\n\n\n//let order_body = items[0].json;\n\n\n\n\n\n// Return the object with the name field\nreturn {\n    json: {\n        \n        //order_body,\n        env,\n        auth,\n        email,\n        first_name,\n        second_name,\n        shipping_address,\n        billing_city,\n        shipping_zip,\n        currency,\n        product_remote_id,\n        product_variant_remote_id,\n        total_product_price,\n        billing_address,\n        order_pid,\n        \n        \n        \n    }\n};\n\n"
+        },
+        "id": "8074fba3-e452-4481-93f7-754b0eaca43d",
+        "name": "Update",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          1080,
+          -1580
+        ],
+        "alwaysOutputData": false
+      },
+      {
+        "parameters": {
+          "url": "={{ $('Shop Platforms').item.json.data[0].shop.domain }}api/orders/{{$json[\"data\"].match(/<order>\\s*<id><!\\[CDATA\\[(\\d+)\\]\\]><\\/id>/)[1]}}",
+          "sendQuery": true,
+          "queryParameters": {
+            "parameters": [
+              {
+                "name": "ws_key",
+                "value": "={{ $('Shop Platforms').item.json.data[0].CMS_api_key }}"
+              }
+            ]
+          },
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "cookie",
+                "value": "PHPSESSID=varqlcdg9cfes0kbalj0k9td3a;PrestaShop-0855ee89820719254893048b26ed51c9=def50200a00681b6f7acecfc596bd1edcee3465242e3ec06729ee77f1607408f3965b40b54532c87d0594163f71f654375be36aaa1d73c83c4cd95c1f3bfc6e59cb1cfb99732c6e881882c1d4065f537b6e7386378ca26e55fbb468d57e0a69321dc5f88ed1664cdbd7375aee8a50cd61710a27e4da34f58e3c7b57def717953be46c2d41338f980dfe20064aba0b370a516f735564f282493c270f8c169365251edb07fdce6c3ff01f7561293225d2d3b39ae52150ad9c650adb84ce8817fe257ecb75c9941;PrestaShop-df5a150f0bed1eafa37192e80f10f929=def5020028dfdad4b6b91ceeed2a0f778e6b13b1fe72440a7390871afb558a8dc02f32d9e220c0b5f3ac7f70cb1a833ed63ccf2c82fb0f50762c6d93f4e563f83ecc99f58f21c8e445b22862c0412c2d5736ec9145bf1b516884704614048030ab47aef83a56f2f3a4cb07b694cd76fa5d172220bc1ed0f77a4f23320ce5b6523d21b0af2c7da4f0321233b683a00a256876b7cae99f2357483e4db268ae3be02cd4f58bca6b4b4fb9efe55e50df219b46c96564ab6227e240e388a58ef101df1f3aceee4a83c809eb2e3916342f67dfcef88adbd44616c7b162d28c83d607bf14c87897338eacbd10bf;"
+              }
+            ]
+          },
+          "options": {
+            "redirect": {
+              "redirect": {}
+            }
+          }
+        },
+        "id": "8c95cf31-2ffb-4b7a-a65d-2643962ee82b",
+        "name": "get order",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          3160,
+          -1420
+        ]
+      },
+      {
+        "parameters": {
+          "method": "PUT",
+          "url": "=https://api.{{ $('Update').item.json.env }}.gosharpei.com/api/orders/{{ $('Update').item.json.order_pid }}",
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "Accept",
+                "value": "application/json"
+              },
+              {
+                "name": "Authorization",
+                "value": "={{ $('Order - Review').item.json.body.apikey }}"
+              }
+            ]
+          },
+          "sendBody": true,
+          "bodyParameters": {
+            "parameters": [
+              {
+                "name": "meta_key",
+                "value": "prestashop_order_id"
+              },
+              {
+                "name": "meta_value",
+                "value": "={{ \n  $json[\"data\"].match(/<id><!\\[CDATA\\[(\\d+)\\]\\]><\\/id>/)[1].toString()\n}}"
+              }
+            ]
+          },
+          "options": {
+            "redirect": {
+              "redirect": {}
+            }
+          }
+        },
+        "id": "a823b8aa-53ec-49f1-8a06-d043a034e7de",
+        "name": "Update Order2",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          3380,
+          -1420
+        ]
+      },
+      {
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "order_review_prod",
+          "options": {}
+        },
+        "id": "da1e3c0c-677a-4740-a398-6ee9d32820f2",
+        "name": "Order Review PROD",
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2,
+        "position": [
+          520,
+          -1380
+        ],
+        "webhookId": "4f817c86-ac19-4220-993d-7628d3979120"
+      },
+      {
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "order_review",
+          "options": {}
+        },
+        "id": "aaf45bfd-8c20-435b-be26-ce7cf2d6f526",
+        "name": "Order - Review",
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2,
+        "position": [
+          520,
+          -1780
+        ],
+        "webhookId": "5ff49bed-cb00-4dd8-beda-2ea52d706544"
+      }
+    ],
+    "connections": {
+      "Order - Cancelled": {
+        "main": [
+          [
+            {
+              "node": "If",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "If": {
+        "main": [
+          [
+            {
+              "node": "Order - Cancelled / Customer ENG",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Order - Cancelled / Customer SPA",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Order - Cancelled / Customer ENG": {
+        "main": [
+          [
+            {
+              "node": "Order - Cancelled / Merchant ENG",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "If1": {
+        "main": [
+          [
+            {
+              "node": "Order - Review / Customer SPA1",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Order - Fulfillment / Customer SPA",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "If2": {
+        "main": [
+          [
+            {
+              "node": "Order - Creation / Merchant ENG",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Order - Creation": {
+        "main": [
+          [
+            {
+              "node": "If2",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "If4": {
+        "main": [
+          [
+            {
+              "node": "Order - Accepted / Customer ENG",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Order - Accepted / Customer SPA",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Order - Accepted": {
+        "main": [
+          [
+            {
+              "node": "If4",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "If5": {
+        "main": [
+          [
+            {
+              "node": "Order - Delivery / Customer ENG",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Order - Delivery / Customer SPA",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Order - Delivery": {
+        "main": [
+          [
+            {
+              "node": "If5",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "If6": {
+        "main": [
+          [
+            {
+              "node": "Order - Completed / Customer ENG",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Order - Completed / Customer SPA",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Order - Completed": {
+        "main": [
+          [
+            {
+              "node": "If6",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "If7": {
+        "main": [
+          [
+            {
+              "node": "Order - Error Payment / Customer ENG",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Order - Error Payment / Customer SPA",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Order - Error Payment": {
+        "main": [
+          [
+            {
+              "node": "If7",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "If3": {
+        "main": [
+          [
+            {
+              "node": "Order - Review / Customer SPA",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "Order - Review / Merchant SPA1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Update Cart1": {
+        "main": [
+          [
+            {
+              "node": "Create order1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Create Cart1": {
+        "main": [
+          [
+            {
+              "node": "Update Cart1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Create Customer1": {
+        "main": [
+          [
+            {
+              "node": "Create Delivery Address",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Get Customer1": {
+        "main": [
+          [
+            {
+              "node": "If9",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Create order1": {
+        "main": [
+          [
+            {
+              "node": "get order1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Shop Platforms": {
+        "main": [
+          [
+            {
+              "node": "If8",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Wait": {
+        "main": [
+          [
+            {
+              "node": "Create Cart1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Get Addresses": {
+        "main": [
+          [
+            {
+              "node": "Create Cart",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Create Cart": {
+        "main": [
+          [
+            {
+              "node": "Update Cart",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Update Cart": {
+        "main": [
+          [
+            {
+              "node": "Create order",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Create order": {
+        "main": [
+          [
+            {
+              "node": "get order",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Create Delivery Address": {
+        "main": [
+          [
+            {
+              "node": "Create Invoice Address",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Create Invoice Address": {
+        "main": [
+          [
+            {
+              "node": "Wait",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Shops": {
+        "main": [
+          [
+            {
+              "node": "Shop Platforms",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "get order1": {
+        "main": [
+          [
+            {
+              "node": "Update Order1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "If8": {
+        "main": [
+          [
+            {
+              "node": "Get Customer1",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "No Operation, do nothing",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "If9": {
+        "main": [
+          [
+            {
+              "node": "Create Customer1",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Get Addresses",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Order - Fulfillment": {
+        "main": [
+          [
+            {
+              "node": "If1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Get Full Json": {
+        "main": [
+          [
+            {
+              "node": "Update",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Get Full Json2": {
+        "main": [
+          [
+            {
+              "node": "Update",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Update": {
+        "main": [
+          [
+            {
+              "node": "Shops",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "get order": {
+        "main": [
+          [
+            {
+              "node": "Update Order2",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Order Review PROD": {
+        "main": [
+          [
+            {
+              "node": "Get Full Json",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Order - Review": {
+        "main": [
+          [
+            {
+              "node": "Get Full Json2",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "If3",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "pinData": {
+      "Order - Fulfillment": [
+        {
+          "headers": {
+            "x-forwarded-for": "54.193.39.185",
+            "x-forwarded-proto": "https",
+            "x-forwarded-port": "443",
+            "host": "automation.prod.gosharpei.com",
+            "x-amzn-trace-id": "Root=1-6740dc17-08d77f3d69058134290950e7",
+            "content-length": "1569",
+            "accept": "*/*",
+            "content-type": "application/json"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "apikey": "$2y$10$UzfjIeYjEdv9S2zvCt15KeVvc729GtDEIhmiieOKsTomLaKD2Ig7S",
+            "product_variant_name": "Apple iPhone 14 / Yellow - 128 GB",
+            "product_remote_id": "268",
+            "product_variant_remote_id": "560",
+            "product_image": "https://assets.dev.gosharpei.com/products/2701/1729509339_268.jpg",
+            "first_name": "Jose",
+            "second_name": "Brest",
+            "email": "jose@gosharpei.com",
+            "billing_name": "billing name",
+            "billing_policy": "billing every 1 Month",
+            "verification_url": "https://checkout.dev.gosharpei.com/verification?pid=83905e20-099e-4be4-be24-023e87b07c43",
+            "provider_logo_url": "https://assets.dev.gosharpei.com/user_company/1720785689_Decathlon-Logo.jpg",
+            "provider_name": "Decathlon",
+            "provider_email": "decathlon@gosharpei.com",
+            "provider_tc": "https://assets.dev.gosharpei.com/users_companies_documents/332/1720785725_Plantilla - Términos y condiciones.pdf",
+            "shipping_address": "Ocean Drive",
+            "shipping_city": "Miami Beach",
+            "shipping_country": "United States of America",
+            "shipping_zip": "33139",
+            "billing_address": "Ocean Drive",
+            "billing_city": "Miami Beach",
+            "billing_country": "United States of America",
+            "billing_zip": "33139",
+            "payment_type": "Visa",
+            "payment_type_image": "https://assets.dev.gosharpei.com/card_brand/visa.svg",
+            "payment_last_4_digits": "4242",
+            "order_number": 4335,
+            "selling_plan_type": "Lease-to-own",
+            "contract_duration": "1 Month",
+            "temporality": "Month",
+            "currency": "USD",
+            "price_period": "$100.66",
+            "paid": "$100.66",
+            "total_product_price": "719.00",
+            "order_url": "https://app.dev.gosharpei.com/admin/orders/b78bbaba-d4ea-45f4-8b6c-2250500f1761",
+            "shop_name": "Decathlon",
+            "language": "es"
+          },
+          "webhookUrl": "http://https://automation.prod.gosharpei.com:5678/webhook/order_review",
+          "executionMode": "production"
+        }
+      ],
+      "Order Review PROD": [
+        {
+          "headers": {
+            "x-forwarded-for": "54.215.193.31",
+            "x-forwarded-proto": "https",
+            "x-forwarded-port": "443",
+            "host": "automation.prod.gosharpei.com",
+            "x-amzn-trace-id": "Root=1-67486434-084bdf8850e328ef54b384ec",
+            "content-length": "1620",
+            "accept": "*/*",
+            "content-type": "application/json"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "apikey": "$2y$10$UzfjIeYjEdv9S2zvCt15KeVvc729GtDEIhmiieOKsTomLaKD2Ig7S",
+            "product_variant_name": "Apple iPad 10th Generation with A14 Bionic chip 109inch Liquid Retina Display 64GB / Blue",
+            "product_remote_id": "272",
+            "product_variant_remote_id": "566",
+            "product_image": "https://assets.dev.gosharpei.com/products/2707/1729587358_272.jpg",
+            "first_name": "j",
+            "second_name": "b",
+            "email": "joseb46@yahoo.com.ar",
+            "billing_name": null,
+            "billing_policy": "billing every 1 Month",
+            "verification_url": "https://checkout.dev.gosharpei.com/verification?pid=7178ce39-59ee-409a-84f1-32b212f3166a",
+            "provider_logo_url": "https://assets.dev.gosharpei.com/user_company/1720785689_Decathlon-Logo.jpg",
+            "provider_name": "Decathlon",
+            "provider_email": "decathlon@gosharpei.com",
+            "provider_tc": "https://assets.dev.gosharpei.com/users_companies_documents/332/1720785725_Plantilla - Términos y condiciones.pdf",
+            "shipping_address": "123 Ocean Dr",
+            "shipping_city": "Miami Beach",
+            "shipping_country": "United States of America",
+            "shipping_zip": "33139",
+            "billing_address": "123 Ocean Dr",
+            "billing_city": "Miami Beach",
+            "billing_country": "United States of America",
+            "billing_zip": "33139",
+            "payment_type": "Visa",
+            "payment_type_image": "https://assets.dev.gosharpei.com/card_brand/visa.svg",
+            "payment_last_4_digits": "4242",
+            "order_number": 4421,
+            "selling_plan_type": "Lease-to-own",
+            "contract_duration": "1 Month",
+            "temporality": "Month",
+            "currency": "USD",
+            "price_period": "$55.86",
+            "paid": "$55.86",
+            "total_product_price": "399.00",
+            "order_url": "https://app.dev.gosharpei.com/admin/orders/4b0c6903-1faf-4d16-9d7f-bb8068ac6ae2",
+            "shop_name": "Decathlon",
+            "language": "es"
+          },
+          "webhookUrl": "http://https://automation.prod.gosharpei.com:5678/webhook/order_review",
+          "executionMode": "production"
+        }
+      ],
+      "Order - Review": [
+        {
+          "headers": {
+            "x-forwarded-for": "54.215.193.31",
+            "x-forwarded-proto": "https",
+            "x-forwarded-port": "443",
+            "host": "automation.prod.gosharpei.com",
+            "x-amzn-trace-id": "Root=1-67486434-084bdf8850e328ef54b384ec",
+            "content-length": "1620",
+            "accept": "*/*",
+            "content-type": "application/json"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "order_pid": "91a334de-d6b8-4eae-b341-c50780eddd3b",
+            "apikey": "$2y$10$UzfjIeYjEdv9S2zvCt15KeVvc729GtDEIhmiieOKsTomLaKD2Ig7S",
+            "product_variant_name": "Apple iPad 10th Generation with A14 Bionic chip 109inch Liquid Retina Display 64GB / Blue",
+            "product_remote_id": "272",
+            "product_variant_remote_id": "566",
+            "product_image": "https://assets.dev.gosharpei.com/products/2707/1729587358_272.jpg",
+            "first_name": "j",
+            "second_name": "b",
+            "email": "josebr33@yahoo.com.ar",
+            "billing_name": null,
+            "billing_policy": "billing every 1 Month",
+            "verification_url": "https://checkout.dev.gosharpei.com/verification?pid=7178ce39-59ee-409a-84f1-32b212f3166a",
+            "provider_logo_url": "https://assets.dev.gosharpei.com/user_company/1720785689_Decathlon-Logo.jpg",
+            "provider_name": "Decathlon",
+            "provider_email": "decathlon@gosharpei.com",
+            "provider_tc": "https://assets.dev.gosharpei.com/users_companies_documents/332/1720785725_Plantilla - Términos y condiciones.pdf",
+            "shipping_address": "123 Ocean Dr",
+            "shipping_city": "Miami Beach",
+            "shipping_country": "United States of America",
+            "shipping_zip": "33139",
+            "billing_address": "123 Ocean Dr",
+            "billing_city": "Miami Beach",
+            "billing_country": "United States of America",
+            "billing_zip": "33139",
+            "payment_type": "Visa",
+            "payment_type_image": "https://assets.dev.gosharpei.com/card_brand/visa.svg",
+            "payment_last_4_digits": "4242",
+            "order_number": 4421,
+            "selling_plan_type": "Lease-to-own",
+            "contract_duration": "1 Month",
+            "temporality": "Month",
+            "currency": "USD",
+            "price_period": "$55.86",
+            "paid": "$55.86",
+            "total_product_price": "399.00",
+            "order_url": "https://app.dev.gosharpei.com/admin/orders/4b0c6903-1faf-4d16-9d7f-bb8068ac6ae2",
+            "shop_name": "Decathlon",
+            "language": "es"
+          },
+          "webhookUrl": "http://https://automation.prod.gosharpei.com:5678/webhook/order_review",
+          "executionMode": "production"
+        }
+      ]
+    }
+  }

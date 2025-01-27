@@ -1,0 +1,503 @@
+{
+    "meta": {
+      "instanceId": "0c0beacef8877bbf2416eb00f2b5dc96354e26dd1df5517320459b1236860f8c"
+    },
+    "nodes": [
+      {
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "transaction_failed",
+          "options": {}
+        },
+        "id": "95ff363a-3d1e-4036-b00a-3aed42235985",
+        "name": "Transaction - Failed",
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2,
+        "position": [
+          1320,
+          -60
+        ],
+        "webhookId": "02a29027-43b9-4795-82da-47ccbafcba14"
+      },
+      {
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "transaction_paid",
+          "options": {}
+        },
+        "id": "9a8570eb-0347-4818-8bb5-bf7a3e70737a",
+        "name": "Transaction - Paid",
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2,
+        "position": [
+          1320,
+          460
+        ],
+        "webhookId": "0fcf2c2c-de47-4fa5-96c2-3808f4e7731e"
+      },
+      {
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "transaction_captured",
+          "options": {}
+        },
+        "id": "c27bb362-e81b-4de1-b94b-23426c9ec472",
+        "name": "Captured",
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2,
+        "position": [
+          2220,
+          660
+        ],
+        "webhookId": "3f6a7a6e-2100-4313-b1f7-1f2ad90a5b69"
+      },
+      {
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "transaction_refunded",
+          "options": {}
+        },
+        "id": "ab27d100-432b-43e5-b53e-6ac706e37da6",
+        "name": "Refunded",
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2,
+        "position": [
+          2220,
+          540
+        ],
+        "webhookId": "9923a05d-6bdc-4330-9791-e502478fd053"
+      },
+      {
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "transaction_cancelled",
+          "options": {}
+        },
+        "id": "3ba6bed6-8637-41c2-ae96-c553fb08c277",
+        "name": "Transaction - Cancelled",
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2,
+        "position": [
+          380,
+          -60
+        ],
+        "webhookId": "746efb66-727c-41b4-b337-f8ccfda58627"
+      },
+      {
+        "parameters": {
+          "resource": "mail",
+          "fromEmail": "jose@gosharpei.com",
+          "fromName": "Sharpei",
+          "toEmail": "josebrest25@gmail.com",
+          "dynamicTemplate": true,
+          "templateId": "d-b3108c8f035e40b1998e81a5ce3735e8",
+          "additionalFields": {}
+        },
+        "id": "185359a5-dcdf-4328-883f-dad2ed88679a",
+        "name": "Transaction - Cancelled / Customer ENG",
+        "type": "n8n-nodes-base.sendGrid",
+        "typeVersion": 1,
+        "position": [
+          800,
+          -160
+        ],
+        "credentials": {
+          "sendGridApi": {
+            "id": "Z0C9bFwvJ8sTkIJz",
+            "name": "SendGrid account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "resource": "mail",
+          "fromEmail": "jose@gosharpei.com",
+          "fromName": "Sharpei",
+          "toEmail": "josebrest25@gmail.com",
+          "dynamicTemplate": true,
+          "templateId": "d-fd8172d0f6564550aff318fed473e178",
+          "additionalFields": {}
+        },
+        "id": "d02671b6-c45a-4549-9c0c-b52bc557da39",
+        "name": "Transaction - Cancelled / Merchant ENG",
+        "type": "n8n-nodes-base.sendGrid",
+        "typeVersion": 1,
+        "position": [
+          1020,
+          -160
+        ],
+        "credentials": {
+          "sendGridApi": {
+            "id": "Z0C9bFwvJ8sTkIJz",
+            "name": "SendGrid account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "resource": "mail",
+          "fromEmail": "jose@gosharpei.com",
+          "fromName": "Sharpei",
+          "toEmail": "josebrest25@gmail.com",
+          "dynamicTemplate": true,
+          "templateId": "d-c43f4c43cc3b40ecbeccb2f656168816",
+          "additionalFields": {}
+        },
+        "id": "889ebd78-3c51-4d3e-bec1-38c1d8062f01",
+        "name": "Transaction - Cancelled / Customer SPA",
+        "type": "n8n-nodes-base.sendGrid",
+        "typeVersion": 1,
+        "position": [
+          800,
+          40
+        ],
+        "credentials": {
+          "sendGridApi": {
+            "id": "Z0C9bFwvJ8sTkIJz",
+            "name": "SendGrid account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "options": {}
+        },
+        "id": "a75482a6-1e1e-4556-af99-58b2cfca75ef",
+        "name": "If",
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2,
+        "position": [
+          600,
+          -60
+        ]
+      },
+      {
+        "parameters": {
+          "options": {}
+        },
+        "id": "cdc96eb2-0d4f-4f0b-9c46-351e33648aa4",
+        "name": "If1",
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2,
+        "position": [
+          600,
+          400
+        ]
+      },
+      {
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "transaction_declined",
+          "options": {}
+        },
+        "id": "865f4a7b-636b-4f6d-8355-7dae40296143",
+        "name": "Transaction - Declined",
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2,
+        "position": [
+          380,
+          400
+        ],
+        "webhookId": "01afa63f-a6e6-4c82-be77-df2bd2814c12"
+      },
+      {
+        "parameters": {
+          "resource": "mail",
+          "fromEmail": "jose@gosharpei.com",
+          "fromName": "Sharpei",
+          "toEmail": "josebrest25@gmail.com",
+          "dynamicTemplate": true,
+          "templateId": "d-26de3356b7444ca49ad7fc386f92fa6c",
+          "additionalFields": {}
+        },
+        "id": "d1e2294d-e099-440b-9ac3-fcb255130339",
+        "name": "Transaction - Declined / Customer ENG",
+        "type": "n8n-nodes-base.sendGrid",
+        "typeVersion": 1,
+        "position": [
+          800,
+          300
+        ],
+        "credentials": {
+          "sendGridApi": {
+            "id": "Z0C9bFwvJ8sTkIJz",
+            "name": "SendGrid account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "resource": "mail",
+          "fromEmail": "jose@gosharpei.com",
+          "fromName": "Sharpei",
+          "toEmail": "josebrest25@gmail.com",
+          "dynamicTemplate": true,
+          "templateId": "d-6b99c5232a424072bf72ae9719dee966",
+          "additionalFields": {}
+        },
+        "id": "3781dc8b-8126-41c6-b220-366507f764cb",
+        "name": "Transaction - Declined / Customer SPA",
+        "type": "n8n-nodes-base.sendGrid",
+        "typeVersion": 1,
+        "position": [
+          800,
+          500
+        ],
+        "credentials": {
+          "sendGridApi": {
+            "id": "Z0C9bFwvJ8sTkIJz",
+            "name": "SendGrid account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "options": {}
+        },
+        "id": "f648e6d6-17e2-4267-a0cc-e3bc9f75f7c1",
+        "name": "If2",
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2,
+        "position": [
+          1520,
+          -60
+        ]
+      },
+      {
+        "parameters": {
+          "resource": "mail",
+          "fromEmail": "jose@gosharpei.com",
+          "fromName": "Sharpei",
+          "toEmail": "josebrest25@gmail.com",
+          "dynamicTemplate": true,
+          "templateId": "d-0fc89d32b2124729a9f49a6c0ff46949",
+          "additionalFields": {}
+        },
+        "id": "0f51324a-d2a2-4c79-b9d3-19d8f45ee868",
+        "name": "Transaction - Failed / Customer ENG",
+        "type": "n8n-nodes-base.sendGrid",
+        "typeVersion": 1,
+        "position": [
+          1720,
+          -160
+        ],
+        "credentials": {
+          "sendGridApi": {
+            "id": "Z0C9bFwvJ8sTkIJz",
+            "name": "SendGrid account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "resource": "mail",
+          "fromEmail": "jose@gosharpei.com",
+          "fromName": "Sharpei",
+          "toEmail": "josebrest25@gmail.com",
+          "dynamicTemplate": true,
+          "templateId": "d-b3c7d8f4dfa04fb8ac7be5988d96f543",
+          "additionalFields": {}
+        },
+        "id": "ed3140b8-6d7f-47fb-b8e9-3798a56dd410",
+        "name": "Transaction - Failed / Customer SPA",
+        "type": "n8n-nodes-base.sendGrid",
+        "typeVersion": 1,
+        "position": [
+          1720,
+          40
+        ],
+        "credentials": {
+          "sendGridApi": {
+            "id": "Z0C9bFwvJ8sTkIJz",
+            "name": "SendGrid account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "options": {}
+        },
+        "id": "8f322b00-a82c-46e5-ab6c-b1502d7b3ea7",
+        "name": "If3",
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2,
+        "position": [
+          1520,
+          460
+        ]
+      },
+      {
+        "parameters": {
+          "resource": "mail",
+          "fromEmail": "jose@gosharpei.com",
+          "fromName": "Sharpei",
+          "toEmail": "josebrest25@gmail.com",
+          "dynamicTemplate": true,
+          "templateId": "d-33ef69ecd8cf4d2e8ef2d1d995494e73",
+          "additionalFields": {}
+        },
+        "id": "21a9dead-7159-4d69-96f3-f6b3778212df",
+        "name": "Transaction - Paid / Customer ENG",
+        "type": "n8n-nodes-base.sendGrid",
+        "typeVersion": 1,
+        "position": [
+          1720,
+          360
+        ],
+        "credentials": {
+          "sendGridApi": {
+            "id": "Z0C9bFwvJ8sTkIJz",
+            "name": "SendGrid account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "resource": "mail",
+          "fromEmail": "jose@gosharpei.com",
+          "fromName": "Sharpei",
+          "toEmail": "josebrest25@gmail.com",
+          "dynamicTemplate": true,
+          "templateId": "d-706a144e8c174d7793c424e4cce64479",
+          "additionalFields": {}
+        },
+        "id": "ca103764-9537-4f54-92db-48353acb7fd1",
+        "name": "Transaction - Paid / Customer SPA",
+        "type": "n8n-nodes-base.sendGrid",
+        "typeVersion": 1,
+        "position": [
+          1720,
+          560
+        ],
+        "credentials": {
+          "sendGridApi": {
+            "id": "Z0C9bFwvJ8sTkIJz",
+            "name": "SendGrid account"
+          }
+        }
+      }
+    ],
+    "connections": {
+      "Transaction - Failed": {
+        "main": [
+          [
+            {
+              "node": "If2",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Transaction - Paid": {
+        "main": [
+          [
+            {
+              "node": "If3",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Transaction - Cancelled": {
+        "main": [
+          [
+            {
+              "node": "If",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Transaction - Cancelled / Customer ENG": {
+        "main": [
+          [
+            {
+              "node": "Transaction - Cancelled / Merchant ENG",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "If": {
+        "main": [
+          [
+            {
+              "node": "Transaction - Cancelled / Customer ENG",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Transaction - Cancelled / Customer SPA",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "If1": {
+        "main": [
+          [
+            {
+              "node": "Transaction - Declined / Customer ENG",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Transaction - Declined / Customer SPA",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Transaction - Declined": {
+        "main": [
+          [
+            {
+              "node": "If1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "If2": {
+        "main": [
+          [
+            {
+              "node": "Transaction - Failed / Customer ENG",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Transaction - Failed / Customer SPA",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "If3": {
+        "main": [
+          [
+            {
+              "node": "Transaction - Paid / Customer ENG",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "pinData": {}
+  }

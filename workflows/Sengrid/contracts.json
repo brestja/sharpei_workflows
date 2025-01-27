@@ -1,0 +1,943 @@
+{
+    "meta": {
+      "instanceId": "0c0beacef8877bbf2416eb00f2b5dc96354e26dd1df5517320459b1236860f8c"
+    },
+    "nodes": [
+      {
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "contract_cancelled",
+          "options": {}
+        },
+        "id": "92318776-4814-49b9-9954-3e699bc11638",
+        "name": "Contract - Cancelled",
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2,
+        "position": [
+          -40,
+          -100
+        ],
+        "webhookId": "6b0c10bf-d706-4b67-81f6-cc63ae54cbd2"
+      },
+      {
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "contract_completed_buyout",
+          "options": {}
+        },
+        "id": "fa5f96fa-a3f3-4149-9067-ff791975fc71",
+        "name": "Contract - Completed Buyout",
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2,
+        "position": [
+          1840,
+          -40
+        ],
+        "webhookId": "35e58cbe-2061-4fef-978c-c58b549102f1"
+      },
+      {
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "contract_draft",
+          "options": {}
+        },
+        "id": "ec24bbec-098c-4055-be80-185c41d9b87c",
+        "name": "Contract - Draft",
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2,
+        "position": [
+          2200,
+          -40
+        ],
+        "webhookId": "9ca9121f-2296-4058-b889-0222c3ced593"
+      },
+      {
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "contract_finished",
+          "options": {}
+        },
+        "id": "ff32622b-84c6-4dc4-a82c-7902c1a3e351",
+        "name": "Contract - Finished",
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2,
+        "position": [
+          880,
+          -600
+        ],
+        "webhookId": "77f19bb8-f669-4d9d-a730-602d34a2023e"
+      },
+      {
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "contract_active",
+          "options": {}
+        },
+        "id": "29c83bdb-9567-47bc-bed0-a8fae801e86e",
+        "name": "Contract -  Active",
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2,
+        "position": [
+          -40,
+          -580
+        ],
+        "webhookId": "3f55862f-4f6c-4944-ae63-95fe09f62aa3"
+      },
+      {
+        "parameters": {
+          "options": {}
+        },
+        "id": "63441504-8f95-413f-9212-2f122e6b38bf",
+        "name": "If",
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2,
+        "position": [
+          140,
+          -580
+        ]
+      },
+      {
+        "parameters": {
+          "resource": "mail",
+          "fromEmail": "jose@gosharpei.com",
+          "fromName": "Sharpei",
+          "toEmail": "josebrest25@gmail.com",
+          "dynamicTemplate": true,
+          "templateId": "d-a2492d881c574741b5b8f96f2c270c0d",
+          "additionalFields": {}
+        },
+        "id": "5e32d562-26ee-4cb7-adc0-106f4123b284",
+        "name": "Contract -  Active / Customer ENG",
+        "type": "n8n-nodes-base.sendGrid",
+        "typeVersion": 1,
+        "position": [
+          340,
+          -680
+        ],
+        "credentials": {
+          "sendGridApi": {
+            "id": "Z0C9bFwvJ8sTkIJz",
+            "name": "SendGrid account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "resource": "mail",
+          "fromEmail": "jose@gosharpei.com",
+          "fromName": "Sharpei",
+          "toEmail": "josebrest25@gmail.com",
+          "dynamicTemplate": true,
+          "templateId": "d-bb7f82cdcd51458c9fec33c900a855df",
+          "additionalFields": {}
+        },
+        "id": "769aec18-3401-493d-bd0d-5eedd9787fbd",
+        "name": "Contract -  Active / Customer SPA",
+        "type": "n8n-nodes-base.sendGrid",
+        "typeVersion": 1,
+        "position": [
+          340,
+          -480
+        ],
+        "credentials": {
+          "sendGridApi": {
+            "id": "Z0C9bFwvJ8sTkIJz",
+            "name": "SendGrid account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "options": {}
+        },
+        "id": "21838ce7-9c28-466b-a54e-146b0b234f0d",
+        "name": "If1",
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2,
+        "position": [
+          140,
+          -100
+        ]
+      },
+      {
+        "parameters": {
+          "resource": "mail",
+          "fromEmail": "jose@gosharpei.com",
+          "fromName": "Sharpei",
+          "toEmail": "josebrest25@gmail.com",
+          "dynamicTemplate": true,
+          "templateId": "d-9c17bb4a2200406c9b9ac9d41a2a3221",
+          "additionalFields": {}
+        },
+        "id": "e2e0265c-373b-45e9-993c-c01741f7f21f",
+        "name": "Contract - Cancelled / Customer ENG",
+        "type": "n8n-nodes-base.sendGrid",
+        "typeVersion": 1,
+        "position": [
+          340,
+          -200
+        ],
+        "credentials": {
+          "sendGridApi": {
+            "id": "Z0C9bFwvJ8sTkIJz",
+            "name": "SendGrid account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "resource": "mail",
+          "fromEmail": "jose@gosharpei.com",
+          "fromName": "Sharpei",
+          "toEmail": "josebrest25@gmail.com",
+          "dynamicTemplate": true,
+          "templateId": "d-6ddbf5952f7d40508124b8251c510f73",
+          "additionalFields": {}
+        },
+        "id": "73623ffc-5d9a-4a88-bfed-b1dd6f87464f",
+        "name": "Contract - Cancelled / Customer SPA",
+        "type": "n8n-nodes-base.sendGrid",
+        "typeVersion": 1,
+        "position": [
+          340,
+          -20
+        ],
+        "credentials": {
+          "sendGridApi": {
+            "id": "Z0C9bFwvJ8sTkIJz",
+            "name": "SendGrid account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "options": {}
+        },
+        "id": "f1229c55-38f4-41d8-814f-38c4b755e0dc",
+        "name": "If2",
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2,
+        "position": [
+          1060,
+          -600
+        ]
+      },
+      {
+        "parameters": {
+          "resource": "mail",
+          "fromEmail": "jose@gosharpei.com",
+          "fromName": "Sharpei",
+          "toEmail": "josebrest25@gmail.com",
+          "dynamicTemplate": true,
+          "templateId": "d-9e685ef595f046a0ad6be0fe0373604f",
+          "additionalFields": {}
+        },
+        "id": "e4f8c4da-e943-4d65-ae8c-86d933bb4d97",
+        "name": "Contract - Finished / Customer ENG",
+        "type": "n8n-nodes-base.sendGrid",
+        "typeVersion": 1,
+        "position": [
+          1260,
+          -700
+        ],
+        "credentials": {
+          "sendGridApi": {
+            "id": "Z0C9bFwvJ8sTkIJz",
+            "name": "SendGrid account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "resource": "mail",
+          "fromEmail": "jose@gosharpei.com",
+          "fromName": "Sharpei",
+          "toEmail": "josebrest25@gmail.com",
+          "dynamicTemplate": true,
+          "templateId": "d-f17a03f766dc465fb6edd197bba2fca7",
+          "additionalFields": {}
+        },
+        "id": "bb456bfa-aaaa-43d5-9c9d-8626aabd7c8b",
+        "name": "Contract - Finished / Customer SPA",
+        "type": "n8n-nodes-base.sendGrid",
+        "typeVersion": 1,
+        "position": [
+          1260,
+          -500
+        ],
+        "credentials": {
+          "sendGridApi": {
+            "id": "Z0C9bFwvJ8sTkIJz",
+            "name": "SendGrid account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "resource": "mail",
+          "fromEmail": "jose@gosharpei.com",
+          "fromName": "Sharpei",
+          "toEmail": "josebrest25@gmail.com",
+          "dynamicTemplate": true,
+          "templateId": "d-52aeb631cc9f4ab48ea03bbc99b921a7",
+          "additionalFields": {}
+        },
+        "id": "9e7bc913-f76d-4b2e-a7c1-ca3008282bcc",
+        "name": "Contract - Finished / Merchant ENG",
+        "type": "n8n-nodes-base.sendGrid",
+        "typeVersion": 1,
+        "position": [
+          1460,
+          -700
+        ],
+        "credentials": {
+          "sendGridApi": {
+            "id": "Z0C9bFwvJ8sTkIJz",
+            "name": "SendGrid account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "options": {}
+        },
+        "id": "89684ca6-a554-4c86-95e9-5828a364f64d",
+        "name": "If3",
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2,
+        "position": [
+          1060,
+          -100
+        ]
+      },
+      {
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "contract_inspection",
+          "options": {}
+        },
+        "id": "d50d5ab9-6c8d-47fd-9b4b-b9bdd7d539c8",
+        "name": "Contract - Inspection",
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2,
+        "position": [
+          880,
+          -100
+        ],
+        "webhookId": "037f9bbc-7d74-4662-b118-6061546ff953"
+      },
+      {
+        "parameters": {
+          "resource": "mail",
+          "fromEmail": "jose@gosharpei.com",
+          "fromName": "Sharpei",
+          "toEmail": "josebrest25@gmail.com",
+          "dynamicTemplate": true,
+          "templateId": "d-c32ead5a58a2446f86ce05fb922c8457",
+          "additionalFields": {}
+        },
+        "id": "f43cd39d-9c99-4141-8222-91596d1d0d0e",
+        "name": "Contract - Inspection / Customer ENG",
+        "type": "n8n-nodes-base.sendGrid",
+        "typeVersion": 1,
+        "position": [
+          1260,
+          -200
+        ],
+        "credentials": {
+          "sendGridApi": {
+            "id": "Z0C9bFwvJ8sTkIJz",
+            "name": "SendGrid account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "resource": "mail",
+          "fromEmail": "jose@gosharpei.com",
+          "fromName": "Sharpei",
+          "toEmail": "josebrest25@gmail.com",
+          "dynamicTemplate": true,
+          "templateId": "d-439bd1973652418fa7e3c6373f703c84",
+          "additionalFields": {}
+        },
+        "id": "9036d6ee-0821-4195-abe4-172ced97a904",
+        "name": "Contract - Inspection / Customer SPA",
+        "type": "n8n-nodes-base.sendGrid",
+        "typeVersion": 1,
+        "position": [
+          1260,
+          0
+        ],
+        "credentials": {
+          "sendGridApi": {
+            "id": "Z0C9bFwvJ8sTkIJz",
+            "name": "SendGrid account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "resource": "mail",
+          "fromEmail": "jose@gosharpei.com",
+          "fromName": "Sharpei",
+          "toEmail": "josebrest25@gmail.com",
+          "dynamicTemplate": true,
+          "templateId": "d-3ed0b02b3e3f4a059e8c92a6f7accaf8",
+          "additionalFields": {}
+        },
+        "id": "392d5c4d-97d0-48b4-b829-cc58512a2b5d",
+        "name": "Contract - Inspection / Merchant ENG",
+        "type": "n8n-nodes-base.sendGrid",
+        "typeVersion": 1,
+        "position": [
+          1460,
+          -200
+        ],
+        "credentials": {
+          "sendGridApi": {
+            "id": "Z0C9bFwvJ8sTkIJz",
+            "name": "SendGrid account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "options": {}
+        },
+        "id": "be764f01-75b6-4d3f-9d20-3e3d89c1d6cb",
+        "name": "If4",
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2,
+        "position": [
+          140,
+          380
+        ]
+      },
+      {
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "contract_completed",
+          "options": {}
+        },
+        "id": "d11ea6a0-dd91-4a0b-8132-d9affbae16c3",
+        "name": "Contract - Completed",
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2,
+        "position": [
+          -40,
+          380
+        ],
+        "webhookId": "bd021323-87d7-40ea-ac28-ece326e8d261"
+      },
+      {
+        "parameters": {
+          "resource": "mail",
+          "fromEmail": "jose@gosharpei.com",
+          "fromName": "Sharpei",
+          "toEmail": "josebrest25@gmail.com",
+          "dynamicTemplate": true,
+          "templateId": "d-e684a7a3ce6d48d8a452c4b37c7162b2",
+          "additionalFields": {}
+        },
+        "id": "acbf8c81-0ddb-43b0-9da1-d6dbb7e29cae",
+        "name": "Contract - Completed / Customer ENG",
+        "type": "n8n-nodes-base.sendGrid",
+        "typeVersion": 1,
+        "position": [
+          340,
+          280
+        ],
+        "credentials": {
+          "sendGridApi": {
+            "id": "Z0C9bFwvJ8sTkIJz",
+            "name": "SendGrid account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "resource": "mail",
+          "fromEmail": "jose@gosharpei.com",
+          "fromName": "Sharpei",
+          "toEmail": "josebrest25@gmail.com",
+          "dynamicTemplate": true,
+          "templateId": "d-dd222ad27b264cd295041345bac6c06c",
+          "additionalFields": {}
+        },
+        "id": "b0b78155-0613-4d53-821b-89ed27c87138",
+        "name": "Contract - Completed / Customer SPA",
+        "type": "n8n-nodes-base.sendGrid",
+        "typeVersion": 1,
+        "position": [
+          340,
+          480
+        ],
+        "credentials": {
+          "sendGridApi": {
+            "id": "Z0C9bFwvJ8sTkIJz",
+            "name": "SendGrid account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "options": {}
+        },
+        "id": "b7d95d9d-2a89-45f2-9be7-e204ea1ffeba",
+        "name": "If5",
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2,
+        "position": [
+          1060,
+          360
+        ]
+      },
+      {
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "contract_return",
+          "options": {}
+        },
+        "id": "63cce882-38d8-4d86-889d-51521a0734d9",
+        "name": "Contract - Return",
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2,
+        "position": [
+          880,
+          360
+        ],
+        "webhookId": "5d5fa626-351e-4a1b-8211-cc8a0aef1728"
+      },
+      {
+        "parameters": {
+          "resource": "mail",
+          "fromEmail": "jose@gosharpei.com",
+          "fromName": "Sharpei",
+          "toEmail": "josebrest25@gmail.com",
+          "dynamicTemplate": true,
+          "templateId": "d-fec46af9f75447679dda7e0e3e8469d2",
+          "additionalFields": {}
+        },
+        "id": "2b74b5a8-0ee7-4215-9937-ef1ca9fdc476",
+        "name": "Contract - Return / Customer ENG",
+        "type": "n8n-nodes-base.sendGrid",
+        "typeVersion": 1,
+        "position": [
+          1260,
+          260
+        ],
+        "credentials": {
+          "sendGridApi": {
+            "id": "Z0C9bFwvJ8sTkIJz",
+            "name": "SendGrid account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "resource": "mail",
+          "fromEmail": "jose@gosharpei.com",
+          "fromName": "Sharpei",
+          "toEmail": "josebrest25@gmail.com",
+          "dynamicTemplate": true,
+          "templateId": "d-1244b7e30e7245269f8ac0f208a8c2e6",
+          "additionalFields": {}
+        },
+        "id": "92b1c9c8-d766-48a2-9acf-9c1714326afb",
+        "name": "Contract - Return / Customer SPA",
+        "type": "n8n-nodes-base.sendGrid",
+        "typeVersion": 1,
+        "position": [
+          1260,
+          460
+        ],
+        "credentials": {
+          "sendGridApi": {
+            "id": "Z0C9bFwvJ8sTkIJz",
+            "name": "SendGrid account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "resource": "mail",
+          "fromEmail": "jose@gosharpei.com",
+          "fromName": "Sharpei",
+          "toEmail": "josebrest25@gmail.com",
+          "dynamicTemplate": true,
+          "templateId": "d-f0ac93b0f9104b8ba7f9734db95b9fc9",
+          "additionalFields": {}
+        },
+        "id": "a0f7421a-281f-4836-880d-eb6c0d425ff8",
+        "name": "Contract - Return / Merchant ENG",
+        "type": "n8n-nodes-base.sendGrid",
+        "typeVersion": 1,
+        "position": [
+          1460,
+          260
+        ],
+        "credentials": {
+          "sendGridApi": {
+            "id": "Z0C9bFwvJ8sTkIJz",
+            "name": "SendGrid account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "resource": "mail",
+          "fromEmail": "jose@gosharpei.com",
+          "fromName": "Sharpei",
+          "toEmail": "josebrest25@gmail.com",
+          "dynamicTemplate": true,
+          "templateId": "d-f7317468d74941588b45b297bafe7f48",
+          "additionalFields": {}
+        },
+        "id": "fa1aac4d-a348-4ef5-b5a8-6b978d2b95b1",
+        "name": "Contract - Cancelled / Merchant ENG",
+        "type": "n8n-nodes-base.sendGrid",
+        "typeVersion": 1,
+        "position": [
+          580,
+          -200
+        ],
+        "credentials": {
+          "sendGridApi": {
+            "id": "Z0C9bFwvJ8sTkIJz",
+            "name": "SendGrid account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "options": {}
+        },
+        "id": "fcd17e70-85bf-4f55-b596-1a7b4f342b61",
+        "name": "If6",
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2,
+        "position": [
+          2040,
+          -560
+        ]
+      },
+      {
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "contract_printed_label",
+          "options": {}
+        },
+        "id": "f2db1f49-01d8-47cc-811e-1c71c7470e9d",
+        "name": "Contract - Printed Label",
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2,
+        "position": [
+          1840,
+          -560
+        ],
+        "webhookId": "4d4f4e42-4971-4098-9b41-822726064a34"
+      },
+      {
+        "parameters": {
+          "resource": "mail",
+          "fromEmail": "jose@gosharpei.com",
+          "fromName": "Sharpei",
+          "toEmail": "josebrest25@gmail.com",
+          "dynamicTemplate": true,
+          "templateId": "d-721957d3ee6a4649b25883dd465e33a1",
+          "additionalFields": {}
+        },
+        "id": "0563cc30-d8eb-4bf3-8998-215227ea2f78",
+        "name": "Contract - Printed Label / Customer ENG",
+        "type": "n8n-nodes-base.sendGrid",
+        "typeVersion": 1,
+        "position": [
+          2220,
+          -660
+        ],
+        "credentials": {
+          "sendGridApi": {
+            "id": "Z0C9bFwvJ8sTkIJz",
+            "name": "SendGrid account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "resource": "mail",
+          "fromEmail": "jose@gosharpei.com",
+          "fromName": "Sharpei",
+          "toEmail": "josebrest25@gmail.com",
+          "dynamicTemplate": true,
+          "templateId": "d-3b85f41fd76f449e8e770160b519e15e",
+          "additionalFields": {}
+        },
+        "id": "50c3e2c5-ab95-4c4e-878a-a638464513bf",
+        "name": "Contract - Printed Label / Customer SPA",
+        "type": "n8n-nodes-base.sendGrid",
+        "typeVersion": 1,
+        "position": [
+          2220,
+          -460
+        ],
+        "credentials": {
+          "sendGridApi": {
+            "id": "Z0C9bFwvJ8sTkIJz",
+            "name": "SendGrid account"
+          }
+        }
+      }
+    ],
+    "connections": {
+      "Contract - Cancelled": {
+        "main": [
+          [
+            {
+              "node": "If1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Contract - Finished": {
+        "main": [
+          [
+            {
+              "node": "If2",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Contract -  Active": {
+        "main": [
+          [
+            {
+              "node": "If",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "If": {
+        "main": [
+          [
+            {
+              "node": "Contract -  Active / Customer ENG",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Contract -  Active / Customer SPA",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "If1": {
+        "main": [
+          [
+            {
+              "node": "Contract - Cancelled / Customer ENG",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Contract - Cancelled / Customer SPA",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Contract - Cancelled / Customer ENG": {
+        "main": [
+          [
+            {
+              "node": "Contract - Cancelled / Merchant ENG",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "If2": {
+        "main": [
+          [
+            {
+              "node": "Contract - Finished / Customer ENG",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Contract - Finished / Customer SPA",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Contract - Finished / Customer ENG": {
+        "main": [
+          [
+            {
+              "node": "Contract - Finished / Merchant ENG",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "If3": {
+        "main": [
+          [
+            {
+              "node": "Contract - Inspection / Customer ENG",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Contract - Inspection / Customer SPA",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Contract - Inspection": {
+        "main": [
+          [
+            {
+              "node": "If3",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Contract - Inspection / Customer ENG": {
+        "main": [
+          [
+            {
+              "node": "Contract - Inspection / Merchant ENG",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "If4": {
+        "main": [
+          null,
+          [
+            {
+              "node": "Contract - Completed / Customer SPA",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Contract - Completed": {
+        "main": [
+          [
+            {
+              "node": "If4",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "If5": {
+        "main": [
+          [
+            {
+              "node": "Contract - Return / Customer ENG",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Contract - Return / Customer SPA",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Contract - Return": {
+        "main": [
+          [
+            {
+              "node": "If5",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Contract - Return / Customer ENG": {
+        "main": [
+          [
+            {
+              "node": "Contract - Return / Merchant ENG",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "If6": {
+        "main": [
+          [
+            {
+              "node": "Contract - Printed Label / Customer ENG",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Contract - Printed Label / Customer SPA",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Contract - Printed Label": {
+        "main": [
+          [
+            {
+              "node": "If6",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "pinData": {
+      "Contract -  Active": [
+        {
+          "Recipient_email": "jose@gosharpei.com",
+          "Lang": "Spanish"
+        }
+      ]
+    }
+  }

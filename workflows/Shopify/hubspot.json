@@ -1,0 +1,61 @@
+{
+    "meta": {
+      "instanceId": "0c0beacef8877bbf2416eb00f2b5dc96354e26dd1df5517320459b1236860f8c"
+    },
+    "nodes": [
+      {
+        "parameters": {
+          "authentication": "appToken",
+          "email": "jose@gosharpei.com",
+          "additionalFields": {
+            "phoneNumber": ""
+          },
+          "options": {}
+        },
+        "id": "1f88c894-e63e-4a07-ba4f-14c1634b30e5",
+        "name": "HubSpot",
+        "type": "n8n-nodes-base.hubspot",
+        "typeVersion": 2.1,
+        "position": [
+          740,
+          180
+        ],
+        "credentials": {
+          "hubspotAppToken": {
+            "id": "chvFDv62rsar70bF",
+            "name": "HubSpot account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "shopify/contacts",
+          "options": {}
+        },
+        "id": "f77ab3fb-8b45-4e67-bcee-a4e07da4841e",
+        "name": "Webhook",
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2,
+        "position": [
+          480,
+          180
+        ],
+        "webhookId": "9650159c-fccc-4eb3-99be-8803fb193a2e"
+      }
+    ],
+    "connections": {
+      "Webhook": {
+        "main": [
+          [
+            {
+              "node": "HubSpot",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "pinData": {}
+  }

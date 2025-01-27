@@ -1,0 +1,560 @@
+{
+  "meta": {
+    "instanceId": "0c0beacef8877bbf2416eb00f2b5dc96354e26dd1df5517320459b1236860f8c"
+  },
+  "nodes": [
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1jcsEzMEXxQo4kYxBeyJVZGkkr3mnMP2zSWVt6mTZ12U",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Hoja 1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1jcsEzMEXxQo4kYxBeyJVZGkkr3mnMP2zSWVt6mTZ12U/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "id_BillingAttempt": "={{ $json.id }}",
+            "id_SubscriptionContract": "={{ $json.subscriptionContract.id }}",
+            "ready": "={{ $json.ready }}",
+            "completed_at": "={{ $json.completedAt }}",
+            "error_code": "={{ $json.errorCode }}",
+            "error_message": "={{ $json.errorMessage }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "id_BillingAttempt",
+              "displayName": "id_BillingAttempt",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "id_SubscriptionContract",
+              "displayName": "id_SubscriptionContract",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "ready",
+              "displayName": "ready",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "completed_at",
+              "displayName": "completed_at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "error_code",
+              "displayName": "error_code",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "error_message",
+              "displayName": "error_message",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "2b655c15-5c1a-4463-a68f-c68be9dc9794",
+      "name": "Google Sheets",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.4,
+      "position": [
+        2660,
+        580
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "OT8wMWyUPUaPSE6u",
+          "name": "Google Sheets account 5"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "tableId": "billing_attemps",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "id",
+              "fieldValue": "={{ $json.id.slice($json.id.lastIndexOf(\"/\") + 1) }}\n"
+            },
+            {
+              "fieldId": "id_SubscriptionContract",
+              "fieldValue": "={{ $json.subscriptionContract.id }}"
+            },
+            {
+              "fieldId": "error_code",
+              "fieldValue": "={{ $json.errorCode }}"
+            },
+            {
+              "fieldId": "error_message",
+              "fieldValue": "={{ $json.errorMessage }}"
+            },
+            {
+              "fieldId": "completed_at",
+              "fieldValue": "={{ $json.completedAt }}"
+            },
+            {
+              "fieldId": "ready",
+              "fieldValue": "={{ $json.ready }}"
+            },
+            {
+              "fieldId": "shop_url",
+              "fieldValue": "={{ $json.shop_url }}"
+            }
+          ]
+        }
+      },
+      "id": "0b61b826-2a9e-419a-a7c9-d4581b71a650",
+      "name": "Supabase2",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        2400,
+        580
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "MoKGO7mrRJWXYoiT",
+          "name": "Supabase account"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "amount": 3
+      },
+      "id": "c9cddfc1-199f-453c-afae-d26583133f98",
+      "name": "Wait",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        2180,
+        580
+      ],
+      "webhookId": "f6fe9dc7-ed36-44dd-a0b8-4257401bf64d"
+    },
+    {
+      "parameters": {},
+      "id": "d4ebd661-ff59-4fde-8b91-92aa51c629a7",
+      "name": "Replace Me",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        1960,
+        580
+      ]
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "4b7b674f-381b-4746-af74-97b8e50be0da",
+      "name": "Loop Over Items",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        1740,
+        580
+      ]
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "data",
+        "options": {}
+      },
+      "id": "02b70ac0-7784-4cd3-8337-1ccb63250158",
+      "name": "Split Out",
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        1480,
+        580
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Obtener las respuestas de entrada\nconst responses = $input.all();\n\n// Inicializar un arreglo vacío para almacenar los nodos\nlet data = [];\n\n// Crear un conjunto para almacenar nodos únicos basados en una clave única (por ejemplo, `id`)\nconst uniqueNodes = new Set();\n\n// Iterar sobre todas las respuestas de entrada\nresponses.forEach(response => {\n    // Acceder a los edges dentro de la estructura del JSON\n    const edges = response.json.body.jobData.data.subscriptionBillingAttempts.edges;\n\n  const shop_url = response.json.body.shop;\n\n    // Agregar nodos únicos al arreglo data\n    edges.forEach(edge => {\n        const node = edge.node;\n\n        // Suponiendo que cada nodo tiene un campo `id` único\n        if (!uniqueNodes.has(node.id)) {\n            uniqueNodes.add(node.id); // Registrar el nodo como único\n            data.push({ ...node, shop_url }); // Agregar al arreglo final\n        }\n    });\n});\n\n// Devolver el arreglo combinado en el formato esperado\nreturn [\n    {\n        json: {\n            data\n        }\n    }\n];\n"
+      },
+      "id": "4179b0ff-5a1a-452c-8d33-2ccbcface0a4",
+      "name": "Code3",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1260,
+        580
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const axios = require('axios');\nconst job = item.json; // Input from n8n workflow\nconst job_id = item.job_id;\nconst accessToken = job.token;\nconst shop = job.shop; // Shopify store domain\n\nconsole.log('job id', job_id);\n\ntry {\n  const response = await axios.post(\n    `https://${shop}/admin/api/2024-10/graphql.json`,\n    {\n      query: `\n        { \n          subscriptionBillingAttempts(first: 10, reverse: true) {\n          edges {\n          node {\n          id\n          ready\n          completedAt\n          errorCode\n          errorMessage\n          nextActionUrl\n          subscriptionContract {\n          id\n          }\n          }\n          }\n          }\n          }\n      `\n    },\n    {\n      headers: {\n        \"X-Shopify-Access-Token\": accessToken,\n        \"Content-Type\": \"application/json\",\n      },\n    }\n  );\n\n  console.log(response.data);\n\n  const jobData = response.data;\n\n  if (!jobData) {\n    return {\n      statusCode: 200,\n      body: JSON.stringify({\n        shop,\n        job_id,\n        jobData,\n      }),\n    };\n  }\n\n  return {\n    statusCode: 200,\n    body: {\n      jobData,\n      shop\n    },\n  };\n} catch (error) {\n  return {\n    statusCode: 500,\n    body: JSON.stringify({\n      error: error.message,\n    }),\n  };\n}"
+      },
+      "id": "85b5fa60-301b-4fcc-9ee8-f2fc7df5a0ee",
+      "name": "Code",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1020,
+        580
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "tableId": "background_jobs",
+        "returnAll": true,
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "shop",
+              "condition": "eq",
+              "keyValue": "ositosconalcohol.myshopify.com"
+            }
+          ]
+        }
+      },
+      "id": "57992f3f-c0fa-4213-9c30-6b6e056f6505",
+      "name": "Get All Jobs",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        800,
+        580
+      ],
+      "notesInFlow": true,
+      "credentials": {
+        "supabaseApi": {
+          "id": "MoKGO7mrRJWXYoiT",
+          "name": "Supabase account"
+        }
+      },
+      "notes": "Retrieves all shops from Supabase"
+    },
+    {
+      "parameters": {
+        "tableId": "background_jobs",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "job_id",
+              "fieldValue": "={{ $json.contracts.subscriptionBillingCycleBulkCharge.job.id }}"
+            },
+            {
+              "fieldId": "status",
+              "fieldValue": "PROCESSING"
+            },
+            {
+              "fieldId": "shop",
+              "fieldValue": "={{ $json.shop }}"
+            },
+            {
+              "fieldId": "token",
+              "fieldValue": "={{ $json.accessToken }}"
+            }
+          ]
+        }
+      },
+      "id": "dca2cf85-5d3f-4693-8a4a-611fb9ffae31",
+      "name": "Supabase",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        1480,
+        320
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "MoKGO7mrRJWXYoiT",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const axios = require('axios');\nconst startDate = new Date();\nstartDate.setDate(startDate.getDate() - 5);\nstartDate.setHours(0, 0, 0, 0);\nconst endDate = new Date();\nconst session = item.json.session;\nconst token = session.accessToken;\nconst shop = session.shop;\n\nconst SubscriptionBillingChargeBulkMutation = () => {\n  return {\n    query: `mutation subscriptionBillingCycleBulkChargeMutation($startDate: DateTime!, $endDate: DateTime!) {\n                    subscriptionBillingCycleBulkCharge(\n                      billingAttemptExpectedDateRange: {\n                        startDate: $startDate\n                        endDate: $endDate\n                      },\n                      filters: {\n                        contractStatus: [ACTIVE],\n                        billingCycleStatus: [UNBILLED],\n                        billingAttemptStatus: NO_ATTEMPT\n                      }\n                    ) {\n                      job {\n                        id\n                      }\n                      userErrors {\n                        message\n                      }\n                    }\n                  }`,\n    variables: {\n      startDate: startDate,\n      endDate: endDate,\n    },\n  };\n};\n\nasync function fetchSubscriptionData() {\n  if (!shop) {\n    throw new Error(\"shop is undefined\");\n  }\n  \n  const response = await axios.post(\n    `https://${shop}/admin/api/2024-07/graphql.json`,\n    SubscriptionBillingChargeBulkMutation(startDate, endDate), // Pass the data directly\n    { // Pass headers in a separate configuration object\n      headers: {\n        \"X-Shopify-Access-Token\": token,\n        \"Content-Type\": \"application/json\",\n      },\n    }\n  );\n\n  const data = response.data;\n\n  console.log(data);\n\n  return {\n    contracts: data.data,\n    accessToken: token,\n    shop,\n  };\n}\n\nconst subscriptions = await fetchSubscriptionData();\n\nreturn subscriptions;\n"
+      },
+      "id": "757008b7-c9ad-415c-a74b-49b98ad513e9",
+      "name": "BulkEnqueueSubscriptions",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1260,
+        320
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "053fe708-5067-4479-886f-0fa62ff35036",
+              "name": "session",
+              "value": "={{ $json.session }}",
+              "type": "object"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "cc11875a-c4ad-4836-b561-f44ec72670fa",
+      "name": "Get the sessions",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1020,
+        320
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "tableId": "sessions",
+        "returnAll": true
+      },
+      "id": "de900e3a-c21d-4bfb-b83b-1114c3bde7f0",
+      "name": "Get All Shops",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        800,
+        320
+      ],
+      "notesInFlow": true,
+      "credentials": {
+        "supabaseApi": {
+          "id": "MoKGO7mrRJWXYoiT",
+          "name": "Supabase account"
+        }
+      },
+      "notes": "Retrieves all shops from Supabase"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 1
+            }
+          ]
+        }
+      },
+      "id": "c1a7fc49-a999-402e-b151-375b8f909ead",
+      "name": "Schedule Trigger1",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        540,
+        580
+      ]
+    },
+    {
+      "parameters": {
+        "sendTo": "lucia@gosharpei.com",
+        "subject": "Billing attemp error",
+        "emailType": "text",
+        "message": "=Shopify Billing  attemps run succesfully.",
+        "options": {
+          "ccList": "josebrest25@gmail.com"
+        }
+      },
+      "id": "775589bf-5b55-4757-8e4b-7d969779fa2a",
+      "name": "Gmail",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2,
+      "position": [
+        1740,
+        320
+      ],
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "MMR6YWjk7bfVViQ4",
+          "name": "Gmail account 9"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "Supabase2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Replace Me": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        null,
+        [
+          {
+            "node": "Replace Me",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code3": {
+      "main": [
+        [
+          {
+            "node": "Split Out",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "Code3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get All Jobs": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase": {
+      "main": [
+        [
+          {
+            "node": "Gmail",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "BulkEnqueueSubscriptions": {
+      "main": [
+        [
+          {
+            "node": "Supabase",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get the sessions": {
+      "main": [
+        [
+          {
+            "node": "BulkEnqueueSubscriptions",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get All Shops": {
+      "main": [
+        [
+          {
+            "node": "Get the sessions",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger1": {
+      "main": [
+        [
+          {
+            "node": "Get All Jobs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {}
+}

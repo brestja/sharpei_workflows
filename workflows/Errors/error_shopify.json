@@ -1,0 +1,127 @@
+{
+    "meta": {
+      "instanceId": "0c0beacef8877bbf2416eb00f2b5dc96354e26dd1df5517320459b1236860f8c"
+    },
+    "nodes": [
+      {
+        "parameters": {},
+        "id": "5153e938-e221-48b9-b47a-7cce5d51ce20",
+        "name": "Error Trigger",
+        "type": "n8n-nodes-base.errorTrigger",
+        "typeVersion": 1,
+        "position": [
+          220,
+          220
+        ]
+      },
+      {
+        "parameters": {
+          "sendTo": "lucia@gosharpei.com",
+          "subject": "Billing attemp error",
+          "emailType": "text",
+          "message": "=Workflow ID: {{ $json[\"Workflow ID\"] }}\n\nName: {{ $json.workflow.name }}\n\nExecution Id: {{ $json.execution.id }}\n\nUrl:  {{ $json.execution.url }}\n\nError: {{ $json[\"error message\"] }}\n\nLast Node Executed: {{ $json[\"Last Node Executed\"] }}\n\nMode: {{ $json.execution.mode }}     ",
+          "options": {
+            "ccList": "josebrest25@gmail.com"
+          }
+        },
+        "id": "23b3cd2d-b60c-4630-bdad-13877fd317e4",
+        "name": "Gmail",
+        "type": "n8n-nodes-base.gmail",
+        "typeVersion": 2,
+        "position": [
+          780,
+          220
+        ],
+        "credentials": {
+          "gmailOAuth2": {
+            "id": "MMR6YWjk7bfVViQ4",
+            "name": "Gmail account 9"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "9b0d5475-ea8e-4732-bcb4-9659a6bc1445",
+                "name": "execution.url",
+                "value": "={{ $('Error Trigger').item.json.execution.url }}",
+                "type": "string"
+              },
+              {
+                "id": "d6f641e6-c957-4008-ab04-21a503f78cf2",
+                "name": "Workflow ID",
+                "value": "={{ $('Error Trigger').item.json.workflow.id }}",
+                "type": "string"
+              },
+              {
+                "id": "7a96bbac-0df9-4055-8b9b-12a6fa801979",
+                "name": "Last Node Executed",
+                "value": "={{ $('Error Trigger').item.json.execution.lastNodeExecuted }}",
+                "type": "string"
+              },
+              {
+                "id": "6aa97632-d509-4e3a-b481-632776866313",
+                "name": "execution.mode",
+                "value": "={{ $('Error Trigger').item.json.execution.mode }}",
+                "type": "string"
+              },
+              {
+                "id": "4f212860-67a4-4c15-93c0-a6b77c311bfc",
+                "name": "workflow.name",
+                "value": "={{ $('Error Trigger').item.json.workflow.name }}",
+                "type": "string"
+              },
+              {
+                "id": "cd09f3e0-10bf-4f15-9782-3f805043f6c2",
+                "name": "error message",
+                "value": "={{ $('Error Trigger').item.json.execution.error.message }} ",
+                "type": "string"
+              },
+              {
+                "id": "315ce145-5941-4eea-9002-4400ef386361",
+                "name": "execution.id",
+                "value": "={{ $json.id }}",
+                "type": "number"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "id": "36525c83-5a5d-4488-9a1f-3e4e2e0e1745",
+        "name": "Edit Fields2",
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          500,
+          220
+        ]
+      }
+    ],
+    "connections": {
+      "Error Trigger": {
+        "main": [
+          [
+            {
+              "node": "Edit Fields2",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Edit Fields2": {
+        "main": [
+          [
+            {
+              "node": "Gmail",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "pinData": {}
+  }
